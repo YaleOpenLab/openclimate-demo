@@ -57,4 +57,3 @@ api=> SELECT * FROM USERS;
 ```
 
 After getting the relevant dbs for postgres up, run `npm install` and `npm start` to get the backend running
-```
