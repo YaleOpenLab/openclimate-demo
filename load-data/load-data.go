@@ -9,10 +9,8 @@ import (
   "strings"
 )
 
-func main() {
-  fmt.Println("Hello World!")
-
-  file, err := os.Open("old/data/country_definitions.csv")
+func create_csv_dictionary(path_to_file string) [][]string {
+  file, err := os.Open(path_to_file)
   if err != nil {
     log.Fatal(err)
   }
@@ -25,5 +23,10 @@ func main() {
     log.Fatal(err)
   }
 
-  fmt.Print(records[16][2])
+  return records
+}
+
+func main() {
+  // Example call to create_csv_dictionary
+  fmt.Println(create_csv_dictionary("data/country_definitions.csv"))
 }
