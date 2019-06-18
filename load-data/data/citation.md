@@ -1,4 +1,6 @@
-## The data in this directory was obtained from the following sources:
+## Citation
+
+_The data in this directory was obtained from the following sources:_
 
 ### [https://github.com/openclimatedata](https://github.com/openclimatedata)
 
