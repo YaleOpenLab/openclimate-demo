@@ -7,12 +7,7 @@ import (
 )
 
 func main() {
-	user, err := database.RetrieveUser("Jerry")
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println(user)
-	user, err = database.PutUser(user)
+	err := database.DeleteUser("Jerry", 3)
 	if err != nil {
 		log.Fatal(err)
 	}
