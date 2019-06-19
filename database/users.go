@@ -13,6 +13,21 @@ type User struct {
 	Pwhash string
 }
 
+func NewUser(name string, pwhash string, email string) (User, error) {
+	var err error
+	var user User
+	user.Name = name
+	user.Pwhash = pwhash
+	user.Email = email
+
+	user, err = PutUser(user)
+	if err != nil {
+		return user, errors.Wrap(err, "could not put user into the db while creating user, quitting")
+	}
+
+	return user, nil // you can replace this with return PutUser but that doesn't expand the error wrap that we want to have
+}
+
 func RetrieveUser(name string) (User, error) {
 	var x User
 	db, err := OpenDB()
@@ -54,6 +69,37 @@ func PutUser(user User) (User, error) {
 		return user, errors.Wrap(err, "could not insert user into db, quitting")
 	}
 	return user, nil
+}
+
+func (user *User) Save() error {
+	db, err := OpenDB()
+	if err != nil {
+		return errors.Wrap(err, "could not open db, quitting")
+	}
+
+	defer db.Close()
+	sqlTx := `
+	UPDATE users
+	SET name=$2, email=$3, pwhash=$4
+	WHERE id=$1
+	RETURNING id
+	`
+
+	var returnedIdS string
+	err = db.QueryRow(sqlTx, user.Id, user.Name, user.Email, user.Pwhash).Scan(&returnedIdS)
+	if err != nil {
+		return errors.Wrap(err, "could not insert user into db, quitting")
+	}
+
+	returnedId, err := utils.StoICheck(returnedIdS)
+	if err != nil {
+		return err
+	}
+
+	if returnedId != user.Id {
+		return errors.New("ids don't match, quitting")
+	}
+	return nil
 }
 
 func RetrieveAllUsers() ([]User, error) {

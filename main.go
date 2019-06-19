@@ -7,8 +7,14 @@ import (
 )
 
 func main() {
-	err := database.DeleteUser("Jerry", 3)
+	var user database.User
+	user.Id = 2
+	user.Name=  "GeorgeCool"
+	user.Email = "george@example.com"
+	user.Pwhash = "nicetry"
+	err := user.Save()
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println(user)
 }
