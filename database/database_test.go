@@ -34,11 +34,11 @@ func TestUsers(t *testing.T) {
 		log.Fatal(err)
 	}
 
-	if len(users) - initLength != 1 {
+	if len(users)-initLength != 1 {
 		t.Fatal("user length not 1, quitting")
 	}
 
-	user.Name=  "GeorgeCool"
+	user.Name = "GeorgeCool"
 	user.Email = "george@example.com"
 	user.Pwhash = "nicetry"
 	err = user.Save()

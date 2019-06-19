@@ -13,9 +13,15 @@ type User struct {
 	Pwhash string
 }
 
+// NewUser creates a new user
 func NewUser(name string, pwhash string, email string) (User, error) {
 	var err error
 	var user User
+
+	if len(pwhash) != 128 {
+		return user, errors.New("pwhash not of length 128, quitting")
+	}
+
 	user.Name = name
 	user.Pwhash = pwhash
 	user.Email = email
@@ -28,6 +34,7 @@ func NewUser(name string, pwhash string, email string) (User, error) {
 	return user, nil // you can replace this with return PutUser but that doesn't expand the error wrap that we want to have
 }
 
+// RetrieveUser retrieves a user given his name
 func RetrieveUser(name string) (User, error) {
 	var x User
 	db, err := OpenDB()
@@ -52,6 +59,17 @@ func RetrieveUser(name string) (User, error) {
 	return x, nil
 }
 
+// AuthUser returns true if the user's name and pwhashes match
+func AuthUser(name string, pwhash string) bool {
+	user, err := RetrieveUser(name)
+	if err != nil {
+		return false
+	}
+
+	return user.Pwhash == pwhash
+}
+
+// PutUser creates a new user in the database
 func PutUser(user User) (User, error) {
 	db, err := OpenDB()
 	if err != nil {
@@ -71,6 +89,7 @@ func PutUser(user User) (User, error) {
 	return user, nil
 }
 
+// Save updates the user struct stored in the database
 func (user *User) Save() error {
 	db, err := OpenDB()
 	if err != nil {
@@ -102,6 +121,7 @@ func (user *User) Save() error {
 	return nil
 }
 
+// RetrieveAllUsers retrieves all users from the database
 func RetrieveAllUsers() ([]User, error) {
 	var users []User
 	db, err := OpenDB()
@@ -138,7 +158,8 @@ func RetrieveAllUsers() ([]User, error) {
 	return users, nil
 }
 
-func DeleteUser(name string, id int) (error) {
+// DeleteUser deletes a g ive nuser from the database
+func DeleteUser(name string, id int) error {
 	user, err := RetrieveUser(name)
 	if err != nil {
 		return errors.Wrap(err, "could not retrieve user from db, quitting")
