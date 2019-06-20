@@ -3,6 +3,8 @@ package main
 import (
 	"log"
 	"net/http"
+	"os"
+	"os/exec"
 )
 
 func setupRelayHandlers() {
@@ -28,6 +30,30 @@ func StartServer(port string, insecure bool) {
 	}
 }
 
+func RunPythonScript() error {
+	dir, err := os.Getwd()
+	if err != nil {
+		return err
+	}
+
+	cmd := exec.Command(dir + "/csv.py")
+	cmd.Stdout = os.Stdout
+	cmd.Stderr = os.Stderr
+	err = cmd.Run()
+	if err != nil {
+		return err
+	}
+
+	return nil
+}
+
 func main() {
+	var err error
+
+	err = RunPythonScript()
+	if err != nil {
+		log.Fatal(err)
+	}
+
 	StartServer("8001", true)
 }
