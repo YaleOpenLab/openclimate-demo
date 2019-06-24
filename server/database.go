@@ -21,7 +21,7 @@ func newUser() {
 		checkOrigin(w, r)
 
 		if r.URL.Query()["username"] == nil || r.URL.Query()["pwhash"] == nil || r.URL.Query()["email"] == nil {
-			log.Println("required params - username, pwhash, email missing, quitting")
+			log.Println("required params - username, pwhash, email missing")
 			log.Println(r.URL.Query()["username"])
 			log.Println(r.URL.Query()["pwhash"])
 			log.Println(r.URL.Query()["email"])
@@ -35,7 +35,7 @@ func newUser() {
 
 		user, err := database.NewUser(username, pwhash, email)
 		if err != nil {
-			log.Println("couldn't create new user, quitting", err)
+			log.Println("couldn't create new user", err)
 			responseHandler(w, StatusInternalServerError)
 			return
 		}
@@ -57,7 +57,7 @@ func retrieveUser() {
 		checkOrigin(w, r)
 
 		if !authorizeUser(r) {
-			log.Println("user has invalid credentials, quitting")
+			log.Println("user has invalid credentials")
 			responseHandler(w, StatusUnauthorized)
 			return
 		}
@@ -69,6 +69,7 @@ func retrieveUser() {
 		if err != nil {
 			log.Println("could not retrieve user from the database, quittting")
 			responseHandler(w, StatusInternalServerError)
+			return
 		}
 
 		MarshalSend(w, user)
@@ -81,7 +82,7 @@ func retrieveAllUsers() {
 		checkOrigin(w, r)
 
 		if !authorizeUser(r) {
-			log.Println("user has invalid credentials, quitting")
+			log.Println("user has invalid credentials")
 			responseHandler(w, StatusUnauthorized)
 			return
 		}
@@ -90,6 +91,7 @@ func retrieveAllUsers() {
 		if err != nil {
 			log.Println("could not retrieve user from the database, quittting")
 			responseHandler(w, StatusInternalServerError)
+			return
 		}
 
 		MarshalSend(w, users)
@@ -102,7 +104,7 @@ func deleteUser() {
 		checkOrigin(w, r)
 
 		if !authorizeUser(r) {
-			log.Println("user has invalid credentials, quitting")
+			log.Println("user has invalid credentials")
 			responseHandler(w, StatusUnauthorized)
 			return
 		}
@@ -127,7 +129,7 @@ func updateUser() {
 		checkOrigin(w, r)
 
 		if !authorizeUser(r) {
-			log.Println("user has invalid credentials, quitting")
+			log.Println("user has invalid credentials")
 			responseHandler(w, StatusUnauthorized)
 			return
 		}
@@ -139,6 +141,7 @@ func updateUser() {
 		if err != nil {
 			log.Println("could not retrieve user from the database, quittting")
 			responseHandler(w, StatusInternalServerError)
+			return
 		}
 
 		if r.URL.Query()["email"] != nil {
@@ -156,6 +159,7 @@ func updateUser() {
 		if err != nil {
 			log.Println("error while savingt user to database")
 			responseHandler(w, StatusInternalServerError)
+			return
 		}
 
 		MarshalSend(w, user)
