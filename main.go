@@ -8,6 +8,7 @@ import (
 	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/YaleOpenLab/openclimate/server"
+	//"github.com/YaleOpenLab/openclimate/notif"
 	"github.com/spf13/viper"
 )
 
