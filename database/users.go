@@ -35,7 +35,7 @@ func NewUser(name string, pwhash string, email string) (User, error) {
 }
 
 // RetrieveUser retrieves a user given his name
-func RetrieveUser(name string) (User, error) {
+func RetrieveUser(name string, pwhash string) (User, error) {
 	var x User
 	db, err := OpenDB()
 	if err != nil {
@@ -43,8 +43,8 @@ func RetrieveUser(name string) (User, error) {
 	}
 	defer db.Close()
 
-	var id, dbName, email, pwhash string
-	err = db.QueryRow("SELECT * FROM users WHERE name = $1", name).Scan(&id, &dbName, &email, &pwhash)
+	var id, dbName, email, providedHash string
+	err = db.QueryRow("SELECT * FROM users WHERE name = $1 AND pwhash = $2", name, pwhash).Scan(&id, &dbName, &email, &providedHash)
 	if err != nil {
 		return x, errors.Wrap(err, "could not get user by name")
 	}
@@ -54,19 +54,15 @@ func RetrieveUser(name string) (User, error) {
 	}
 	x.Name = dbName
 	x.Email = email
-	x.Pwhash = pwhash
+	x.Pwhash = providedHash
 
 	return x, nil
 }
 
 // AuthUser returns true if the user's name and pwhashes match
 func AuthUser(name string, pwhash string) bool {
-	user, err := RetrieveUser(name)
-	if err != nil {
-		return false
-	}
-
-	return user.Pwhash == pwhash
+	user, err := RetrieveUser(name, pwhash)
+	return !(err != nil) && user.Pwhash == pwhash
 }
 
 // PutUser creates a new user in the database
@@ -158,14 +154,14 @@ func RetrieveAllUsers() ([]User, error) {
 	return users, nil
 }
 
-// DeleteUser deletes a g ive nuser from the database
-func DeleteUser(name string, id int) error {
-	user, err := RetrieveUser(name)
+// DeleteUser deletes a given user from the database
+func DeleteUser(name string, pwhash string) error {
+	user, err := RetrieveUser(name, pwhash)
 	if err != nil {
 		return errors.Wrap(err, "could not retrieve user from db, quitting")
 	}
 
-	if user.Name != name || user.Id != id {
+	if user.Name != name || user.Pwhash != pwhash {
 		return errors.Wrap(err, "did not delete, user names don't match")
 	}
 	// open db and delete the user now
@@ -177,12 +173,18 @@ func DeleteUser(name string, id int) error {
 	defer db.Close()
 	sqlTx := `
 	DELETE FROM users
-	WHERE name = $1 AND id = $2
+	WHERE name = $1 AND pwhash = $2
+	RETURNING id
 	`
 	var id2 string
-	err = db.QueryRow(sqlTx, user.Name, user.Id).Scan(&id2)
+	err = db.QueryRow(sqlTx, user.Name, user.Pwhash).Scan(&id2)
 	if err != nil {
-		return errors.Wrap(err, "could not insert user into db, quitting")
+		return errors.Wrap(err, "could not execute sql to delete user from db, quitting")
 	}
+
+	if utils.StoI(id2) != user.Id {
+		return errors.New("deleted user id and provided user id don't match, quitting")
+	}
+
 	return nil
 }

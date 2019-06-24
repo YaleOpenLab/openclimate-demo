@@ -60,6 +60,7 @@ func setupPingHandler() {
 
 func StartServer(port string, insecure bool) {
 	setupBasicHandlers()
+	setupDBHandlers()
 	log.Println("Starting RPC Server on Port: ", port)
 	if insecure {
 		log.Fatal(http.ListenAndServe(":"+port, nil))
