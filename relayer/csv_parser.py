@@ -96,17 +96,17 @@ def standardize_energy_units(data):
 
 
 def clean_data(data):
-	"""
+	'''
 	Standardizes all units in the data to metric tons for CO2e emissions
 	and MWh for energy generation.
-	"""
+	'''
 	data = standardize_co2e_units(data)
 	data = standardize_energy_units(data)
 	return(data)
 
 
 def load_file(file):
-	"""Reads in a CSV file and returns a panda dataframe."""
+	'''Reads in a CSV file and returns a panda dataframe.'''
 	return pd.read_csv(file, names=column_names)
 
 
