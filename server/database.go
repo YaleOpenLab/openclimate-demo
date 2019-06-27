@@ -44,11 +44,11 @@ func newUser() {
 	})
 }
 
-func authorizeUser(r *http.Request) bool {
+func authorizeUser(r *http.Request) (database.User, error) {
 	username := r.URL.Query()["username"][0]
 	pwhash := r.URL.Query()["pwhash"][0]
 
-	return database.AuthUser(username, pwhash)
+	return database.ValidateUser(username, pwhash)
 }
 
 func retrieveUser() {
@@ -56,19 +56,10 @@ func retrieveUser() {
 		checkGet(w, r)
 		checkOrigin(w, r)
 
-		if !authorizeUser(r) {
-			log.Println("user has invalid credentials")
-			responseHandler(w, StatusUnauthorized)
-			return
-		}
-
-		username := r.URL.Query()["username"][0]
-		pwhash := r.URL.Query()["pwhash"][0]
-
-		user, err := database.RetrieveUser(username, pwhash)
+		user, err := authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quittting")
-			responseHandler(w, StatusInternalServerError)
+			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -81,9 +72,10 @@ func retrieveAllUsers() {
 		checkGet(w, r)
 		checkOrigin(w, r)
 
-		if !authorizeUser(r) {
-			log.Println("user has invalid credentials")
-			responseHandler(w, StatusUnauthorized)
+		_, err := authorizeUser(r)
+		if err != nil {
+			log.Println("could not retrieve user from the database, quittting")
+			responseHandler(w, StatusInternalServerError)
 			return
 		}
 
@@ -103,16 +95,14 @@ func deleteUser() {
 		checkGet(w, r)
 		checkOrigin(w, r)
 
-		if !authorizeUser(r) {
-			log.Println("user has invalid credentials")
-			responseHandler(w, StatusUnauthorized)
+		user, err := authorizeUser(r)
+		if err != nil {
+			log.Println("could not retrieve user from the database, quittting")
+			responseHandler(w, StatusInternalServerError)
 			return
 		}
 
-		username := r.URL.Query()["username"][0]
-		pwhash := r.URL.Query()["pwhash"][0]
-
-		err := database.DeleteUser(username, pwhash)
+		err = database.DeleteKeyFromBucket(user.Index, database.UserBucket)
 		if err != nil {
 			log.Println("could not delete user from database, quittting", err)
 			responseHandler(w, StatusBadRequest)
@@ -128,16 +118,7 @@ func updateUser() {
 		checkGet(w, r)
 		checkOrigin(w, r)
 
-		if !authorizeUser(r) {
-			log.Println("user has invalid credentials")
-			responseHandler(w, StatusUnauthorized)
-			return
-		}
-
-		username := r.URL.Query()["username"][0]
-		pwhash := r.URL.Query()["pwhash"][0]
-
-		user, err := database.RetrieveUser(username, pwhash)
+		user, err := authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quittting")
 			responseHandler(w, StatusInternalServerError)
