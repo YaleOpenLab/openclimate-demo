@@ -1,16 +1,61 @@
 package database
 
 import (
-	//"log"
-	"github.com/YaleOpenLab/openclimate/utils"
+	"log"
+	"crypto/ecdsa"
+	aes "github.com/YaleOpenLab/openx/aes"
+	utils "github.com/YaleOpenLab/openx/utils"
+	"github.com/ethereum/go-ethereum/common/hexutil"
+	crypto "github.com/ethereum/go-ethereum/crypto"
 	"github.com/pkg/errors"
+	"database/sql"
 )
 
 type User struct {
-	Id     int
-	Name   string
-	Email  string
-	Pwhash string
+	Id             int
+	Name           string
+	Email          string
+	Pwhash         string
+	EthereumWallet EthWallet
+}
+
+// EthWallet contains the structures needed for an ethereum wallet
+type EthWallet struct {
+	PrivateKey string
+	PublicKey    string
+	Address      string
+}
+
+func (a *User) GenKeys(seedpwd string) error {
+	ecdsaPrivkey, err := crypto.GenerateKey()
+	if err != nil {
+		return errors.Wrap(err, "could not generate an ethereum keypair, quitting!")
+	}
+
+	privateKeyBytes := crypto.FromECDSA(ecdsaPrivkey)
+
+	ek, err := aes.Encrypt([]byte(hexutil.Encode(privateKeyBytes)[2:]), seedpwd)
+	if err != nil {
+		return errors.Wrap(err, "error while encrypting seed")
+	}
+
+	a.EthereumWallet.PrivateKey = string(ek)
+	a.EthereumWallet.Address = crypto.PubkeyToAddress(ecdsaPrivkey.PublicKey).Hex()
+
+	publicKeyECDSA, ok := ecdsaPrivkey.Public().(*ecdsa.PublicKey)
+	if !ok {
+		return errors.Wrap(err, "error casting public key to ECDSA")
+	}
+
+	publicKeyBytes := crypto.FromECDSAPub(publicKeyECDSA)
+	a.EthereumWallet.PublicKey = hexutil.Encode(publicKeyBytes)[4:] // an ethereum address is 65 bytes long and hte first byte is 0x04 for DER encoding, so we omit that
+
+	if crypto.PubkeyToAddress(*publicKeyECDSA).Hex() != a.EthereumWallet.Address {
+		return errors.Wrap(err, "addresses don't match, quitting!")
+	}
+
+	err = a.Save()
+	return err
 }
 
 // NewUser creates a new user
@@ -43,18 +88,21 @@ func RetrieveUser(name string, pwhash string) (User, error) {
 	}
 	defer db.Close()
 
-	var id, dbName, email, providedHash string
-	err = db.QueryRow("SELECT * FROM users WHERE name = $1 AND pwhash = $2", name, pwhash).Scan(&id, &dbName, &email, &providedHash)
+	var id, dbName, email, providedHash, ethAddr, ethEncKey sql.NullString
+	err = db.QueryRow("SELECT * FROM users WHERE name = $1 AND pwhash = $2", name, pwhash).Scan(&id, &dbName, &email, &providedHash, &ethAddr, &ethEncKey)
 	if err != nil {
 		return x, errors.Wrap(err, "could not get user by name")
 	}
-	x.Id, err = utils.StoICheck(id)
+	x.Id, err = utils.StoICheck(id.String)
 	if err != nil {
 		return x, errors.Wrap(err, "could not convert string to integer")
 	}
-	x.Name = dbName
-	x.Email = email
-	x.Pwhash = providedHash
+	x.Name = dbName.String
+	x.Email = email.String
+	x.Pwhash = providedHash.String
+	x.EthereumWallet.Address = ethAddr.String
+	// x.EthereumWallet.PrivateKey = ethEncKey.String
+	// have a separate handler for privkey ops
 
 	return x, nil
 }
@@ -94,14 +142,15 @@ func (user *User) Save() error {
 
 	defer db.Close()
 	sqlTx := `
-	UPDATE users
-	SET name=$2, email=$3, pwhash=$4
-	WHERE id=$1
-	RETURNING id
+	update users
+	set name= $2, email=$3, pwhash=$4, ethaddress=$5, ethenckey=encrypt($6, 'key', 'aes')
+	where id=$1
+	returning id;
 	`
 
+	log.Println("cool")
 	var returnedIdS string
-	err = db.QueryRow(sqlTx, user.Id, user.Name, user.Email, user.Pwhash).Scan(&returnedIdS)
+	err = db.QueryRow(sqlTx, user.Id, user.Name, user.Email, user.Pwhash, user.EthereumWallet.Address, user.EthereumWallet.PrivateKey).Scan(&returnedIdS)
 	if err != nil {
 		return errors.Wrap(err, "could not insert user into db, quitting")
 	}
