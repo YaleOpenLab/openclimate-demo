@@ -47,6 +47,6 @@ func main() {
 		log.Fatal(err)
 	}
 
-	log.Println(blockchain.CommitToChain("ethereum", "blah", "cool"))
+	log.Println(blockchain.CommitToChain("ethereum", "top", "secret"))
 	server.StartServer("8001", true)
 }

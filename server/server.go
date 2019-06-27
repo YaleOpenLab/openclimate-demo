@@ -24,7 +24,6 @@ func MarshalSend(w http.ResponseWriter, x interface{}) {
 		WriteToHandler(w, []byte(errString))
 		return
 	}
-	log.Println("JSON: ", string(xJson))
 	WriteToHandler(w, xJson)
 }
 
@@ -62,6 +61,7 @@ func StartServer(port string, insecure bool) {
 	setupBasicHandlers()
 	setupDBHandlers()
 	setupSwytchApis()
+	dataHandler()
 	log.Println("Starting RPC Server on Port: ", port)
 	if insecure {
 		log.Fatal(http.ListenAndServe(":"+port, nil))

@@ -8,6 +8,7 @@ import (
 	"log"
 	"math/big"
 
+	// keys "github.com/cosmos/cosmos-sdk/crypto/keys"
 	aes "github.com/YaleOpenLab/openx/aes"
 	utils "github.com/YaleOpenLab/openx/utils"
 	"github.com/boltdb/bolt"
@@ -24,16 +25,66 @@ type User struct {
 	Email          string
 	Pwhash         string
 	EthereumWallet EthWallet
+	CosmosWallet   CosmWallet
 }
 
 // EthWallet contains the structures needed for an ethereum wallet
 type EthWallet struct {
-	PrivateKey string
-	PublicKey  string
-	Address    string
+	EncryptedPrivateKey string
+	PublicKey           string
+	Address             string
 }
 
-func (a *User) GenKeys(seedpwd string) error {
+type CosmWallet struct {
+	PrivateKey string
+	PublicKey  string
+}
+
+/*
+func (a *User) GenCosmosKeys() error {
+	// Select the encryption and storage for your cryptostore
+	cstore := keys.NewInMemory()
+
+	sec := keys.Secp256k1
+
+	// Add keys and see they return in alphabetical order
+	bob, _, err := cstore.CreateMnemonic("Bob", keys.English, "friend", sec)
+	if err != nil {
+		// this should never happen
+		log.Println(err)
+	} else {
+		// return info here just like in List
+		log.Println(bob.GetName())
+	}
+	_, _, _ = cstore.CreateMnemonic("Alice", keys.English, "secret", sec)
+	_, _, _ = cstore.CreateMnemonic("Carl", keys.English, "mitm", sec)
+	info, _ := cstore.List()
+	for _, i := range info {
+		log.Println(i.GetName())
+	}
+
+	// We need to use passphrase to generate a signature
+	tx := []byte("deadbeef")
+	sig, pub, err := cstore.Sign("Bob", "friend", tx)
+	if err != nil {
+		log.Println("don't accept real passphrase")
+	}
+
+	// and we can validate the signature with publicly available info
+	binfo, _ := cstore.Get("Bob")
+	if !binfo.GetPubKey().Equals(bob.GetPubKey()) {
+		log.Println("Get and Create return different keys")
+	}
+
+	if pub.Equals(binfo.GetPubKey()) {
+		log.Println("signed by Bob")
+	}
+	if !pub.VerifyBytes(tx, sig) {
+		log.Println("invalid signature")
+	}
+}
+*/
+func (a *User) GenEthKeys(seedpwd string) error {
 	ecdsaPrivkey, err := crypto.GenerateKey()
 	if err != nil {
 		return errors.Wrap(err, "could not generate an ethereum keypair, quitting!")
@@ -46,7 +97,7 @@ func (a *User) GenKeys(seedpwd string) error {
 		return errors.Wrap(err, "error while encrypting seed")
 	}
 
-	a.EthereumWallet.PrivateKey = string(ek)
+	a.EthereumWallet.EncryptedPrivateKey = string(ek)
 	a.EthereumWallet.Address = crypto.PubkeyToAddress(ecdsaPrivkey.PublicKey).Hex()
 
 	publicKeyECDSA, ok := ecdsaPrivkey.Public().(*ecdsa.PublicKey)
@@ -195,7 +246,7 @@ func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {
 		return "", err
 	}
 
-	privateKey, err := crypto.HexToECDSA(a.EthereumWallet.PrivateKey)
+	privateKey, err := crypto.HexToECDSA(a.EthereumWallet.EncryptedPrivateKey)
 	if err != nil {
 		return "", err
 	}
