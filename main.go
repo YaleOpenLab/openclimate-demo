@@ -36,16 +36,16 @@ func main() {
 
 	log.Printf("PRIVATEKEY: %s \nPRIVATE KEY PASSWORD: %s", globals.PrivateKey, globals.PrivateKeyPassword)
 
-	user, err := database.RetrieveUser("test", "9a768ace36ff3d1771d5c145a544de3d68343b2e76093cb7b2a8ea89ac7f1a20c852e6fc1d71275b43abffefac381c5b906f55c3bcff4225353d02f1d3498758")
+	_, err = database.RetrieveAllUsers()
+	if err != nil {
+		database.CreateHomeDir()
+	}
+
+	user, err := database.NewUser("name", "9a768ace36ff3d1771d5c145a544de3d68343b2e76093cb7b2a8ea89ac7f1a20c852e6fc1d71275b43abffefac381c5b906f55c3bcff4225353d02f1d3498758", "email")
+	log.Println(user)
 	if err != nil {
 		log.Fatal(err)
 	}
-
-	err = user.GenKeys("x")
-	if err != nil {
-		log.Fatal(err)
-	}
-
 	log.Println(blockchain.CommitToChain("ethereum", "blah", "cool"))
 	server.StartServer("8001", true)
 }
