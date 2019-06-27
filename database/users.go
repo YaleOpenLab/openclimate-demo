@@ -1,14 +1,20 @@
 package database
 
 import (
-	"log"
+	"bytes"
+	"fmt"
 	"crypto/ecdsa"
+	"database/sql"
+	"github.com/pkg/errors"
+	"log"
+	"math/big"
+
 	aes "github.com/YaleOpenLab/openx/aes"
 	utils "github.com/YaleOpenLab/openx/utils"
 	"github.com/ethereum/go-ethereum/common/hexutil"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
 	crypto "github.com/ethereum/go-ethereum/crypto"
-	"github.com/pkg/errors"
-	"database/sql"
 )
 
 type User struct {
@@ -22,8 +28,8 @@ type User struct {
 // EthWallet contains the structures needed for an ethereum wallet
 type EthWallet struct {
 	PrivateKey string
-	PublicKey    string
-	Address      string
+	PublicKey  string
+	Address    string
 }
 
 func (a *User) GenKeys(seedpwd string) error {
@@ -235,5 +241,33 @@ func DeleteUser(name string, pwhash string) error {
 		return errors.New("deleted user id and provided user id don't match, quitting")
 	}
 
+	return nil
+}
+
+func (a *User) SendEthereumTx(address string, amount big.Int) error {
+	chainId := big.NewInt(3) // Ropsten chain id
+	senderPrivKey, err := crypto.HexToECDSA(a.EthereumWallet.PrivateKey)
+	if err != nil {
+		return errors.Wrap(err, "could not convert private key from hex to ecdsa")
+	}
+	recipientAddr := common.HexToAddress(address)
+
+	nonce := uint64(7)
+	gasLimit := uint64(100000)     // hardcode gas, max 100k exec limit
+	gasPrice := big.NewInt(1000000000) // hardcode gas, 1 gwei price
+
+	tx := types.NewTransaction(nonce, recipientAddr, &amount, gasLimit, gasPrice, nil)
+
+	signer := types.NewEIP155Signer(chainId)
+	signedTx, err := types.SignTx(tx, signer, senderPrivKey)
+	if err != nil {
+		return errors.Wrap(err, "could not sign transaction, quitting")
+	}
+
+	var buff bytes.Buffer
+	signedTx.EncodeRLP(&buff)
+	fmt.Printf("0x%x\n", buff.Bytes())
+
+	// TODO: send this to infura or something once we decide to fit in a blockchain
 	return nil
 }
