@@ -1,1 +1,842 @@
-{"Number":{"0":1,"1":2,"2":3,"3":4,"4":5,"5":6,"6":7,"7":8,"8":9,"9":10,"10":11,"11":12,"12":13,"13":14,"14":15,"15":16,"16":17,"17":18,"18":19,"19":20,"20":21,"21":22,"22":23,"23":24,"24":25,"25":26,"26":27,"27":28,"28":29,"29":30,"30":31,"31":32,"32":33,"33":34,"34":35,"35":36,"36":37,"37":38,"38":39,"39":40,"40":41,"41":42,"42":43,"43":44,"44":45,"45":46,"46":47,"47":48,"48":49,"49":50,"50":51,"51":52,"52":53,"53":54,"54":55,"55":56,"56":57,"57":58,"58":59,"59":60,"60":61,"61":62,"62":63,"63":64,"64":65,"65":66,"66":67,"67":68,"68":69,"69":70,"70":71,"71":72,"72":73,"73":74,"74":75,"75":76,"76":77,"77":78,"78":79,"79":80,"80":81,"81":82,"82":83,"83":84,"84":85,"85":86,"86":87,"87":88,"88":89,"89":90,"90":91,"91":92,"92":93,"93":94,"94":95,"95":96,"96":97,"97":98,"98":99,"99":100,"100":101,"101":102,"102":103,"103":104,"104":105,"105":106,"106":107,"107":108,"108":109,"109":110,"110":111,"111":112,"112":113,"113":114,"114":115,"115":116,"116":117,"117":118,"118":119,"119":120,"120":121,"121":122,"122":123,"123":124,"124":125,"125":126,"126":127,"127":128,"128":129,"129":130,"130":131,"131":132,"132":133,"133":134,"134":135,"135":136,"136":137,"137":138,"138":139,"139":140},"Code":{"0":"AUS","1":"NZL","2":"XOC","3":"CHN","4":"HKG","5":"JPN","6":"KOR","7":"MNG","8":"TWN","9":"XEA","10":"BRN","11":"KHM","12":"IDN","13":"LAO","14":"MYS","15":"PHL","16":"SGP","17":"THA","18":"VNM","19":"XSE","20":"BGD","21":"IND","22":"NPL","23":"PAK","24":"LKA","25":"XSA","26":"CAN","27":"USA","28":"MEX","29":"XNA","30":"ARG","31":"BOL","32":"BRA","33":"CHL","34":"COL","35":"ECU","36":"PRY","37":"PER","38":"URY","39":"VEN","40":"XSM","41":"CRI","42":"GTM","43":"HND","44":"NIC","45":"PAN","46":"SLV","47":"XCA","48":"DOM","49":"JAM","50":"PRI","51":"TTO","52":"XCB","53":"AUT","54":"BEL","55":"CYP","56":"CZE","57":"DNK","58":"EST","59":"FIN","60":"FRA","61":"DEU","62":"GRC","63":"HUN","64":"IRL","65":"ITA","66":"LVA","67":"LTU","68":"LUX","69":"MLT","70":"NLD","71":"POL","72":"PRT","73":"SVK","74":"SVN","75":"ESP","76":"SWE","77":"GBR","78":"CHE","79":"NOR","80":"XEF","81":"ALB","82":"BGR","83":"BLR","84":"HRV","85":"ROU","86":"RUS","87":"UKR","88":"XEE","89":"XER","90":"KAZ","91":"KGZ","92":"XSU","93":"ARM","94":"AZE","95":"GEO","96":"BHR","97":"IRN","98":"ISR","99":"JOR","100":"KWT","101":"OMN","102":"QAT","103":"SAU","104":"TUR","105":"ARE","106":"XWS","107":"EGY","108":"MAR","109":"TUN","110":"XNF","111":"BEN","112":"BFA","113":"CMR","114":"CIV","115":"GHA","116":"GIN","117":"NGA","118":"SEN","119":"TGO","120":"XWF","121":"XCF","122":"XAC","123":"ETH","124":"KEN","125":"MDG","126":"MWI","127":"MUS","128":"MOZ","129":"RWA","130":"TZA","131":"UGA","132":"ZMB","133":"ZWE","134":"XEC","135":"BWA","136":"NAM","137":"ZAF","138":"XSC","139":"XTW"},"Name":{"0":"Australia","1":"New Zealand","2":"Rest of Oceania","3":"China","4":"Hong Kong","5":"Japan","6":"Korea Republic of","7":"Mongolia","8":"Taiwan","9":"Rest of East Asia","10":"Brunei Darussalam","11":"Cambodia","12":"Indonesia","13":"Lao People's Democratic Republic","14":"Malaysia","15":"Philippines","16":"Singapore","17":"Thailand","18":"Viet Nam","19":"Rest of Southeast Asia","20":"Bangladesh","21":"India","22":"Nepal","23":"Pakistan","24":"Sri Lanka","25":"Rest of South Asia","26":"Canada","27":"United States of America","28":"Mexico","29":"Rest of North America","30":"Argentina","31":"Bolivia","32":"Brazil","33":"Chile","34":"Colombia","35":"Ecuador","36":"Paraguay","37":"Peru","38":"Uruguay","39":"Venezuela","40":"Rest of South America","41":"Costa Rica","42":"Guatemala","43":"Honduras","44":"Nicaragua","45":"Panama","46":"El Salvador","47":"Rest of Central America","48":"Dominican Republic","49":"Jamaica","50":"Puerto Rico","51":"Trinidad and Tobago","52":"Caribbean","53":"Austria","54":"Belgium","55":"Cyprus","56":"Czech Republic","57":"Denmark","58":"Estonia","59":"Finland","60":"France","61":"Germany","62":"Greece","63":"Hungary","64":"Ireland","65":"Italy","66":"Latvia","67":"Lithuania","68":"Luxembourg","69":"Malta","70":"Netherlands","71":"Poland","72":"Portugal","73":"Slovakia","74":"Slovenia","75":"Spain","76":"Sweden","77":"United Kingdom","78":"Switzerland","79":"Norway","80":"Rest of EFTA","81":"Albania","82":"Bulgaria","83":"Belarus","84":"Croatia","85":"Romania","86":"Russian Federation","87":"Ukraine","88":"Rest of Eastern Europe","89":"Rest of Europe","90":"Kazakhstan","91":"Kyrgyzstan","92":"Rest of Former Soviet Union","93":"Armenia","94":"Azerbaijan","95":"Georgia","96":"Bahrain","97":"Iran Islamic Republic of","98":"Israel","99":"Jordan","100":"Kuwait","101":"Oman","102":"Qatar","103":"Saudi Arabia","104":"Turkey","105":"United Arab Emirates","106":"Rest of Western Asia","107":"Egypt","108":"Morocco","109":"Tunisia","110":"Rest of North Africa","111":"Benin","112":"Burkina Faso","113":"Cameroon","114":"Cote d'Ivoire","115":"Ghana","116":"Guinea","117":"Nigeria","118":"Senegal","119":"Togo","120":"Rest of Western Africa","121":"Central Africa","122":"South Central Africa","123":"Ethiopia","124":"Kenya","125":"Madagascar","126":"Malawi","127":"Mauritius","128":"Mozambique","129":"Rwanda","130":"Tanzania United Republic of","131":"Uganda","132":"Zambia","133":"Zimbabwe","134":"Rest of Eastern Africa","135":"Botswana","136":"Namibia","137":"South Africa","138":"Rest of South African Customs Union","139":"Rest of the World"},"Description":{"0":"- Australia - Christmas Island - Cocos (Keeling) Islands - Heard Island and McDonald Islands - Norfolk Island","1":null,"2":"- American Samoa - Cook Islands - Fiji - French Polynesia - Guam - Kiribati - Marshall Islands - Micronesia Federated States of - Nauru - New Caledonia - Niue - Northern Mariana Islands - Palau - Papua New Guinea - Pitcairn - Samoa - Solomon Islands - Tokelau - Tonga - Tuvalu - United States Minor Outlying Islands - Vanuatu - Wallis and Futuna","3":null,"4":null,"5":null,"6":null,"7":null,"8":null,"9":"- Korea Democratic Peoples Republic of - Macao","10":null,"11":null,"12":null,"13":null,"14":null,"15":null,"16":null,"17":null,"18":null,"19":"- Myanmar - Timor Leste","20":null,"21":null,"22":null,"23":null,"24":null,"25":"- Afghanistan - Bhutan - Maldives","26":null,"27":null,"28":null,"29":"- Bermuda - Greenland - Saint Pierre and Miquelon","30":null,"31":null,"32":null,"33":null,"34":null,"35":null,"36":null,"37":null,"38":null,"39":null,"40":"- Falkland Islands (Malvinas) - French Guiana - Guyana - South Georgia and the South Sandwich Islands - Suriname","41":null,"42":null,"43":null,"44":null,"45":null,"46":null,"47":"- Belize","48":null,"49":null,"50":null,"51":null,"52":"- Anguilla - Antigua & Barbuda - Aruba - Bahamas - Barbados - Cayman Islands - Cuba - Dominica - Grenada - Haiti - Montserrat - Netherlands Antilles - Saint Kitts and Nevis - Saint Lucia - Saint Vincent and the Grenadines - Turks and Caicos Islands - Virgin Islands British - Virgin Islands U.S.","53":null,"54":null,"55":null,"56":null,"57":null,"58":null,"59":"- Aland Islands - Finland","60":"- France - Guadeloupe - Martinique - Reunion","61":null,"62":null,"63":null,"64":null,"65":null,"66":null,"67":null,"68":null,"69":null,"70":null,"71":null,"72":null,"73":null,"74":null,"75":null,"76":null,"77":null,"78":null,"79":"- Norway - Svalbard and Jan Mayen","80":"- Iceland - Liechtenstein","81":null,"82":null,"83":null,"84":null,"85":null,"86":null,"87":null,"88":"- Moldova Republic of","89":"- Andorra - Bosnia and Herzegovina - Faroe Islands - Gibraltar - Guernsey - Holy See (Vatican City State) - Isle of Man - Jersey - Macedonia the former Yugoslav Republic of - Monaco - Montenegro - San Marino - Serbia","90":null,"91":null,"92":"- Tajikistan - Turkmenistan - Uzbekistan","93":null,"94":null,"95":null,"96":null,"97":null,"98":null,"99":null,"100":null,"101":null,"102":null,"103":null,"104":null,"105":null,"106":"- Iraq - Lebanon - Palestinian Territory Occupied - Syrian Arab Republic - Yemen","107":null,"108":null,"109":null,"110":"- Algeria - Libyan Arab Jamahiriya - Western Sahara","111":null,"112":null,"113":null,"114":null,"115":null,"116":null,"117":null,"118":null,"119":null,"120":"- Cape Verde - Gambia - Guinea-Bissau - Liberia - Mali - Mauritania - Niger - Saint Helena, ASCENSION AND TRISTAN DA CUNHA - Sierra Leone","121":"- Central African Republic - Chad - Congo - Equatorial Guinea - Gabon - Sao Tome and Principe","122":"- Angola - Congo the Democratic Republic of the","123":null,"124":null,"125":null,"126":null,"127":null,"128":null,"129":null,"130":null,"131":null,"132":null,"133":null,"134":"- Burundi - Comoros - Djibouti - Eritrea - Mayotte - Seychelles - Somalia - Sudan","135":null,"136":null,"137":null,"138":"- Lesotho - Swaziland","139":"- Antarctica - Bouvet Island - British Indian Ocean Territory - French Southern Territories"}}
+{
+  "0": {
+    "Number": 1,
+    "Code": "AUS",
+    "Name": "Australia",
+    "Description": "- Australia - Christmas Island - Cocos (Keeling) Islands - Heard Island and McDonald Islands - Norfolk Island"
+  },
+  "1": {
+    "Number": 2,
+    "Code": "NZL",
+    "Name": "New Zealand",
+    "Description": null
+  },
+  "2": {
+    "Number": 3,
+    "Code": "XOC",
+    "Name": "Rest of Oceania",
+    "Description": "- American Samoa - Cook Islands - Fiji - French Polynesia - Guam - Kiribati - Marshall Islands - Micronesia Federated States of - Nauru - New Caledonia - Niue - Northern Mariana Islands - Palau - Papua New Guinea - Pitcairn - Samoa - Solomon Islands - Tokelau - Tonga - Tuvalu - United States Minor Outlying Islands - Vanuatu - Wallis and Futuna"
+  },
+  "3": {
+    "Number": 4,
+    "Code": "CHN",
+    "Name": "China",
+    "Description": null
+  },
+  "4": {
+    "Number": 5,
+    "Code": "HKG",
+    "Name": "Hong Kong",
+    "Description": null
+  },
+  "5": {
+    "Number": 6,
+    "Code": "JPN",
+    "Name": "Japan",
+    "Description": null
+  },
+  "6": {
+    "Number": 7,
+    "Code": "KOR",
+    "Name": "Korea Republic of",
+    "Description": null
+  },
+  "7": {
+    "Number": 8,
+    "Code": "MNG",
+    "Name": "Mongolia",
+    "Description": null
+  },
+  "8": {
+    "Number": 9,
+    "Code": "TWN",
+    "Name": "Taiwan",
+    "Description": null
+  },
+  "9": {
+    "Number": 10,
+    "Code": "XEA",
+    "Name": "Rest of East Asia",
+    "Description": "- Korea Democratic Peoples Republic of - Macao"
+  },
+  "10": {
+    "Number": 11,
+    "Code": "BRN",
+    "Name": "Brunei Darussalam",
+    "Description": null
+  },
+  "11": {
+    "Number": 12,
+    "Code": "KHM",
+    "Name": "Cambodia",
+    "Description": null
+  },
+  "12": {
+    "Number": 13,
+    "Code": "IDN",
+    "Name": "Indonesia",
+    "Description": null
+  },
+  "13": {
+    "Number": 14,
+    "Code": "LAO",
+    "Name": "Lao People's Democratic Republic",
+    "Description": null
+  },
+  "14": {
+    "Number": 15,
+    "Code": "MYS",
+    "Name": "Malaysia",
+    "Description": null
+  },
+  "15": {
+    "Number": 16,
+    "Code": "PHL",
+    "Name": "Philippines",
+    "Description": null
+  },
+  "16": {
+    "Number": 17,
+    "Code": "SGP",
+    "Name": "Singapore",
+    "Description": null
+  },
+  "17": {
+    "Number": 18,
+    "Code": "THA",
+    "Name": "Thailand",
+    "Description": null
+  },
+  "18": {
+    "Number": 19,
+    "Code": "VNM",
+    "Name": "Viet Nam",
+    "Description": null
+  },
+  "19": {
+    "Number": 20,
+    "Code": "XSE",
+    "Name": "Rest of Southeast Asia",
+    "Description": "- Myanmar - Timor Leste"
+  },
+  "20": {
+    "Number": 21,
+    "Code": "BGD",
+    "Name": "Bangladesh",
+    "Description": null
+  },
+  "21": {
+    "Number": 22,
+    "Code": "IND",
+    "Name": "India",
+    "Description": null
+  },
+  "22": {
+    "Number": 23,
+    "Code": "NPL",
+    "Name": "Nepal",
+    "Description": null
+  },
+  "23": {
+    "Number": 24,
+    "Code": "PAK",
+    "Name": "Pakistan",
+    "Description": null
+  },
+  "24": {
+    "Number": 25,
+    "Code": "LKA",
+    "Name": "Sri Lanka",
+    "Description": null
+  },
+  "25": {
+    "Number": 26,
+    "Code": "XSA",
+    "Name": "Rest of South Asia",
+    "Description": "- Afghanistan - Bhutan - Maldives"
+  },
+  "26": {
+    "Number": 27,
+    "Code": "CAN",
+    "Name": "Canada",
+    "Description": null
+  },
+  "27": {
+    "Number": 28,
+    "Code": "USA",
+    "Name": "United States of America",
+    "Description": null
+  },
+  "28": {
+    "Number": 29,
+    "Code": "MEX",
+    "Name": "Mexico",
+    "Description": null
+  },
+  "29": {
+    "Number": 30,
+    "Code": "XNA",
+    "Name": "Rest of North America",
+    "Description": "- Bermuda - Greenland - Saint Pierre and Miquelon"
+  },
+  "30": {
+    "Number": 31,
+    "Code": "ARG",
+    "Name": "Argentina",
+    "Description": null
+  },
+  "31": {
+    "Number": 32,
+    "Code": "BOL",
+    "Name": "Bolivia",
+    "Description": null
+  },
+  "32": {
+    "Number": 33,
+    "Code": "BRA",
+    "Name": "Brazil",
+    "Description": null
+  },
+  "33": {
+    "Number": 34,
+    "Code": "CHL",
+    "Name": "Chile",
+    "Description": null
+  },
+  "34": {
+    "Number": 35,
+    "Code": "COL",
+    "Name": "Colombia",
+    "Description": null
+  },
+  "35": {
+    "Number": 36,
+    "Code": "ECU",
+    "Name": "Ecuador",
+    "Description": null
+  },
+  "36": {
+    "Number": 37,
+    "Code": "PRY",
+    "Name": "Paraguay",
+    "Description": null
+  },
+  "37": {
+    "Number": 38,
+    "Code": "PER",
+    "Name": "Peru",
+    "Description": null
+  },
+  "38": {
+    "Number": 39,
+    "Code": "URY",
+    "Name": "Uruguay",
+    "Description": null
+  },
+  "39": {
+    "Number": 40,
+    "Code": "VEN",
+    "Name": "Venezuela",
+    "Description": null
+  },
+  "40": {
+    "Number": 41,
+    "Code": "XSM",
+    "Name": "Rest of South America",
+    "Description": "- Falkland Islands (Malvinas) - French Guiana - Guyana - South Georgia and the South Sandwich Islands - Suriname"
+  },
+  "41": {
+    "Number": 42,
+    "Code": "CRI",
+    "Name": "Costa Rica",
+    "Description": null
+  },
+  "42": {
+    "Number": 43,
+    "Code": "GTM",
+    "Name": "Guatemala",
+    "Description": null
+  },
+  "43": {
+    "Number": 44,
+    "Code": "HND",
+    "Name": "Honduras",
+    "Description": null
+  },
+  "44": {
+    "Number": 45,
+    "Code": "NIC",
+    "Name": "Nicaragua",
+    "Description": null
+  },
+  "45": {
+    "Number": 46,
+    "Code": "PAN",
+    "Name": "Panama",
+    "Description": null
+  },
+  "46": {
+    "Number": 47,
+    "Code": "SLV",
+    "Name": "El Salvador",
+    "Description": null
+  },
+  "47": {
+    "Number": 48,
+    "Code": "XCA",
+    "Name": "Rest of Central America",
+    "Description": "- Belize"
+  },
+  "48": {
+    "Number": 49,
+    "Code": "DOM",
+    "Name": "Dominican Republic",
+    "Description": null
+  },
+  "49": {
+    "Number": 50,
+    "Code": "JAM",
+    "Name": "Jamaica",
+    "Description": null
+  },
+  "50": {
+    "Number": 51,
+    "Code": "PRI",
+    "Name": "Puerto Rico",
+    "Description": null
+  },
+  "51": {
+    "Number": 52,
+    "Code": "TTO",
+    "Name": "Trinidad and Tobago",
+    "Description": null
+  },
+  "52": {
+    "Number": 53,
+    "Code": "XCB",
+    "Name": "Caribbean",
+    "Description": "- Anguilla - Antigua & Barbuda - Aruba - Bahamas - Barbados - Cayman Islands - Cuba - Dominica - Grenada - Haiti - Montserrat - Netherlands Antilles - Saint Kitts and Nevis - Saint Lucia - Saint Vincent and the Grenadines - Turks and Caicos Islands - Virgin Islands British - Virgin Islands U.S."
+  },
+  "53": {
+    "Number": 54,
+    "Code": "AUT",
+    "Name": "Austria",
+    "Description": null
+  },
+  "54": {
+    "Number": 55,
+    "Code": "BEL",
+    "Name": "Belgium",
+    "Description": null
+  },
+  "55": {
+    "Number": 56,
+    "Code": "CYP",
+    "Name": "Cyprus",
+    "Description": null
+  },
+  "56": {
+    "Number": 57,
+    "Code": "CZE",
+    "Name": "Czech Republic",
+    "Description": null
+  },
+  "57": {
+    "Number": 58,
+    "Code": "DNK",
+    "Name": "Denmark",
+    "Description": null
+  },
+  "58": {
+    "Number": 59,
+    "Code": "EST",
+    "Name": "Estonia",
+    "Description": null
+  },
+  "59": {
+    "Number": 60,
+    "Code": "FIN",
+    "Name": "Finland",
+    "Description": "- Aland Islands - Finland"
+  },
+  "60": {
+    "Number": 61,
+    "Code": "FRA",
+    "Name": "France",
+    "Description": "- France - Guadeloupe - Martinique - Reunion"
+  },
+  "61": {
+    "Number": 62,
+    "Code": "DEU",
+    "Name": "Germany",
+    "Description": null
+  },
+  "62": {
+    "Number": 63,
+    "Code": "GRC",
+    "Name": "Greece",
+    "Description": null
+  },
+  "63": {
+    "Number": 64,
+    "Code": "HUN",
+    "Name": "Hungary",
+    "Description": null
+  },
+  "64": {
+    "Number": 65,
+    "Code": "IRL",
+    "Name": "Ireland",
+    "Description": null
+  },
+  "65": {
+    "Number": 66,
+    "Code": "ITA",
+    "Name": "Italy",
+    "Description": null
+  },
+  "66": {
+    "Number": 67,
+    "Code": "LVA",
+    "Name": "Latvia",
+    "Description": null
+  },
+  "67": {
+    "Number": 68,
+    "Code": "LTU",
+    "Name": "Lithuania",
+    "Description": null
+  },
+  "68": {
+    "Number": 69,
+    "Code": "LUX",
+    "Name": "Luxembourg",
+    "Description": null
+  },
+  "69": {
+    "Number": 70,
+    "Code": "MLT",
+    "Name": "Malta",
+    "Description": null
+  },
+  "70": {
+    "Number": 71,
+    "Code": "NLD",
+    "Name": "Netherlands",
+    "Description": null
+  },
+  "71": {
+    "Number": 72,
+    "Code": "POL",
+    "Name": "Poland",
+    "Description": null
+  },
+  "72": {
+    "Number": 73,
+    "Code": "PRT",
+    "Name": "Portugal",
+    "Description": null
+  },
+  "73": {
+    "Number": 74,
+    "Code": "SVK",
+    "Name": "Slovakia",
+    "Description": null
+  },
+  "74": {
+    "Number": 75,
+    "Code": "SVN",
+    "Name": "Slovenia",
+    "Description": null
+  },
+  "75": {
+    "Number": 76,
+    "Code": "ESP",
+    "Name": "Spain",
+    "Description": null
+  },
+  "76": {
+    "Number": 77,
+    "Code": "SWE",
+    "Name": "Sweden",
+    "Description": null
+  },
+  "77": {
+    "Number": 78,
+    "Code": "GBR",
+    "Name": "United Kingdom",
+    "Description": null
+  },
+  "78": {
+    "Number": 79,
+    "Code": "CHE",
+    "Name": "Switzerland",
+    "Description": null
+  },
+  "79": {
+    "Number": 80,
+    "Code": "NOR",
+    "Name": "Norway",
+    "Description": "- Norway - Svalbard and Jan Mayen"
+  },
+  "80": {
+    "Number": 81,
+    "Code": "XEF",
+    "Name": "Rest of EFTA",
+    "Description": "- Iceland - Liechtenstein"
+  },
+  "81": {
+    "Number": 82,
+    "Code": "ALB",
+    "Name": "Albania",
+    "Description": null
+  },
+  "82": {
+    "Number": 83,
+    "Code": "BGR",
+    "Name": "Bulgaria",
+    "Description": null
+  },
+  "83": {
+    "Number": 84,
+    "Code": "BLR",
+    "Name": "Belarus",
+    "Description": null
+  },
+  "84": {
+    "Number": 85,
+    "Code": "HRV",
+    "Name": "Croatia",
+    "Description": null
+  },
+  "85": {
+    "Number": 86,
+    "Code": "ROU",
+    "Name": "Romania",
+    "Description": null
+  },
+  "86": {
+    "Number": 87,
+    "Code": "RUS",
+    "Name": "Russian Federation",
+    "Description": null
+  },
+  "87": {
+    "Number": 88,
+    "Code": "UKR",
+    "Name": "Ukraine",
+    "Description": null
+  },
+  "88": {
+    "Number": 89,
+    "Code": "XEE",
+    "Name": "Rest of Eastern Europe",
+    "Description": "- Moldova Republic of"
+  },
+  "89": {
+    "Number": 90,
+    "Code": "XER",
+    "Name": "Rest of Europe",
+    "Description": "- Andorra - Bosnia and Herzegovina - Faroe Islands - Gibraltar - Guernsey - Holy See (Vatican City State) - Isle of Man - Jersey - Macedonia the former Yugoslav Republic of - Monaco - Montenegro - San Marino - Serbia"
+  },
+  "90": {
+    "Number": 91,
+    "Code": "KAZ",
+    "Name": "Kazakhstan",
+    "Description": null
+  },
+  "91": {
+    "Number": 92,
+    "Code": "KGZ",
+    "Name": "Kyrgyzstan",
+    "Description": null
+  },
+  "92": {
+    "Number": 93,
+    "Code": "XSU",
+    "Name": "Rest of Former Soviet Union",
+    "Description": "- Tajikistan - Turkmenistan - Uzbekistan"
+  },
+  "93": {
+    "Number": 94,
+    "Code": "ARM",
+    "Name": "Armenia",
+    "Description": null
+  },
+  "94": {
+    "Number": 95,
+    "Code": "AZE",
+    "Name": "Azerbaijan",
+    "Description": null
+  },
+  "95": {
+    "Number": 96,
+    "Code": "GEO",
+    "Name": "Georgia",
+    "Description": null
+  },
+  "96": {
+    "Number": 97,
+    "Code": "BHR",
+    "Name": "Bahrain",
+    "Description": null
+  },
+  "97": {
+    "Number": 98,
+    "Code": "IRN",
+    "Name": "Iran Islamic Republic of",
+    "Description": null
+  },
+  "98": {
+    "Number": 99,
+    "Code": "ISR",
+    "Name": "Israel",
+    "Description": null
+  },
+  "99": {
+    "Number": 100,
+    "Code": "JOR",
+    "Name": "Jordan",
+    "Description": null
+  },
+  "100": {
+    "Number": 101,
+    "Code": "KWT",
+    "Name": "Kuwait",
+    "Description": null
+  },
+  "101": {
+    "Number": 102,
+    "Code": "OMN",
+    "Name": "Oman",
+    "Description": null
+  },
+  "102": {
+    "Number": 103,
+    "Code": "QAT",
+    "Name": "Qatar",
+    "Description": null
+  },
+  "103": {
+    "Number": 104,
+    "Code": "SAU",
+    "Name": "Saudi Arabia",
+    "Description": null
+  },
+  "104": {
+    "Number": 105,
+    "Code": "TUR",
+    "Name": "Turkey",
+    "Description": null
+  },
+  "105": {
+    "Number": 106,
+    "Code": "ARE",
+    "Name": "United Arab Emirates",
+    "Description": null
+  },
+  "106": {
+    "Number": 107,
+    "Code": "XWS",
+    "Name": "Rest of Western Asia",
+    "Description": "- Iraq - Lebanon - Palestinian Territory Occupied - Syrian Arab Republic - Yemen"
+  },
+  "107": {
+    "Number": 108,
+    "Code": "EGY",
+    "Name": "Egypt",
+    "Description": null
+  },
+  "108": {
+    "Number": 109,
+    "Code": "MAR",
+    "Name": "Morocco",
+    "Description": null
+  },
+  "109": {
+    "Number": 110,
+    "Code": "TUN",
+    "Name": "Tunisia",
+    "Description": null
+  },
+  "110": {
+    "Number": 111,
+    "Code": "XNF",
+    "Name": "Rest of North Africa",
+    "Description": "- Algeria - Libyan Arab Jamahiriya - Western Sahara"
+  },
+  "111": {
+    "Number": 112,
+    "Code": "BEN",
+    "Name": "Benin",
+    "Description": null
+  },
+  "112": {
+    "Number": 113,
+    "Code": "BFA",
+    "Name": "Burkina Faso",
+    "Description": null
+  },
+  "113": {
+    "Number": 114,
+    "Code": "CMR",
+    "Name": "Cameroon",
+    "Description": null
+  },
+  "114": {
+    "Number": 115,
+    "Code": "CIV",
+    "Name": "Cote d'Ivoire",
+    "Description": null
+  },
+  "115": {
+    "Number": 116,
+    "Code": "GHA",
+    "Name": "Ghana",
+    "Description": null
+  },
+  "116": {
+    "Number": 117,
+    "Code": "GIN",
+    "Name": "Guinea",
+    "Description": null
+  },
+  "117": {
+    "Number": 118,
+    "Code": "NGA",
+    "Name": "Nigeria",
+    "Description": null
+  },
+  "118": {
+    "Number": 119,
+    "Code": "SEN",
+    "Name": "Senegal",
+    "Description": null
+  },
+  "119": {
+    "Number": 120,
+    "Code": "TGO",
+    "Name": "Togo",
+    "Description": null
+  },
+  "120": {
+    "Number": 121,
+    "Code": "XWF",
+    "Name": "Rest of Western Africa",
+    "Description": "- Cape Verde - Gambia - Guinea-Bissau - Liberia - Mali - Mauritania - Niger - Saint Helena, ASCENSION AND TRISTAN DA CUNHA - Sierra Leone"
+  },
+  "121": {
+    "Number": 122,
+    "Code": "XCF",
+    "Name": "Central Africa",
+    "Description": "- Central African Republic - Chad - Congo - Equatorial Guinea - Gabon - Sao Tome and Principe"
+  },
+  "122": {
+    "Number": 123,
+    "Code": "XAC",
+    "Name": "South Central Africa",
+    "Description": "- Angola - Congo the Democratic Republic of the"
+  },
+  "123": {
+    "Number": 124,
+    "Code": "ETH",
+    "Name": "Ethiopia",
+    "Description": null
+  },
+  "124": {
+    "Number": 125,
+    "Code": "KEN",
+    "Name": "Kenya",
+    "Description": null
+  },
+  "125": {
+    "Number": 126,
+    "Code": "MDG",
+    "Name": "Madagascar",
+    "Description": null
+  },
+  "126": {
+    "Number": 127,
+    "Code": "MWI",
+    "Name": "Malawi",
+    "Description": null
+  },
+  "127": {
+    "Number": 128,
+    "Code": "MUS",
+    "Name": "Mauritius",
+    "Description": null
+  },
+  "128": {
+    "Number": 129,
+    "Code": "MOZ",
+    "Name": "Mozambique",
+    "Description": null
+  },
+  "129": {
+    "Number": 130,
+    "Code": "RWA",
+    "Name": "Rwanda",
+    "Description": null
+  },
+  "130": {
+    "Number": 131,
+    "Code": "TZA",
+    "Name": "Tanzania United Republic of",
+    "Description": null
+  },
+  "131": {
+    "Number": 132,
+    "Code": "UGA",
+    "Name": "Uganda",
+    "Description": null
+  },
+  "132": {
+    "Number": 133,
+    "Code": "ZMB",
+    "Name": "Zambia",
+    "Description": null
+  },
+  "133": {
+    "Number": 134,
+    "Code": "ZWE",
+    "Name": "Zimbabwe",
+    "Description": null
+  },
+  "134": {
+    "Number": 135,
+    "Code": "XEC",
+    "Name": "Rest of Eastern Africa",
+    "Description": "- Burundi - Comoros - Djibouti - Eritrea - Mayotte - Seychelles - Somalia - Sudan"
+  },
+  "135": {
+    "Number": 136,
+    "Code": "BWA",
+    "Name": "Botswana",
+    "Description": null
+  },
+  "136": {
+    "Number": 137,
+    "Code": "NAM",
+    "Name": "Namibia",
+    "Description": null
+  },
+  "137": {
+    "Number": 138,
+    "Code": "ZAF",
+    "Name": "South Africa",
+    "Description": null
+  },
+  "138": {
+    "Number": 139,
+    "Code": "XSC",
+    "Name": "Rest of South African Customs Union",
+    "Description": "- Lesotho - Swaziland"
+  },
+  "139": {
+    "Number": 140,
+    "Code": "XTW",
+    "Name": "Rest of the World",
+    "Description": "- Antarctica - Bouvet Island - British Indian Ocean Territory - French Southern Territories"
+  }
+}

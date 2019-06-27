@@ -1,1 +1,1523 @@
-{"Code":{"0":"AFG","1":"ALB","2":"DZA","3":"AND","4":"AGO","5":"ATG","6":"ARG","7":"ARM","8":"AUS","9":"AZE","10":"BHS","11":"BHR","12":"BGD","13":"BRB","14":"BLR","15":"BLZ","16":"BEN","17":"BTN","18":"BOL","19":"BIH","20":"BWA","21":"BRA","22":"BRN","23":"BFA","24":"BDI","25":"CPV","26":"KHM","27":"CMR","28":"CAN","29":"CAF","30":"TCD","31":"CHL","32":"CHN","33":"COL","34":"COM","35":"COG","36":"COK","37":"CRI","38":"CUB","39":"CIV","40":"PRK","41":"COD","42":"DJI","43":"DMA","44":"DOM","45":"ECU","46":"EGY","47":"SLV","48":"GNQ","49":"ERI","50":"SWZ","51":"ETH","52":"EUU","53":"FJI","54":"FRA","55":"GAB","56":"GMB","57":"GEO","58":"GHA","59":"GRD","60":"GTM","61":"GIN","62":"GNB","63":"GUY","64":"HTI","65":"HND","66":"ISL","67":"IND","68":"IDN","69":"IRN","70":"IRQ","71":"ISR","72":"JAM","73":"JPN","74":"JOR","75":"KAZ","76":"KEN","77":"KIR","78":"KWT","79":"KGZ","80":"LAO","81":"LBN","82":"LSO","83":"LBR","84":"LIE","85":"MDG","86":"MWI","87":"MYS","88":"MDV","89":"MLI","90":"MHL","91":"MRT","92":"MUS","93":"MEX","94":"FSM","95":"MCO","96":"MNG","97":"MNE","98":"MAR","99":"MOZ","100":"MMR","101":"NAM","102":"NRU","103":"NPL","104":"NZL","105":"NIC","106":"NER","107":"NGA","108":"NIU","109":"NOR","110":"OMN","111":"PAK","112":"PLW","113":"PAN","114":"PNG","115":"PRY","116":"PER","117":"PHL","118":"QAT","119":"KOR","120":"MDA","121":"RUS","122":"RWA","123":"KNA","124":"LCA","125":"WSM","126":"SMR","127":"STP","128":"SAU","129":"SEN","130":"SRB","131":"SYC","132":"SLE","133":"SGP","134":"SLB","135":"SOM","136":"ZAF","137":"SSD","138":"LKA","139":"VCT","140":"PSE","141":"SDN","142":"SUR","143":"CHE","144":"SYR","145":"TJK","146":"THA","147":"MKD","148":"TZA","149":"TLS","150":"TGO","151":"TON","152":"TTO","153":"TUN","154":"TUR","155":"TKM","156":"TUV","157":"UGA","158":"UKR","159":"ARE","160":"USA","161":"URY","162":"UZB","163":"VUT","164":"VEN","165":"VNM","166":"YEM","167":"ZMB","168":"ZWE"},"Party":{"0":"Afghanistan","1":"Albania","2":"Algeria","3":"Andorra","4":"Angola","5":"Antigua and Barbuda","6":"Argentina","7":"Armenia","8":"Australia","9":"Azerbaijan","10":"Bahamas","11":"Bahrain","12":"Bangladesh","13":"Barbados","14":"Belarus","15":"Belize","16":"Benin","17":"Bhutan","18":"Bolivia (Plurinational State of)","19":"Bosnia and Herzegovina","20":"Botswana","21":"Brazil","22":"Brunei","23":"Burkina Faso","24":"Burundi","25":"Cabo Verde","26":"Cambodia","27":"Cameroon","28":"Canada","29":"Central African Republic","30":"Chad","31":"Chile","32":"China","33":"Colombia","34":"Comoros","35":"Congo","36":"Cook Islands","37":"Costa Rica","38":"Cuba","39":"C\u00f4te d'Ivoire","40":"Democratic People's Republic of Korea","41":"Democratic Republic of the Congo","42":"Djibouti","43":"Dominica","44":"Dominican Republic","45":"Ecuador","46":"Egypt","47":"El Salvador","48":"Equatorial Guinea","49":"Eritrea","50":"Eswatini","51":"Ethiopia","52":"European Union","53":"Fiji","54":"France","55":"Gabon","56":"Gambia","57":"Georgia","58":"Ghana","59":"Grenada","60":"Guatemala","61":"Guinea","62":"Guinea Bissau","63":"Guyana","64":"Haiti","65":"Honduras","66":"Iceland","67":"India","68":"Indonesia","69":"Iran","70":"Iraq","71":"Israel","72":"Jamaica","73":"Japan","74":"Jordan","75":"Kazakhstan","76":"Kenya","77":"Kiribati","78":"Kuwait","79":"Kyrgyzstan","80":"Lao People's Democratic Republic","81":"Lebanon","82":"Lesotho","83":"Liberia","84":"Liechtenstein","85":"Madagascar","86":"Malawi","87":"Malaysia","88":"Maldives","89":"Mali","90":"Marshall Islands","91":"Mauritania","92":"Mauritius","93":"Mexico","94":"Micronesia","95":"Monaco","96":"Mongolia","97":"Montenegro","98":"Morocco","99":"Mozambique","100":"Myanmar","101":"Namibia","102":"Nauru","103":"Nepal","104":"New Zealand","105":"Nicaragua","106":"Niger","107":"Nigeria","108":"Niue","109":"Norway","110":"Oman","111":"Pakistan","112":"Palau","113":"Panama","114":"Papua New Guinea","115":"Paraguay","116":"Peru","117":"Philippines","118":"Qatar","119":"Republic of Korea","120":"Republic of Moldova","121":"Russia","122":"Rwanda","123":"Saint Kitts and Nevis","124":"Saint Lucia","125":"Samoa","126":"San Marino","127":"Sao Tome and Principe","128":"Saudi Arabia","129":"Senegal","130":"Serbia","131":"Seychelles","132":"Sierra Leone","133":"Singapore","134":"Solomon Islands","135":"Somalia","136":"South Africa","137":"South Sudan","138":"Sri Lanka","139":"St Vincent and the Grenadines","140":"State of Palestine","141":"Sudan","142":"Suriname","143":"Switzerland","144":"Syrian Arabic Republic","145":"Tajikistan","146":"Thailand","147":"The Republic of North Macedonia","148":"The United Republic of Tanzania","149":"Timor-Leste","150":"Togo","151":"Tonga","152":"Trinidad and Tobago","153":"Tunisia","154":"Turkey","155":"Turkmenistan","156":"Tuvalu","157":"Uganda","158":"Ukraine","159":"United Arab Emirates","160":"United States of America","161":"Uruguay","162":"Uzbekistan","163":"Vanuatu","164":"Venezuela","165":"Viet Nam","166":"Yemen","167":"Zambia","168":"Zimbabwe"},"Kind":{"0":"First NDC","1":"First NDC","2":"First NDC","3":"First NDC","4":"INDC","5":"First NDC","6":"First NDC","7":"First NDC","8":"First NDC","9":"First NDC","10":"First NDC","11":"First NDC","12":"First NDC","13":"First NDC","14":"First NDC","15":"First NDC","16":"First NDC","17":"First NDC","18":"First NDC","19":"First NDC","20":"First NDC","21":"First NDC","22":"INDC","23":"First NDC","24":"First NDC","25":"First NDC","26":"First NDC","27":"First NDC","28":"First NDC","29":"First NDC","30":"First NDC","31":"First NDC","32":"First NDC","33":"First NDC","34":"First NDC","35":"First NDC","36":"First NDC","37":"First NDC","38":"First NDC","39":"First NDC","40":"First NDC","41":"First NDC","42":"First NDC","43":"First NDC","44":"First NDC","45":"First NDC","46":"First NDC","47":"First NDC","48":"First NDC","49":"First NDC","50":"First NDC","51":"First NDC","52":"First NDC","53":"First NDC","54":"First NDC","55":"First NDC","56":"First NDC","57":"First NDC","58":"First NDC","59":"First NDC","60":"First NDC","61":"First NDC","62":"First NDC","63":"First NDC","64":"First NDC","65":"First NDC","66":"First NDC","67":"First NDC","68":"First NDC","69":"INDC","70":"INDC","71":"First NDC","72":"First NDC","73":"First NDC","74":"First NDC","75":"First NDC","76":"First NDC","77":"First NDC","78":"First NDC","79":"INDC","80":"First NDC","81":"INDC","82":"First NDC","83":"First NDC","84":"First NDC","85":"First NDC","86":"First NDC","87":"First NDC","88":"First NDC","89":"First NDC","90":"Second NDC","91":"First NDC","92":"First NDC","93":"First NDC","94":"First NDC","95":"First NDC","96":"First NDC","97":"First NDC","98":"First NDC","99":"First NDC","100":"First NDC","101":"First NDC","102":"First NDC","103":"First NDC","104":"First NDC","105":"First NDC","106":"First NDC","107":"First NDC","108":"First NDC","109":"First NDC","110":"INDC","111":"First NDC","112":"First NDC","113":"First NDC","114":"First NDC","115":"First NDC","116":"First NDC","117":"INDC","118":"First NDC","119":"First NDC","120":"First NDC","121":"INDC","122":"First NDC","123":"First NDC","124":"First NDC","125":"First NDC","126":"First NDC","127":"First NDC","128":"First NDC","129":"INDC","130":"First NDC","131":"First NDC","132":"First NDC","133":"First NDC","134":"First NDC","135":"First NDC","136":"First NDC","137":"INDC","138":"First NDC","139":"First NDC","140":"First NDC","141":"First NDC","142":"First NDC","143":"First NDC","144":"First NDC","145":"First NDC","146":"First NDC","147":"First NDC","148":"First NDC","149":"First NDC","150":"First NDC","151":"First NDC","152":"First NDC","153":"First NDC","154":"INDC","155":"First NDC","156":"First NDC","157":"First NDC","158":"First NDC","159":"First NDC","160":"First NDC","161":"First NDC","162":"First NDC","163":"First NDC","164":"First NDC","165":"First NDC","166":"INDC","167":"First NDC","168":"First NDC"},"Language":{"0":"English","1":"English","2":"English","3":"French","4":"English","5":"English","6":"English","7":"English","8":"English","9":"English","10":"English","11":"English","12":"English","13":"English","14":"English","15":"English","16":"English","17":"English","18":"English","19":"English","20":"English","21":"English","22":"English","23":"English","24":"English","25":"English","26":"English","27":"French","28":"English","29":"English","30":"English","31":"English","32":"English","33":"English","34":"French","35":"French","36":"English","37":"English","38":"Spanish","39":"French","40":"English","41":"French","42":"English","43":"English","44":"English","45":"Spanish","46":"English","47":"Spanish","48":"Spanish","49":"English","50":"English","51":"English","52":"English","53":"English","54":"French","55":"French","56":"English","57":"English","58":"English","59":"English","60":"Spanish","61":"English","62":"English","63":"English","64":"French","65":"Spanish","66":"English","67":"English","68":"English","69":"English","70":"Arabic","71":"English","72":"English","73":"English","74":"English","75":"English","76":"English","77":"English","78":"English","79":"English","80":"English","81":"English","82":"English","83":"English","84":"English","85":"English","86":"English","87":"English","88":"English","89":"French","90":"English","91":"French","92":"English","93":"English","94":"English","95":"English","96":"English","97":"English","98":"English","99":"English","100":"English","101":"English","102":"English","103":"English","104":"English","105":"Spanish","106":"English","107":"English","108":"English","109":"English","110":"English","111":"English","112":"English","113":"Spanish","114":"English","115":"Spanish","116":"English","117":"English","118":"English","119":"English","120":"English","121":"English","122":"English","123":"English","124":"English","125":"English","126":"English","127":"English","128":"English","129":"French","130":"English","131":"English","132":"English","133":"English","134":"English","135":"English","136":"English","137":"English","138":"English","139":"English","140":"English","141":"English","142":"English","143":"English","144":"English","145":"English","146":"English","147":"English","148":"English","149":"English","150":"English","151":"English","152":"English","153":"English","154":"English","155":"English","156":"English","157":"English","158":"English","159":"English","160":"English","161":"English","162":"English","163":"English","164":"Spanish","165":"English","166":"English","167":"English","168":"English"},"Filename":{"0":"AFG_Afghanistan_First_NDC_English.pdf","1":"ALB_Albania_First_NDC_English.pdf","2":"DZA_Algeria_First_NDC_Translation_English.pdf","3":"AND_Andorra_First_NDC_French.pdf","4":"AGO_Angola_INDC_English.pdf","5":"ATG_Antigua-and-Barbuda_First_NDC_English.pdf","6":"ARG_Argentina_First_NDC_Translation_English.pdf","7":"ARM_Armenia_First_NDC_English.pdf","8":"AUS_Australia_First_NDC_English.pdf","9":"AZE_Azerbaijan_First_NDC_English.pdf","10":"BHS_Bahamas_First_NDC_English.pdf","11":"BHR_Bahrain_First_NDC_English.pdf","12":"BGD_Bangladesh_First_NDC_English.pdf","13":"BRB_Barbados_First_NDC_English.pdf","14":"BLR_Belarus_First_NDC_Translation_English.pdf","15":"BLZ_Belize_First_NDC_English.pdf","16":"BEN_Benin_First_NDC_Translation_English.pdf","17":"BTN_Bhutan_First_NDC_English.pdf","18":"BOL_Bolivia-Plurinational-State-of_First_NDC_Translation_English.pdf","19":"BIH_Bosnia-and-Herzegovina_First_NDC_English.pdf","20":"BWA_Botswana_First_NDC_English.pdf","21":"BRA_Brazil_First_NDC_English.pdf","22":"BRN_Brunei_INDC_English.pdf","23":"BFA_Burkina-Faso_First_NDC_Translation_English.pdf","24":"BDI_Burundi_First_NDC_Translation_English.pdf","25":"CPV_Cabo-Verde_First_NDC_English.pdf","26":"KHM_Cambodia_First_NDC_English.pdf","27":"CMR_Cameroon_First_NDC_French.pdf","28":"CAN_Canada_First_NDC_Revised_English.pdf","29":"CAF_Central-African-Republic_First_NDC_Translation_English.pdf","30":"TCD_Chad_First_NDC_Translation_English.pdf","31":"CHL_Chile_First_NDC_Translation_English.pdf","32":"CHN_China_First_NDC_English.pdf","33":"COL_Colombia_First_NDC_Translation_English.pdf","34":"COM_Comoros_First_NDC_French.pdf","35":"COG_Congo_First_NDC_French.pdf","36":"COK_Cook-Islands_First_NDC_English.pdf","37":"CRI_Costa-Rica_First_NDC_Translation_English.pdf","38":"CUB_Cuba_First_NDC_Spanish.pdf","39":"CIV_Cote-d-Ivoire_First_NDC_French.pdf","40":"PRK_Democratic-People-s-Republic-of-Korea_First_NDC_English.pdf","41":"COD_Democratic-Republic-of-the-Congo_First_NDC_French.pdf","42":"DJI_Djibouti_First_NDC_Translation_English.pdf","43":"DMA_Dominica_First_NDC_English.pdf","44":"DOM_Dominican-Republic_First_NDC_Translation_English.pdf","45":"ECU_Ecuador_First_NDC_Spanish.pdf","46":"EGY_Egypt_First_NDC_English.pdf","47":"SLV_El-Salvador_First_NDC_Revised_Spanish.pdf","48":"GNQ_Equatorial-Guinea_First_NDC_Spanish.pdf","49":"ERI_Eritrea_First_NDC_English.pdf","50":"SWZ_Eswatini_First_NDC_English.pdf","51":"ETH_Ethiopia_First_NDC_English.pdf","52":"EUU_European-Union_First_NDC_English.pdf","53":"FJI_Fiji_First_NDC_English.pdf","54":"FRA_France_First_NDC_French.pdf","55":"GAB_Gabon_First_NDC_French.pdf","56":"GMB_Gambia_First_NDC_English.pdf","57":"GEO_Georgia_First_NDC_English.pdf","58":"GHA_Ghana_First_NDC_English.pdf","59":"GRD_Grenada_First_NDC_English.pdf","60":"GTM_Guatemala_First_NDC_Spanish.pdf","61":"GIN_Guinea_First_NDC_Translation_English.pdf","62":"GNB_Guinea-Bissau_First_NDC_English.pdf","63":"GUY_Guyana_First_NDC_English.pdf","64":"HTI_Haiti_First_NDC_French.pdf","65":"HND_Honduras_First_NDC_Spanish.pdf","66":"ISL_Iceland_First_NDC_English.pdf","67":"IND_India_First_NDC_English.pdf","68":"IDN_Indonesia_First_NDC_English.pdf","69":"IRN_Iran_INDC_English.pdf","70":"IRQ_Iraq_INDC_Arabic.pdf","71":"ISR_Israel_First_NDC_English.pdf","72":"JAM_Jamaica_First_NDC_English.pdf","73":"JPN_Japan_First_NDC_English.pdf","74":"JOR_Jordan_First_NDC_English.pdf","75":"KAZ_Kazakhstan_First_NDC_English.pdf","76":"KEN_Kenya_First_NDC_English.pdf","77":"KIR_Kiribati_First_NDC_English.pdf","78":"KWT_Kuwait_First_NDC_Translation_English.pdf","79":"KGZ_Kyrgyzstan_INDC_English.pdf","80":"LAO_Lao-People-s-Democratic-Republic_First_NDC_English.pdf","81":"LBN_Lebanon_INDC_English.pdf","82":"LSO_Lesotho_First_NDC_English.pdf","83":"LBR_Liberia_First_NDC_English.pdf","84":"LIE_Liechtenstein_First_NDC_English.pdf","85":"MDG_Madagascar_First_NDC_Translation_English.pdf","86":"MWI_Malawi_First_NDC_English.pdf","87":"MYS_Malaysia_First_NDC_English.pdf","88":"MDV_Maldives_First_NDC_English.pdf","89":"MLI_Mali_First_NDC_French.pdf","90":"MHL_Marshall-Islands_Second_NDC_English.pdf","91":"MRT_Mauritania_First_NDC_French.pdf","92":"MUS_Mauritius_First_NDC_English.pdf","93":"MEX_Mexico_First_NDC_English.pdf","94":"FSM_Micronesia_First_NDC_English.pdf","95":"MCO_Monaco_First_NDC_English.pdf","96":"MNG_Mongolia_First_NDC_English.pdf","97":"MNE_Montenegro_First_NDC_English.pdf","98":"MAR_Morocco_First_NDC_Translation_English.pdf","99":"MOZ_Mozambique_First_NDC_English.pdf","100":"MMR_Myanmar_First_NDC_English.pdf","101":"NAM_Namibia_First_NDC_English.pdf","102":"NRU_Nauru_First_NDC_English.pdf","103":"NPL_Nepal_First_NDC_English.pdf","104":"NZL_New-Zealand_First_NDC_English.pdf","105":"NIC_Nicaragua_First_NDC_Spanish.pdf","106":"NER_Niger_First_NDC_Translation_English.pdf","107":"NGA_Nigeria_First_NDC_English.pdf","108":"NIU_Niue_First_NDC_English.pdf","109":"NOR_Norway_First_NDC_English.pdf","110":"OMN_Oman_INDC_English.pdf","111":"PAK_Pakistan_First_NDC_English.pdf","112":"PLW_Palau_First_NDC_English.pdf","113":"PAN_Panama_First_NDC_Spanish.pdf","114":"PNG_Papua-New-Guinea_First_NDC_English.pdf","115":"PRY_Paraguay_First_NDC_Spanish.pdf","116":"PER_Peru_First_NDC_Translation_English.pdf","117":"PHL_Philippines_INDC_English.pdf","118":"QAT_Qatar_First_NDC_Translation_English.pdf","119":"KOR_Republic-of-Korea_First_NDC_English.pdf","120":"MDA_Republic-of-Moldova_First_NDC_English.pdf","121":"RUS_Russia_INDC_English.pdf","122":"RWA_Rwanda_First_NDC_English.pdf","123":"KNA_Saint-Kitts-and-Nevis_First_NDC_English.pdf","124":"LCA_Saint-Lucia_First_NDC_English.pdf","125":"WSM_Samoa_First_NDC_English.pdf","126":"SMR_San-Marino_First_NDC_English.pdf","127":"STP_Sao-Tome-and-Principe_First_NDC_English.pdf","128":"SAU_Saudi-Arabia_First_NDC_Translation_English.pdf","129":"SEN_Senegal_INDC_French.pdf","130":"SRB_Serbia_First_NDC_English.pdf","131":"SYC_Seychelles_First_NDC_English.pdf","132":"SLE_Sierra-Leone_First_NDC_English.pdf","133":"SGP_Singapore_First_NDC_English.pdf","134":"SLB_Solomon-Islands_First_NDC_English.pdf","135":"SOM_Somalia_First_NDC_English.pdf","136":"ZAF_South-Africa_First_NDC_English.pdf","137":"SSD_South-Sudan_INDC_English.pdf","138":"LKA_Sri-Lanka_First_NDC_English.pdf","139":"VCT_St-Vincent-and-the-Grenadines_First_NDC_English.pdf","140":"PSE_State-of-Palestine_First_NDC_English.pdf","141":"SDN_Sudan_First_NDC_English.pdf","142":"SUR_Suriname_First_NDC_English.pdf","143":"CHE_Switzerland_First_NDC_English.pdf","144":"SYR_Syrian-Arabic-Republic_First_NDC_Translation_English.pdf","145":"TJK_Tajikistan_First_NDC_Translation_English.pdf","146":"THA_Thailand_First_NDC_English.pdf","147":"MKD_The-Republic-of-North-Macedonia_First_NDC_English.pdf","148":"TZA_The-United-Republic-of-Tanzania_First_NDC_English.pdf","149":"TLS_Timor-Leste_First_NDC_English.pdf","150":"TGO_Togo_First_NDC_Translation_English.pdf","151":"TON_Tonga_First_NDC_English.pdf","152":"TTO_Trinidad-and-Tobago_First_NDC_English.pdf","153":"TUN_Tunisia_First_NDC_Translation_English.pdf","154":"TUR_Turkey_INDC_English.pdf","155":"TKM_Turkmenistan_First_NDC_English.pdf","156":"TUV_Tuvalu_First_NDC_English.pdf","157":"UGA_Uganda_First_NDC_English.pdf","158":"UKR_Ukraine_First_NDC_English.pdf","159":"ARE_United-Arab-Emirates_First_NDC_English.pdf","160":"USA_United-States-of-America_First_NDC_English.pdf","161":"URY_Uruguay_First_NDC_Translation_English.pdf","162":"UZB_Uzbekistan_First_NDC_English.pdf","163":"VUT_Vanuatu_First_NDC_English.pdf","164":"VEN_Venezuela_First_NDC_Spanish.pdf","165":"VNM_Viet-Nam_First_NDC_English.pdf","166":"YEM_Yemen_INDC_English.pdf","167":"ZMB_Zambia_First_NDC_English.pdf","168":"ZWE_Zimbabwe_First_NDC_English.pdf"},"SubmissionDate":{"0":"2016-11-23","1":"2016-09-21","2":"2016-10-20","3":"2017-03-24","4":"2015-11-29","5":"2016-09-21","6":"2016-11-17","7":"2017-03-23","8":"2016-11-09","9":"2017-01-09","10":"2016-10-31","11":"2016-12-30","12":"2016-09-21","13":"2016-04-22","14":"2016-09-21","15":"2016-04-20","16":"2018-09-09","17":"2017-09-19","18":"2016-10-05","19":"2017-03-16","20":"2016-11-11","21":"2016-09-21","22":"2015-12-01","23":"2016-11-11","24":"2018-01-17","25":"2017-09-21","26":"2017-02-06","27":"2016-07-29","28":"2017-05-11","29":"2016-10-11","30":"2017-01-12","31":"2017-02-10","32":"2016-09-03","33":"2018-07-12","34":"2016-11-23","35":"2017-04-21","36":"2016-09-01","37":"2016-10-13","38":"2016-12-30","39":"2016-10-25","40":"2016-10-03","41":"2017-12-13","42":"2016-11-11","43":"2016-09-21","44":"2017-09-21","45":"2019-03-29","46":"2017-06-29","47":"2017-10-30","48":"2018-10-30","49":"2018-06-19","50":"2016-09-21","51":"2017-03-09","52":"2016-10-05","53":"2016-04-22","54":"2016-10-05","55":"2016-11-02","56":"2016-11-07","57":"2017-05-08","58":"2016-09-21","59":"2016-04-22","60":"2017-01-25","61":"2016-09-21","62":"2018-10-22","63":"2016-05-20","64":"2017-07-31","65":"2016-09-21","66":"2016-09-21","67":"2016-10-02","68":"2016-11-06","69":"2015-11-21","70":"2015-11-12","71":"2016-11-22","72":"2017-04-10","73":"2016-11-08","74":"2016-11-04","75":"2016-12-06","76":"2016-12-28","77":"2016-09-21","78":"2018-04-23","79":"2015-09-29","80":"2016-09-07","81":"2015-09-30","82":"2018-06-22","83":"2018-08-27","84":"2017-09-20","85":"2016-09-21","86":"2017-06-29","87":"2016-11-16","88":"2016-04-22","89":"2016-09-23","90":"2018-11-22","91":"2017-02-27","92":"2016-04-22","93":"2016-09-21","94":"2016-09-15","95":"2016-10-26","96":"2016-09-21","97":"2017-12-21","98":"2016-09-19","99":"2018-06-04","100":"2017-09-19","101":"2016-09-21","102":"2016-04-07","103":"2016-10-05","104":"2016-10-05","105":"2018-09-03","106":"2016-09-21","107":"2017-05-16","108":"2016-10-28","109":"2016-06-20","110":"2015-10-19","111":"2016-11-10","112":"2016-04-22","113":"2016-04-18","114":"2016-03-24","115":"2016-10-14","116":"2016-07-25","117":"2015-10-01","118":"2017-06-23","119":"2016-11-03","120":"2017-06-20","121":"2015-04-01","122":"2016-10-06","123":"2016-04-22","124":"2016-04-22","125":"2016-04-22","126":"2018-09-26","127":"2016-11-02","128":"2016-11-03","129":"2015-09-26","130":"2017-07-25","131":"2016-04-29","132":"2016-11-01","133":"2016-09-21","134":"2016-09-21","135":"2016-04-22","136":"2016-11-01","137":"2015-11-23","138":"2016-11-06","139":"2016-06-29","140":"2017-08-21","141":"2017-08-02","142":"2019-02-13","143":"2017-10-06","144":"2019-03-13","145":"2017-03-22","146":"2016-09-21","147":"2018-01-09","148":"2018-05-18","149":"2017-08-16","150":"2017-06-28","151":"2016-09-21","152":"2018-02-22","153":"2017-02-10","154":"2015-09-30","155":"2016-10-21","156":"2016-04-22","157":"2016-09-21","158":"2016-09-19","159":"2016-09-21","160":"2016-09-03","161":"2017-11-14","162":"2018-11-09","163":"2016-09-21","164":"2018-02-27","165":"2016-11-03","166":"2015-11-23","167":"2016-12-09","168":"2017-08-07"},"EncodedAbsUrl":{"0":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Afghanistan%20First\/INDC_AFG_20150927_FINAL.pdf","1":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Albania%20First\/Albania%20First.pdf","2":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Algeria%20First\/Algeria%20-%20INDC%20(English%20unofficial%20translation)%20September%2003,2015.pdf","3":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Andorra%20First\/Andorra%20INDC-CPDN.pdf","4":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Angola\/1\/INDC%20Angola%20deposito.pdf","5":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Antigua%20and%20Barbuda%20First\/Antigua%20and%20Barbuda%20First.pdf","6":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Argentina%20First\/Traducci\u00f3n%20NDC_Argentina.pdf","7":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Armenia%20First\/INDC-Armenia.pdf","8":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Australia%20First\/Australias%20Intended%20Nationally%20Determined%20Contribution%20to%20a%20new%20Climate%20Change%20Agreement%20-%20August%202015.pdf","9":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Azerbaijan%20First\/INDC%20Azerbaijan.pdf","10":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Bahamas%20First\/Bahamas_COP-22%20UNFCCC.pdf","11":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Bahrain%20First\/INDC_Kingdom_of_Bahrain.pdf","12":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Bangladesh%20First\/INDC_2015_of_Bangladesh.pdf","13":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Barbados%20First\/Barbados%20INDC%20FINAL%20September%20%2028,%202015.pdf","14":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Belarus%20First\/Belarus_INDC_Eng_25.09.2015.pdf","15":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Belize%20First\/BELIZE%27s%20%20NDC.pdf","16":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Benin%20First\/CDN_BENIN_VERSION_ANGLAISE.pdf","17":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Bhutan%20First\/Bhutan-INDC-20150930.pdf","18":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Bolivia%20(Plurinational%20State%20of)%20First\/INDC-Bolivia-english.pdf","19":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Bosnia%20and%20Herzegovina%20First\/INDC%20Bosnia%20and%20Herzegovina.pdf","20":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Botswana%20First\/BOTSWANA.pdf","21":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Brazil%20First\/BRAZIL%20iNDC%20english%20FINAL.pdf","22":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Brunei\/1\/Brunei%20Darussalam%20INDC_FINAL_30%20November%202015.pdf","23":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Burkina%20Faso%20First\/INDC%20Burkina_ENG.%20version_finale.pdf","24":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Burundi%20First\/Burundi_INDC-english%20version.pdf","25":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Cabo%20Verde%20First\/Cabo_Verde_INDC_.pdf","26":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Cambodia%20First\/Cambodia%27s%20INDC%20to%20the%20UNFCCC.pdf","27":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Cameroon%20First\/CPDN%20CMR%20Final.pdf","28":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Canada%20First\/Canada%20First%20NDC-Revised%20submission%202017-05-11.pdf","29":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Central%20African%20Republic%20First\/INDC_R\u00e9publique%20Centrafricaine_EN.pdf","30":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Chad%20First\/INDC%20Chad_Official%20version_English.pdf","31":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Chile%20First\/INDC%20Chile%20english%20version.pdf","32":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/China%20First\/China%27s%20First%20NDC%20Submission.pdf","33":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Colombia%20First\/Colombia%20iNDC%20Unofficial%20translation%20Eng.pdf","34":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Comoros%20First\/INDC_Comores_Version_Francaise.pdf","35":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Congo%20First\/NDC_Congo_RAPPORT.pdf","36":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Cook%20Islands%20First\/Cook%20Islands%20INDCsFINAL7Nov.pdf","37":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Costa%20Rica%20First\/INDC%20Costa%20Rica%20Version%202%200%20final%20ENG.pdf","38":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Cuba%20First\/Republic%20of%20Cuba-NDCs-Nov2015.pdf","39":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/C\u00f4te%20d%27Ivoire%20First\/INDC_CI_22092015.pdf","40":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Democratic%20People%27s%20Republic%20of%20Korea%20First\/DPRK-INDC%20by%202030.pdf","41":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Democratic%20Republic%20of%20the%20Congo%20First\/CPDN%20-%20R\u00e9p%20D\u00e9m%20du%20Congo.pdf","42":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Djibouti%20First\/INDC-Djibouti_ENG.pdf","43":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Dominica%20First\/Commonwealth%20of%20Dominica-%20Intended%20Nationally%20Determined%20Contributions%20(INDC).pdf","44":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Dominican%20Republic%20First\/INDC-DR%20August%202015%20(unofficial%20translation).pdf","45":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Ecuador%20First\/Primera%20NDC%20Ecuador.pdf","46":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Egypt%20First\/Egyptian%20INDC.pdf","47":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/El%20Salvador%20First\/EL%20SALVADOR-INTENDED%20NATIONALLY%20DETERMINED%20CONTRIBUTION%20B.pdf","48":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Equatorial%20Guinea%20First\/Rep\u00fablica%20de%20Guinea%20Ecuatorial_INDC.pdf","49":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Eritrea%20First\/NRC%20Eritrea.pdf","50":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Eswatini%20First\/Eswatini%27s%20INDC.pdf","51":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Ethiopia%20First\/INDC-Ethiopia-100615.pdf","52":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/European%20Union%20First\/LV-03-06-EU%20INDC.pdf","53":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Fiji%20First\/FIJI_iNDC_Final_051115.pdf","54":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/France%20First\/CDN%20France%20PTOM%20-%205%20octobre%202016.pdf","55":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Gabon%20First\/20150331%20INDC%20Gabon.pdf","56":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Gambia%20First\/The%20INDC%20OF%20THE%20GAMBIA.pdf","57":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Georgia%20First\/INDC_of_Georgia.pdf","58":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Ghana%20First\/GH_INDC_2392015.pdf","59":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Grenada%20First\/Grenada%20INDC.pdf","60":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Guatemala%20First\/Gobierno%20de%20Guatemala%20INDC-UNFCCC%20Sept%202015.pdf","61":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Guinea%20First\/INDC_Guinea_english_version%20UNFCCC.pdf","62":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Guinea%20Bissau%20First\/GUINEA-BISSAU_INDC_Version%20to%20the%20UNFCCC%20(eng).pdf","63":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Guyana%20First\/Guyana%27s%20revised%20NDC%20-%20Final.pdf","64":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Haiti%20First\/CPDN_Republique%20d%27Haiti.pdf","65":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Honduras%20First\/Honduras%20INDC_esp.pdf","66":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Iceland%20First\/INDC-ICELAND.pdf","67":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/India%20First\/INDIA%20INDC%20TO%20UNFCCC.pdf","68":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Indonesia%20First\/First%20NDC%20Indonesia_submitted%20to%20UNFCCC%20Set_November%20%202016.pdf","69":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Iran\/1\/INDC%20Iran%20Final%20Text.pdf","70":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Iraq\/1\/INDC-Iraq.pdf","71":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Israel%20First\/Israel%20INDC.pdf","72":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Jamaica%20First\/Jamaica%27s%20INDC_2015-11-25.pdf","73":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Japan%20First\/20150717_Japan%27s%20INDC.pdf","74":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Jordan%20First\/Jordan%20INDCs%20Final.pdf","75":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Kazakhstan%20First\/INDC%20Kz_eng.pdf","76":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Kenya%20First\/Kenya_NDC_20150723.pdf","77":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Kiribati%20First\/INDC_KIRIBATI.pdf","78":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Kuwait%20First\/Kuwait%20First%20NDC_English.pdf","79":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Kyrgyzstan\/1\/Kyrgyzstan%20INDC%20_ENG_%20final.pdf","80":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Lao%20People%27s%20Democratic%20Republic%20First\/Lao%20PDR%20First%20NDC.pdf","81":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Lebanon\/1\/Republic%20of%20Lebanon%20-%20INDC%20-%20September%202015.pdf","82":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Lesotho%20First\/Lesotho%20First%20NDC.pdf","83":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Liberia%20First\/INDC%20Final%20Submission%20Sept%2030%202015%20Liberia.pdf","84":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Liechtenstein%20First\/150422_INDC_FL.pdf","85":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Madagascar%20First\/Madagascar%20INDC%20Eng.pdf","86":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Malawi%20First\/MALAWI%20INDC%20SUBMITTED%20TO%20UNFCCC%20REV.pdf","87":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Malaysia%20First\/INDC%20Malaysia%20Final%2027%20November%202015%20Revised%20Final%20UNFCCC.pdf","88":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Maldives%20First\/Maldives%20INDC.pdf","89":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Mali%20First\/Mali_revised%20NDC.pdf","90":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Marshall%20Islands%20Second\/20181122%20Marshall%20Islands%20NDC%20to%20UNFCCC%2022%20November%202018%20FINAL.pdf","91":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Mauretania%20First\/INDC%20MAURITANIA.pdf","92":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Mauritius%20First\/Final%20INDC%20for%20Mauritius%2028%20Sept%202015.pdf","93":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Mexico%20First\/MEXICO%20INDC%2003.30.2015.pdf","94":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Micronesia%20First\/Micronesia%20First%20NDC.pdf","95":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Monaco%20First\/Monaco_INDC.pdf","96":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Mongolia%20First\/150924_INDCs%20of%20Mongolia.pdf","97":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Montenegro%20First\/INDCSubmission_%20Montenegro.pdf","98":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Morocco%20First\/Morocco%20First%20NDC-English.pdf","99":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Mozambique%20First\/MOZ_INDC_Final_Version.pdf","100":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Myanmar%20First\/Myanmar%27s%20INDC.pdf","101":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Namibia%20First\/INDC%20of%20Namibia%20Final%20pdf.pdf","102":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Nauru%20First\/Nauru_NDC.pdf","103":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Nepal%20First\/Nepal%20First%20NDC.pdf","104":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/New%20Zealand%20First\/New%20Zealand%20first%20NDC.pdf","105":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Nicaragua%20First\/Contribucion%20Nacionalmente%20Determinada%20Nicaragua.pdf","106":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Niger%20First\/Niger-INDC-final_Eng.pdf","107":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Nigeria%20First\/Approved%20Nigeria%27s%20INDC_271115.pdf","108":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Niue%20First\/Niue%20INDC%20Final.pdf","109":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Norway%20First\/NorwayINDC.pdf","110":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Oman\/1\/OMAN%20INDCs.pdf","111":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Pakistan%20First\/Pak-INDC.pdf","112":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Palau%20First\/Palau_INDC.Final%20Copy.pdf","113":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Panama%20First\/PANAMA%20NDC.pdf","114":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Papua%20New%20Guinea%20First\/PNG_INDC%20to%20the%20UNFCCC.pdf","115":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Paraguay%20First\/Documento%20INDC%20Paraguay%2001-10-15.pdf","116":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Peru%20First\/iNDC%20Per\u00fa%20english.pdf","117":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Philippines\/1\/Philippines%20-%20Final%20INDC%20submission.pdf","118":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Qatar%20First\/Qatar%20INDCs%20Report%20-English.pdf","119":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Republic%20of%20Korea%20First\/INDC%20Submission%20by%20the%20Republic%20of%20Korea%20on%20June%2030.pdf","120":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Republic%20of%20Moldova%20First\/INDC_Republic_of_Moldova_25.09.2015.pdf","121":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Russia\/1\/Russian%20Submission%20INDC_eng_rev1.doc","122":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Rwanda%20First\/INDC_Rwanda_Nov.2015.pdf","123":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Saint%20Kitts%20and%20Nevis%20First\/St.%20Kitts%20and%20Nevis%20INDC.pdf","124":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Saint%20Lucia%20First\/Saint%20Lucia%27s%20INDC%2018th%20November%202015.pdf","125":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Samoa%20First\/Samoa%20INDC_Submission%20to%20UNFCCC.pdf","126":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/San%20Marino%20First\/SAN%20MARINO%20INDC%20EN.pdf","127":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Sao%20Tome%20and%20Principe%20First\/STP_INDC%20_Ingles_30.09.pdf","128":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Saudi%20Arabia%20First\/KSA-INDCs%20English.pdf","129":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Senegal\/1\/CPDN%20-%20S%C3%A9n%C3%A9gal.pdf","130":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Serbia%20First\/Republic_of_Serbia.pdf","131":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Seychelles%20First\/INDC%20of%20Seychelles.pdf","132":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Sierra%20Leone%20First\/SIERRA%20LEONE%20INDC.pdf","133":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Singapore%20First\/Singapore%20INDC.pdf","134":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Solomon%20Islands%20First\/SOLOMON%20ISLANDS%20INDC.pdf","135":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Somalia%20First\/Somalia%27s%20INDCs.pdf","136":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/South%20Africa%20First\/South%20Africa.pdf","137":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/South%20Sudan\/1\/South%20Sudan%20Intended%20Nationally%20Determined%20%20%20%20Contribution.pdf","138":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Sri%20Lanka%20First\/NDCs%20of%20Sri%20Lanka.pdf","139":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Saint%20Vincent%20and%20Grenadines%20First\/Saint%20Vincent%20and%20the%20Grenadines_NDC.pdf","140":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/State%20of%20Palestine%20First\/State%20of%20Palestine%20First%20NDC.pdf","141":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Sudan%20First\/28Oct15-Sudan%20INDC.pdf","142":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Suriname%20First\/Suriname%20First%20NDC.pdf","143":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Switzerland%20First\/15%2002%2027_INDC%20Contribution%20of%20Switzerland.pdf","144":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Syrian%20Arabic%20Republic%20First\/FirstNDC-Eng-Syrian%20Arab%20Republic.pdf","145":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Tajikistan%20First\/INDC-TJK%20final%20ENG.pdf","146":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Thailand%20First\/Thailand_INDC.pdf","147":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/The%20Republic%20of%20North%20Macedonia%20First\/Submission_Republic_of_Macedonia_20150805144001_135181.pdf","148":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/The%20United%20Republic%20of%20Tanzania%20First%20NDC\/The%20United%20Republic%20of%20Tanzania%20First%20NDC.pdf","149":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Timor-Leste%20First\/Timor-Leste%20First%20NDC.pdf","150":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Togo%20First\/INDC%20Togo_english%20version.pdf","151":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Tonga%20First\/Tonga%20INDC.pdf","152":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Trinidad%20and%20Tobago%20First\/Trinidad%20and%20Tobago%20Final%20INDC.pdf","153":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Tunisia%20First\/INDC-Tunisia-English%20Version.pdf","154":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Turkey\/1\/The_INDC_of_TURKEY_v.15.19.30.pdf","155":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Turkmenistan%20First\/INDC_Turkmenistan.pdf","156":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Tuvalu%20First\/TUVALU%20INDC.pdf","157":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Uganda%20First\/INDC%20Uganda%20final%20%2014%20October%20%202015.pdf","158":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Ukraine%20First\/Ukraine%20First%20NDC.pdf","159":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/United%20Arab%20Emirates%20First\/UAE%20INDC%20-%2022%20October.pdf","160":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/United%20States%20of%20America%20First\/U.S.A.%20First%20NDC%20Submission.pdf","161":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Uruguay%20First\/Uruguay_First%20Nationally%20Determined%20Contribution.pdf","162":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Uzbekistan%20First\/INDC%20Uzbekistan%2018-04-2017_Eng.pdf","163":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Vanuatu%20First\/VANUATU%20%20INDC%20UNFCCC%20Submission.pdf","164":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Venezuela%20First\/Primera%20%20NDC%20Venezuela.pdf","165":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Viet%20Nam%20First\/VIETNAM%27S%20INDC.pdf","166":"http:\/\/www4.unfccc.int\/Submissions\/INDC\/Published%20Documents\/Yemen\/1\/Yemen%20INDC%2021%20Nov.%202015.pdf","167":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Zambia%20First\/FINAL+ZAMBIA%27S+INDC_1.pdf","168":"https:\/\/www4.unfccc.int\/sites\/ndcstaging\/PublishedDocuments\/Zimbabwe%20First\/Zimbabwe%20First%20NDC.pdf"}}
+{
+  "0": {
+    "Code": "AFG",
+    "Party": "Afghanistan",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "AFG_Afghanistan_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-23",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Afghanistan%20First/INDC_AFG_20150927_FINAL.pdf"
+  },
+  "1": {
+    "Code": "ALB",
+    "Party": "Albania",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ALB_Albania_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Albania%20First/Albania%20First.pdf"
+  },
+  "2": {
+    "Code": "DZA",
+    "Party": "Algeria",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "DZA_Algeria_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-10-20",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Algeria%20First/Algeria%20-%20INDC%20(English%20unofficial%20translation)%20September%2003,2015.pdf"
+  },
+  "3": {
+    "Code": "AND",
+    "Party": "Andorra",
+    "Kind": "First NDC",
+    "Language": "French",
+    "Filename": "AND_Andorra_First_NDC_French.pdf",
+    "SubmissionDate": "2017-03-24",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Andorra%20First/Andorra%20INDC-CPDN.pdf"
+  },
+  "4": {
+    "Code": "AGO",
+    "Party": "Angola",
+    "Kind": "INDC",
+    "Language": "English",
+    "Filename": "AGO_Angola_INDC_English.pdf",
+    "SubmissionDate": "2015-11-29",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Angola/1/INDC%20Angola%20deposito.pdf"
+  },
+  "5": {
+    "Code": "ATG",
+    "Party": "Antigua and Barbuda",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ATG_Antigua-and-Barbuda_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Antigua%20and%20Barbuda%20First/Antigua%20and%20Barbuda%20First.pdf"
+  },
+  "6": {
+    "Code": "ARG",
+    "Party": "Argentina",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ARG_Argentina_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-11-17",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Argentina%20First/Traducción%20NDC_Argentina.pdf"
+  },
+  "7": {
+    "Code": "ARM",
+    "Party": "Armenia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ARM_Armenia_First_NDC_English.pdf",
+    "SubmissionDate": "2017-03-23",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Armenia%20First/INDC-Armenia.pdf"
+  },
+  "8": {
+    "Code": "AUS",
+    "Party": "Australia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "AUS_Australia_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-09",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Australia%20First/Australias%20Intended%20Nationally%20Determined%20Contribution%20to%20a%20new%20Climate%20Change%20Agreement%20-%20August%202015.pdf"
+  },
+  "9": {
+    "Code": "AZE",
+    "Party": "Azerbaijan",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "AZE_Azerbaijan_First_NDC_English.pdf",
+    "SubmissionDate": "2017-01-09",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Azerbaijan%20First/INDC%20Azerbaijan.pdf"
+  },
+  "10": {
+    "Code": "BHS",
+    "Party": "Bahamas",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BHS_Bahamas_First_NDC_English.pdf",
+    "SubmissionDate": "2016-10-31",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Bahamas%20First/Bahamas_COP-22%20UNFCCC.pdf"
+  },
+  "11": {
+    "Code": "BHR",
+    "Party": "Bahrain",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BHR_Bahrain_First_NDC_English.pdf",
+    "SubmissionDate": "2016-12-30",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Bahrain%20First/INDC_Kingdom_of_Bahrain.pdf"
+  },
+  "12": {
+    "Code": "BGD",
+    "Party": "Bangladesh",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BGD_Bangladesh_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Bangladesh%20First/INDC_2015_of_Bangladesh.pdf"
+  },
+  "13": {
+    "Code": "BRB",
+    "Party": "Barbados",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BRB_Barbados_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Barbados%20First/Barbados%20INDC%20FINAL%20September%20%2028,%202015.pdf"
+  },
+  "14": {
+    "Code": "BLR",
+    "Party": "Belarus",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BLR_Belarus_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Belarus%20First/Belarus_INDC_Eng_25.09.2015.pdf"
+  },
+  "15": {
+    "Code": "BLZ",
+    "Party": "Belize",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BLZ_Belize_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-20",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Belize%20First/BELIZE%27s%20%20NDC.pdf"
+  },
+  "16": {
+    "Code": "BEN",
+    "Party": "Benin",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BEN_Benin_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2018-09-09",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Benin%20First/CDN_BENIN_VERSION_ANGLAISE.pdf"
+  },
+  "17": {
+    "Code": "BTN",
+    "Party": "Bhutan",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BTN_Bhutan_First_NDC_English.pdf",
+    "SubmissionDate": "2017-09-19",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Bhutan%20First/Bhutan-INDC-20150930.pdf"
+  },
+  "18": {
+    "Code": "BOL",
+    "Party": "Bolivia (Plurinational State of)",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BOL_Bolivia-Plurinational-State-of_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-10-05",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Bolivia%20(Plurinational%20State%20of)%20First/INDC-Bolivia-english.pdf"
+  },
+  "19": {
+    "Code": "BIH",
+    "Party": "Bosnia and Herzegovina",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BIH_Bosnia-and-Herzegovina_First_NDC_English.pdf",
+    "SubmissionDate": "2017-03-16",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Bosnia%20and%20Herzegovina%20First/INDC%20Bosnia%20and%20Herzegovina.pdf"
+  },
+  "20": {
+    "Code": "BWA",
+    "Party": "Botswana",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BWA_Botswana_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-11",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Botswana%20First/BOTSWANA.pdf"
+  },
+  "21": {
+    "Code": "BRA",
+    "Party": "Brazil",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BRA_Brazil_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Brazil%20First/BRAZIL%20iNDC%20english%20FINAL.pdf"
+  },
+  "22": {
+    "Code": "BRN",
+    "Party": "Brunei",
+    "Kind": "INDC",
+    "Language": "English",
+    "Filename": "BRN_Brunei_INDC_English.pdf",
+    "SubmissionDate": "2015-12-01",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Brunei/1/Brunei%20Darussalam%20INDC_FINAL_30%20November%202015.pdf"
+  },
+  "23": {
+    "Code": "BFA",
+    "Party": "Burkina Faso",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BFA_Burkina-Faso_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-11-11",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Burkina%20Faso%20First/INDC%20Burkina_ENG.%20version_finale.pdf"
+  },
+  "24": {
+    "Code": "BDI",
+    "Party": "Burundi",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "BDI_Burundi_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2018-01-17",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Burundi%20First/Burundi_INDC-english%20version.pdf"
+  },
+  "25": {
+    "Code": "CPV",
+    "Party": "Cabo Verde",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "CPV_Cabo-Verde_First_NDC_English.pdf",
+    "SubmissionDate": "2017-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Cabo%20Verde%20First/Cabo_Verde_INDC_.pdf"
+  },
+  "26": {
+    "Code": "KHM",
+    "Party": "Cambodia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "KHM_Cambodia_First_NDC_English.pdf",
+    "SubmissionDate": "2017-02-06",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Cambodia%20First/Cambodia%27s%20INDC%20to%20the%20UNFCCC.pdf"
+  },
+  "27": {
+    "Code": "CMR",
+    "Party": "Cameroon",
+    "Kind": "First NDC",
+    "Language": "French",
+    "Filename": "CMR_Cameroon_First_NDC_French.pdf",
+    "SubmissionDate": "2016-07-29",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Cameroon%20First/CPDN%20CMR%20Final.pdf"
+  },
+  "28": {
+    "Code": "CAN",
+    "Party": "Canada",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "CAN_Canada_First_NDC_Revised_English.pdf",
+    "SubmissionDate": "2017-05-11",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Canada%20First/Canada%20First%20NDC-Revised%20submission%202017-05-11.pdf"
+  },
+  "29": {
+    "Code": "CAF",
+    "Party": "Central African Republic",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "CAF_Central-African-Republic_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-10-11",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Central%20African%20Republic%20First/INDC_République%20Centrafricaine_EN.pdf"
+  },
+  "30": {
+    "Code": "TCD",
+    "Party": "Chad",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "TCD_Chad_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2017-01-12",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Chad%20First/INDC%20Chad_Official%20version_English.pdf"
+  },
+  "31": {
+    "Code": "CHL",
+    "Party": "Chile",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "CHL_Chile_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2017-02-10",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Chile%20First/INDC%20Chile%20english%20version.pdf"
+  },
+  "32": {
+    "Code": "CHN",
+    "Party": "China",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "CHN_China_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-03",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/China%20First/China%27s%20First%20NDC%20Submission.pdf"
+  },
+  "33": {
+    "Code": "COL",
+    "Party": "Colombia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "COL_Colombia_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2018-07-12",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Colombia%20First/Colombia%20iNDC%20Unofficial%20translation%20Eng.pdf"
+  },
+  "34": {
+    "Code": "COM",
+    "Party": "Comoros",
+    "Kind": "First NDC",
+    "Language": "French",
+    "Filename": "COM_Comoros_First_NDC_French.pdf",
+    "SubmissionDate": "2016-11-23",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Comoros%20First/INDC_Comores_Version_Francaise.pdf"
+  },
+  "35": {
+    "Code": "COG",
+    "Party": "Congo",
+    "Kind": "First NDC",
+    "Language": "French",
+    "Filename": "COG_Congo_First_NDC_French.pdf",
+    "SubmissionDate": "2017-04-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Congo%20First/NDC_Congo_RAPPORT.pdf"
+  },
+  "36": {
+    "Code": "COK",
+    "Party": "Cook Islands",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "COK_Cook-Islands_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-01",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Cook%20Islands%20First/Cook%20Islands%20INDCsFINAL7Nov.pdf"
+  },
+  "37": {
+    "Code": "CRI",
+    "Party": "Costa Rica",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "CRI_Costa-Rica_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-10-13",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Costa%20Rica%20First/INDC%20Costa%20Rica%20Version%202%200%20final%20ENG.pdf"
+  },
+  "38": {
+    "Code": "CUB",
+    "Party": "Cuba",
+    "Kind": "First NDC",
+    "Language": "Spanish",
+    "Filename": "CUB_Cuba_First_NDC_Spanish.pdf",
+    "SubmissionDate": "2016-12-30",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Cuba%20First/Republic%20of%20Cuba-NDCs-Nov2015.pdf"
+  },
+  "39": {
+    "Code": "CIV",
+    "Party": "Côte d'Ivoire",
+    "Kind": "First NDC",
+    "Language": "French",
+    "Filename": "CIV_Cote-d-Ivoire_First_NDC_French.pdf",
+    "SubmissionDate": "2016-10-25",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Côte%20d%27Ivoire%20First/INDC_CI_22092015.pdf"
+  },
+  "40": {
+    "Code": "PRK",
+    "Party": "Democratic People's Republic of Korea",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "PRK_Democratic-People-s-Republic-of-Korea_First_NDC_English.pdf",
+    "SubmissionDate": "2016-10-03",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Democratic%20People%27s%20Republic%20of%20Korea%20First/DPRK-INDC%20by%202030.pdf"
+  },
+  "41": {
+    "Code": "COD",
+    "Party": "Democratic Republic of the Congo",
+    "Kind": "First NDC",
+    "Language": "French",
+    "Filename": "COD_Democratic-Republic-of-the-Congo_First_NDC_French.pdf",
+    "SubmissionDate": "2017-12-13",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Democratic%20Republic%20of%20the%20Congo%20First/CPDN%20-%20Rép%20Dém%20du%20Congo.pdf"
+  },
+  "42": {
+    "Code": "DJI",
+    "Party": "Djibouti",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "DJI_Djibouti_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-11-11",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Djibouti%20First/INDC-Djibouti_ENG.pdf"
+  },
+  "43": {
+    "Code": "DMA",
+    "Party": "Dominica",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "DMA_Dominica_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Dominica%20First/Commonwealth%20of%20Dominica-%20Intended%20Nationally%20Determined%20Contributions%20(INDC).pdf"
+  },
+  "44": {
+    "Code": "DOM",
+    "Party": "Dominican Republic",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "DOM_Dominican-Republic_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2017-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Dominican%20Republic%20First/INDC-DR%20August%202015%20(unofficial%20translation).pdf"
+  },
+  "45": {
+    "Code": "ECU",
+    "Party": "Ecuador",
+    "Kind": "First NDC",
+    "Language": "Spanish",
+    "Filename": "ECU_Ecuador_First_NDC_Spanish.pdf",
+    "SubmissionDate": "2019-03-29",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Ecuador%20First/Primera%20NDC%20Ecuador.pdf"
+  },
+  "46": {
+    "Code": "EGY",
+    "Party": "Egypt",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "EGY_Egypt_First_NDC_English.pdf",
+    "SubmissionDate": "2017-06-29",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Egypt%20First/Egyptian%20INDC.pdf"
+  },
+  "47": {
+    "Code": "SLV",
+    "Party": "El Salvador",
+    "Kind": "First NDC",
+    "Language": "Spanish",
+    "Filename": "SLV_El-Salvador_First_NDC_Revised_Spanish.pdf",
+    "SubmissionDate": "2017-10-30",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/El%20Salvador%20First/EL%20SALVADOR-INTENDED%20NATIONALLY%20DETERMINED%20CONTRIBUTION%20B.pdf"
+  },
+  "48": {
+    "Code": "GNQ",
+    "Party": "Equatorial Guinea",
+    "Kind": "First NDC",
+    "Language": "Spanish",
+    "Filename": "GNQ_Equatorial-Guinea_First_NDC_Spanish.pdf",
+    "SubmissionDate": "2018-10-30",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Equatorial%20Guinea%20First/República%20de%20Guinea%20Ecuatorial_INDC.pdf"
+  },
+  "49": {
+    "Code": "ERI",
+    "Party": "Eritrea",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ERI_Eritrea_First_NDC_English.pdf",
+    "SubmissionDate": "2018-06-19",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Eritrea%20First/NRC%20Eritrea.pdf"
+  },
+  "50": {
+    "Code": "SWZ",
+    "Party": "Eswatini",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SWZ_Eswatini_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Eswatini%20First/Eswatini%27s%20INDC.pdf"
+  },
+  "51": {
+    "Code": "ETH",
+    "Party": "Ethiopia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ETH_Ethiopia_First_NDC_English.pdf",
+    "SubmissionDate": "2017-03-09",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Ethiopia%20First/INDC-Ethiopia-100615.pdf"
+  },
+  "52": {
+    "Code": "EUU",
+    "Party": "European Union",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "EUU_European-Union_First_NDC_English.pdf",
+    "SubmissionDate": "2016-10-05",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/European%20Union%20First/LV-03-06-EU%20INDC.pdf"
+  },
+  "53": {
+    "Code": "FJI",
+    "Party": "Fiji",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "FJI_Fiji_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Fiji%20First/FIJI_iNDC_Final_051115.pdf"
+  },
+  "54": {
+    "Code": "FRA",
+    "Party": "France",
+    "Kind": "First NDC",
+    "Language": "French",
+    "Filename": "FRA_France_First_NDC_French.pdf",
+    "SubmissionDate": "2016-10-05",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/France%20First/CDN%20France%20PTOM%20-%205%20octobre%202016.pdf"
+  },
+  "55": {
+    "Code": "GAB",
+    "Party": "Gabon",
+    "Kind": "First NDC",
+    "Language": "French",
+    "Filename": "GAB_Gabon_First_NDC_French.pdf",
+    "SubmissionDate": "2016-11-02",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Gabon%20First/20150331%20INDC%20Gabon.pdf"
+  },
+  "56": {
+    "Code": "GMB",
+    "Party": "Gambia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "GMB_Gambia_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-07",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Gambia%20First/The%20INDC%20OF%20THE%20GAMBIA.pdf"
+  },
+  "57": {
+    "Code": "GEO",
+    "Party": "Georgia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "GEO_Georgia_First_NDC_English.pdf",
+    "SubmissionDate": "2017-05-08",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Georgia%20First/INDC_of_Georgia.pdf"
+  },
+  "58": {
+    "Code": "GHA",
+    "Party": "Ghana",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "GHA_Ghana_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Ghana%20First/GH_INDC_2392015.pdf"
+  },
+  "59": {
+    "Code": "GRD",
+    "Party": "Grenada",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "GRD_Grenada_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Grenada%20First/Grenada%20INDC.pdf"
+  },
+  "60": {
+    "Code": "GTM",
+    "Party": "Guatemala",
+    "Kind": "First NDC",
+    "Language": "Spanish",
+    "Filename": "GTM_Guatemala_First_NDC_Spanish.pdf",
+    "SubmissionDate": "2017-01-25",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Guatemala%20First/Gobierno%20de%20Guatemala%20INDC-UNFCCC%20Sept%202015.pdf"
+  },
+  "61": {
+    "Code": "GIN",
+    "Party": "Guinea",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "GIN_Guinea_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Guinea%20First/INDC_Guinea_english_version%20UNFCCC.pdf"
+  },
+  "62": {
+    "Code": "GNB",
+    "Party": "Guinea Bissau",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "GNB_Guinea-Bissau_First_NDC_English.pdf",
+    "SubmissionDate": "2018-10-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Guinea%20Bissau%20First/GUINEA-BISSAU_INDC_Version%20to%20the%20UNFCCC%20(eng).pdf"
+  },
+  "63": {
+    "Code": "GUY",
+    "Party": "Guyana",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "GUY_Guyana_First_NDC_English.pdf",
+    "SubmissionDate": "2016-05-20",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Guyana%20First/Guyana%27s%20revised%20NDC%20-%20Final.pdf"
+  },
+  "64": {
+    "Code": "HTI",
+    "Party": "Haiti",
+    "Kind": "First NDC",
+    "Language": "French",
+    "Filename": "HTI_Haiti_First_NDC_French.pdf",
+    "SubmissionDate": "2017-07-31",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Haiti%20First/CPDN_Republique%20d%27Haiti.pdf"
+  },
+  "65": {
+    "Code": "HND",
+    "Party": "Honduras",
+    "Kind": "First NDC",
+    "Language": "Spanish",
+    "Filename": "HND_Honduras_First_NDC_Spanish.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Honduras%20First/Honduras%20INDC_esp.pdf"
+  },
+  "66": {
+    "Code": "ISL",
+    "Party": "Iceland",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ISL_Iceland_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Iceland%20First/INDC-ICELAND.pdf"
+  },
+  "67": {
+    "Code": "IND",
+    "Party": "India",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "IND_India_First_NDC_English.pdf",
+    "SubmissionDate": "2016-10-02",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/India%20First/INDIA%20INDC%20TO%20UNFCCC.pdf"
+  },
+  "68": {
+    "Code": "IDN",
+    "Party": "Indonesia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "IDN_Indonesia_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-06",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Indonesia%20First/First%20NDC%20Indonesia_submitted%20to%20UNFCCC%20Set_November%20%202016.pdf"
+  },
+  "69": {
+    "Code": "IRN",
+    "Party": "Iran",
+    "Kind": "INDC",
+    "Language": "English",
+    "Filename": "IRN_Iran_INDC_English.pdf",
+    "SubmissionDate": "2015-11-21",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Iran/1/INDC%20Iran%20Final%20Text.pdf"
+  },
+  "70": {
+    "Code": "IRQ",
+    "Party": "Iraq",
+    "Kind": "INDC",
+    "Language": "Arabic",
+    "Filename": "IRQ_Iraq_INDC_Arabic.pdf",
+    "SubmissionDate": "2015-11-12",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Iraq/1/INDC-Iraq.pdf"
+  },
+  "71": {
+    "Code": "ISR",
+    "Party": "Israel",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ISR_Israel_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Israel%20First/Israel%20INDC.pdf"
+  },
+  "72": {
+    "Code": "JAM",
+    "Party": "Jamaica",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "JAM_Jamaica_First_NDC_English.pdf",
+    "SubmissionDate": "2017-04-10",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Jamaica%20First/Jamaica%27s%20INDC_2015-11-25.pdf"
+  },
+  "73": {
+    "Code": "JPN",
+    "Party": "Japan",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "JPN_Japan_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-08",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Japan%20First/20150717_Japan%27s%20INDC.pdf"
+  },
+  "74": {
+    "Code": "JOR",
+    "Party": "Jordan",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "JOR_Jordan_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-04",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Jordan%20First/Jordan%20INDCs%20Final.pdf"
+  },
+  "75": {
+    "Code": "KAZ",
+    "Party": "Kazakhstan",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "KAZ_Kazakhstan_First_NDC_English.pdf",
+    "SubmissionDate": "2016-12-06",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Kazakhstan%20First/INDC%20Kz_eng.pdf"
+  },
+  "76": {
+    "Code": "KEN",
+    "Party": "Kenya",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "KEN_Kenya_First_NDC_English.pdf",
+    "SubmissionDate": "2016-12-28",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Kenya%20First/Kenya_NDC_20150723.pdf"
+  },
+  "77": {
+    "Code": "KIR",
+    "Party": "Kiribati",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "KIR_Kiribati_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Kiribati%20First/INDC_KIRIBATI.pdf"
+  },
+  "78": {
+    "Code": "KWT",
+    "Party": "Kuwait",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "KWT_Kuwait_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2018-04-23",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Kuwait%20First/Kuwait%20First%20NDC_English.pdf"
+  },
+  "79": {
+    "Code": "KGZ",
+    "Party": "Kyrgyzstan",
+    "Kind": "INDC",
+    "Language": "English",
+    "Filename": "KGZ_Kyrgyzstan_INDC_English.pdf",
+    "SubmissionDate": "2015-09-29",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Kyrgyzstan/1/Kyrgyzstan%20INDC%20_ENG_%20final.pdf"
+  },
+  "80": {
+    "Code": "LAO",
+    "Party": "Lao People's Democratic Republic",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "LAO_Lao-People-s-Democratic-Republic_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-07",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Lao%20People%27s%20Democratic%20Republic%20First/Lao%20PDR%20First%20NDC.pdf"
+  },
+  "81": {
+    "Code": "LBN",
+    "Party": "Lebanon",
+    "Kind": "INDC",
+    "Language": "English",
+    "Filename": "LBN_Lebanon_INDC_English.pdf",
+    "SubmissionDate": "2015-09-30",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Lebanon/1/Republic%20of%20Lebanon%20-%20INDC%20-%20September%202015.pdf"
+  },
+  "82": {
+    "Code": "LSO",
+    "Party": "Lesotho",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "LSO_Lesotho_First_NDC_English.pdf",
+    "SubmissionDate": "2018-06-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Lesotho%20First/Lesotho%20First%20NDC.pdf"
+  },
+  "83": {
+    "Code": "LBR",
+    "Party": "Liberia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "LBR_Liberia_First_NDC_English.pdf",
+    "SubmissionDate": "2018-08-27",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Liberia%20First/INDC%20Final%20Submission%20Sept%2030%202015%20Liberia.pdf"
+  },
+  "84": {
+    "Code": "LIE",
+    "Party": "Liechtenstein",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "LIE_Liechtenstein_First_NDC_English.pdf",
+    "SubmissionDate": "2017-09-20",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Liechtenstein%20First/150422_INDC_FL.pdf"
+  },
+  "85": {
+    "Code": "MDG",
+    "Party": "Madagascar",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MDG_Madagascar_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Madagascar%20First/Madagascar%20INDC%20Eng.pdf"
+  },
+  "86": {
+    "Code": "MWI",
+    "Party": "Malawi",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MWI_Malawi_First_NDC_English.pdf",
+    "SubmissionDate": "2017-06-29",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Malawi%20First/MALAWI%20INDC%20SUBMITTED%20TO%20UNFCCC%20REV.pdf"
+  },
+  "87": {
+    "Code": "MYS",
+    "Party": "Malaysia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MYS_Malaysia_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-16",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Malaysia%20First/INDC%20Malaysia%20Final%2027%20November%202015%20Revised%20Final%20UNFCCC.pdf"
+  },
+  "88": {
+    "Code": "MDV",
+    "Party": "Maldives",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MDV_Maldives_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Maldives%20First/Maldives%20INDC.pdf"
+  },
+  "89": {
+    "Code": "MLI",
+    "Party": "Mali",
+    "Kind": "First NDC",
+    "Language": "French",
+    "Filename": "MLI_Mali_First_NDC_French.pdf",
+    "SubmissionDate": "2016-09-23",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Mali%20First/Mali_revised%20NDC.pdf"
+  },
+  "90": {
+    "Code": "MHL",
+    "Party": "Marshall Islands",
+    "Kind": "Second NDC",
+    "Language": "English",
+    "Filename": "MHL_Marshall-Islands_Second_NDC_English.pdf",
+    "SubmissionDate": "2018-11-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Marshall%20Islands%20Second/20181122%20Marshall%20Islands%20NDC%20to%20UNFCCC%2022%20November%202018%20FINAL.pdf"
+  },
+  "91": {
+    "Code": "MRT",
+    "Party": "Mauritania",
+    "Kind": "First NDC",
+    "Language": "French",
+    "Filename": "MRT_Mauritania_First_NDC_French.pdf",
+    "SubmissionDate": "2017-02-27",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Mauretania%20First/INDC%20MAURITANIA.pdf"
+  },
+  "92": {
+    "Code": "MUS",
+    "Party": "Mauritius",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MUS_Mauritius_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Mauritius%20First/Final%20INDC%20for%20Mauritius%2028%20Sept%202015.pdf"
+  },
+  "93": {
+    "Code": "MEX",
+    "Party": "Mexico",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MEX_Mexico_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Mexico%20First/MEXICO%20INDC%2003.30.2015.pdf"
+  },
+  "94": {
+    "Code": "FSM",
+    "Party": "Micronesia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "FSM_Micronesia_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-15",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Micronesia%20First/Micronesia%20First%20NDC.pdf"
+  },
+  "95": {
+    "Code": "MCO",
+    "Party": "Monaco",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MCO_Monaco_First_NDC_English.pdf",
+    "SubmissionDate": "2016-10-26",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Monaco%20First/Monaco_INDC.pdf"
+  },
+  "96": {
+    "Code": "MNG",
+    "Party": "Mongolia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MNG_Mongolia_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Mongolia%20First/150924_INDCs%20of%20Mongolia.pdf"
+  },
+  "97": {
+    "Code": "MNE",
+    "Party": "Montenegro",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MNE_Montenegro_First_NDC_English.pdf",
+    "SubmissionDate": "2017-12-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Montenegro%20First/INDCSubmission_%20Montenegro.pdf"
+  },
+  "98": {
+    "Code": "MAR",
+    "Party": "Morocco",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MAR_Morocco_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-09-19",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Morocco%20First/Morocco%20First%20NDC-English.pdf"
+  },
+  "99": {
+    "Code": "MOZ",
+    "Party": "Mozambique",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MOZ_Mozambique_First_NDC_English.pdf",
+    "SubmissionDate": "2018-06-04",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Mozambique%20First/MOZ_INDC_Final_Version.pdf"
+  },
+  "100": {
+    "Code": "MMR",
+    "Party": "Myanmar",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MMR_Myanmar_First_NDC_English.pdf",
+    "SubmissionDate": "2017-09-19",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Myanmar%20First/Myanmar%27s%20INDC.pdf"
+  },
+  "101": {
+    "Code": "NAM",
+    "Party": "Namibia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "NAM_Namibia_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Namibia%20First/INDC%20of%20Namibia%20Final%20pdf.pdf"
+  },
+  "102": {
+    "Code": "NRU",
+    "Party": "Nauru",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "NRU_Nauru_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-07",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Nauru%20First/Nauru_NDC.pdf"
+  },
+  "103": {
+    "Code": "NPL",
+    "Party": "Nepal",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "NPL_Nepal_First_NDC_English.pdf",
+    "SubmissionDate": "2016-10-05",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Nepal%20First/Nepal%20First%20NDC.pdf"
+  },
+  "104": {
+    "Code": "NZL",
+    "Party": "New Zealand",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "NZL_New-Zealand_First_NDC_English.pdf",
+    "SubmissionDate": "2016-10-05",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/New%20Zealand%20First/New%20Zealand%20first%20NDC.pdf"
+  },
+  "105": {
+    "Code": "NIC",
+    "Party": "Nicaragua",
+    "Kind": "First NDC",
+    "Language": "Spanish",
+    "Filename": "NIC_Nicaragua_First_NDC_Spanish.pdf",
+    "SubmissionDate": "2018-09-03",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Nicaragua%20First/Contribucion%20Nacionalmente%20Determinada%20Nicaragua.pdf"
+  },
+  "106": {
+    "Code": "NER",
+    "Party": "Niger",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "NER_Niger_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Niger%20First/Niger-INDC-final_Eng.pdf"
+  },
+  "107": {
+    "Code": "NGA",
+    "Party": "Nigeria",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "NGA_Nigeria_First_NDC_English.pdf",
+    "SubmissionDate": "2017-05-16",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Nigeria%20First/Approved%20Nigeria%27s%20INDC_271115.pdf"
+  },
+  "108": {
+    "Code": "NIU",
+    "Party": "Niue",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "NIU_Niue_First_NDC_English.pdf",
+    "SubmissionDate": "2016-10-28",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Niue%20First/Niue%20INDC%20Final.pdf"
+  },
+  "109": {
+    "Code": "NOR",
+    "Party": "Norway",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "NOR_Norway_First_NDC_English.pdf",
+    "SubmissionDate": "2016-06-20",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Norway%20First/NorwayINDC.pdf"
+  },
+  "110": {
+    "Code": "OMN",
+    "Party": "Oman",
+    "Kind": "INDC",
+    "Language": "English",
+    "Filename": "OMN_Oman_INDC_English.pdf",
+    "SubmissionDate": "2015-10-19",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Oman/1/OMAN%20INDCs.pdf"
+  },
+  "111": {
+    "Code": "PAK",
+    "Party": "Pakistan",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "PAK_Pakistan_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-10",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Pakistan%20First/Pak-INDC.pdf"
+  },
+  "112": {
+    "Code": "PLW",
+    "Party": "Palau",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "PLW_Palau_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Palau%20First/Palau_INDC.Final%20Copy.pdf"
+  },
+  "113": {
+    "Code": "PAN",
+    "Party": "Panama",
+    "Kind": "First NDC",
+    "Language": "Spanish",
+    "Filename": "PAN_Panama_First_NDC_Spanish.pdf",
+    "SubmissionDate": "2016-04-18",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Panama%20First/PANAMA%20NDC.pdf"
+  },
+  "114": {
+    "Code": "PNG",
+    "Party": "Papua New Guinea",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "PNG_Papua-New-Guinea_First_NDC_English.pdf",
+    "SubmissionDate": "2016-03-24",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Papua%20New%20Guinea%20First/PNG_INDC%20to%20the%20UNFCCC.pdf"
+  },
+  "115": {
+    "Code": "PRY",
+    "Party": "Paraguay",
+    "Kind": "First NDC",
+    "Language": "Spanish",
+    "Filename": "PRY_Paraguay_First_NDC_Spanish.pdf",
+    "SubmissionDate": "2016-10-14",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Paraguay%20First/Documento%20INDC%20Paraguay%2001-10-15.pdf"
+  },
+  "116": {
+    "Code": "PER",
+    "Party": "Peru",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "PER_Peru_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-07-25",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Peru%20First/iNDC%20Perú%20english.pdf"
+  },
+  "117": {
+    "Code": "PHL",
+    "Party": "Philippines",
+    "Kind": "INDC",
+    "Language": "English",
+    "Filename": "PHL_Philippines_INDC_English.pdf",
+    "SubmissionDate": "2015-10-01",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Philippines/1/Philippines%20-%20Final%20INDC%20submission.pdf"
+  },
+  "118": {
+    "Code": "QAT",
+    "Party": "Qatar",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "QAT_Qatar_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2017-06-23",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Qatar%20First/Qatar%20INDCs%20Report%20-English.pdf"
+  },
+  "119": {
+    "Code": "KOR",
+    "Party": "Republic of Korea",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "KOR_Republic-of-Korea_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-03",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Republic%20of%20Korea%20First/INDC%20Submission%20by%20the%20Republic%20of%20Korea%20on%20June%2030.pdf"
+  },
+  "120": {
+    "Code": "MDA",
+    "Party": "Republic of Moldova",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MDA_Republic-of-Moldova_First_NDC_English.pdf",
+    "SubmissionDate": "2017-06-20",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Republic%20of%20Moldova%20First/INDC_Republic_of_Moldova_25.09.2015.pdf"
+  },
+  "121": {
+    "Code": "RUS",
+    "Party": "Russia",
+    "Kind": "INDC",
+    "Language": "English",
+    "Filename": "RUS_Russia_INDC_English.pdf",
+    "SubmissionDate": "2015-04-01",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Russia/1/Russian%20Submission%20INDC_eng_rev1.doc"
+  },
+  "122": {
+    "Code": "RWA",
+    "Party": "Rwanda",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "RWA_Rwanda_First_NDC_English.pdf",
+    "SubmissionDate": "2016-10-06",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Rwanda%20First/INDC_Rwanda_Nov.2015.pdf"
+  },
+  "123": {
+    "Code": "KNA",
+    "Party": "Saint Kitts and Nevis",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "KNA_Saint-Kitts-and-Nevis_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Saint%20Kitts%20and%20Nevis%20First/St.%20Kitts%20and%20Nevis%20INDC.pdf"
+  },
+  "124": {
+    "Code": "LCA",
+    "Party": "Saint Lucia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "LCA_Saint-Lucia_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Saint%20Lucia%20First/Saint%20Lucia%27s%20INDC%2018th%20November%202015.pdf"
+  },
+  "125": {
+    "Code": "WSM",
+    "Party": "Samoa",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "WSM_Samoa_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Samoa%20First/Samoa%20INDC_Submission%20to%20UNFCCC.pdf"
+  },
+  "126": {
+    "Code": "SMR",
+    "Party": "San Marino",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SMR_San-Marino_First_NDC_English.pdf",
+    "SubmissionDate": "2018-09-26",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/San%20Marino%20First/SAN%20MARINO%20INDC%20EN.pdf"
+  },
+  "127": {
+    "Code": "STP",
+    "Party": "Sao Tome and Principe",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "STP_Sao-Tome-and-Principe_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-02",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Sao%20Tome%20and%20Principe%20First/STP_INDC%20_Ingles_30.09.pdf"
+  },
+  "128": {
+    "Code": "SAU",
+    "Party": "Saudi Arabia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SAU_Saudi-Arabia_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2016-11-03",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Saudi%20Arabia%20First/KSA-INDCs%20English.pdf"
+  },
+  "129": {
+    "Code": "SEN",
+    "Party": "Senegal",
+    "Kind": "INDC",
+    "Language": "French",
+    "Filename": "SEN_Senegal_INDC_French.pdf",
+    "SubmissionDate": "2015-09-26",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Senegal/1/CPDN%20-%20S%C3%A9n%C3%A9gal.pdf"
+  },
+  "130": {
+    "Code": "SRB",
+    "Party": "Serbia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SRB_Serbia_First_NDC_English.pdf",
+    "SubmissionDate": "2017-07-25",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Serbia%20First/Republic_of_Serbia.pdf"
+  },
+  "131": {
+    "Code": "SYC",
+    "Party": "Seychelles",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SYC_Seychelles_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-29",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Seychelles%20First/INDC%20of%20Seychelles.pdf"
+  },
+  "132": {
+    "Code": "SLE",
+    "Party": "Sierra Leone",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SLE_Sierra-Leone_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-01",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Sierra%20Leone%20First/SIERRA%20LEONE%20INDC.pdf"
+  },
+  "133": {
+    "Code": "SGP",
+    "Party": "Singapore",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SGP_Singapore_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Singapore%20First/Singapore%20INDC.pdf"
+  },
+  "134": {
+    "Code": "SLB",
+    "Party": "Solomon Islands",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SLB_Solomon-Islands_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Solomon%20Islands%20First/SOLOMON%20ISLANDS%20INDC.pdf"
+  },
+  "135": {
+    "Code": "SOM",
+    "Party": "Somalia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SOM_Somalia_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Somalia%20First/Somalia%27s%20INDCs.pdf"
+  },
+  "136": {
+    "Code": "ZAF",
+    "Party": "South Africa",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ZAF_South-Africa_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-01",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/South%20Africa%20First/South%20Africa.pdf"
+  },
+  "137": {
+    "Code": "SSD",
+    "Party": "South Sudan",
+    "Kind": "INDC",
+    "Language": "English",
+    "Filename": "SSD_South-Sudan_INDC_English.pdf",
+    "SubmissionDate": "2015-11-23",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/South%20Sudan/1/South%20Sudan%20Intended%20Nationally%20Determined%20%20%20%20Contribution.pdf"
+  },
+  "138": {
+    "Code": "LKA",
+    "Party": "Sri Lanka",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "LKA_Sri-Lanka_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-06",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Sri%20Lanka%20First/NDCs%20of%20Sri%20Lanka.pdf"
+  },
+  "139": {
+    "Code": "VCT",
+    "Party": "St Vincent and the Grenadines",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "VCT_St-Vincent-and-the-Grenadines_First_NDC_English.pdf",
+    "SubmissionDate": "2016-06-29",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Saint%20Vincent%20and%20Grenadines%20First/Saint%20Vincent%20and%20the%20Grenadines_NDC.pdf"
+  },
+  "140": {
+    "Code": "PSE",
+    "Party": "State of Palestine",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "PSE_State-of-Palestine_First_NDC_English.pdf",
+    "SubmissionDate": "2017-08-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/State%20of%20Palestine%20First/State%20of%20Palestine%20First%20NDC.pdf"
+  },
+  "141": {
+    "Code": "SDN",
+    "Party": "Sudan",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SDN_Sudan_First_NDC_English.pdf",
+    "SubmissionDate": "2017-08-02",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Sudan%20First/28Oct15-Sudan%20INDC.pdf"
+  },
+  "142": {
+    "Code": "SUR",
+    "Party": "Suriname",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SUR_Suriname_First_NDC_English.pdf",
+    "SubmissionDate": "2019-02-13",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Suriname%20First/Suriname%20First%20NDC.pdf"
+  },
+  "143": {
+    "Code": "CHE",
+    "Party": "Switzerland",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "CHE_Switzerland_First_NDC_English.pdf",
+    "SubmissionDate": "2017-10-06",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Switzerland%20First/15%2002%2027_INDC%20Contribution%20of%20Switzerland.pdf"
+  },
+  "144": {
+    "Code": "SYR",
+    "Party": "Syrian Arabic Republic",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "SYR_Syrian-Arabic-Republic_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2019-03-13",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Syrian%20Arabic%20Republic%20First/FirstNDC-Eng-Syrian%20Arab%20Republic.pdf"
+  },
+  "145": {
+    "Code": "TJK",
+    "Party": "Tajikistan",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "TJK_Tajikistan_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2017-03-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Tajikistan%20First/INDC-TJK%20final%20ENG.pdf"
+  },
+  "146": {
+    "Code": "THA",
+    "Party": "Thailand",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "THA_Thailand_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Thailand%20First/Thailand_INDC.pdf"
+  },
+  "147": {
+    "Code": "MKD",
+    "Party": "The Republic of North Macedonia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "MKD_The-Republic-of-North-Macedonia_First_NDC_English.pdf",
+    "SubmissionDate": "2018-01-09",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/The%20Republic%20of%20North%20Macedonia%20First/Submission_Republic_of_Macedonia_20150805144001_135181.pdf"
+  },
+  "148": {
+    "Code": "TZA",
+    "Party": "The United Republic of Tanzania",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "TZA_The-United-Republic-of-Tanzania_First_NDC_English.pdf",
+    "SubmissionDate": "2018-05-18",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/The%20United%20Republic%20of%20Tanzania%20First%20NDC/The%20United%20Republic%20of%20Tanzania%20First%20NDC.pdf"
+  },
+  "149": {
+    "Code": "TLS",
+    "Party": "Timor-Leste",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "TLS_Timor-Leste_First_NDC_English.pdf",
+    "SubmissionDate": "2017-08-16",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Timor-Leste%20First/Timor-Leste%20First%20NDC.pdf"
+  },
+  "150": {
+    "Code": "TGO",
+    "Party": "Togo",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "TGO_Togo_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2017-06-28",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Togo%20First/INDC%20Togo_english%20version.pdf"
+  },
+  "151": {
+    "Code": "TON",
+    "Party": "Tonga",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "TON_Tonga_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Tonga%20First/Tonga%20INDC.pdf"
+  },
+  "152": {
+    "Code": "TTO",
+    "Party": "Trinidad and Tobago",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "TTO_Trinidad-and-Tobago_First_NDC_English.pdf",
+    "SubmissionDate": "2018-02-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Trinidad%20and%20Tobago%20First/Trinidad%20and%20Tobago%20Final%20INDC.pdf"
+  },
+  "153": {
+    "Code": "TUN",
+    "Party": "Tunisia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "TUN_Tunisia_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2017-02-10",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Tunisia%20First/INDC-Tunisia-English%20Version.pdf"
+  },
+  "154": {
+    "Code": "TUR",
+    "Party": "Turkey",
+    "Kind": "INDC",
+    "Language": "English",
+    "Filename": "TUR_Turkey_INDC_English.pdf",
+    "SubmissionDate": "2015-09-30",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Turkey/1/The_INDC_of_TURKEY_v.15.19.30.pdf"
+  },
+  "155": {
+    "Code": "TKM",
+    "Party": "Turkmenistan",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "TKM_Turkmenistan_First_NDC_English.pdf",
+    "SubmissionDate": "2016-10-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Turkmenistan%20First/INDC_Turkmenistan.pdf"
+  },
+  "156": {
+    "Code": "TUV",
+    "Party": "Tuvalu",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "TUV_Tuvalu_First_NDC_English.pdf",
+    "SubmissionDate": "2016-04-22",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Tuvalu%20First/TUVALU%20INDC.pdf"
+  },
+  "157": {
+    "Code": "UGA",
+    "Party": "Uganda",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "UGA_Uganda_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Uganda%20First/INDC%20Uganda%20final%20%2014%20October%20%202015.pdf"
+  },
+  "158": {
+    "Code": "UKR",
+    "Party": "Ukraine",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "UKR_Ukraine_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-19",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Ukraine%20First/Ukraine%20First%20NDC.pdf"
+  },
+  "159": {
+    "Code": "ARE",
+    "Party": "United Arab Emirates",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ARE_United-Arab-Emirates_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/United%20Arab%20Emirates%20First/UAE%20INDC%20-%2022%20October.pdf"
+  },
+  "160": {
+    "Code": "USA",
+    "Party": "United States of America",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "USA_United-States-of-America_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-03",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/United%20States%20of%20America%20First/U.S.A.%20First%20NDC%20Submission.pdf"
+  },
+  "161": {
+    "Code": "URY",
+    "Party": "Uruguay",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "URY_Uruguay_First_NDC_Translation_English.pdf",
+    "SubmissionDate": "2017-11-14",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Uruguay%20First/Uruguay_First%20Nationally%20Determined%20Contribution.pdf"
+  },
+  "162": {
+    "Code": "UZB",
+    "Party": "Uzbekistan",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "UZB_Uzbekistan_First_NDC_English.pdf",
+    "SubmissionDate": "2018-11-09",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Uzbekistan%20First/INDC%20Uzbekistan%2018-04-2017_Eng.pdf"
+  },
+  "163": {
+    "Code": "VUT",
+    "Party": "Vanuatu",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "VUT_Vanuatu_First_NDC_English.pdf",
+    "SubmissionDate": "2016-09-21",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Vanuatu%20First/VANUATU%20%20INDC%20UNFCCC%20Submission.pdf"
+  },
+  "164": {
+    "Code": "VEN",
+    "Party": "Venezuela",
+    "Kind": "First NDC",
+    "Language": "Spanish",
+    "Filename": "VEN_Venezuela_First_NDC_Spanish.pdf",
+    "SubmissionDate": "2018-02-27",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Venezuela%20First/Primera%20%20NDC%20Venezuela.pdf"
+  },
+  "165": {
+    "Code": "VNM",
+    "Party": "Viet Nam",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "VNM_Viet-Nam_First_NDC_English.pdf",
+    "SubmissionDate": "2016-11-03",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Viet%20Nam%20First/VIETNAM%27S%20INDC.pdf"
+  },
+  "166": {
+    "Code": "YEM",
+    "Party": "Yemen",
+    "Kind": "INDC",
+    "Language": "English",
+    "Filename": "YEM_Yemen_INDC_English.pdf",
+    "SubmissionDate": "2015-11-23",
+    "EncodedAbsUrl": "http://www4.unfccc.int/Submissions/INDC/Published%20Documents/Yemen/1/Yemen%20INDC%2021%20Nov.%202015.pdf"
+  },
+  "167": {
+    "Code": "ZMB",
+    "Party": "Zambia",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ZMB_Zambia_First_NDC_English.pdf",
+    "SubmissionDate": "2016-12-09",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Zambia%20First/FINAL+ZAMBIA%27S+INDC_1.pdf"
+  },
+  "168": {
+    "Code": "ZWE",
+    "Party": "Zimbabwe",
+    "Kind": "First NDC",
+    "Language": "English",
+    "Filename": "ZWE_Zimbabwe_First_NDC_English.pdf",
+    "SubmissionDate": "2017-08-07",
+    "EncodedAbsUrl": "https://www4.unfccc.int/sites/ndcstaging/PublishedDocuments/Zimbabwe%20First/Zimbabwe%20First%20NDC.pdf"
+  }
+}

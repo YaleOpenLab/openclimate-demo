@@ -1,1 +1,1878 @@
-{"Year":{"0":1750,"1":1751,"2":1752,"3":1753,"4":1754,"5":1755,"6":1756,"7":1757,"8":1758,"9":1759,"10":1760,"11":1761,"12":1762,"13":1763,"14":1764,"15":1765,"16":1766,"17":1767,"18":1768,"19":1769,"20":1770,"21":1771,"22":1772,"23":1773,"24":1774,"25":1775,"26":1776,"27":1777,"28":1778,"29":1779,"30":1780,"31":1781,"32":1782,"33":1783,"34":1784,"35":1785,"36":1786,"37":1787,"38":1788,"39":1789,"40":1790,"41":1791,"42":1792,"43":1793,"44":1794,"45":1795,"46":1796,"47":1797,"48":1798,"49":1799,"50":1800,"51":1801,"52":1802,"53":1803,"54":1804,"55":1805,"56":1806,"57":1807,"58":1808,"59":1809,"60":1810,"61":1811,"62":1812,"63":1813,"64":1814,"65":1815,"66":1816,"67":1817,"68":1818,"69":1819,"70":1820,"71":1821,"72":1822,"73":1823,"74":1824,"75":1825,"76":1826,"77":1827,"78":1828,"79":1829,"80":1830,"81":1831,"82":1832,"83":1833,"84":1834,"85":1835,"86":1836,"87":1837,"88":1838,"89":1839,"90":1840,"91":1841,"92":1842,"93":1843,"94":1844,"95":1845,"96":1846,"97":1847,"98":1848,"99":1849,"100":1850,"101":1851,"102":1852,"103":1853,"104":1854,"105":1855,"106":1856,"107":1857,"108":1858,"109":1859,"110":1860,"111":1861,"112":1862,"113":1863,"114":1864,"115":1865,"116":1866,"117":1867,"118":1868,"119":1869,"120":1870,"121":1871,"122":1872,"123":1873,"124":1874,"125":1875,"126":1876,"127":1877,"128":1878,"129":1879,"130":1880,"131":1881,"132":1882,"133":1883,"134":1884,"135":1885,"136":1886,"137":1887,"138":1888,"139":1889,"140":1890,"141":1891,"142":1892,"143":1893,"144":1894,"145":1895,"146":1896,"147":1897,"148":1898,"149":1899,"150":1900,"151":1901,"152":1902,"153":1903,"154":1904,"155":1905,"156":1906,"157":1907,"158":1908,"159":1909,"160":1910,"161":1911,"162":1912,"163":1913,"164":1914,"165":1915,"166":1916,"167":1917,"168":1918,"169":1919,"170":1920,"171":1921,"172":1922,"173":1923,"174":1924,"175":1925,"176":1926,"177":1927,"178":1928,"179":1929,"180":1930,"181":1931,"182":1932,"183":1933,"184":1934,"185":1935,"186":1936,"187":1937,"188":1938,"189":1939,"190":1940,"191":1941,"192":1942,"193":1943,"194":1944,"195":1945,"196":1946,"197":1947,"198":1948,"199":1949,"200":1950,"201":1951,"202":1952,"203":1953,"204":1954,"205":1955,"206":1956,"207":1957,"208":1958,"209":1959,"210":1960,"211":1961,"212":1962,"213":1963,"214":1964,"215":1965,"216":1966,"217":1967,"218":1968,"219":1969,"220":1970,"221":1971,"222":1972,"223":1973,"224":1974,"225":1975,"226":1976,"227":1977,"228":1978,"229":1979,"230":1980,"231":1981,"232":1982,"233":1983,"234":1984,"235":1985,"236":1986,"237":1987,"238":1988,"239":1989,"240":1990,"241":1991,"242":1992,"243":1993,"244":1994,"245":1995,"246":1996,"247":1997,"248":1998,"249":1999,"250":2000,"251":2001,"252":2002,"253":2003,"254":2004,"255":2005,"256":2006,"257":2007,"258":2008,"259":2009,"260":2010,"261":2011,"262":2012,"263":2013,"264":2014,"265":2015,"266":2016,"267":2017},"Fossil-Fuel-Industry":{"0":null,"1":0.003,"2":0.003,"3":0.003,"4":0.003,"5":0.003,"6":0.003,"7":0.003,"8":0.003,"9":0.003,"10":0.003,"11":0.003,"12":0.003,"13":0.003,"14":0.003,"15":0.003,"16":0.003,"17":0.003,"18":0.003,"19":0.003,"20":0.003,"21":0.004,"22":0.004,"23":0.004,"24":0.004,"25":0.004,"26":0.004,"27":0.004,"28":0.004,"29":0.004,"30":0.004,"31":0.005,"32":0.005,"33":0.005,"34":0.005,"35":0.005,"36":0.005,"37":0.005,"38":0.005,"39":0.005,"40":0.005,"41":0.006,"42":0.006,"43":0.006,"44":0.006,"45":0.006,"46":0.006,"47":0.007,"48":0.007,"49":0.007,"50":0.008,"51":0.008,"52":0.01,"53":0.009,"54":0.009,"55":0.009,"56":0.01,"57":0.01,"58":0.01,"59":0.01,"60":0.01,"61":0.011,"62":0.011,"63":0.011,"64":0.011,"65":0.012,"66":0.013,"67":0.014,"68":0.014,"69":0.014,"70":0.014,"71":0.014,"72":0.015,"73":0.016,"74":0.016,"75":0.017,"76":0.017,"77":0.018,"78":0.018,"79":0.018,"80":0.024,"81":0.023,"82":0.023,"83":0.024,"84":0.024,"85":0.025,"86":0.029,"87":0.029,"88":0.03,"89":0.031,"90":0.033,"91":0.034,"92":0.036,"93":0.037,"94":0.039,"95":0.043,"96":0.043,"97":0.046,"98":0.047,"99":0.05,"100":0.054,"101":0.054,"102":0.057,"103":0.059,"104":0.069,"105":0.071,"106":0.076,"107":0.077,"108":0.078,"109":0.083,"110":0.091,"111":0.095,"112":0.097,"113":0.104,"114":0.112,"115":0.119,"116":0.122,"117":0.13,"118":0.135,"119":0.142,"120":0.147,"121":0.156,"122":0.173,"123":0.184,"124":0.174,"125":0.188,"126":0.191,"127":0.194,"128":0.196,"129":0.21,"130":0.236,"131":0.243,"132":0.256,"133":0.272,"134":0.275,"135":0.277,"136":0.281,"137":0.295,"138":0.327,"139":0.327,"140":0.356,"141":0.372,"142":0.374,"143":0.37,"144":0.383,"145":0.406,"146":0.419,"147":0.44,"148":0.465,"149":0.507,"150":0.534,"151":0.552,"152":0.566,"153":0.617,"154":0.624,"155":0.663,"156":0.707,"157":0.784,"158":0.75,"159":0.785,"160":0.819,"161":0.836,"162":0.879,"163":0.943,"164":0.85,"165":0.838,"166":0.901,"167":0.955,"168":0.936,"169":0.806,"170":0.932,"171":0.803,"172":0.845,"173":0.97,"174":0.963,"175":0.975,"176":0.983,"177":1.062,"178":1.065,"179":1.145,"180":1.053,"181":0.94,"182":0.847,"183":0.893,"184":0.973,"185":1.027,"186":1.13,"187":1.209,"188":1.142,"189":1.192,"190":1.299,"191":1.334,"192":1.342,"193":1.391,"194":1.383,"195":1.16,"196":1.238,"197":1.392,"198":1.469,"199":1.419,"200":1.63,"201":1.767,"202":1.795,"203":1.841,"204":1.865,"205":2.042,"206":2.177,"207":2.27,"208":2.33,"209":2.453,"210":2.568,"211":2.58,"212":2.685,"213":2.833,"214":2.994,"215":3.129,"216":3.288,"217":3.393,"218":3.565,"219":3.779,"220":4.052,"221":4.206,"222":4.373,"223":4.611,"224":4.619,"225":4.592,"226":4.858,"227":5.01,"228":5.066,"229":5.348,"230":5.292,"231":5.127,"232":5.083,"233":5.063,"234":5.245,"235":5.402,"236":5.567,"237":5.708,"238":5.917,"239":6.046,"240":6.054,"241":6.122,"242":6.058,"243":6.046,"244":6.15,"245":6.279,"246":6.42,"247":6.527,"248":6.546,"249":6.531,"250":6.703,"251":6.861,"252":6.958,"253":7.333,"254":7.693,"255":7.984,"256":8.266,"257":8.428,"258":8.7,"259":8.603,"260":9.025,"261":9.377,"262":9.53,"263":9.609,"264":9.69,"265":9.679,"266":9.737,"267":9.867},"Land-Use-Change":{"0":null,"1":null,"2":null,"3":null,"4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null,"11":null,"12":null,"13":null,"14":null,"15":null,"16":null,"17":null,"18":null,"19":null,"20":null,"21":null,"22":null,"23":null,"24":null,"25":null,"26":null,"27":null,"28":null,"29":null,"30":null,"31":null,"32":null,"33":null,"34":null,"35":null,"36":null,"37":null,"38":null,"39":null,"40":null,"41":null,"42":null,"43":null,"44":null,"45":null,"46":null,"47":null,"48":null,"49":null,"50":null,"51":null,"52":null,"53":null,"54":null,"55":null,"56":null,"57":null,"58":null,"59":null,"60":null,"61":null,"62":null,"63":null,"64":null,"65":null,"66":null,"67":null,"68":null,"69":null,"70":null,"71":null,"72":null,"73":null,"74":null,"75":null,"76":null,"77":null,"78":null,"79":null,"80":null,"81":null,"82":null,"83":null,"84":null,"85":null,"86":null,"87":null,"88":null,"89":null,"90":null,"91":null,"92":null,"93":null,"94":null,"95":null,"96":null,"97":null,"98":null,"99":null,"100":0.688,"101":0.692,"102":0.697,"103":0.702,"104":0.705,"105":0.707,"106":0.711,"107":0.717,"108":0.723,"109":0.726,"110":0.696,"111":0.687,"112":0.683,"113":0.681,"114":0.679,"115":0.679,"116":0.676,"117":0.674,"118":0.672,"119":0.673,"120":0.742,"121":0.772,"122":0.791,"123":0.811,"124":0.827,"125":0.842,"126":0.854,"127":0.864,"128":0.873,"129":0.879,"130":0.876,"131":0.89,"132":0.9,"133":0.911,"134":0.92,"135":0.928,"136":0.932,"137":0.936,"138":0.94,"139":0.946,"140":0.979,"141":1.005,"142":1.021,"143":1.032,"144":1.044,"145":1.054,"146":1.063,"147":1.073,"148":1.078,"149":1.081,"150":1.119,"151":1.149,"152":1.167,"153":1.183,"154":1.197,"155":1.208,"156":1.215,"157":1.226,"158":1.228,"159":1.238,"160":1.215,"161":1.208,"162":1.197,"163":1.19,"164":1.17,"165":1.16,"166":1.151,"167":1.146,"168":1.145,"169":1.145,"170":1.197,"171":1.227,"172":1.25,"173":1.261,"174":1.271,"175":1.278,"176":1.282,"177":1.287,"178":1.288,"179":1.286,"180":1.349,"181":1.39,"182":1.413,"183":1.441,"184":1.46,"185":1.478,"186":1.496,"187":1.506,"188":1.513,"189":1.516,"190":1.543,"191":1.566,"192":1.562,"193":1.554,"194":1.544,"195":1.533,"196":1.523,"197":1.512,"198":1.496,"199":1.471,"200":1.551,"201":1.599,"202":1.617,"203":1.645,"204":1.674,"205":1.699,"206":1.731,"207":1.758,"208":1.789,"209":1.811,"210":1.673,"211":1.608,"212":1.567,"213":1.514,"214":1.464,"215":1.418,"216":1.376,"217":1.355,"218":1.354,"219":1.363,"220":1.322,"221":1.285,"222":1.247,"223":1.219,"224":1.179,"225":1.148,"226":1.13,"227":1.106,"228":1.069,"229":1.043,"230":1.086,"231":1.096,"232":1.108,"233":1.15,"234":1.186,"235":1.204,"236":1.242,"237":1.279,"238":1.297,"239":1.323,"240":1.322,"241":1.333,"242":1.348,"243":1.349,"244":1.345,"245":1.331,"246":1.306,"247":1.78,"248":1.228,"249":1.202,"250":1.316,"251":1.178,"252":1.338,"253":1.387,"254":1.336,"255":1.214,"256":1.254,"257":1.073,"258":1.128,"259":1.573,"260":1.419,"261":1.355,"262":1.599,"263":1.542,"264":1.602,"265":1.623,"266":1.3,"267":1.388},"Atmospheric-Growth":{"0":-0.078,"1":-0.074,"2":-0.071,"3":-0.068,"4":-0.064,"5":-0.058,"6":-0.05,"7":-0.04,"8":-0.028,"9":-0.014,"10":0.002,"11":0.02,"12":0.04,"13":0.063,"14":0.087,"15":0.112,"16":0.135,"17":0.156,"18":0.174,"19":0.191,"20":0.205,"21":0.216,"22":0.226,"23":0.233,"24":0.238,"25":0.243,"26":0.248,"27":0.256,"28":0.266,"29":0.278,"30":0.292,"31":0.315,"32":0.348,"33":0.379,"34":0.406,"35":0.43,"36":0.449,"37":0.466,"38":0.479,"39":0.488,"40":0.494,"41":0.496,"42":0.494,"43":0.489,"44":0.481,"45":0.469,"46":0.455,"47":0.439,"48":0.422,"49":0.402,"50":0.381,"51":0.362,"52":0.342,"53":0.322,"54":0.3,"55":0.277,"56":0.253,"57":0.228,"58":0.202,"59":0.174,"60":0.146,"61":0.116,"62":0.085,"63":0.053,"64":0.019,"65":-0.015,"66":-0.044,"67":-0.068,"68":-0.085,"69":-0.096,"70":-0.1,"71":-0.098,"72":-0.09,"73":-0.075,"74":-0.054,"75":-0.027,"76":0.006,"77":0.043,"78":0.068,"79":0.088,"80":0.106,"81":0.122,"82":0.137,"83":0.149,"84":0.16,"85":0.179,"86":0.205,"87":0.237,"88":0.274,"89":0.316,"90":0.361,"91":0.409,"92":0.455,"93":0.48,"94":0.479,"95":0.456,"96":0.421,"97":0.377,"98":0.323,"99":0.259,"100":0.189,"101":0.126,"102":0.07,"103":0.01,"104":-0.039,"105":-0.063,"106":-0.063,"107":-0.053,"108":-0.036,"109":-0.014,"110":0.015,"111":0.051,"112":0.095,"113":0.146,"114":0.207,"115":0.274,"116":0.334,"117":0.385,"118":0.427,"119":0.458,"120":0.481,"121":0.495,"122":0.497,"123":0.486,"124":0.462,"125":0.431,"126":0.41,"127":0.404,"128":0.414,"129":0.437,"130":0.468,"131":0.503,"132":0.545,"133":0.591,"134":0.646,"135":0.718,"136":0.782,"137":0.821,"138":0.838,"139":0.851,"140":0.862,"141":0.86,"142":0.843,"143":0.811,"144":0.772,"145":0.726,"146":0.664,"147":0.59,"148":0.531,"149":0.496,"150":0.482,"151":0.483,"152":0.498,"153":0.525,"154":0.563,"155":0.608,"156":0.641,"157":0.668,"158":0.688,"159":0.699,"160":0.707,"161":0.724,"162":0.755,"163":0.788,"164":0.814,"165":0.834,"166":0.846,"167":0.847,"168":0.834,"169":0.808,"170":0.774,"171":0.748,"172":0.732,"173":0.725,"174":0.727,"175":0.732,"176":0.745,"177":0.76,"178":0.778,"179":0.789,"180":0.791,"181":0.79,"182":0.788,"183":0.786,"184":0.782,"185":0.774,"186":0.758,"187":0.738,"188":0.713,"189":0.671,"190":0.606,"191":0.523,"192":0.429,"193":0.334,"194":0.259,"195":0.214,"196":0.203,"197":0.215,"198":0.25,"199":0.303,"200":0.362,"201":0.418,"202":0.479,"203":0.547,"204":0.622,"205":0.699,"206":0.774,"207":0.87,"208":1.02,"209":1.175,"210":1.31,"211":1.434,"212":1.55,"213":1.658,"214":1.762,"215":1.861,"216":1.956,"217":2.049,"218":2.138,"219":2.225,"220":2.31,"221":2.392,"222":2.473,"223":2.551,"224":2.627,"225":2.7,"226":2.77,"227":2.837,"228":2.899,"229":2.955,"230":3.004,"231":3.046,"232":3.084,"233":3.118,"234":3.148,"235":3.174,"236":3.197,"237":3.216,"238":3.231,"239":3.243,"240":3.252,"241":3.261,"242":3.273,"243":3.29,"244":3.311,"245":3.335,"246":3.361,"247":3.388,"248":3.412,"249":3.433,"250":3.449,"251":3.461,"252":3.469,"253":3.474,"254":3.476,"255":null,"256":null,"257":null,"258":null,"259":null,"260":null,"261":null,"262":null,"263":null,"264":null,"265":null,"266":null,"267":null},"Ocean-Sink":{"0":null,"1":null,"2":null,"3":null,"4":null,"5":null,"6":null,"7":null,"8":null,"9":null,"10":null,"11":null,"12":null,"13":null,"14":null,"15":null,"16":null,"17":null,"18":null,"19":null,"20":null,"21":null,"22":null,"23":null,"24":null,"25":null,"26":null,"27":null,"28":null,"29":null,"30":null,"31":0.074,"32":0.082,"33":0.09,"34":0.102,"35":0.104,"36":0.117,"37":0.124,"38":0.131,"39":0.133,"40":0.14,"41":0.147,"42":0.149,"43":0.156,"44":0.157,"45":0.164,"46":0.165,"47":0.166,"48":0.167,"49":0.167,"50":0.173,"51":0.173,"52":0.173,"53":0.174,"54":0.174,"55":0.174,"56":0.174,"57":0.173,"58":0.173,"59":0.173,"60":0.173,"61":0.167,"62":0.166,"63":0.166,"64":0.16,"65":0.16,"66":0.159,"67":0.158,"68":0.158,"69":0.152,"70":0.151,"71":0.151,"72":0.15,"73":0.144,"74":0.143,"75":0.142,"76":0.142,"77":0.141,"78":0.14,"79":0.135,"80":0.135,"81":0.134,"82":0.134,"83":0.134,"84":0.134,"85":0.134,"86":0.134,"87":0.135,"88":0.136,"89":0.137,"90":0.133,"91":0.139,"92":0.14,"93":0.141,"94":0.143,"95":0.144,"96":0.15,"97":0.151,"98":0.157,"99":0.158,"100":0.164,"101":0.165,"102":0.172,"103":0.173,"104":0.174,"105":0.181,"106":0.182,"107":0.189,"108":0.196,"109":0.198,"110":0.2,"111":0.207,"112":0.219,"113":0.226,"114":0.229,"115":0.236,"116":0.244,"117":0.252,"118":0.26,"119":0.268,"120":0.271,"121":0.279,"122":0.288,"123":0.296,"124":0.305,"125":0.313,"126":0.322,"127":0.335,"128":0.344,"129":0.353,"130":0.362,"131":0.37,"132":0.379,"133":0.387,"134":0.396,"135":0.404,"136":0.407,"137":0.415,"138":0.419,"139":0.426,"140":0.434,"141":0.436,"142":0.444,"143":0.451,"144":0.459,"145":0.462,"146":0.469,"147":0.477,"148":0.48,"149":0.488,"150":0.491,"151":0.499,"152":0.502,"153":0.511,"154":0.52,"155":0.523,"156":0.532,"157":0.541,"158":0.55,"159":0.558,"160":0.562,"161":0.57,"162":0.574,"163":0.582,"164":0.585,"165":0.594,"166":0.597,"167":0.605,"168":0.613,"169":0.616,"170":0.624,"171":0.632,"172":0.634,"173":0.642,"174":0.645,"175":0.652,"176":0.654,"177":0.656,"178":0.663,"179":0.664,"180":0.665,"181":0.667,"182":0.672,"183":0.673,"184":0.674,"185":0.674,"186":0.674,"187":0.674,"188":0.673,"189":0.673,"190":0.673,"191":0.668,"192":0.668,"193":0.669,"194":0.67,"195":0.671,"196":0.678,"197":0.681,"198":0.689,"199":0.693,"200":0.703,"201":0.712,"202":0.728,"203":0.745,"204":0.757,"205":0.77,"206":0.783,"207":0.793,"208":0.808,"209":0.834,"210":0.885,"211":0.916,"212":0.943,"213":0.96,"214":0.957,"215":0.977,"216":1.043,"217":1.09,"218":1.115,"219":1.179,"220":1.239,"221":1.249,"222":1.274,"223":1.369,"224":1.407,"225":1.396,"226":1.426,"227":1.488,"228":1.565,"229":1.607,"230":1.658,"231":1.697,"232":1.712,"233":1.756,"234":1.81,"235":1.844,"236":1.868,"237":1.905,"238":1.99,"239":2.03,"240":2.011,"241":2.01,"242":1.994,"243":1.967,"244":1.998,"245":2.079,"246":2.127,"247":2.142,"248":2.207,"249":2.281,"250":2.27,"251":2.274,"252":2.33,"253":2.411,"254":2.457,"255":2.486,"256":2.539,"257":2.555,"258":2.564,"259":2.594,"260":2.648,"261":null,"262":null,"263":null,"264":null,"265":null,"266":null,"267":null}}
+{
+  "0": {
+    "Year": 1750,
+    "Fossil-Fuel-Industry": null,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.078,
+    "Ocean-Sink": null
+  },
+  "1": {
+    "Year": 1751,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.074,
+    "Ocean-Sink": null
+  },
+  "2": {
+    "Year": 1752,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.071,
+    "Ocean-Sink": null
+  },
+  "3": {
+    "Year": 1753,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.068,
+    "Ocean-Sink": null
+  },
+  "4": {
+    "Year": 1754,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.064,
+    "Ocean-Sink": null
+  },
+  "5": {
+    "Year": 1755,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.058,
+    "Ocean-Sink": null
+  },
+  "6": {
+    "Year": 1756,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.05,
+    "Ocean-Sink": null
+  },
+  "7": {
+    "Year": 1757,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.04,
+    "Ocean-Sink": null
+  },
+  "8": {
+    "Year": 1758,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.028,
+    "Ocean-Sink": null
+  },
+  "9": {
+    "Year": 1759,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.014,
+    "Ocean-Sink": null
+  },
+  "10": {
+    "Year": 1760,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.002,
+    "Ocean-Sink": null
+  },
+  "11": {
+    "Year": 1761,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.02,
+    "Ocean-Sink": null
+  },
+  "12": {
+    "Year": 1762,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.04,
+    "Ocean-Sink": null
+  },
+  "13": {
+    "Year": 1763,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.063,
+    "Ocean-Sink": null
+  },
+  "14": {
+    "Year": 1764,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.087,
+    "Ocean-Sink": null
+  },
+  "15": {
+    "Year": 1765,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.112,
+    "Ocean-Sink": null
+  },
+  "16": {
+    "Year": 1766,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.135,
+    "Ocean-Sink": null
+  },
+  "17": {
+    "Year": 1767,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.156,
+    "Ocean-Sink": null
+  },
+  "18": {
+    "Year": 1768,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.174,
+    "Ocean-Sink": null
+  },
+  "19": {
+    "Year": 1769,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.191,
+    "Ocean-Sink": null
+  },
+  "20": {
+    "Year": 1770,
+    "Fossil-Fuel-Industry": 0.003,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.205,
+    "Ocean-Sink": null
+  },
+  "21": {
+    "Year": 1771,
+    "Fossil-Fuel-Industry": 0.004,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.216,
+    "Ocean-Sink": null
+  },
+  "22": {
+    "Year": 1772,
+    "Fossil-Fuel-Industry": 0.004,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.226,
+    "Ocean-Sink": null
+  },
+  "23": {
+    "Year": 1773,
+    "Fossil-Fuel-Industry": 0.004,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.233,
+    "Ocean-Sink": null
+  },
+  "24": {
+    "Year": 1774,
+    "Fossil-Fuel-Industry": 0.004,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.238,
+    "Ocean-Sink": null
+  },
+  "25": {
+    "Year": 1775,
+    "Fossil-Fuel-Industry": 0.004,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.243,
+    "Ocean-Sink": null
+  },
+  "26": {
+    "Year": 1776,
+    "Fossil-Fuel-Industry": 0.004,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.248,
+    "Ocean-Sink": null
+  },
+  "27": {
+    "Year": 1777,
+    "Fossil-Fuel-Industry": 0.004,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.256,
+    "Ocean-Sink": null
+  },
+  "28": {
+    "Year": 1778,
+    "Fossil-Fuel-Industry": 0.004,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.266,
+    "Ocean-Sink": null
+  },
+  "29": {
+    "Year": 1779,
+    "Fossil-Fuel-Industry": 0.004,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.278,
+    "Ocean-Sink": null
+  },
+  "30": {
+    "Year": 1780,
+    "Fossil-Fuel-Industry": 0.004,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.292,
+    "Ocean-Sink": null
+  },
+  "31": {
+    "Year": 1781,
+    "Fossil-Fuel-Industry": 0.005,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.315,
+    "Ocean-Sink": 0.074
+  },
+  "32": {
+    "Year": 1782,
+    "Fossil-Fuel-Industry": 0.005,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.348,
+    "Ocean-Sink": 0.082
+  },
+  "33": {
+    "Year": 1783,
+    "Fossil-Fuel-Industry": 0.005,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.379,
+    "Ocean-Sink": 0.09
+  },
+  "34": {
+    "Year": 1784,
+    "Fossil-Fuel-Industry": 0.005,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.406,
+    "Ocean-Sink": 0.102
+  },
+  "35": {
+    "Year": 1785,
+    "Fossil-Fuel-Industry": 0.005,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.43,
+    "Ocean-Sink": 0.104
+  },
+  "36": {
+    "Year": 1786,
+    "Fossil-Fuel-Industry": 0.005,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.449,
+    "Ocean-Sink": 0.117
+  },
+  "37": {
+    "Year": 1787,
+    "Fossil-Fuel-Industry": 0.005,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.466,
+    "Ocean-Sink": 0.124
+  },
+  "38": {
+    "Year": 1788,
+    "Fossil-Fuel-Industry": 0.005,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.479,
+    "Ocean-Sink": 0.131
+  },
+  "39": {
+    "Year": 1789,
+    "Fossil-Fuel-Industry": 0.005,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.488,
+    "Ocean-Sink": 0.133
+  },
+  "40": {
+    "Year": 1790,
+    "Fossil-Fuel-Industry": 0.005,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.494,
+    "Ocean-Sink": 0.14
+  },
+  "41": {
+    "Year": 1791,
+    "Fossil-Fuel-Industry": 0.006,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.496,
+    "Ocean-Sink": 0.147
+  },
+  "42": {
+    "Year": 1792,
+    "Fossil-Fuel-Industry": 0.006,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.494,
+    "Ocean-Sink": 0.149
+  },
+  "43": {
+    "Year": 1793,
+    "Fossil-Fuel-Industry": 0.006,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.489,
+    "Ocean-Sink": 0.156
+  },
+  "44": {
+    "Year": 1794,
+    "Fossil-Fuel-Industry": 0.006,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.481,
+    "Ocean-Sink": 0.157
+  },
+  "45": {
+    "Year": 1795,
+    "Fossil-Fuel-Industry": 0.006,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.469,
+    "Ocean-Sink": 0.164
+  },
+  "46": {
+    "Year": 1796,
+    "Fossil-Fuel-Industry": 0.006,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.455,
+    "Ocean-Sink": 0.165
+  },
+  "47": {
+    "Year": 1797,
+    "Fossil-Fuel-Industry": 0.007,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.439,
+    "Ocean-Sink": 0.166
+  },
+  "48": {
+    "Year": 1798,
+    "Fossil-Fuel-Industry": 0.007,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.422,
+    "Ocean-Sink": 0.167
+  },
+  "49": {
+    "Year": 1799,
+    "Fossil-Fuel-Industry": 0.007,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.402,
+    "Ocean-Sink": 0.167
+  },
+  "50": {
+    "Year": 1800,
+    "Fossil-Fuel-Industry": 0.008,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.381,
+    "Ocean-Sink": 0.173
+  },
+  "51": {
+    "Year": 1801,
+    "Fossil-Fuel-Industry": 0.008,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.362,
+    "Ocean-Sink": 0.173
+  },
+  "52": {
+    "Year": 1802,
+    "Fossil-Fuel-Industry": 0.01,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.342,
+    "Ocean-Sink": 0.173
+  },
+  "53": {
+    "Year": 1803,
+    "Fossil-Fuel-Industry": 0.009,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.322,
+    "Ocean-Sink": 0.174
+  },
+  "54": {
+    "Year": 1804,
+    "Fossil-Fuel-Industry": 0.009,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.3,
+    "Ocean-Sink": 0.174
+  },
+  "55": {
+    "Year": 1805,
+    "Fossil-Fuel-Industry": 0.009,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.277,
+    "Ocean-Sink": 0.174
+  },
+  "56": {
+    "Year": 1806,
+    "Fossil-Fuel-Industry": 0.01,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.253,
+    "Ocean-Sink": 0.174
+  },
+  "57": {
+    "Year": 1807,
+    "Fossil-Fuel-Industry": 0.01,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.228,
+    "Ocean-Sink": 0.173
+  },
+  "58": {
+    "Year": 1808,
+    "Fossil-Fuel-Industry": 0.01,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.202,
+    "Ocean-Sink": 0.173
+  },
+  "59": {
+    "Year": 1809,
+    "Fossil-Fuel-Industry": 0.01,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.174,
+    "Ocean-Sink": 0.173
+  },
+  "60": {
+    "Year": 1810,
+    "Fossil-Fuel-Industry": 0.01,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.146,
+    "Ocean-Sink": 0.173
+  },
+  "61": {
+    "Year": 1811,
+    "Fossil-Fuel-Industry": 0.011,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.116,
+    "Ocean-Sink": 0.167
+  },
+  "62": {
+    "Year": 1812,
+    "Fossil-Fuel-Industry": 0.011,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.085,
+    "Ocean-Sink": 0.166
+  },
+  "63": {
+    "Year": 1813,
+    "Fossil-Fuel-Industry": 0.011,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.053,
+    "Ocean-Sink": 0.166
+  },
+  "64": {
+    "Year": 1814,
+    "Fossil-Fuel-Industry": 0.011,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.019,
+    "Ocean-Sink": 0.16
+  },
+  "65": {
+    "Year": 1815,
+    "Fossil-Fuel-Industry": 0.012,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.015,
+    "Ocean-Sink": 0.16
+  },
+  "66": {
+    "Year": 1816,
+    "Fossil-Fuel-Industry": 0.013,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.044,
+    "Ocean-Sink": 0.159
+  },
+  "67": {
+    "Year": 1817,
+    "Fossil-Fuel-Industry": 0.014,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.068,
+    "Ocean-Sink": 0.158
+  },
+  "68": {
+    "Year": 1818,
+    "Fossil-Fuel-Industry": 0.014,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.085,
+    "Ocean-Sink": 0.158
+  },
+  "69": {
+    "Year": 1819,
+    "Fossil-Fuel-Industry": 0.014,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.096,
+    "Ocean-Sink": 0.152
+  },
+  "70": {
+    "Year": 1820,
+    "Fossil-Fuel-Industry": 0.014,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.1,
+    "Ocean-Sink": 0.151
+  },
+  "71": {
+    "Year": 1821,
+    "Fossil-Fuel-Industry": 0.014,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.098,
+    "Ocean-Sink": 0.151
+  },
+  "72": {
+    "Year": 1822,
+    "Fossil-Fuel-Industry": 0.015,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.09,
+    "Ocean-Sink": 0.15
+  },
+  "73": {
+    "Year": 1823,
+    "Fossil-Fuel-Industry": 0.016,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.075,
+    "Ocean-Sink": 0.144
+  },
+  "74": {
+    "Year": 1824,
+    "Fossil-Fuel-Industry": 0.016,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.054,
+    "Ocean-Sink": 0.143
+  },
+  "75": {
+    "Year": 1825,
+    "Fossil-Fuel-Industry": 0.017,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": -0.027,
+    "Ocean-Sink": 0.142
+  },
+  "76": {
+    "Year": 1826,
+    "Fossil-Fuel-Industry": 0.017,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.006,
+    "Ocean-Sink": 0.142
+  },
+  "77": {
+    "Year": 1827,
+    "Fossil-Fuel-Industry": 0.018,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.043,
+    "Ocean-Sink": 0.141
+  },
+  "78": {
+    "Year": 1828,
+    "Fossil-Fuel-Industry": 0.018,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.068,
+    "Ocean-Sink": 0.14
+  },
+  "79": {
+    "Year": 1829,
+    "Fossil-Fuel-Industry": 0.018,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.088,
+    "Ocean-Sink": 0.135
+  },
+  "80": {
+    "Year": 1830,
+    "Fossil-Fuel-Industry": 0.024,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.106,
+    "Ocean-Sink": 0.135
+  },
+  "81": {
+    "Year": 1831,
+    "Fossil-Fuel-Industry": 0.023,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.122,
+    "Ocean-Sink": 0.134
+  },
+  "82": {
+    "Year": 1832,
+    "Fossil-Fuel-Industry": 0.023,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.137,
+    "Ocean-Sink": 0.134
+  },
+  "83": {
+    "Year": 1833,
+    "Fossil-Fuel-Industry": 0.024,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.149,
+    "Ocean-Sink": 0.134
+  },
+  "84": {
+    "Year": 1834,
+    "Fossil-Fuel-Industry": 0.024,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.16,
+    "Ocean-Sink": 0.134
+  },
+  "85": {
+    "Year": 1835,
+    "Fossil-Fuel-Industry": 0.025,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.179,
+    "Ocean-Sink": 0.134
+  },
+  "86": {
+    "Year": 1836,
+    "Fossil-Fuel-Industry": 0.029,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.205,
+    "Ocean-Sink": 0.134
+  },
+  "87": {
+    "Year": 1837,
+    "Fossil-Fuel-Industry": 0.029,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.237,
+    "Ocean-Sink": 0.135
+  },
+  "88": {
+    "Year": 1838,
+    "Fossil-Fuel-Industry": 0.03,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.274,
+    "Ocean-Sink": 0.136
+  },
+  "89": {
+    "Year": 1839,
+    "Fossil-Fuel-Industry": 0.031,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.316,
+    "Ocean-Sink": 0.137
+  },
+  "90": {
+    "Year": 1840,
+    "Fossil-Fuel-Industry": 0.033,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.361,
+    "Ocean-Sink": 0.133
+  },
+  "91": {
+    "Year": 1841,
+    "Fossil-Fuel-Industry": 0.034,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.409,
+    "Ocean-Sink": 0.139
+  },
+  "92": {
+    "Year": 1842,
+    "Fossil-Fuel-Industry": 0.036,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.455,
+    "Ocean-Sink": 0.14
+  },
+  "93": {
+    "Year": 1843,
+    "Fossil-Fuel-Industry": 0.037,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.48,
+    "Ocean-Sink": 0.141
+  },
+  "94": {
+    "Year": 1844,
+    "Fossil-Fuel-Industry": 0.039,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.479,
+    "Ocean-Sink": 0.143
+  },
+  "95": {
+    "Year": 1845,
+    "Fossil-Fuel-Industry": 0.043,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.456,
+    "Ocean-Sink": 0.144
+  },
+  "96": {
+    "Year": 1846,
+    "Fossil-Fuel-Industry": 0.043,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.421,
+    "Ocean-Sink": 0.15
+  },
+  "97": {
+    "Year": 1847,
+    "Fossil-Fuel-Industry": 0.046,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.377,
+    "Ocean-Sink": 0.151
+  },
+  "98": {
+    "Year": 1848,
+    "Fossil-Fuel-Industry": 0.047,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.323,
+    "Ocean-Sink": 0.157
+  },
+  "99": {
+    "Year": 1849,
+    "Fossil-Fuel-Industry": 0.05,
+    "Land-Use-Change": null,
+    "Atmospheric-Growth": 0.259,
+    "Ocean-Sink": 0.158
+  },
+  "100": {
+    "Year": 1850,
+    "Fossil-Fuel-Industry": 0.054,
+    "Land-Use-Change": 0.688,
+    "Atmospheric-Growth": 0.189,
+    "Ocean-Sink": 0.164
+  },
+  "101": {
+    "Year": 1851,
+    "Fossil-Fuel-Industry": 0.054,
+    "Land-Use-Change": 0.692,
+    "Atmospheric-Growth": 0.126,
+    "Ocean-Sink": 0.165
+  },
+  "102": {
+    "Year": 1852,
+    "Fossil-Fuel-Industry": 0.057,
+    "Land-Use-Change": 0.697,
+    "Atmospheric-Growth": 0.07,
+    "Ocean-Sink": 0.172
+  },
+  "103": {
+    "Year": 1853,
+    "Fossil-Fuel-Industry": 0.059,
+    "Land-Use-Change": 0.702,
+    "Atmospheric-Growth": 0.01,
+    "Ocean-Sink": 0.173
+  },
+  "104": {
+    "Year": 1854,
+    "Fossil-Fuel-Industry": 0.069,
+    "Land-Use-Change": 0.705,
+    "Atmospheric-Growth": -0.039,
+    "Ocean-Sink": 0.174
+  },
+  "105": {
+    "Year": 1855,
+    "Fossil-Fuel-Industry": 0.071,
+    "Land-Use-Change": 0.707,
+    "Atmospheric-Growth": -0.063,
+    "Ocean-Sink": 0.181
+  },
+  "106": {
+    "Year": 1856,
+    "Fossil-Fuel-Industry": 0.076,
+    "Land-Use-Change": 0.711,
+    "Atmospheric-Growth": -0.063,
+    "Ocean-Sink": 0.182
+  },
+  "107": {
+    "Year": 1857,
+    "Fossil-Fuel-Industry": 0.077,
+    "Land-Use-Change": 0.717,
+    "Atmospheric-Growth": -0.053,
+    "Ocean-Sink": 0.189
+  },
+  "108": {
+    "Year": 1858,
+    "Fossil-Fuel-Industry": 0.078,
+    "Land-Use-Change": 0.723,
+    "Atmospheric-Growth": -0.036,
+    "Ocean-Sink": 0.196
+  },
+  "109": {
+    "Year": 1859,
+    "Fossil-Fuel-Industry": 0.083,
+    "Land-Use-Change": 0.726,
+    "Atmospheric-Growth": -0.014,
+    "Ocean-Sink": 0.198
+  },
+  "110": {
+    "Year": 1860,
+    "Fossil-Fuel-Industry": 0.091,
+    "Land-Use-Change": 0.696,
+    "Atmospheric-Growth": 0.015,
+    "Ocean-Sink": 0.2
+  },
+  "111": {
+    "Year": 1861,
+    "Fossil-Fuel-Industry": 0.095,
+    "Land-Use-Change": 0.687,
+    "Atmospheric-Growth": 0.051,
+    "Ocean-Sink": 0.207
+  },
+  "112": {
+    "Year": 1862,
+    "Fossil-Fuel-Industry": 0.097,
+    "Land-Use-Change": 0.683,
+    "Atmospheric-Growth": 0.095,
+    "Ocean-Sink": 0.219
+  },
+  "113": {
+    "Year": 1863,
+    "Fossil-Fuel-Industry": 0.104,
+    "Land-Use-Change": 0.681,
+    "Atmospheric-Growth": 0.146,
+    "Ocean-Sink": 0.226
+  },
+  "114": {
+    "Year": 1864,
+    "Fossil-Fuel-Industry": 0.112,
+    "Land-Use-Change": 0.679,
+    "Atmospheric-Growth": 0.207,
+    "Ocean-Sink": 0.229
+  },
+  "115": {
+    "Year": 1865,
+    "Fossil-Fuel-Industry": 0.119,
+    "Land-Use-Change": 0.679,
+    "Atmospheric-Growth": 0.274,
+    "Ocean-Sink": 0.236
+  },
+  "116": {
+    "Year": 1866,
+    "Fossil-Fuel-Industry": 0.122,
+    "Land-Use-Change": 0.676,
+    "Atmospheric-Growth": 0.334,
+    "Ocean-Sink": 0.244
+  },
+  "117": {
+    "Year": 1867,
+    "Fossil-Fuel-Industry": 0.13,
+    "Land-Use-Change": 0.674,
+    "Atmospheric-Growth": 0.385,
+    "Ocean-Sink": 0.252
+  },
+  "118": {
+    "Year": 1868,
+    "Fossil-Fuel-Industry": 0.135,
+    "Land-Use-Change": 0.672,
+    "Atmospheric-Growth": 0.427,
+    "Ocean-Sink": 0.26
+  },
+  "119": {
+    "Year": 1869,
+    "Fossil-Fuel-Industry": 0.142,
+    "Land-Use-Change": 0.673,
+    "Atmospheric-Growth": 0.458,
+    "Ocean-Sink": 0.268
+  },
+  "120": {
+    "Year": 1870,
+    "Fossil-Fuel-Industry": 0.147,
+    "Land-Use-Change": 0.742,
+    "Atmospheric-Growth": 0.481,
+    "Ocean-Sink": 0.271
+  },
+  "121": {
+    "Year": 1871,
+    "Fossil-Fuel-Industry": 0.156,
+    "Land-Use-Change": 0.772,
+    "Atmospheric-Growth": 0.495,
+    "Ocean-Sink": 0.279
+  },
+  "122": {
+    "Year": 1872,
+    "Fossil-Fuel-Industry": 0.173,
+    "Land-Use-Change": 0.791,
+    "Atmospheric-Growth": 0.497,
+    "Ocean-Sink": 0.288
+  },
+  "123": {
+    "Year": 1873,
+    "Fossil-Fuel-Industry": 0.184,
+    "Land-Use-Change": 0.811,
+    "Atmospheric-Growth": 0.486,
+    "Ocean-Sink": 0.296
+  },
+  "124": {
+    "Year": 1874,
+    "Fossil-Fuel-Industry": 0.174,
+    "Land-Use-Change": 0.827,
+    "Atmospheric-Growth": 0.462,
+    "Ocean-Sink": 0.305
+  },
+  "125": {
+    "Year": 1875,
+    "Fossil-Fuel-Industry": 0.188,
+    "Land-Use-Change": 0.842,
+    "Atmospheric-Growth": 0.431,
+    "Ocean-Sink": 0.313
+  },
+  "126": {
+    "Year": 1876,
+    "Fossil-Fuel-Industry": 0.191,
+    "Land-Use-Change": 0.854,
+    "Atmospheric-Growth": 0.41,
+    "Ocean-Sink": 0.322
+  },
+  "127": {
+    "Year": 1877,
+    "Fossil-Fuel-Industry": 0.194,
+    "Land-Use-Change": 0.864,
+    "Atmospheric-Growth": 0.404,
+    "Ocean-Sink": 0.335
+  },
+  "128": {
+    "Year": 1878,
+    "Fossil-Fuel-Industry": 0.196,
+    "Land-Use-Change": 0.873,
+    "Atmospheric-Growth": 0.414,
+    "Ocean-Sink": 0.344
+  },
+  "129": {
+    "Year": 1879,
+    "Fossil-Fuel-Industry": 0.21,
+    "Land-Use-Change": 0.879,
+    "Atmospheric-Growth": 0.437,
+    "Ocean-Sink": 0.353
+  },
+  "130": {
+    "Year": 1880,
+    "Fossil-Fuel-Industry": 0.236,
+    "Land-Use-Change": 0.876,
+    "Atmospheric-Growth": 0.468,
+    "Ocean-Sink": 0.362
+  },
+  "131": {
+    "Year": 1881,
+    "Fossil-Fuel-Industry": 0.243,
+    "Land-Use-Change": 0.89,
+    "Atmospheric-Growth": 0.503,
+    "Ocean-Sink": 0.37
+  },
+  "132": {
+    "Year": 1882,
+    "Fossil-Fuel-Industry": 0.256,
+    "Land-Use-Change": 0.9,
+    "Atmospheric-Growth": 0.545,
+    "Ocean-Sink": 0.379
+  },
+  "133": {
+    "Year": 1883,
+    "Fossil-Fuel-Industry": 0.272,
+    "Land-Use-Change": 0.911,
+    "Atmospheric-Growth": 0.591,
+    "Ocean-Sink": 0.387
+  },
+  "134": {
+    "Year": 1884,
+    "Fossil-Fuel-Industry": 0.275,
+    "Land-Use-Change": 0.92,
+    "Atmospheric-Growth": 0.646,
+    "Ocean-Sink": 0.396
+  },
+  "135": {
+    "Year": 1885,
+    "Fossil-Fuel-Industry": 0.277,
+    "Land-Use-Change": 0.928,
+    "Atmospheric-Growth": 0.718,
+    "Ocean-Sink": 0.404
+  },
+  "136": {
+    "Year": 1886,
+    "Fossil-Fuel-Industry": 0.281,
+    "Land-Use-Change": 0.932,
+    "Atmospheric-Growth": 0.782,
+    "Ocean-Sink": 0.407
+  },
+  "137": {
+    "Year": 1887,
+    "Fossil-Fuel-Industry": 0.295,
+    "Land-Use-Change": 0.936,
+    "Atmospheric-Growth": 0.821,
+    "Ocean-Sink": 0.415
+  },
+  "138": {
+    "Year": 1888,
+    "Fossil-Fuel-Industry": 0.327,
+    "Land-Use-Change": 0.94,
+    "Atmospheric-Growth": 0.838,
+    "Ocean-Sink": 0.419
+  },
+  "139": {
+    "Year": 1889,
+    "Fossil-Fuel-Industry": 0.327,
+    "Land-Use-Change": 0.946,
+    "Atmospheric-Growth": 0.851,
+    "Ocean-Sink": 0.426
+  },
+  "140": {
+    "Year": 1890,
+    "Fossil-Fuel-Industry": 0.356,
+    "Land-Use-Change": 0.979,
+    "Atmospheric-Growth": 0.862,
+    "Ocean-Sink": 0.434
+  },
+  "141": {
+    "Year": 1891,
+    "Fossil-Fuel-Industry": 0.372,
+    "Land-Use-Change": 1.005,
+    "Atmospheric-Growth": 0.86,
+    "Ocean-Sink": 0.436
+  },
+  "142": {
+    "Year": 1892,
+    "Fossil-Fuel-Industry": 0.374,
+    "Land-Use-Change": 1.021,
+    "Atmospheric-Growth": 0.843,
+    "Ocean-Sink": 0.444
+  },
+  "143": {
+    "Year": 1893,
+    "Fossil-Fuel-Industry": 0.37,
+    "Land-Use-Change": 1.032,
+    "Atmospheric-Growth": 0.811,
+    "Ocean-Sink": 0.451
+  },
+  "144": {
+    "Year": 1894,
+    "Fossil-Fuel-Industry": 0.383,
+    "Land-Use-Change": 1.044,
+    "Atmospheric-Growth": 0.772,
+    "Ocean-Sink": 0.459
+  },
+  "145": {
+    "Year": 1895,
+    "Fossil-Fuel-Industry": 0.406,
+    "Land-Use-Change": 1.054,
+    "Atmospheric-Growth": 0.726,
+    "Ocean-Sink": 0.462
+  },
+  "146": {
+    "Year": 1896,
+    "Fossil-Fuel-Industry": 0.419,
+    "Land-Use-Change": 1.063,
+    "Atmospheric-Growth": 0.664,
+    "Ocean-Sink": 0.469
+  },
+  "147": {
+    "Year": 1897,
+    "Fossil-Fuel-Industry": 0.44,
+    "Land-Use-Change": 1.073,
+    "Atmospheric-Growth": 0.59,
+    "Ocean-Sink": 0.477
+  },
+  "148": {
+    "Year": 1898,
+    "Fossil-Fuel-Industry": 0.465,
+    "Land-Use-Change": 1.078,
+    "Atmospheric-Growth": 0.531,
+    "Ocean-Sink": 0.48
+  },
+  "149": {
+    "Year": 1899,
+    "Fossil-Fuel-Industry": 0.507,
+    "Land-Use-Change": 1.081,
+    "Atmospheric-Growth": 0.496,
+    "Ocean-Sink": 0.488
+  },
+  "150": {
+    "Year": 1900,
+    "Fossil-Fuel-Industry": 0.534,
+    "Land-Use-Change": 1.119,
+    "Atmospheric-Growth": 0.482,
+    "Ocean-Sink": 0.491
+  },
+  "151": {
+    "Year": 1901,
+    "Fossil-Fuel-Industry": 0.552,
+    "Land-Use-Change": 1.149,
+    "Atmospheric-Growth": 0.483,
+    "Ocean-Sink": 0.499
+  },
+  "152": {
+    "Year": 1902,
+    "Fossil-Fuel-Industry": 0.566,
+    "Land-Use-Change": 1.167,
+    "Atmospheric-Growth": 0.498,
+    "Ocean-Sink": 0.502
+  },
+  "153": {
+    "Year": 1903,
+    "Fossil-Fuel-Industry": 0.617,
+    "Land-Use-Change": 1.183,
+    "Atmospheric-Growth": 0.525,
+    "Ocean-Sink": 0.511
+  },
+  "154": {
+    "Year": 1904,
+    "Fossil-Fuel-Industry": 0.624,
+    "Land-Use-Change": 1.197,
+    "Atmospheric-Growth": 0.563,
+    "Ocean-Sink": 0.52
+  },
+  "155": {
+    "Year": 1905,
+    "Fossil-Fuel-Industry": 0.663,
+    "Land-Use-Change": 1.208,
+    "Atmospheric-Growth": 0.608,
+    "Ocean-Sink": 0.523
+  },
+  "156": {
+    "Year": 1906,
+    "Fossil-Fuel-Industry": 0.707,
+    "Land-Use-Change": 1.215,
+    "Atmospheric-Growth": 0.641,
+    "Ocean-Sink": 0.532
+  },
+  "157": {
+    "Year": 1907,
+    "Fossil-Fuel-Industry": 0.784,
+    "Land-Use-Change": 1.226,
+    "Atmospheric-Growth": 0.668,
+    "Ocean-Sink": 0.541
+  },
+  "158": {
+    "Year": 1908,
+    "Fossil-Fuel-Industry": 0.75,
+    "Land-Use-Change": 1.228,
+    "Atmospheric-Growth": 0.688,
+    "Ocean-Sink": 0.55
+  },
+  "159": {
+    "Year": 1909,
+    "Fossil-Fuel-Industry": 0.785,
+    "Land-Use-Change": 1.238,
+    "Atmospheric-Growth": 0.699,
+    "Ocean-Sink": 0.558
+  },
+  "160": {
+    "Year": 1910,
+    "Fossil-Fuel-Industry": 0.819,
+    "Land-Use-Change": 1.215,
+    "Atmospheric-Growth": 0.707,
+    "Ocean-Sink": 0.562
+  },
+  "161": {
+    "Year": 1911,
+    "Fossil-Fuel-Industry": 0.836,
+    "Land-Use-Change": 1.208,
+    "Atmospheric-Growth": 0.724,
+    "Ocean-Sink": 0.57
+  },
+  "162": {
+    "Year": 1912,
+    "Fossil-Fuel-Industry": 0.879,
+    "Land-Use-Change": 1.197,
+    "Atmospheric-Growth": 0.755,
+    "Ocean-Sink": 0.574
+  },
+  "163": {
+    "Year": 1913,
+    "Fossil-Fuel-Industry": 0.943,
+    "Land-Use-Change": 1.19,
+    "Atmospheric-Growth": 0.788,
+    "Ocean-Sink": 0.582
+  },
+  "164": {
+    "Year": 1914,
+    "Fossil-Fuel-Industry": 0.85,
+    "Land-Use-Change": 1.17,
+    "Atmospheric-Growth": 0.814,
+    "Ocean-Sink": 0.585
+  },
+  "165": {
+    "Year": 1915,
+    "Fossil-Fuel-Industry": 0.838,
+    "Land-Use-Change": 1.16,
+    "Atmospheric-Growth": 0.834,
+    "Ocean-Sink": 0.594
+  },
+  "166": {
+    "Year": 1916,
+    "Fossil-Fuel-Industry": 0.901,
+    "Land-Use-Change": 1.151,
+    "Atmospheric-Growth": 0.846,
+    "Ocean-Sink": 0.597
+  },
+  "167": {
+    "Year": 1917,
+    "Fossil-Fuel-Industry": 0.955,
+    "Land-Use-Change": 1.146,
+    "Atmospheric-Growth": 0.847,
+    "Ocean-Sink": 0.605
+  },
+  "168": {
+    "Year": 1918,
+    "Fossil-Fuel-Industry": 0.936,
+    "Land-Use-Change": 1.145,
+    "Atmospheric-Growth": 0.834,
+    "Ocean-Sink": 0.613
+  },
+  "169": {
+    "Year": 1919,
+    "Fossil-Fuel-Industry": 0.806,
+    "Land-Use-Change": 1.145,
+    "Atmospheric-Growth": 0.808,
+    "Ocean-Sink": 0.616
+  },
+  "170": {
+    "Year": 1920,
+    "Fossil-Fuel-Industry": 0.932,
+    "Land-Use-Change": 1.197,
+    "Atmospheric-Growth": 0.774,
+    "Ocean-Sink": 0.624
+  },
+  "171": {
+    "Year": 1921,
+    "Fossil-Fuel-Industry": 0.803,
+    "Land-Use-Change": 1.227,
+    "Atmospheric-Growth": 0.748,
+    "Ocean-Sink": 0.632
+  },
+  "172": {
+    "Year": 1922,
+    "Fossil-Fuel-Industry": 0.845,
+    "Land-Use-Change": 1.25,
+    "Atmospheric-Growth": 0.732,
+    "Ocean-Sink": 0.634
+  },
+  "173": {
+    "Year": 1923,
+    "Fossil-Fuel-Industry": 0.97,
+    "Land-Use-Change": 1.261,
+    "Atmospheric-Growth": 0.725,
+    "Ocean-Sink": 0.642
+  },
+  "174": {
+    "Year": 1924,
+    "Fossil-Fuel-Industry": 0.963,
+    "Land-Use-Change": 1.271,
+    "Atmospheric-Growth": 0.727,
+    "Ocean-Sink": 0.645
+  },
+  "175": {
+    "Year": 1925,
+    "Fossil-Fuel-Industry": 0.975,
+    "Land-Use-Change": 1.278,
+    "Atmospheric-Growth": 0.732,
+    "Ocean-Sink": 0.652
+  },
+  "176": {
+    "Year": 1926,
+    "Fossil-Fuel-Industry": 0.983,
+    "Land-Use-Change": 1.282,
+    "Atmospheric-Growth": 0.745,
+    "Ocean-Sink": 0.654
+  },
+  "177": {
+    "Year": 1927,
+    "Fossil-Fuel-Industry": 1.062,
+    "Land-Use-Change": 1.287,
+    "Atmospheric-Growth": 0.76,
+    "Ocean-Sink": 0.656
+  },
+  "178": {
+    "Year": 1928,
+    "Fossil-Fuel-Industry": 1.065,
+    "Land-Use-Change": 1.288,
+    "Atmospheric-Growth": 0.778,
+    "Ocean-Sink": 0.663
+  },
+  "179": {
+    "Year": 1929,
+    "Fossil-Fuel-Industry": 1.145,
+    "Land-Use-Change": 1.286,
+    "Atmospheric-Growth": 0.789,
+    "Ocean-Sink": 0.664
+  },
+  "180": {
+    "Year": 1930,
+    "Fossil-Fuel-Industry": 1.053,
+    "Land-Use-Change": 1.349,
+    "Atmospheric-Growth": 0.791,
+    "Ocean-Sink": 0.665
+  },
+  "181": {
+    "Year": 1931,
+    "Fossil-Fuel-Industry": 0.94,
+    "Land-Use-Change": 1.39,
+    "Atmospheric-Growth": 0.79,
+    "Ocean-Sink": 0.667
+  },
+  "182": {
+    "Year": 1932,
+    "Fossil-Fuel-Industry": 0.847,
+    "Land-Use-Change": 1.413,
+    "Atmospheric-Growth": 0.788,
+    "Ocean-Sink": 0.672
+  },
+  "183": {
+    "Year": 1933,
+    "Fossil-Fuel-Industry": 0.893,
+    "Land-Use-Change": 1.441,
+    "Atmospheric-Growth": 0.786,
+    "Ocean-Sink": 0.673
+  },
+  "184": {
+    "Year": 1934,
+    "Fossil-Fuel-Industry": 0.973,
+    "Land-Use-Change": 1.46,
+    "Atmospheric-Growth": 0.782,
+    "Ocean-Sink": 0.674
+  },
+  "185": {
+    "Year": 1935,
+    "Fossil-Fuel-Industry": 1.027,
+    "Land-Use-Change": 1.478,
+    "Atmospheric-Growth": 0.774,
+    "Ocean-Sink": 0.674
+  },
+  "186": {
+    "Year": 1936,
+    "Fossil-Fuel-Industry": 1.13,
+    "Land-Use-Change": 1.496,
+    "Atmospheric-Growth": 0.758,
+    "Ocean-Sink": 0.674
+  },
+  "187": {
+    "Year": 1937,
+    "Fossil-Fuel-Industry": 1.209,
+    "Land-Use-Change": 1.506,
+    "Atmospheric-Growth": 0.738,
+    "Ocean-Sink": 0.674
+  },
+  "188": {
+    "Year": 1938,
+    "Fossil-Fuel-Industry": 1.142,
+    "Land-Use-Change": 1.513,
+    "Atmospheric-Growth": 0.713,
+    "Ocean-Sink": 0.673
+  },
+  "189": {
+    "Year": 1939,
+    "Fossil-Fuel-Industry": 1.192,
+    "Land-Use-Change": 1.516,
+    "Atmospheric-Growth": 0.671,
+    "Ocean-Sink": 0.673
+  },
+  "190": {
+    "Year": 1940,
+    "Fossil-Fuel-Industry": 1.299,
+    "Land-Use-Change": 1.543,
+    "Atmospheric-Growth": 0.606,
+    "Ocean-Sink": 0.673
+  },
+  "191": {
+    "Year": 1941,
+    "Fossil-Fuel-Industry": 1.334,
+    "Land-Use-Change": 1.566,
+    "Atmospheric-Growth": 0.523,
+    "Ocean-Sink": 0.668
+  },
+  "192": {
+    "Year": 1942,
+    "Fossil-Fuel-Industry": 1.342,
+    "Land-Use-Change": 1.562,
+    "Atmospheric-Growth": 0.429,
+    "Ocean-Sink": 0.668
+  },
+  "193": {
+    "Year": 1943,
+    "Fossil-Fuel-Industry": 1.391,
+    "Land-Use-Change": 1.554,
+    "Atmospheric-Growth": 0.334,
+    "Ocean-Sink": 0.669
+  },
+  "194": {
+    "Year": 1944,
+    "Fossil-Fuel-Industry": 1.383,
+    "Land-Use-Change": 1.544,
+    "Atmospheric-Growth": 0.259,
+    "Ocean-Sink": 0.67
+  },
+  "195": {
+    "Year": 1945,
+    "Fossil-Fuel-Industry": 1.16,
+    "Land-Use-Change": 1.533,
+    "Atmospheric-Growth": 0.214,
+    "Ocean-Sink": 0.671
+  },
+  "196": {
+    "Year": 1946,
+    "Fossil-Fuel-Industry": 1.238,
+    "Land-Use-Change": 1.523,
+    "Atmospheric-Growth": 0.203,
+    "Ocean-Sink": 0.678
+  },
+  "197": {
+    "Year": 1947,
+    "Fossil-Fuel-Industry": 1.392,
+    "Land-Use-Change": 1.512,
+    "Atmospheric-Growth": 0.215,
+    "Ocean-Sink": 0.681
+  },
+  "198": {
+    "Year": 1948,
+    "Fossil-Fuel-Industry": 1.469,
+    "Land-Use-Change": 1.496,
+    "Atmospheric-Growth": 0.25,
+    "Ocean-Sink": 0.689
+  },
+  "199": {
+    "Year": 1949,
+    "Fossil-Fuel-Industry": 1.419,
+    "Land-Use-Change": 1.471,
+    "Atmospheric-Growth": 0.303,
+    "Ocean-Sink": 0.693
+  },
+  "200": {
+    "Year": 1950,
+    "Fossil-Fuel-Industry": 1.63,
+    "Land-Use-Change": 1.551,
+    "Atmospheric-Growth": 0.362,
+    "Ocean-Sink": 0.703
+  },
+  "201": {
+    "Year": 1951,
+    "Fossil-Fuel-Industry": 1.767,
+    "Land-Use-Change": 1.599,
+    "Atmospheric-Growth": 0.418,
+    "Ocean-Sink": 0.712
+  },
+  "202": {
+    "Year": 1952,
+    "Fossil-Fuel-Industry": 1.795,
+    "Land-Use-Change": 1.617,
+    "Atmospheric-Growth": 0.479,
+    "Ocean-Sink": 0.728
+  },
+  "203": {
+    "Year": 1953,
+    "Fossil-Fuel-Industry": 1.841,
+    "Land-Use-Change": 1.645,
+    "Atmospheric-Growth": 0.547,
+    "Ocean-Sink": 0.745
+  },
+  "204": {
+    "Year": 1954,
+    "Fossil-Fuel-Industry": 1.865,
+    "Land-Use-Change": 1.674,
+    "Atmospheric-Growth": 0.622,
+    "Ocean-Sink": 0.757
+  },
+  "205": {
+    "Year": 1955,
+    "Fossil-Fuel-Industry": 2.042,
+    "Land-Use-Change": 1.699,
+    "Atmospheric-Growth": 0.699,
+    "Ocean-Sink": 0.77
+  },
+  "206": {
+    "Year": 1956,
+    "Fossil-Fuel-Industry": 2.177,
+    "Land-Use-Change": 1.731,
+    "Atmospheric-Growth": 0.774,
+    "Ocean-Sink": 0.783
+  },
+  "207": {
+    "Year": 1957,
+    "Fossil-Fuel-Industry": 2.27,
+    "Land-Use-Change": 1.758,
+    "Atmospheric-Growth": 0.87,
+    "Ocean-Sink": 0.793
+  },
+  "208": {
+    "Year": 1958,
+    "Fossil-Fuel-Industry": 2.33,
+    "Land-Use-Change": 1.789,
+    "Atmospheric-Growth": 1.02,
+    "Ocean-Sink": 0.808
+  },
+  "209": {
+    "Year": 1959,
+    "Fossil-Fuel-Industry": 2.453,
+    "Land-Use-Change": 1.811,
+    "Atmospheric-Growth": 1.175,
+    "Ocean-Sink": 0.834
+  },
+  "210": {
+    "Year": 1960,
+    "Fossil-Fuel-Industry": 2.568,
+    "Land-Use-Change": 1.673,
+    "Atmospheric-Growth": 1.31,
+    "Ocean-Sink": 0.885
+  },
+  "211": {
+    "Year": 1961,
+    "Fossil-Fuel-Industry": 2.58,
+    "Land-Use-Change": 1.608,
+    "Atmospheric-Growth": 1.434,
+    "Ocean-Sink": 0.916
+  },
+  "212": {
+    "Year": 1962,
+    "Fossil-Fuel-Industry": 2.685,
+    "Land-Use-Change": 1.567,
+    "Atmospheric-Growth": 1.55,
+    "Ocean-Sink": 0.943
+  },
+  "213": {
+    "Year": 1963,
+    "Fossil-Fuel-Industry": 2.833,
+    "Land-Use-Change": 1.514,
+    "Atmospheric-Growth": 1.658,
+    "Ocean-Sink": 0.96
+  },
+  "214": {
+    "Year": 1964,
+    "Fossil-Fuel-Industry": 2.994,
+    "Land-Use-Change": 1.464,
+    "Atmospheric-Growth": 1.762,
+    "Ocean-Sink": 0.957
+  },
+  "215": {
+    "Year": 1965,
+    "Fossil-Fuel-Industry": 3.129,
+    "Land-Use-Change": 1.418,
+    "Atmospheric-Growth": 1.861,
+    "Ocean-Sink": 0.977
+  },
+  "216": {
+    "Year": 1966,
+    "Fossil-Fuel-Industry": 3.288,
+    "Land-Use-Change": 1.376,
+    "Atmospheric-Growth": 1.956,
+    "Ocean-Sink": 1.043
+  },
+  "217": {
+    "Year": 1967,
+    "Fossil-Fuel-Industry": 3.393,
+    "Land-Use-Change": 1.355,
+    "Atmospheric-Growth": 2.049,
+    "Ocean-Sink": 1.09
+  },
+  "218": {
+    "Year": 1968,
+    "Fossil-Fuel-Industry": 3.565,
+    "Land-Use-Change": 1.354,
+    "Atmospheric-Growth": 2.138,
+    "Ocean-Sink": 1.115
+  },
+  "219": {
+    "Year": 1969,
+    "Fossil-Fuel-Industry": 3.779,
+    "Land-Use-Change": 1.363,
+    "Atmospheric-Growth": 2.225,
+    "Ocean-Sink": 1.179
+  },
+  "220": {
+    "Year": 1970,
+    "Fossil-Fuel-Industry": 4.052,
+    "Land-Use-Change": 1.322,
+    "Atmospheric-Growth": 2.31,
+    "Ocean-Sink": 1.239
+  },
+  "221": {
+    "Year": 1971,
+    "Fossil-Fuel-Industry": 4.206,
+    "Land-Use-Change": 1.285,
+    "Atmospheric-Growth": 2.392,
+    "Ocean-Sink": 1.249
+  },
+  "222": {
+    "Year": 1972,
+    "Fossil-Fuel-Industry": 4.373,
+    "Land-Use-Change": 1.247,
+    "Atmospheric-Growth": 2.473,
+    "Ocean-Sink": 1.274
+  },
+  "223": {
+    "Year": 1973,
+    "Fossil-Fuel-Industry": 4.611,
+    "Land-Use-Change": 1.219,
+    "Atmospheric-Growth": 2.551,
+    "Ocean-Sink": 1.369
+  },
+  "224": {
+    "Year": 1974,
+    "Fossil-Fuel-Industry": 4.619,
+    "Land-Use-Change": 1.179,
+    "Atmospheric-Growth": 2.627,
+    "Ocean-Sink": 1.407
+  },
+  "225": {
+    "Year": 1975,
+    "Fossil-Fuel-Industry": 4.592,
+    "Land-Use-Change": 1.148,
+    "Atmospheric-Growth": 2.7,
+    "Ocean-Sink": 1.396
+  },
+  "226": {
+    "Year": 1976,
+    "Fossil-Fuel-Industry": 4.858,
+    "Land-Use-Change": 1.13,
+    "Atmospheric-Growth": 2.77,
+    "Ocean-Sink": 1.426
+  },
+  "227": {
+    "Year": 1977,
+    "Fossil-Fuel-Industry": 5.01,
+    "Land-Use-Change": 1.106,
+    "Atmospheric-Growth": 2.837,
+    "Ocean-Sink": 1.488
+  },
+  "228": {
+    "Year": 1978,
+    "Fossil-Fuel-Industry": 5.066,
+    "Land-Use-Change": 1.069,
+    "Atmospheric-Growth": 2.899,
+    "Ocean-Sink": 1.565
+  },
+  "229": {
+    "Year": 1979,
+    "Fossil-Fuel-Industry": 5.348,
+    "Land-Use-Change": 1.043,
+    "Atmospheric-Growth": 2.955,
+    "Ocean-Sink": 1.607
+  },
+  "230": {
+    "Year": 1980,
+    "Fossil-Fuel-Industry": 5.292,
+    "Land-Use-Change": 1.086,
+    "Atmospheric-Growth": 3.004,
+    "Ocean-Sink": 1.658
+  },
+  "231": {
+    "Year": 1981,
+    "Fossil-Fuel-Industry": 5.127,
+    "Land-Use-Change": 1.096,
+    "Atmospheric-Growth": 3.046,
+    "Ocean-Sink": 1.697
+  },
+  "232": {
+    "Year": 1982,
+    "Fossil-Fuel-Industry": 5.083,
+    "Land-Use-Change": 1.108,
+    "Atmospheric-Growth": 3.084,
+    "Ocean-Sink": 1.712
+  },
+  "233": {
+    "Year": 1983,
+    "Fossil-Fuel-Industry": 5.063,
+    "Land-Use-Change": 1.15,
+    "Atmospheric-Growth": 3.118,
+    "Ocean-Sink": 1.756
+  },
+  "234": {
+    "Year": 1984,
+    "Fossil-Fuel-Industry": 5.245,
+    "Land-Use-Change": 1.186,
+    "Atmospheric-Growth": 3.148,
+    "Ocean-Sink": 1.81
+  },
+  "235": {
+    "Year": 1985,
+    "Fossil-Fuel-Industry": 5.402,
+    "Land-Use-Change": 1.204,
+    "Atmospheric-Growth": 3.174,
+    "Ocean-Sink": 1.844
+  },
+  "236": {
+    "Year": 1986,
+    "Fossil-Fuel-Industry": 5.567,
+    "Land-Use-Change": 1.242,
+    "Atmospheric-Growth": 3.197,
+    "Ocean-Sink": 1.868
+  },
+  "237": {
+    "Year": 1987,
+    "Fossil-Fuel-Industry": 5.708,
+    "Land-Use-Change": 1.279,
+    "Atmospheric-Growth": 3.216,
+    "Ocean-Sink": 1.905
+  },
+  "238": {
+    "Year": 1988,
+    "Fossil-Fuel-Industry": 5.917,
+    "Land-Use-Change": 1.297,
+    "Atmospheric-Growth": 3.231,
+    "Ocean-Sink": 1.99
+  },
+  "239": {
+    "Year": 1989,
+    "Fossil-Fuel-Industry": 6.046,
+    "Land-Use-Change": 1.323,
+    "Atmospheric-Growth": 3.243,
+    "Ocean-Sink": 2.03
+  },
+  "240": {
+    "Year": 1990,
+    "Fossil-Fuel-Industry": 6.054,
+    "Land-Use-Change": 1.322,
+    "Atmospheric-Growth": 3.252,
+    "Ocean-Sink": 2.011
+  },
+  "241": {
+    "Year": 1991,
+    "Fossil-Fuel-Industry": 6.122,
+    "Land-Use-Change": 1.333,
+    "Atmospheric-Growth": 3.261,
+    "Ocean-Sink": 2.01
+  },
+  "242": {
+    "Year": 1992,
+    "Fossil-Fuel-Industry": 6.058,
+    "Land-Use-Change": 1.348,
+    "Atmospheric-Growth": 3.273,
+    "Ocean-Sink": 1.994
+  },
+  "243": {
+    "Year": 1993,
+    "Fossil-Fuel-Industry": 6.046,
+    "Land-Use-Change": 1.349,
+    "Atmospheric-Growth": 3.29,
+    "Ocean-Sink": 1.967
+  },
+  "244": {
+    "Year": 1994,
+    "Fossil-Fuel-Industry": 6.15,
+    "Land-Use-Change": 1.345,
+    "Atmospheric-Growth": 3.311,
+    "Ocean-Sink": 1.998
+  },
+  "245": {
+    "Year": 1995,
+    "Fossil-Fuel-Industry": 6.279,
+    "Land-Use-Change": 1.331,
+    "Atmospheric-Growth": 3.335,
+    "Ocean-Sink": 2.079
+  },
+  "246": {
+    "Year": 1996,
+    "Fossil-Fuel-Industry": 6.42,
+    "Land-Use-Change": 1.306,
+    "Atmospheric-Growth": 3.361,
+    "Ocean-Sink": 2.127
+  },
+  "247": {
+    "Year": 1997,
+    "Fossil-Fuel-Industry": 6.527,
+    "Land-Use-Change": 1.78,
+    "Atmospheric-Growth": 3.388,
+    "Ocean-Sink": 2.142
+  },
+  "248": {
+    "Year": 1998,
+    "Fossil-Fuel-Industry": 6.546,
+    "Land-Use-Change": 1.228,
+    "Atmospheric-Growth": 3.412,
+    "Ocean-Sink": 2.207
+  },
+  "249": {
+    "Year": 1999,
+    "Fossil-Fuel-Industry": 6.531,
+    "Land-Use-Change": 1.202,
+    "Atmospheric-Growth": 3.433,
+    "Ocean-Sink": 2.281
+  },
+  "250": {
+    "Year": 2000,
+    "Fossil-Fuel-Industry": 6.703,
+    "Land-Use-Change": 1.316,
+    "Atmospheric-Growth": 3.449,
+    "Ocean-Sink": 2.27
+  },
+  "251": {
+    "Year": 2001,
+    "Fossil-Fuel-Industry": 6.861,
+    "Land-Use-Change": 1.178,
+    "Atmospheric-Growth": 3.461,
+    "Ocean-Sink": 2.274
+  },
+  "252": {
+    "Year": 2002,
+    "Fossil-Fuel-Industry": 6.958,
+    "Land-Use-Change": 1.338,
+    "Atmospheric-Growth": 3.469,
+    "Ocean-Sink": 2.33
+  },
+  "253": {
+    "Year": 2003,
+    "Fossil-Fuel-Industry": 7.333,
+    "Land-Use-Change": 1.387,
+    "Atmospheric-Growth": 3.474,
+    "Ocean-Sink": 2.411
+  },
+  "254": {
+    "Year": 2004,
+    "Fossil-Fuel-Industry": 7.693,
+    "Land-Use-Change": 1.336,
+    "Atmospheric-Growth": 3.476,
+    "Ocean-Sink": 2.457
+  },
+  "255": {
+    "Year": 2005,
+    "Fossil-Fuel-Industry": 7.984,
+    "Land-Use-Change": 1.214,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": 2.486
+  },
+  "256": {
+    "Year": 2006,
+    "Fossil-Fuel-Industry": 8.266,
+    "Land-Use-Change": 1.254,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": 2.539
+  },
+  "257": {
+    "Year": 2007,
+    "Fossil-Fuel-Industry": 8.428,
+    "Land-Use-Change": 1.073,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": 2.555
+  },
+  "258": {
+    "Year": 2008,
+    "Fossil-Fuel-Industry": 8.7,
+    "Land-Use-Change": 1.128,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": 2.564
+  },
+  "259": {
+    "Year": 2009,
+    "Fossil-Fuel-Industry": 8.603,
+    "Land-Use-Change": 1.573,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": 2.594
+  },
+  "260": {
+    "Year": 2010,
+    "Fossil-Fuel-Industry": 9.025,
+    "Land-Use-Change": 1.419,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": 2.648
+  },
+  "261": {
+    "Year": 2011,
+    "Fossil-Fuel-Industry": 9.377,
+    "Land-Use-Change": 1.355,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": null
+  },
+  "262": {
+    "Year": 2012,
+    "Fossil-Fuel-Industry": 9.53,
+    "Land-Use-Change": 1.599,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": null
+  },
+  "263": {
+    "Year": 2013,
+    "Fossil-Fuel-Industry": 9.609,
+    "Land-Use-Change": 1.542,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": null
+  },
+  "264": {
+    "Year": 2014,
+    "Fossil-Fuel-Industry": 9.69,
+    "Land-Use-Change": 1.602,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": null
+  },
+  "265": {
+    "Year": 2015,
+    "Fossil-Fuel-Industry": 9.679,
+    "Land-Use-Change": 1.623,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": null
+  },
+  "266": {
+    "Year": 2016,
+    "Fossil-Fuel-Industry": 9.737,
+    "Land-Use-Change": 1.3,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": null
+  },
+  "267": {
+    "Year": 2017,
+    "Fossil-Fuel-Industry": 9.867,
+    "Land-Use-Change": 1.388,
+    "Atmospheric-Growth": null,
+    "Ocean-Sink": null
+  }
+}

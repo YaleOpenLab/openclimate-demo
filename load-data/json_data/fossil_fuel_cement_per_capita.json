@@ -1,1 +1,297 @@
-{"Year":{"0":1959,"1":1960,"2":1961,"3":1962,"4":1963,"5":1964,"6":1965,"7":1966,"8":1967,"9":1968,"10":1969,"11":1970,"12":1971,"13":1972,"14":1973,"15":1974,"16":1975,"17":1976,"18":1977,"19":1978,"20":1979,"21":1980,"22":1981,"23":1982,"24":1983,"25":1984,"26":1985,"27":1986,"28":1987,"29":1988,"30":1989,"31":1990,"32":1991,"33":1992,"34":1993,"35":1994,"36":1995,"37":1996,"38":1997,"39":1998,"40":1999,"41":2000,"42":2001,"43":2002,"44":2003,"45":2004,"46":2005,"47":2006,"48":2007,"49":2008,"50":2009,"51":2010,"52":2011,"53":2012,"54":2013,"55":2014,"56":2015,"57":2016,"58":2017},"Per Capita":{"0":0.82,"1":0.85,"2":0.83,"3":0.85,"4":0.88,"5":0.91,"6":0.94,"7":0.96,"8":0.98,"9":1.0,"10":1.04,"11":1.09,"12":1.11,"13":1.14,"14":1.17,"15":1.15,"16":1.13,"17":1.17,"18":1.18,"19":1.18,"20":1.22,"21":1.19,"22":1.13,"23":1.1,"24":1.08,"25":1.1,"26":1.11,"27":1.12,"28":1.13,"29":1.15,"30":1.15,"31":1.14,"32":1.13,"33":1.1,"34":1.08,"35":1.08,"36":1.09,"37":1.1,"38":1.1,"39":1.09,"40":1.08,"41":1.09,"42":1.1,"43":1.1,"44":1.15,"45":1.19,"46":1.22,"47":1.25,"48":1.26,"49":1.28,"50":1.25,"51":1.3,"52":1.33,"53":1.34,"54":1.33,"55":1.33,"56":1.31,"57":1.3,"58":1.31},"Source":{"0":"CDIAC","1":"CDIAC","2":"CDIAC","3":"CDIAC","4":"CDIAC","5":"CDIAC","6":"CDIAC","7":"CDIAC","8":"CDIAC","9":"CDIAC","10":"CDIAC","11":"CDIAC","12":"CDIAC","13":"CDIAC","14":"CDIAC","15":"CDIAC","16":"CDIAC","17":"CDIAC","18":"CDIAC","19":"CDIAC","20":"CDIAC","21":"CDIAC","22":"CDIAC","23":"CDIAC","24":"CDIAC","25":"CDIAC","26":"CDIAC","27":"CDIAC","28":"CDIAC","29":"CDIAC","30":"CDIAC","31":"CDIAC","32":"CDIAC","33":"CDIAC","34":"CDIAC","35":"CDIAC","36":"CDIAC","37":"CDIAC","38":"CDIAC","39":"CDIAC","40":"CDIAC","41":"CDIAC","42":"CDIAC","43":"CDIAC","44":"CDIAC","45":"CDIAC","46":"CDIAC","47":"CDIAC","48":"CDIAC","49":"CDIAC","50":"CDIAC","51":"CDIAC","52":"CDIAC","53":"CDIAC","54":"CDIAC","55":"CDIAC","56":"BP","57":"BP","58":"BP"}}
+{
+  "0": {
+    "Year": 1959,
+    "Per Capita": 0.82,
+    "Source": "CDIAC"
+  },
+  "1": {
+    "Year": 1960,
+    "Per Capita": 0.85,
+    "Source": "CDIAC"
+  },
+  "2": {
+    "Year": 1961,
+    "Per Capita": 0.83,
+    "Source": "CDIAC"
+  },
+  "3": {
+    "Year": 1962,
+    "Per Capita": 0.85,
+    "Source": "CDIAC"
+  },
+  "4": {
+    "Year": 1963,
+    "Per Capita": 0.88,
+    "Source": "CDIAC"
+  },
+  "5": {
+    "Year": 1964,
+    "Per Capita": 0.91,
+    "Source": "CDIAC"
+  },
+  "6": {
+    "Year": 1965,
+    "Per Capita": 0.94,
+    "Source": "CDIAC"
+  },
+  "7": {
+    "Year": 1966,
+    "Per Capita": 0.96,
+    "Source": "CDIAC"
+  },
+  "8": {
+    "Year": 1967,
+    "Per Capita": 0.98,
+    "Source": "CDIAC"
+  },
+  "9": {
+    "Year": 1968,
+    "Per Capita": 1.0,
+    "Source": "CDIAC"
+  },
+  "10": {
+    "Year": 1969,
+    "Per Capita": 1.04,
+    "Source": "CDIAC"
+  },
+  "11": {
+    "Year": 1970,
+    "Per Capita": 1.09,
+    "Source": "CDIAC"
+  },
+  "12": {
+    "Year": 1971,
+    "Per Capita": 1.11,
+    "Source": "CDIAC"
+  },
+  "13": {
+    "Year": 1972,
+    "Per Capita": 1.14,
+    "Source": "CDIAC"
+  },
+  "14": {
+    "Year": 1973,
+    "Per Capita": 1.17,
+    "Source": "CDIAC"
+  },
+  "15": {
+    "Year": 1974,
+    "Per Capita": 1.15,
+    "Source": "CDIAC"
+  },
+  "16": {
+    "Year": 1975,
+    "Per Capita": 1.13,
+    "Source": "CDIAC"
+  },
+  "17": {
+    "Year": 1976,
+    "Per Capita": 1.17,
+    "Source": "CDIAC"
+  },
+  "18": {
+    "Year": 1977,
+    "Per Capita": 1.18,
+    "Source": "CDIAC"
+  },
+  "19": {
+    "Year": 1978,
+    "Per Capita": 1.18,
+    "Source": "CDIAC"
+  },
+  "20": {
+    "Year": 1979,
+    "Per Capita": 1.22,
+    "Source": "CDIAC"
+  },
+  "21": {
+    "Year": 1980,
+    "Per Capita": 1.19,
+    "Source": "CDIAC"
+  },
+  "22": {
+    "Year": 1981,
+    "Per Capita": 1.13,
+    "Source": "CDIAC"
+  },
+  "23": {
+    "Year": 1982,
+    "Per Capita": 1.1,
+    "Source": "CDIAC"
+  },
+  "24": {
+    "Year": 1983,
+    "Per Capita": 1.08,
+    "Source": "CDIAC"
+  },
+  "25": {
+    "Year": 1984,
+    "Per Capita": 1.1,
+    "Source": "CDIAC"
+  },
+  "26": {
+    "Year": 1985,
+    "Per Capita": 1.11,
+    "Source": "CDIAC"
+  },
+  "27": {
+    "Year": 1986,
+    "Per Capita": 1.12,
+    "Source": "CDIAC"
+  },
+  "28": {
+    "Year": 1987,
+    "Per Capita": 1.13,
+    "Source": "CDIAC"
+  },
+  "29": {
+    "Year": 1988,
+    "Per Capita": 1.15,
+    "Source": "CDIAC"
+  },
+  "30": {
+    "Year": 1989,
+    "Per Capita": 1.15,
+    "Source": "CDIAC"
+  },
+  "31": {
+    "Year": 1990,
+    "Per Capita": 1.14,
+    "Source": "CDIAC"
+  },
+  "32": {
+    "Year": 1991,
+    "Per Capita": 1.13,
+    "Source": "CDIAC"
+  },
+  "33": {
+    "Year": 1992,
+    "Per Capita": 1.1,
+    "Source": "CDIAC"
+  },
+  "34": {
+    "Year": 1993,
+    "Per Capita": 1.08,
+    "Source": "CDIAC"
+  },
+  "35": {
+    "Year": 1994,
+    "Per Capita": 1.08,
+    "Source": "CDIAC"
+  },
+  "36": {
+    "Year": 1995,
+    "Per Capita": 1.09,
+    "Source": "CDIAC"
+  },
+  "37": {
+    "Year": 1996,
+    "Per Capita": 1.1,
+    "Source": "CDIAC"
+  },
+  "38": {
+    "Year": 1997,
+    "Per Capita": 1.1,
+    "Source": "CDIAC"
+  },
+  "39": {
+    "Year": 1998,
+    "Per Capita": 1.09,
+    "Source": "CDIAC"
+  },
+  "40": {
+    "Year": 1999,
+    "Per Capita": 1.08,
+    "Source": "CDIAC"
+  },
+  "41": {
+    "Year": 2000,
+    "Per Capita": 1.09,
+    "Source": "CDIAC"
+  },
+  "42": {
+    "Year": 2001,
+    "Per Capita": 1.1,
+    "Source": "CDIAC"
+  },
+  "43": {
+    "Year": 2002,
+    "Per Capita": 1.1,
+    "Source": "CDIAC"
+  },
+  "44": {
+    "Year": 2003,
+    "Per Capita": 1.15,
+    "Source": "CDIAC"
+  },
+  "45": {
+    "Year": 2004,
+    "Per Capita": 1.19,
+    "Source": "CDIAC"
+  },
+  "46": {
+    "Year": 2005,
+    "Per Capita": 1.22,
+    "Source": "CDIAC"
+  },
+  "47": {
+    "Year": 2006,
+    "Per Capita": 1.25,
+    "Source": "CDIAC"
+  },
+  "48": {
+    "Year": 2007,
+    "Per Capita": 1.26,
+    "Source": "CDIAC"
+  },
+  "49": {
+    "Year": 2008,
+    "Per Capita": 1.28,
+    "Source": "CDIAC"
+  },
+  "50": {
+    "Year": 2009,
+    "Per Capita": 1.25,
+    "Source": "CDIAC"
+  },
+  "51": {
+    "Year": 2010,
+    "Per Capita": 1.3,
+    "Source": "CDIAC"
+  },
+  "52": {
+    "Year": 2011,
+    "Per Capita": 1.33,
+    "Source": "CDIAC"
+  },
+  "53": {
+    "Year": 2012,
+    "Per Capita": 1.34,
+    "Source": "CDIAC"
+  },
+  "54": {
+    "Year": 2013,
+    "Per Capita": 1.33,
+    "Source": "CDIAC"
+  },
+  "55": {
+    "Year": 2014,
+    "Per Capita": 1.33,
+    "Source": "CDIAC"
+  },
+  "56": {
+    "Year": 2015,
+    "Per Capita": 1.31,
+    "Source": "BP"
+  },
+  "57": {
+    "Year": 2016,
+    "Per Capita": 1.3,
+    "Source": "BP"
+  },
+  "58": {
+    "Year": 2017,
+    "Per Capita": 1.31,
+    "Source": "BP"
+  }
+}
