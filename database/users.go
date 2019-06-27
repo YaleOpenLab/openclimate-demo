@@ -1,11 +1,11 @@
 package database
 
 import (
-	"bytes"
+	"context"
 	"crypto/ecdsa"
 	"encoding/json"
-	"fmt"
 	"github.com/pkg/errors"
+	"log"
 	"math/big"
 
 	aes "github.com/YaleOpenLab/openx/aes"
@@ -15,6 +15,7 @@ import (
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
 	crypto "github.com/ethereum/go-ethereum/crypto"
+	"github.com/ethereum/go-ethereum/ethclient"
 )
 
 type User struct {
@@ -188,30 +189,49 @@ func ValidateUser(name string, pwhash string) (User, error) {
 	return inv, err
 }
 
-func (a *User) SendEthereumTx(address string, amount big.Int) error {
-	chainId := big.NewInt(3) // Ropsten chain id
-	senderPrivKey, err := crypto.HexToECDSA(a.EthereumWallet.PrivateKey)
+func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {
+	client, err := ethclient.Dial("https://ropsten.infura.io")
 	if err != nil {
-		return errors.Wrap(err, "could not convert private key from hex to ecdsa")
-	}
-	recipientAddr := common.HexToAddress(address)
-
-	nonce := uint64(7)
-	gasLimit := uint64(100000)         // hardcode gas, max 100k exec limit
-	gasPrice := big.NewInt(1000000000) // hardcode gas, 1 gwei price
-
-	tx := types.NewTransaction(nonce, recipientAddr, &amount, gasLimit, gasPrice, nil)
-
-	signer := types.NewEIP155Signer(chainId)
-	signedTx, err := types.SignTx(tx, signer, senderPrivKey)
-	if err != nil {
-		return errors.Wrap(err, "could not sign transaction, quitting")
+		return "", err
 	}
 
-	var buff bytes.Buffer
-	signedTx.EncodeRLP(&buff)
-	fmt.Printf("0x%x\n", buff.Bytes())
+	privateKey, err := crypto.HexToECDSA(a.EthereumWallet.PrivateKey)
+	if err != nil {
+		return "", err
+	}
 
-	// TODO: send this to infura or something once we decide to fit in a blockchain
-	return nil
+	publicKey := privateKey.Public()
+	publicKeyECDSA, ok := publicKey.(*ecdsa.PublicKey)
+	if !ok {
+		return "", errors.Wrap(err, "could not derive publickey from private key")
+	}
+
+	fromAddress := crypto.PubkeyToAddress(*publicKeyECDSA)
+	nonce, err := client.PendingNonceAt(context.Background(), fromAddress)
+	if err != nil {
+		return "", errors.Wrap(err, "could not derive nonce, quitting")
+	}
+
+	gasLimit := uint64(21000)
+	gasPrice, err := client.SuggestGasPrice(context.Background())
+	if err != nil {
+		return "", errors.Wrap(err, "could not get gas price from infura, quitting")
+	}
+
+	toAddress := common.HexToAddress(address)
+	var data []byte
+	tx := types.NewTransaction(nonce, toAddress, &amount, gasLimit, gasPrice, data)
+	signedTx, err := types.SignTx(tx, types.HomesteadSigner{}, privateKey)
+	if err != nil {
+		return "", errors.Wrap(err, "could not sing transaction, quitting")
+	}
+
+	err = client.SendTransaction(context.Background(), signedTx)
+	if err != nil {
+		return "", errors.Wrap(err, "could not send transaction to infura, quitting")
+	}
+
+	log.Printf("tx sent: %s", signedTx.Hash().Hex())
+
+	return signedTx.Hash().Hex(), nil
 }

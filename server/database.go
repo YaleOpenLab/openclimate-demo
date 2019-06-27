@@ -4,6 +4,7 @@ import (
 	"github.com/YaleOpenLab/openclimate/database"
 	ipfs "github.com/YaleOpenLab/openx/ipfs"
 	"log"
+	"math/big"
 	"net/http"
 )
 
@@ -179,5 +180,44 @@ func getIpfsHash() {
 		}
 
 		MarshalSend(w, hash)
+	})
+}
+
+func sendEth() {
+	http.HandleFunc("/user/sendeth", func(w http.ResponseWriter, r *http.Request) {
+		checkGet(w, r)
+		checkOrigin(w, r)
+
+		user, err := authorizeUser(r)
+		if err != nil {
+			log.Println("could not retrieve user from the database, quittting")
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		if r.URL.Query()["address"] == nil || r.URL.Query()["amount"] == nil {
+			log.Println("address or amount missing, quitting")
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		address := r.URL.Query()["address"][0]
+		amountStr := r.URL.Query()["amount"][0] // convert this to bigint
+
+		var amount big.Int
+		_, boolErr := amount.SetString(amountStr, 10)
+		if !boolErr {
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		txhash, err := user.SendEthereumTx(address, amount)
+		if err != nil {
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		log.Println("user: ", user.Name, "has sent tx with txhash: ", txhash)
+		responseHandler(w, StatusOK)
 	})
 }
