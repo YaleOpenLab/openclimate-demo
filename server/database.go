@@ -15,6 +15,8 @@ func setupDBHandlers() {
 	deleteUser()
 	updateUser()
 	getIpfsHash()
+	getAllCompanies()
+	getCompany()
 }
 
 // setupPingHandler is a ping route for remote callers to check if the platform is up
@@ -219,5 +221,58 @@ func sendEth() {
 
 		log.Println("user: ", user.Name, "has sent tx with txhash: ", txhash)
 		responseHandler(w, StatusOK)
+	})
+}
+
+func getAllCompanies() {
+	http.HandleFunc("/companies/all", func(w http.ResponseWriter, r *http.Request) {
+		checkGet(w, r)
+		checkOrigin(w, r)
+
+		_, err := authorizeUser(r)
+		if err != nil {
+			log.Println("could not retrieve user from the database, quittting")
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		companies, err := database.RetrieveAllCompanies()
+		if err != nil {
+			log.Println("error while retrieving all companies, quitting")
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		MarshalSend(w, companies)
+	})
+}
+
+func getCompany() {
+	http.HandleFunc("/company", func(w http.ResponseWriter, r *http.Request) {
+		checkGet(w, r)
+		checkOrigin(w, r)
+
+		_, err := authorizeUser(r)
+		if err != nil {
+			log.Println("could not retrieve user from the database, quitting")
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		if r.URL.Query()["company"] == nil {
+			log.Println("company name not passed, quitting")
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		companyName := r.URL.Query()["company"][0]
+		company, err := database.RetrieveCompanyByName(companyName)
+		if err != nil {
+			log.Println("error while retrieving all companies, quitting")
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		MarshalSend(w, company)
 	})
 }
