@@ -139,10 +139,10 @@ func RetrieveAllUsers() ([]User, error) {
 
 // RetrieveUser retrieves a particular User indexed by key from the database
 func RetrieveUser(key int) (User, error) {
-	var inv User
+	var user User
 	db, err := OpenDB()
 	if err != nil {
-		return inv, errors.Wrap(err, "error while opening database")
+		return user, errors.Wrap(err, "error while opening database")
 	}
 	defer db.Close()
 	err = db.View(func(tx *bolt.Tx) error {
@@ -151,22 +151,22 @@ func RetrieveUser(key int) (User, error) {
 		if x == nil {
 			return errors.New("retrieved user nil, quitting!")
 		}
-		return json.Unmarshal(x, &inv)
+		return json.Unmarshal(x, &user)
 	})
-	return inv, err
+	return user, err
 }
 
 // ValidateUser validates a particular user
 func ValidateUser(name string, pwhash string) (User, error) {
-	var inv User
+	var user User
 	temp, err := RetrieveAllUsers()
 	if err != nil {
-		return inv, errors.Wrap(err, "error while retrieving all users from database")
+		return user, errors.Wrap(err, "error while retrieving all users from database")
 	}
 	limit := len(temp) + 1
 	db, err := OpenDB()
 	if err != nil {
-		return inv, errors.Wrap(err, "could not open db, quitting!")
+		return user, errors.Wrap(err, "could not open db, quitting!")
 	}
 	defer db.Close()
 	err = db.View(func(tx *bolt.Tx) error {
@@ -180,13 +180,13 @@ func ValidateUser(name string, pwhash string) (User, error) {
 			}
 			// check names
 			if rUser.Name == name && rUser.Pwhash == pwhash {
-				inv = rUser
+				user = rUser
 				return nil
 			}
 		}
 		return errors.New("Not Found")
 	})
-	return inv, err
+	return user, err
 }
 
 func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {

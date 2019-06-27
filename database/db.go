@@ -10,6 +10,7 @@ import (
 )
 
 var UserBucket = []byte("Users")
+var CompanyBucket = []byte("Companies")
 
 // CreateHomeDir creates a home directory
 func CreateHomeDir() {
@@ -41,6 +42,11 @@ func OpenDB() (*bolt.DB, error) {
 			log.Println("Error while creating projects bucket", err)
 			return err
 		}
+		_, err = tx.CreateBucketIfNotExists(CompanyBucket) // the projects bucket contains all our projects
+		if err != nil {
+			log.Println("Error while creating projects bucket", err)
+			return err
+		}
 		return nil
 	})
 	return db, err
@@ -63,4 +69,3 @@ func DeleteKeyFromBucket(key int, bucketName []byte) error {
 		return nil
 	})
 }
-
