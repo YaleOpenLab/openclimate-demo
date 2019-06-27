@@ -2,6 +2,7 @@ package server
 
 import (
 	"github.com/YaleOpenLab/openclimate/database"
+	ipfs "github.com/YaleOpenLab/openx/ipfs"
 	"log"
 	"net/http"
 )
@@ -12,6 +13,7 @@ func setupDBHandlers() {
 	retrieveAllUsers()
 	deleteUser()
 	updateUser()
+	getIpfsHash()
 }
 
 // setupPingHandler is a ping route for remote callers to check if the platform is up
@@ -144,5 +146,38 @@ func updateUser() {
 		}
 
 		MarshalSend(w, user)
+	})
+}
+
+// getIpfsHash gets the ipfs hash of the passed string
+func getIpfsHash() {
+	http.HandleFunc("/ipfs/hash", func(w http.ResponseWriter, r *http.Request) {
+		checkGet(w, r)
+		checkOrigin(w, r)
+		_, err := authorizeUser(r)
+		if err != nil {
+			responseHandler(w, StatusUnauthorized)
+			return
+		}
+		if r.URL.Query()["string"] == nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		hashString := r.URL.Query()["string"][0]
+		hash, err := ipfs.AddStringToIpfs(hashString)
+		if err != nil {
+			log.Println("did not add string to ipfs", err)
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		hashCheck, err := ipfs.GetStringFromIpfs(hash)
+		if err != nil || hashCheck != hashString {
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		MarshalSend(w, hash)
 	})
 }
