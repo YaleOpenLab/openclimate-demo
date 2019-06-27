@@ -2,17 +2,17 @@ package database
 
 import (
 	"bytes"
-	"fmt"
 	"crypto/ecdsa"
 	"database/sql"
+	"fmt"
 	"github.com/pkg/errors"
 	"log"
 	"math/big"
 
 	aes "github.com/YaleOpenLab/openx/aes"
 	utils "github.com/YaleOpenLab/openx/utils"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
 	crypto "github.com/ethereum/go-ethereum/crypto"
 )
@@ -253,7 +253,7 @@ func (a *User) SendEthereumTx(address string, amount big.Int) error {
 	recipientAddr := common.HexToAddress(address)
 
 	nonce := uint64(7)
-	gasLimit := uint64(100000)     // hardcode gas, max 100k exec limit
+	gasLimit := uint64(100000)         // hardcode gas, max 100k exec limit
 	gasPrice := big.NewInt(1000000000) // hardcode gas, 1 gwei price
 
 	tx := types.NewTransaction(nonce, recipientAddr, &amount, gasLimit, gasPrice, nil)
