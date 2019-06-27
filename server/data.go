@@ -7,6 +7,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"time"
 )
 
 func dataHandler() {
@@ -14,6 +15,9 @@ func dataHandler() {
 	getUSCounties()
 	getParisAgreement()
 	getOceanData()
+	queryNazca()
+	queryNazcaCountry()
+	getCountryId()
 }
 
 type USStatesReturn struct {
@@ -199,5 +203,115 @@ func getOceanData() {
 			y[utils.ItoS(values.Year)] = temp
 		}
 		MarshalSend(w, y)
+	})
+}
+
+var NazcaURL = "https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid="
+
+type NazcaResponse struct {
+	EntityID       string `json:"entityID"`
+	EntityName     string `json:"entityName"`
+	CountryName    string `json:"countryName"`
+	EntityTypeName string `json:"entityTypeName"`
+	Actions        []struct {
+		ActionType  string `json:"actionType"`
+		Name        string `json:"name"`
+		Description string `json:"description"`
+		Adhoc       string `json:"adhoc"`
+	}
+}
+
+func queryNazca() {
+	http.HandleFunc("/nazca/data", func(w http.ResponseWriter, r *http.Request) {
+		checkGet(w, r)
+		checkOrigin(w, r)
+
+		_, err := authorizeUser(r)
+		if err != nil {
+			log.Println("could not retrieve user from the database, quitting")
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		for i := 173; i < 174; i++ {
+			apiUrl := "https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid=" + utils.ItoS(i)
+			data, err := Get(apiUrl)
+			if err != nil {
+				log.Println("country: ", i, "not queryable", err)
+				time.Sleep(1 * time.Second)
+				continue
+			}
+			var x []NazcaResponse
+			err = json.Unmarshal(data, &x)
+			if err != nil {
+				log.Println("could not unmarshal data, quitting", err)
+				responseHandler(w, StatusInternalServerError)
+				return
+			}
+			time.Sleep(1 * time.Second)
+			MarshalSend(w, x)
+		}
+	})
+}
+
+func queryNazcaCountry() {
+	http.HandleFunc("/nazcacountry/data", func(w http.ResponseWriter, r *http.Request) {
+		checkGet(w, r)
+		checkOrigin(w, r)
+
+		_, err := authorizeUser(r)
+		if err != nil {
+			log.Println("could not retrieve user from the database, quitting")
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		countryMap := make(map[int]string)
+		for i := 1; i < 181; i++ {
+			apiUrl := "https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid=" + utils.ItoS(i)
+			data, err := Get(apiUrl)
+			if err != nil {
+				log.Println("country: ", i, "not queryable", err)
+				time.Sleep(1 * time.Second)
+				continue
+			}
+			var x []NazcaResponse
+			err = json.Unmarshal(data, &x)
+			if err != nil {
+				log.Println("could not unmarshal data, quitting", err)
+				responseHandler(w, StatusInternalServerError)
+				return
+			}
+			if len(x) != 0 {
+				log.Println("COUNTRY NAME: ", x[0].CountryName)
+				countryMap[i] = x[0].CountryName
+			}
+			time.Sleep(1 * time.Second)
+		}
+
+		log.Println("COUNTRY MAP: ", countryMap)
+	})
+}
+
+type CountryIdResponse struct {
+	CountryIds map[int]string
+}
+
+func getCountryId() {
+	http.HandleFunc("/countries/id", func(w http.ResponseWriter, r *http.Request) {
+		checkGet(w, r)
+		checkOrigin(w, r)
+
+		_, err := authorizeUser(r)
+		if err != nil {
+			log.Println("could not retrieve user from the database, quitting")
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		countryIds := database.InitUSStates()
+		var x CountryIdResponse
+		x.CountryIds = countryIds
+		MarshalSend(w, x)
 	})
 }

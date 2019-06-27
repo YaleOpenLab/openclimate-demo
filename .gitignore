@@ -2,3 +2,4 @@ openclimate
 config.yaml
 relayer/relayer
 load-data/load-data
+.DS_Store
