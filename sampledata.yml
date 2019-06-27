@@ -1,139 +1,138 @@
 Dashboard:
-	Name:                   'blah'
-	ScopeMetrics:           ['blah', 'blah', 'blah']
-	DirectEmissions:        "blah"
-	DirectEmissionsLink:    "blah"
-	MitigationOutcomes:     "blah"
-	MitigationOutcomesLink: "blah"
-	WindSolar:              "blah"
-	WindSolarLink:          "blah"
-	Adaptation:             "blah"
+  Name:                     "blah"
+  ScopeMetrics:             ['blah', 'blah', 'blah']
+  DirectEmissions:          "blah"
+  DirectEmissionsLink:      "blah"
+  MitigationOutcomes:       "blah"
+  MitigationOutcomesLink:   "blah"
+  WindSolar:                "blah"
+  WindSolarLink:            "blah"
+  Adaptation:               "blah"
 
-	Pledges:
-		"Net Emissions":       "Carbon Neutral"
-	YourReportingProfile:
-		PublicDisclosure:
-			"Accounting visibility": ""Aggregate Accounting""
-			"Accounting visibility": ""Aggregate Accounting""
-	}
-	WeightedScore:          56
-	ClimateAccountability:
-		Direct:                4.5
-		Indirect:              4.5
-		Untrackable:           4.5
-	View:
-	Earth:
-		CWarming        :      "blah"
-		CO2PPM          :      "blah"
-		GtCO2Left       :      "blah"
-		GtCo2Year       :      "blah"
-		EarthStatusLink :      "blah"
-	NationState:
-		Country   :            "blah"
-		NDCPledge :            "blah"
-	Subnational:
-		Country :              "blah"
-		State   :              "blah"
-	ClimateActionAssets:
-		Mitigation:
-			RenewableEnergy:      false
-		Class1:
-	    Key1:
-				Name                    : "blah"
-				Type                    : "blah"
-				ScopeMetrics            : ["blah", "blah"]
-				Capacity                : "blah"
-				MitigationOutcomes      : "blah"
-				GWhYer                  : "blah"
-				CertificateAssetsToDate : "blah"
-				ReportingDevice         : "blah"
-				ActiveIssues            : ["blah", "blah"]
-				MRVMethodology          : "blah"
-				MRVMethodologyLink      : "blah"
-				BlueProgressBar         4.5
-				StarRating              2
-				Certificates           :
-					CertificateId :     "blah"
-					Type          :     "blah"
-					Unit          :     "blah"
-					Start         :     "blah"
-					End           :     "blah"
-					Status        :     "blah"
-				AccessTerminal     : "blah"
-				AccessTerminalLink : "blah"
-	    Key2:
-					Name                    : "blah"
-					Type                    : "blah"
-					ScopeMetrics            : ["blah", "blah"]
-					Capacity                : "blah"
-					MitigationOutcomes      : "blah"
-					GWhYer                  : "blah"
-					CertificateAssetsToDate : "blah"
-					ReportingDevice         : "blah"
-					ActiveIssues            : ["blah", "blah"]
-					MRVMethodology          : "blah"
-					MRVMethodologyLink      : "blah"
-					BlueProgressBar         4.5
-					StarRating              2
-					Certificates           :
-						CertificateId :    "blah"
-						Type          :    "blah"
-						Unit          :    "blah"
-						Start         :    "blah"
-						End           :    "blah"
-						Status        :    "blah"
-					AccessTerminal     : "blah"
-					AccessTerminalLink : "blah"
-		EditNestedScopes :     "blah"
-	Review:
-	CarbonBalance:
-		MtCO2Year   :          "blah"
-		Emissions   :          "blah"
-		Reductions  :          "blah"
-		LastUpdated :          "blah"
-		ReviewLink  :          "blah"
-		RandomBlock:
-			CertID :              "blah"
-			Type   :              "blah"
-			Unit   :              "blah"
-			Status :              "blah"
-		BuyTradeLink :         "blah"
+  Pledges:
+    NetEmissions:           "Carbon Neutral"
+  YourReportingProfile:
+    PublicDisclosure:
+      AccountingVisibility: "Aggregate Accounting"
+      AccountingVisibility: "Aggregate Accounting"
+  WeightedScore:            56
+  ClimateAccountability:
+    Direct:                 4.5
+    Indirect:               4.5
+    Untrackable:            4.5
+  View:
+  Earth:
+    CWarming        :       "blah"
+    CO2PPM          :       "blah"
+    GtCO2Left       :       "blah"
+    GtCo2Year       :       "blah"
+    EarthStatusLink :       "blah"
+  NationState:
+    Country   :             "blah"
+    NDCPledge :             "blah"
+  Subnational:
+    Country :               "blah"
+    State   :               "blah"
+  ClimateActionAssets:
+    Mitigation:
+      RenewableEnergy:      false
+    Class1:
+      Key1:
+        Name                    : "blah"
+        Type                    : "blah"
+        ScopeMetrics            : ["blah", "blah"]
+        Capacity                : "blah"
+        MitigationOutcomes      : "blah"
+        GWhYer                  : "blah"
+        CertificateAssetsToDate : "blah"
+        ReportingDevice         : "blah"
+        ActiveIssues            : ["blah", "blah"]
+        MRVMethodology          : "blah"
+        MRVMethodologyLink      : "blah"
+        BlueProgressBar         : 4.5
+        StarRating              : 2
+        Certificates           :
+          CertificateId :   "blah"
+          Type          :   "blah"
+          Unit          :   "blah"
+          Start         :   "blah"
+          End           :   "blah"
+          Status        :   "blah"
+        AccessTerminal     : "blah"
+        AccessTerminalLink : "blah"
+      Key2:
+          Name                    : "blah"
+          Type                    : "blah"
+          ScopeMetrics            : ["blah", "blah"]
+          Capacity                : "blah"
+          MitigationOutcomes      : "blah"
+          GWhYer                  : "blah"
+          CertificateAssetsToDate : "blah"
+          ReportingDevice         : "blah"
+          ActiveIssues            : ["blah", "blah"]
+          MRVMethodology          : "blah"
+          MRVMethodologyLink      : "blah"
+          BlueProgressBar         : 4.5
+          StarRating              : 2
+          Certificates           :
+            CertificateId : "blah"
+            Type          : "blah"
+            Unit          : "blah"
+            Start         : "blah"
+            End           : "blah"
+            Status        : "blah"
+          AccessTerminal     : "blah"
+          AccessTerminalLink : "blah"
+    EditNestedScopes :      "blah"
+  Review:
+  CarbonBalance:
+    MtCO2Year   :           "blah"
+    Emissions   :           "blah"
+    Reductions  :           "blah"
+    LastUpdated :           "blah"
+    ReviewLink  :           "blah"
+    RandomBlock:
+      CertID :              "blah"
+      Type   :              "blah"
+      Unit   :              "blah"
+      Status :              "blah"
+    BuyTradeLink :          "blah"
 
-	CLimateReports:
-		Name                 : "blah"
-		Scope                : "blah"
-		Date                 : "blah"
-		Verified             : "blah"
-		DownloadLink         : "blah"
-		SeeAllLink           : "blah"
-		NewClimateReportLink : "blah"
-		ExportData           : "blah"
+  ClimateReports:
+    Name                 :  "blah"
+    Scope                :  "blah"
+    Date                 :  "blah"
+    Verified             :  "blah"
+    DownloadLink         :  "blah"
+    SeeAllLink           :  "blah"
+    NewClimateReportLink :  "blah"
+    ExportData           :  "blah"
 
-	IssuesAndDeposits:
-		All:
-			IssueName    :        "blah"
-			IssueId      :        "blah"
-			IssueDate    :        "blah"
-			IssueCreator :        "blah"
-			Tags         :        ["blah", "blah"]
-			Author       :        "blah"
-			Labels       :        ["blah", "blah"]
-			Assets       :        ["blah", "blah"]
-			Started      :        bool
-			Assignee     :        "blah"
+  IssuesAndDeposits:
+    All:
+      IssueName    :        "blah"
+      IssueId      :        "blah"
+      IssueDate    :        "blah"
+      IssueCreator :        "blah"
+      Tags         :        ["blah", "blah"]
+      Author       :        "blah"
+      Labels       :        ["blah", "blah"]
+      Assets       :        ["blah", "blah"]
+      Started      :        bool
+      Assignee     :        "blah"
 
-	Manage:
-		ClimateActions:
-			StartNewLink      :   "blah"
-			AddExistingLink   :   "blah"
-			BulkIntegrateLink :   "blah"
-		ManageCAP:
-			Type            :     ["blah", "blah"]
-			Action          :     "blah"
-			Name            :     "blah"
-			Quantity        :     "blah"
-			Region          :     "blah"
-			Note            :     "blah"
-			MRVProcess      :     "blah"
-			BlueProgressBar:      45
-			Rating          2
+  Manage:
+    ClimateActions:
+      StartNewLink      :   "blah"
+      AddExistingLink   :   "blah"
+      BulkIntegrateLink :   "blah"
+    ManageCAP:
+      Type            :     ["blah", "blah"]
+      Action          :     "blah"
+      Name            :     "blah"
+      Quantity        :     "blah"
+      Region          :     "blah"
+      Note            :     "blah"
+      MRVProcess      :     "blah"
+      BlueProgressBar:      45
+      Rating          :     2
