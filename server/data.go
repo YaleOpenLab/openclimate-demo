@@ -2,8 +2,8 @@ package server
 
 import (
 	"encoding/json"
-	"github.com/YaleOpenLab/openclimate/database"
 	utils "github.com/Varunram/essentials/utils"
+	"github.com/YaleOpenLab/openclimate/database"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -18,6 +18,7 @@ func dataHandler() {
 	queryNazca()
 	queryNazcaCountry()
 	getCountryId()
+	getCarbonData()
 }
 
 type USStatesReturn struct {
@@ -101,7 +102,7 @@ func getParisAgreement() {
 			return
 		}
 
-		data, err := ioutil.ReadFile("load-data/json_data/paris_agreement_entry_into_force.json")
+		data, err := ioutil.ReadFile("data/json_data/paris_agreement_entry_into_force.json")
 		if err != nil {
 			log.Println(err)
 			responseHandler(w, StatusInternalServerError)
@@ -172,7 +173,7 @@ func getOceanData() {
 			return
 		}
 
-		data, err := ioutil.ReadFile("load-data/json_data/ocean_sink.json")
+		data, err := ioutil.ReadFile("data/json_data/ocean_sink.json")
 		if err != nil {
 			log.Println(err)
 			responseHandler(w, StatusInternalServerError)
@@ -200,6 +201,67 @@ func getOceanData() {
 			temp.NorESMOC = values.NorESMOC
 			temp.Landschutzer = values.Landschutzer
 			temp.Rodenbeck = values.Rodenbeck
+			y[utils.ItoS(values.Year)] = temp
+		}
+		MarshalSend(w, y)
+	})
+}
+
+type CarbonDataPrelim struct {
+	Year                   int `json:"Year"`
+	FossilFuelAndIndustry  float64 `json:"Fossil-Fuel-And-Industry"`
+	LandUseChangeEmissions float64 `json:"Land-Use-Change-Emissions"`
+	AtmosphericGrowth      float64 `json:"Atmospheric-Growth"`
+	OceanSink              float64 `json:"Ocean-Sink"`
+	LandSink               float64 `json:"Land-Sink"`
+	BudgetImbalance        float64 `json:"Budget-Imbalance"`
+}
+
+type CarbonDataFinal struct {
+	FossilFuelAndIndustry  float64 `json:"Fossil-Fuel-And-Industry"`
+	LandUseChangeEmissions float64 `json:"Land-Use-Change-Emissions"`
+	AtmosphericGrowth      float64 `json:"Atmospheric-Growth"`
+	OceanSink              float64 `json:"Ocean-Sink"`
+	LandSink               float64 `json:"Land-Sink"`
+	BudgetImbalance        float64 `json:"Budget-Imbalance"`
+}
+
+func getCarbonData() {
+	http.HandleFunc("/carbon/budget", func(w http.ResponseWriter, r *http.Request) {
+		checkGet(w, r)
+		checkOrigin(w, r)
+
+		_, err := authorizeUser(r)
+		if err != nil {
+			log.Println("could not retrieve user from the database, quitting")
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		data, err := ioutil.ReadFile("data/json_data/global_carbon_budget.json")
+		if err != nil {
+			log.Println(err)
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		var x map[string]CarbonDataPrelim
+		err = json.Unmarshal(data, &x)
+		if err != nil {
+			log.Println(err)
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		y := make(map[string]CarbonDataFinal)
+		for _, values := range x {
+			var temp CarbonDataFinal
+			temp.FossilFuelAndIndustry = values.FossilFuelAndIndustry
+			temp.LandUseChangeEmissions = values.LandUseChangeEmissions
+			temp.AtmosphericGrowth = values.AtmosphericGrowth
+			temp.OceanSink = values.OceanSink
+			temp.LandSink = values.LandSink
+			temp.BudgetImbalance = values.BudgetImbalance
 			y[utils.ItoS(values.Year)] = temp
 		}
 		MarshalSend(w, y)
