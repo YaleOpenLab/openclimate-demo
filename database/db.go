@@ -5,7 +5,7 @@ import (
 	"os"
 
 	"github.com/YaleOpenLab/openclimate/globals"
-	utils "github.com/YaleOpenLab/openx/utils"
+	utils "github.com/Varunram/essentials/utils"
 	"github.com/boltdb/bolt"
 )
 

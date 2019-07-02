@@ -2,7 +2,7 @@ package database
 
 import (
 	"encoding/json"
-	utils "github.com/YaleOpenLab/openx/utils"
+	utils "github.com/Varunram/essentials/utils"
 	"github.com/boltdb/bolt"
 	"github.com/pkg/errors"
 )

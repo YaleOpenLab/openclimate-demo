@@ -3,7 +3,7 @@ package server
 import (
 	"encoding/json"
 	"github.com/YaleOpenLab/openclimate/database"
-	utils "github.com/YaleOpenLab/openx/utils"
+	utils "github.com/Varunram/essentials/utils"
 	"io/ioutil"
 	"log"
 	"net/http"
@@ -283,13 +283,11 @@ func queryNazcaCountry() {
 				return
 			}
 			if len(x) != 0 {
-				log.Println("COUNTRY NAME: ", x[0].CountryName)
 				countryMap[i] = x[0].CountryName
 			}
 			time.Sleep(1 * time.Second)
 		}
 
-		log.Println("COUNTRY MAP: ", countryMap)
 	})
 }
 
