@@ -2,6 +2,7 @@ package server
 
 import (
 	ipfs "github.com/Varunram/essentials/ipfs"
+	erpc "github.com/Varunram/essentials/rpc"
 	"github.com/YaleOpenLab/openclimate/database"
 	"log"
 	"math/big"
@@ -22,8 +23,11 @@ func setupDBHandlers() {
 // setupPingHandler is a ping route for remote callers to check if the platform is up
 func newUser() {
 	http.HandleFunc("/user/new", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
 		if r.URL.Query()["username"] == nil || r.URL.Query()["pwhash"] == nil || r.URL.Query()["email"] == nil {
 			log.Println("required params - username, pwhash, email missing")
@@ -45,7 +49,7 @@ func newUser() {
 			return
 		}
 
-		MarshalSend(w, user)
+		erpc.MarshalSend(w, user)
 	})
 }
 
@@ -58,8 +62,11 @@ func authorizeUser(r *http.Request) (database.User, error) {
 
 func retrieveUser() {
 	http.HandleFunc("/user/retrieve", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
 		user, err := authorizeUser(r)
 		if err != nil {
@@ -68,16 +75,19 @@ func retrieveUser() {
 			return
 		}
 
-		MarshalSend(w, user)
+		erpc.MarshalSend(w, user)
 	})
 }
 
 func retrieveAllUsers() {
 	http.HandleFunc("/user/retrieve/all", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
-		_, err := authorizeUser(r)
+		_, err = authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quittting")
 			responseHandler(w, StatusInternalServerError)
@@ -91,14 +101,17 @@ func retrieveAllUsers() {
 			return
 		}
 
-		MarshalSend(w, users)
+		erpc.MarshalSend(w, users)
 	})
 }
 
 func deleteUser() {
 	http.HandleFunc("/user/delete", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
 		user, err := authorizeUser(r)
 		if err != nil {
@@ -120,8 +133,11 @@ func deleteUser() {
 
 func updateUser() {
 	http.HandleFunc("/user/update", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
 		user, err := authorizeUser(r)
 		if err != nil {
@@ -148,16 +164,20 @@ func updateUser() {
 			return
 		}
 
-		MarshalSend(w, user)
+		erpc.MarshalSend(w, user)
 	})
 }
 
 // getIpfsHash gets the ipfs hash of the passed string
 func getIpfsHash() {
 	http.HandleFunc("/ipfs/hash", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
-		_, err := authorizeUser(r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		_, err = authorizeUser(r)
 		if err != nil {
 			responseHandler(w, StatusUnauthorized)
 			return
@@ -181,14 +201,17 @@ func getIpfsHash() {
 			return
 		}
 
-		MarshalSend(w, hash)
+		erpc.MarshalSend(w, hash)
 	})
 }
 
 func sendEth() {
 	http.HandleFunc("/user/sendeth", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
 		user, err := authorizeUser(r)
 		if err != nil {
@@ -226,10 +249,13 @@ func sendEth() {
 
 func getAllCompanies() {
 	http.HandleFunc("/companies/all", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
-		_, err := authorizeUser(r)
+		_, err = authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quittting")
 			responseHandler(w, StatusBadRequest)
@@ -243,16 +269,19 @@ func getAllCompanies() {
 			return
 		}
 
-		MarshalSend(w, companies)
+		erpc.MarshalSend(w, companies)
 	})
 }
 
 func getCompany() {
 	http.HandleFunc("/company", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
-		_, err := authorizeUser(r)
+		_, err = authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quitting")
 			responseHandler(w, StatusBadRequest)
@@ -273,6 +302,6 @@ func getCompany() {
 			return
 		}
 
-		MarshalSend(w, company)
+		erpc.MarshalSend(w, company)
 	})
 }

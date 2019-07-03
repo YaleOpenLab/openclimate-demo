@@ -6,6 +6,8 @@ import (
 	"log"
 	"net/http"
 	"strings"
+
+	erpc "github.com/Varunram/essentials/rpc"
 )
 
 func setupSwytchApis() {
@@ -31,12 +33,15 @@ type GetAccessTokenData struct {
 
 func getAccessToken() {
 	http.HandleFunc("/swytch/accessToken", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
 		if r.URL.Query()["clientId"] == nil || r.URL.Query()["clientSecret"] == nil ||
 			r.URL.Query()["username"] == nil || r.URL.Query()["password"] == nil {
-			MarshalSend(w, StatusBadRequest)
+			erpc.MarshalSend(w, StatusBadRequest)
 			return
 		}
 		url := "https://platformapi-staging.swytch.io/v1/oauth/token"
@@ -59,7 +64,7 @@ func getAccessToken() {
 		req, err := http.NewRequest("POST", url, reqbody)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 			return
 		}
 
@@ -68,7 +73,7 @@ func getAccessToken() {
 		res, err := http.DefaultClient.Do(req)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 			return
 		}
 
@@ -79,22 +84,25 @@ func getAccessToken() {
 		err = json.Unmarshal(body, &x)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 			return
 		}
 
-		MarshalSend(w, x)
+		erpc.MarshalSend(w, x)
 	})
 }
 
 func getRefreshToken() {
 	http.HandleFunc("/swytch/refreshToken", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
 		if r.URL.Query()["clientId"] == nil || r.URL.Query()["clientSecret"] == nil ||
 			r.URL.Query()["refreshToken"] == nil {
-			MarshalSend(w, StatusBadRequest)
+			erpc.MarshalSend(w, StatusBadRequest)
 			return
 		}
 
@@ -117,7 +125,7 @@ func getRefreshToken() {
 		req, err := http.NewRequest("POST", url, reqbody)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 			return
 		}
 
@@ -126,7 +134,7 @@ func getRefreshToken() {
 		res, err := http.DefaultClient.Do(req)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 			return
 		}
 
@@ -137,11 +145,11 @@ func getRefreshToken() {
 		err = json.Unmarshal(body, &x)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 			return
 		}
 
-		MarshalSend(w, x)
+		erpc.MarshalSend(w, x)
 	})
 }
 
@@ -169,11 +177,14 @@ type GetSwytchUserStruct struct {
 
 func getSwytchUser() {
 	http.HandleFunc("/swytch/getuser", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
 		if r.URL.Query()["authToken"] == nil {
-			MarshalSend(w, StatusBadRequest)
+			erpc.MarshalSend(w, StatusBadRequest)
 			return
 		}
 
@@ -183,7 +194,7 @@ func getSwytchUser() {
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		req.Header.Add("authorization", "Bearer "+auth_token)
@@ -192,14 +203,14 @@ func getSwytchUser() {
 		res, err := http.DefaultClient.Do(req)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		defer res.Body.Close()
 		body, err := ioutil.ReadAll(res.Body)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		log.Println(res)
@@ -208,10 +219,10 @@ func getSwytchUser() {
 		err = json.Unmarshal(body, &x)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
-		MarshalSend(w, x)
+		erpc.MarshalSend(w, x)
 	})
 }
 
@@ -254,11 +265,14 @@ type GetAssetStruct struct {
 
 func getAssets() {
 	http.HandleFunc("/swytch/getassets", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
 		if r.URL.Query()["authToken"] == nil || r.URL.Query()["userId"] == nil {
-			MarshalSend(w, StatusBadRequest)
+			erpc.MarshalSend(w, StatusBadRequest)
 			return
 		}
 
@@ -270,7 +284,7 @@ func getAssets() {
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		req.Header.Add("authorization", "Bearer "+auth_token)
@@ -278,14 +292,14 @@ func getAssets() {
 		res, err := http.DefaultClient.Do(req)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		defer res.Body.Close()
 		body, err := ioutil.ReadAll(res.Body)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		log.Println(string(body))
@@ -293,10 +307,10 @@ func getAssets() {
 		err = json.Unmarshal(body, &x)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
-		MarshalSend(w, x)
+		erpc.MarshalSend(w, x)
 	})
 }
 
@@ -350,11 +364,14 @@ type GetEnergyStruct struct {
 
 func getEnergy() {
 	http.HandleFunc("/swytch/getenergy", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
 		if r.URL.Query()["authToken"] == nil || r.URL.Query()["assetId"] == nil {
-			MarshalSend(w, StatusBadRequest)
+			erpc.MarshalSend(w, StatusBadRequest)
 			return
 		}
 
@@ -366,7 +383,7 @@ func getEnergy() {
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		req.Header.Add("authorization", "Bearer "+auth_token)
@@ -374,24 +391,24 @@ func getEnergy() {
 		res, err := http.DefaultClient.Do(req)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		defer res.Body.Close()
 		body, err := ioutil.ReadAll(res.Body)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		var x GetEnergyStruct
 		err = json.Unmarshal(body, &x)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
-		MarshalSend(w, x)
+		erpc.MarshalSend(w, x)
 	})
 }
 
@@ -448,11 +465,14 @@ type GetEnergyAttributionData struct {
 
 func getEnergyAttribution() {
 	http.HandleFunc("/swytch/geteattributes", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
 		if r.URL.Query()["authToken"] == nil || r.URL.Query()["assetId"] == nil {
-			MarshalSend(w, StatusBadRequest)
+			erpc.MarshalSend(w, StatusBadRequest)
 			return
 		}
 
@@ -464,7 +484,7 @@ func getEnergyAttribution() {
 		req, err := http.NewRequest("GET", url, nil)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		req.Header.Add("authorization", "Bearer "+auth_token)
@@ -472,14 +492,14 @@ func getEnergyAttribution() {
 		res, err := http.DefaultClient.Do(req)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		defer res.Body.Close()
 		body, err := ioutil.ReadAll(res.Body)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
 		log.Println(string(body))
@@ -487,9 +507,9 @@ func getEnergyAttribution() {
 		err = json.Unmarshal(body, &x)
 		if err != nil {
 			log.Println(err)
-			MarshalSend(w, StatusInternalServerError)
+			erpc.MarshalSend(w, StatusInternalServerError)
 		}
 
-		MarshalSend(w, x)
+		erpc.MarshalSend(w, x)
 	})
 }

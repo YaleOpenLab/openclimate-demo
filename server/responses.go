@@ -2,6 +2,8 @@ package server
 
 import (
 	"net/http"
+
+	erpc "github.com/Varunram/essentials/rpc"
 )
 
 // use these standard error codes to send out to request replies so callers can figure
@@ -42,5 +44,5 @@ func responseHandler(w http.ResponseWriter, status int) {
 	default:
 		response.Status = "404 Page Not Found"
 	}
-	MarshalSend(w, response)
+	erpc.MarshalSend(w, response)
 }

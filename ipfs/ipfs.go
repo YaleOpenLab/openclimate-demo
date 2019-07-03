@@ -11,8 +11,8 @@ import (
 	"os"
 	"strings"
 
-	consts "github.com/YaleOpenLab/openx/consts"
-	utils "github.com/YaleOpenLab/openx/utils"
+	ipfs "github.com/Varunram/essentials/ipfs"
+	utils "github.com/Varunram/essentials/utils"
 	shell "github.com/ipfs/go-ipfs-api"
 )
 
@@ -43,7 +43,7 @@ func GetFileFromIpfs(hash string, extension string) error {
 	// extension can be pdf, txt, ppt and others
 	sh := RetrieveShell()
 	// generate a random fileName and then return the file to the user
-	fileName := utils.GetRandomString(globals.IpfsFileLength) + "." + extension
+	fileName := utils.GetRandomString(ipfs.IpfsFileLength) + "." + extension
 	return sh.Get(hash, fileName)
 }
 
@@ -53,7 +53,7 @@ func GetStringFromIpfs(hash string) (string, error) {
 	// since ipfs doesn't provide a method to read the string directly, we create a
 	// random fiel at tmp/, decrypt contents to that fiel and then read the file
 	// contents from there
-	tmpFileDir := "/tmp/" + utils.GetRandomString(globals.IpfsFileLength) // using the same length here for consistency
+	tmpFileDir := "/tmp/" + utils.GetRandomString(ipfs.IpfsFileLength) // using the same length here for consistency
 	sh.Get(hash, tmpFileDir)
 	data, err := ioutil.ReadFile(tmpFileDir)
 	if err != nil {

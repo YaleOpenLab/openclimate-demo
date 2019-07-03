@@ -3,6 +3,7 @@ package server
 import (
 	"encoding/json"
 	utils "github.com/Varunram/essentials/utils"
+	erpc "github.com/Varunram/essentials/rpc"
 	"github.com/YaleOpenLab/openclimate/database"
 	"io/ioutil"
 	"log"
@@ -27,10 +28,13 @@ type USStatesReturn struct {
 
 func getUSStates() {
 	http.HandleFunc("/us/states", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
-		_, err := authorizeUser(r)
+		_, err = authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quitting")
 			responseHandler(w, StatusBadRequest)
@@ -40,7 +44,7 @@ func getUSStates() {
 		database.InitUSStates()
 		var x USStatesReturn
 		x.States = database.USStates
-		MarshalSend(w, x)
+		erpc.MarshalSend(w, x)
 	})
 }
 
@@ -50,10 +54,13 @@ type USStateCountiesReturn struct {
 
 func getUSCounties() {
 	http.HandleFunc("/us/counties", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
-		_, err := authorizeUser(r)
+		_, err = authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quitting")
 			responseHandler(w, StatusBadRequest)
@@ -63,7 +70,7 @@ func getUSCounties() {
 		database.InitUSStates()
 		var x USStateCountiesReturn
 		x.Counties = database.USStateCities
-		MarshalSend(w, x)
+		erpc.MarshalSend(w, x)
 	})
 }
 
@@ -92,10 +99,13 @@ type ParisAgreementReturnFinal struct {
 
 func getParisAgreement() {
 	http.HandleFunc("/paris/data", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
-		_, err := authorizeUser(r)
+		_, err = authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quitting")
 			responseHandler(w, StatusBadRequest)
@@ -130,7 +140,7 @@ func getParisAgreement() {
 			temp.Year = values.Year
 			y[values.Code] = temp
 		}
-		MarshalSend(w, y)
+		erpc.MarshalSend(w, y)
 	})
 }
 
@@ -163,10 +173,13 @@ type OceanDataFinal struct {
 
 func getOceanData() {
 	http.HandleFunc("/ocean/data", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
-		_, err := authorizeUser(r)
+		_, err = authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quitting")
 			responseHandler(w, StatusBadRequest)
@@ -203,7 +216,7 @@ func getOceanData() {
 			temp.Rodenbeck = values.Rodenbeck
 			y[utils.ItoS(values.Year)] = temp
 		}
-		MarshalSend(w, y)
+		erpc.MarshalSend(w, y)
 	})
 }
 
@@ -228,10 +241,13 @@ type CarbonDataFinal struct {
 
 func getCarbonData() {
 	http.HandleFunc("/carbon/budget", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
-		_, err := authorizeUser(r)
+		_, err = authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quitting")
 			responseHandler(w, StatusBadRequest)
@@ -264,7 +280,7 @@ func getCarbonData() {
 			temp.BudgetImbalance = values.BudgetImbalance
 			y[utils.ItoS(values.Year)] = temp
 		}
-		MarshalSend(w, y)
+		erpc.MarshalSend(w, y)
 	})
 }
 
@@ -285,10 +301,13 @@ type NazcaResponse struct {
 
 func queryNazca() {
 	http.HandleFunc("/nazca/data", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
-		_, err := authorizeUser(r)
+		_, err = authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quitting")
 			responseHandler(w, StatusBadRequest)
@@ -311,17 +330,20 @@ func queryNazca() {
 				return
 			}
 			time.Sleep(1 * time.Second)
-			MarshalSend(w, x)
+			erpc.MarshalSend(w, x)
 		}
 	})
 }
 
 func queryNazcaCountry() {
 	http.HandleFunc("/nazcacountry/data", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
-		_, err := authorizeUser(r)
+		_, err = authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quitting")
 			responseHandler(w, StatusBadRequest)
@@ -359,10 +381,13 @@ type CountryIdResponse struct {
 
 func getCountryId() {
 	http.HandleFunc("/countries/id", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
+		err := erpc.CheckGet(w, r)
+		if err !=  nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
 
-		_, err := authorizeUser(r)
+		_, err = authorizeUser(r)
 		if err != nil {
 			log.Println("could not retrieve user from the database, quitting")
 			responseHandler(w, StatusBadRequest)
@@ -372,6 +397,6 @@ func getCountryId() {
 		countryIds := database.InitUSStates()
 		var x CountryIdResponse
 		x.CountryIds = countryIds
-		MarshalSend(w, x)
+		erpc.MarshalSend(w, x)
 	})
 }
