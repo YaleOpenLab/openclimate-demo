@@ -52,6 +52,7 @@ func OpenDB() (*bolt.DB, error) {
 	return db, err
 }
 
+
 // DeleteKeyFromBucket deletes a given key from the bucket bucketName but doesn
 // not shift indices of elements succeeding the deleted element's index
 func DeleteKeyFromBucket(key int, bucketName []byte) error {

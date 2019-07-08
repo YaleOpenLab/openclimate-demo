@@ -2,7 +2,6 @@ import pandas as pd
 import os, json, sys, re
 import load_data
 
-
 filename = 'csv_data/cdiac_fossil_fuel_cement_national.csv'
 
 
