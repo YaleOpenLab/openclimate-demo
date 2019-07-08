@@ -2,14 +2,13 @@ import pandas as pd
 import os, json, sys, re
 
 
-json_dirname = 'json_data/'
-
-
 def export_to_json(df, filename):
 	"""
 	Exports the entire panda dataframe into json format and names
 	the json file 'filename'.
 	"""
+
+	json_dirname = 'json_data/'
 	json_data = df.to_json(json_dirname + filename + '.json', orient='index')
 
 

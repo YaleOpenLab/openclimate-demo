@@ -1,3 +1,5 @@
+// Rename to "static_data.go"
+
 package server
 
 import (
@@ -20,7 +22,12 @@ func dataHandler() {
 	queryNazcaCountry()
 	getCountryId()
 	getCarbonData()
+	getCountriesEmissionsData()
 }
+
+/*****************************************/
+/* US STATES & COUNTIES DATA API HANDLER */
+/*****************************************/
 
 type USStatesReturn struct {
 	States []string
@@ -73,6 +80,10 @@ func getUSCounties() {
 		erpc.MarshalSend(w, x)
 	})
 }
+
+/*******************************/
+/* PARIS AGREEMENT API HANDLER */
+/*******************************/
 
 type ParisAgreementReturn struct {
 	Code         string  `json:"Code"`
@@ -144,26 +155,30 @@ func getParisAgreement() {
 	})
 }
 
+/**************************/
+/* OCEAN DATA API HANDLER */
+/**************************/
+
 type OceanDataPrelim struct {
 	Year              int     `json:"year"`
 	OceanSink         float64 `json:"Ocean-Sink"`
 	CCSMBEC           float64 `json:"CCSM-BEC"`
 	MITgcmREcoM2      float64 `json:"MITgcm-REcoM2"`
 	MPIOMHAMOCC       float64 `json:"MPIOM-HAMOCC"`
-	NEMO36PISCESv2gas float64 `json:"NEMO3.6-PISCESv2-gas (CNRM)""`
+	NEMO36PISCESv2gas float64 `json:"NEMO3.6-PISCESv2-gas (CNRM)"`
 	NEMOPISCESIPSL    float64 `json:"NEMO-PISCES (IPSL)"`
 	NEMOPlankTOM5     float64 `json:"NEMO-PlankTOM5"`
 	NorESMOC          float64 `json:"NorESM-OC"`
 	Landschutzer      float64 `json:"Landschützer"`
 	Rodenbeck         float64 `json:"Rödenbeck"`
 }
-
+f
 type OceanDataFinal struct {
 	OceanSink         float64 `json:"Ocean-Sink"`
 	CCSMBEC           float64 `json:"CCSM-BEC"`
 	MITgcmREcoM2      float64 `json:"MITgcm-REcoM2"`
 	MPIOMHAMOCC       float64 `json:"MPIOM-HAMOCC"`
-	NEMO36PISCESv2gas float64 `json:"NEMO3.6-PISCESv2-gas (CNRM)""`
+	NEMO36PISCESv2gas float64 `json:"NEMO3.6-PISCESv2-gas (CNRM)"`
 	NEMOPISCESIPSL    float64 `json:"NEMO-PISCES (IPSL)"`
 	NEMOPlankTOM5     float64 `json:"NEMO-PlankTOM5"`
 	NorESMOC          float64 `json:"NorESM-OC"`
@@ -219,6 +234,10 @@ func getOceanData() {
 		erpc.MarshalSend(w, y)
 	})
 }
+
+/*****************************************/
+/* GLOBAL CARBON BUDGET DATA API HANDLER */
+/*****************************************/
 
 type CarbonDataPrelim struct {
 	Year                   int `json:"Year"`
@@ -283,6 +302,92 @@ func getCarbonData() {
 		erpc.MarshalSend(w, y)
 	})
 }
+
+/*******************************/
+/* PARIS AGREEMENT API HANDLER */
+/*******************************/
+
+type CountriesEmissionsPrelim struct {
+	Nation			string
+	Year			int
+	Total			int
+	SolidFuel		float64
+	LiquidFuel		float64
+	GasFuel			float64
+	Cement			int
+	GasFlaring		float64
+	PerCapita		float64
+	Bunkers			int
+}
+
+type CountriesEmissionsFinal struct {
+	Year			int
+	Total			int
+	SolidFuel		float64
+	LiquidFuel		float64
+	GasFuel			float64
+	Cement			int
+	GasFlaring		float64
+	PerCapita		float64
+	Bunkers			int
+}
+
+func getCountriesEmissionsData() {
+
+	http.HandleFunc("/countries/emissions", func(w http.ResponseWriter, r *http.Request) {
+
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			responseHandler(w, StatusBadRequest)
+			return			
+		}
+
+		_, err = authorizeUser(r)
+		if err != nil {
+			log.Println("could not retrieve user from the database, quitting")
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		data, err := ioutil.ReadFile("data/json_data/countries_emissions_2014.json")
+		if err != nil {
+			log.Println(err)
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		var dataMapPrelim map[string]CountriesEmissionsPrelim
+		err = json.Unmarshal(data, &dataMapPrelim)
+		if err != nil {
+			log.Println(err)
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		dataMapFinal := make(map[string]CountriesEmissionsFinal)
+		for _, values := range dataMapPrelim {
+
+			var temp CountriesEmissionsFinal
+			temp.Year = values.Year
+			temp.Total = values.Total
+			temp.SolidFuel = values.SolidFuel
+			temp.LiquidFuel = values.LiquidFuel
+			temp.GasFuel = values.GasFuel
+			temp.Cement = values.Cement
+			temp.GasFlaring = values.GasFlaring
+			temp.PerCapita = values.PerCapita
+			temp.Bunkers = values.Bunkers
+
+			dataMapFinal[values.Nation] = temp
+
+		}
+		erpc.MarshalSend(w, dataMapFinal)
+	})
+}
+
+/**************************/
+/* NAZCA DATA API HANDLER */
+/**************************/
 
 var NazcaURL = "https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid="
 
@@ -374,6 +479,10 @@ func queryNazcaCountry() {
 
 	})
 }
+
+/**************************/
+/* COUNTRY ID API HANDLER */
+/**************************/
 
 type CountryIdResponse struct {
 	CountryIds map[int]string
