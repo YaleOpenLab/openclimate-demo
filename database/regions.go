@@ -96,16 +96,17 @@ func RetrieveRegionByName(name string, country string) (Region, error) {
 		return region, errors.Wrap(err, "Error while retrieving all regions from database")
 	}
 
-	limit := len(allRegions) + 1
 	db, err := OpenDB()
 	if err != nil {
 		return region, errors.Wrap(err, "Could not open database, quitting")
 	}
 
 	defer db.Close()
+	
 	err = db.View(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket(RegionBucket)
 
+		limit := len(allRegions) + 1
 		for i := 1; i < limit; i++ {
 			var tempRegion Region
 			tempKey := bucket.Get(utils.ItoB(i))

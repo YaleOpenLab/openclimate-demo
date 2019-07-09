@@ -266,7 +266,7 @@ func sendEth() {
 /*******************/
 
 func getAllRegions() {
-	http.HandleFunc("/region", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/region/all", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
 			responseHandler(w, StatusBadRequest)
@@ -292,7 +292,7 @@ func getAllRegions() {
 }
 
 func getRegion() {
-	http.HandleFun("/company", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFun("/region", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
 			responseHandler(w, StatusBadRequest)
