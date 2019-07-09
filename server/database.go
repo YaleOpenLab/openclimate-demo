@@ -18,6 +18,8 @@ func setupDBHandlers() {
 	getIpfsHash()
 	getAllCompanies()
 	getCompany()
+	getAllRegions()
+	getRegion()
 }
 
 /*****************/
@@ -258,6 +260,68 @@ func sendEth() {
 		responseHandler(w, StatusOK)
 	})
 }
+
+/*******************/
+/* REGION HANDLERS */
+/*******************/
+
+func getAllRegions() {
+	http.HandleFunc("/region", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		_, err = authorizeUser(r)
+		if err != nil {
+			log.Println("Could not retrieve user from the database, quitting")
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		regions, err := database.RetrieveAllRegions()
+		if err != nil {
+			log.Println("Error while retrieving all companies, quitting")
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, regions)
+	})
+}
+
+func getRegion() {
+	http.HandleFun("/company", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			responseHandler(w, StatusBadRequest)
+			return
+		}
+
+		_, err = authorizeUser(r)
+		if err != nil {
+			log.Println("Could not retrieve user from the database, quitting")
+			responseHandler(w, StatusBadRequest)
+		}
+
+		if r.URL.Query()["region_name"] == nil {
+			log.Println("Region_name not passed, quitting")
+			responseHandler(w, StatusBadRequest)
+		}
+
+		regionName := r.UrlQuery()["region_name"][0]
+		region, err := database.RetrieveRegionByName(regionName) //************ STOP ***********
+		if err != nil {
+			log.Println("Error while retrieving all companies, quitting")
+			responseHandler(w, StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, region)
+	})
+}
+
 
 /********************/
 /* COMPANY HANDLERS */
