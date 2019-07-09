@@ -8,7 +8,7 @@ import (
 	"math/big"
 	"net/http"
 )
-x
+
 func setupDBHandlers() {
 	newUser()
 	retrieveUser()
@@ -19,6 +19,10 @@ func setupDBHandlers() {
 	getAllCompanies()
 	getCompany()
 }
+
+/*****************/
+/* USER HANDLERS */
+/*****************/
 
 // setupPingHandler is a ping route for remote callers to check if the platform is up
 func newUser() {
@@ -168,6 +172,10 @@ func updateUser() {
 	})
 }
 
+/*****************/
+/* IPFS HANDLERS */
+/*****************/
+
 // getIpfsHash gets the ipfs hash of the passed string
 func getIpfsHash() {
 	http.HandleFunc("/ipfs/hash", func(w http.ResponseWriter, r *http.Request) {
@@ -204,6 +212,10 @@ func getIpfsHash() {
 		erpc.MarshalSend(w, hash)
 	})
 }
+
+/*********************/
+/* ETHEREUM HANDLERS */
+/*********************/
 
 func sendEth() {
 	http.HandleFunc("/user/sendeth", func(w http.ResponseWriter, r *http.Request) {
@@ -246,6 +258,10 @@ func sendEth() {
 		responseHandler(w, StatusOK)
 	})
 }
+
+/********************/
+/* COMPANY HANDLERS */
+/********************/
 
 func getAllCompanies() {
 	http.HandleFunc("/companies/all", func(w http.ResponseWriter, r *http.Request) {

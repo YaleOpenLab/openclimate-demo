@@ -339,7 +339,7 @@ func getCountriesEmissionsData() {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
 			responseHandler(w, StatusBadRequest)
-			return			
+			return
 		}
 
 		_, err = authorizeUser(r)
