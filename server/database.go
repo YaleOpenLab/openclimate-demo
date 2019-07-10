@@ -41,7 +41,7 @@ func newUser() {
 			log.Println(r.URL.Query()["username"])
 			log.Println(r.URL.Query()["pwhash"])
 			log.Println(r.URL.Query()["email"])
-			responseHandler(w, StatusBadRequest)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -52,7 +52,7 @@ func newUser() {
 		user, err := database.NewUser(username, pwhash, email)
 		if err != nil {
 			log.Println("couldn't create new user", err)
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -79,7 +79,7 @@ func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error)
 	user, err = database.ValidateUser(username, pwhash)
 	if err != nil {
 		log.Println("could not retrieve user from the database, quitting")
-		responseHandler(w, StatusBadRequest)
+		erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		return user, errors.New("user not found in database, quitting")
 	}
 	return user, nil
@@ -106,7 +106,7 @@ func retrieveAllUsers() {
 		users, err := database.RetrieveAllUsers()
 		if err != nil {
 			log.Println("could not retrieve user from the database, quittting")
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -124,11 +124,11 @@ func deleteUser() {
 		err = database.DeleteKeyFromBucket(user.Index, database.UserBucket)
 		if err != nil {
 			log.Println("could not delete user from database, quittting", err)
-			responseHandler(w, StatusBadRequest)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
-		responseHandler(w, StatusOK)
+		erpc.ResponseHandler(w, erpc.StatusOK)
 	})
 }
 
@@ -146,14 +146,14 @@ func updateUser() {
 		} else if r.URL.Query()["newusername"] != nil {
 			user.Name = r.URL.Query()["newusername"][0]
 		} else {
-			responseHandler(w, StatusBadRequest)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
 		err = user.Save()
 		if err != nil {
 			log.Println("error while savingt user to database")
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -174,7 +174,7 @@ func getIpfsHash() {
 		}
 
 		if r.URL.Query()["string"] == nil {
-			responseHandler(w, StatusBadRequest)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -182,13 +182,13 @@ func getIpfsHash() {
 		hash, err := ipfs.AddStringToIpfs(hashString)
 		if err != nil {
 			log.Println("did not add string to ipfs", err)
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
 		hashCheck, err := ipfs.GetStringFromIpfs(hash)
 		if err != nil || hashCheck != hashString {
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -209,7 +209,7 @@ func sendEth() {
 
 		if r.URL.Query()["address"] == nil || r.URL.Query()["amount"] == nil {
 			log.Println("address or amount missing, quitting")
-			responseHandler(w, StatusBadRequest)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -219,18 +219,18 @@ func sendEth() {
 		var amount big.Int
 		_, boolErr := amount.SetString(amountStr, 10)
 		if !boolErr {
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
 		txhash, err := user.SendEthereumTx(address, amount)
 		if err != nil {
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
 		log.Println("user: ", user.Name, "has sent tx with txhash: ", txhash)
-		responseHandler(w, StatusOK)
+		erpc.ResponseHandler(w, erpc.StatusOK)
 	})
 }
 
@@ -248,7 +248,7 @@ func getAllRegions() {
 		regions, err := database.RetrieveAllRegions()
 		if err != nil {
 			log.Println("Error while retrieving all companies, quitting")
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -265,7 +265,7 @@ func getRegion() {
 
 		if r.URL.Query()["region_name"] == nil || r.URL.Query()["region_country"] == nil {
 			log.Println("Region_name or region_country not passed, quitting")
-			responseHandler(w, StatusBadRequest)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		}
 
 		name := r.URL.Query()["region_name"][0]
@@ -273,7 +273,7 @@ func getRegion() {
 		region, err := database.RetrieveRegionByName(name, country) //************ STOP ***********
 		if err != nil {
 			log.Println("Error while retrieving all companies, quitting")
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -295,7 +295,7 @@ func getAllCompanies() {
 		companies, err := database.RetrieveAllCompanies()
 		if err != nil {
 			log.Println("error while retrieving all companies, quitting")
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -312,7 +312,7 @@ func getCompany() {
 
 		if r.URL.Query()["company"] == nil {
 			log.Println("company name not passed, quitting")
-			responseHandler(w, StatusBadRequest)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -320,7 +320,7 @@ func getCompany() {
 		company, err := database.RetrieveCompanyByName(companyName)
 		if err != nil {
 			log.Println("error while retrieving all companies, quitting")
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 

@@ -102,7 +102,7 @@ func getParisAgreement() {
 		data, err := ioutil.ReadFile("data/json_data/paris_agreement_entry_into_force.json")
 		if err != nil {
 			log.Println(err)
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -110,7 +110,7 @@ func getParisAgreement() {
 		err = json.Unmarshal(data, &x)
 		if err != nil {
 			log.Println(err)
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -172,7 +172,7 @@ func getOceanData() {
 		data, err := ioutil.ReadFile("data/json_data/ocean_sink.json")
 		if err != nil {
 			log.Println(err)
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -180,7 +180,7 @@ func getOceanData() {
 		err = json.Unmarshal(data, &x)
 		if err != nil {
 			log.Println(err)
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -236,7 +236,7 @@ func getCarbonData() {
 		data, err := ioutil.ReadFile("data/json_data/global_carbon_budget.json")
 		if err != nil {
 			log.Println(err)
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -244,7 +244,7 @@ func getCarbonData() {
 		err = json.Unmarshal(data, &x)
 		if err != nil {
 			log.Println(err)
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -295,7 +295,6 @@ type CountriesEmissionsFinal struct {
 func getCountriesEmissionsData() {
 
 	http.HandleFunc("/countries/emissions", func(w http.ResponseWriter, r *http.Request) {
-
 		_, err := CheckGetAuth(w, r)
 		if err != nil {
 			return
@@ -304,7 +303,7 @@ func getCountriesEmissionsData() {
 		data, err := ioutil.ReadFile("data/json_data/countries_emissions_2014.json")
 		if err != nil {
 			log.Println(err)
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -312,7 +311,7 @@ func getCountriesEmissionsData() {
 		err = json.Unmarshal(data, &dataMapPrelim)
 		if err != nil {
 			log.Println(err)
-			responseHandler(w, StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
@@ -378,7 +377,7 @@ func queryNazca() {
 			err = json.Unmarshal(data, &x)
 			if err != nil {
 				log.Println("could not unmarshal data, quitting", err)
-				responseHandler(w, StatusInternalServerError)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 				return
 			}
 			time.Sleep(1 * time.Second)
@@ -407,7 +406,7 @@ func queryNazcaCountry() {
 			err = json.Unmarshal(data, &x)
 			if err != nil {
 				log.Println("could not unmarshal data, quitting", err)
-				responseHandler(w, StatusInternalServerError)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 				return
 			}
 			if len(x) != 0 {
