@@ -1,4 +1,4 @@
-package database
+xpackage database
 
 import (
 	"log"
@@ -47,6 +47,16 @@ func OpenDB() (*bolt.DB, error) {
 		_, err = tx.CreateBucketIfNotExists(CompanyBucket) // the projects bucket contains all our projects
 		if err != nil {
 			log.Println("Error while creating projects bucket", err)
+			return err
+		}
+		_, err = tx.CreateBucketIfNotExists(RegionBucket)
+		if err != nil {
+			log.Println("Error while creating region bucket", err)
+			return err
+		}
+		_, err = tx.CreateBucketIfNotExists(CityBucket)
+		if err != nil {
+			log.Println("Error while creating city bucket", err)
 			return err
 		}
 		return nil
