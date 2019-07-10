@@ -12,8 +12,8 @@ import (
 	aes "github.com/Varunram/essentials/aes"
 	edb "github.com/Varunram/essentials/database"
 	utils "github.com/Varunram/essentials/utils"
-	"github.com/boltdb/bolt"
 	"github.com/YaleOpenLab/openclimate/globals"
+	"github.com/boltdb/bolt"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -147,16 +147,16 @@ func NewUser(name string, pwhash string, email string) (User, error) {
 
 // Save inserts a passed User object into the database
 func (a *User) Save() error {
-	return edb.Save(globals.DbDir + "/openclimate.db", UserBucket, a, a.Index)
+	return edb.Save(globals.DbDir+"/openclimate.db", UserBucket, a, a.Index)
 }
 
 // RetrieveAllUsers gets a list of all User in the database
 func RetrieveAllUsers() ([]User, error) {
 	var users []User
-	keys, err := edb.RetrieveAllKeys(globals.DbDir + "/openclimate.db", UserBucket)
+	keys, err := edb.RetrieveAllKeys(globals.DbDir+"/openclimate.db", UserBucket)
 	if err != nil {
 		log.Println(err)
-		return users ,errors.Wrap(err, "could not retrieve all user keys")
+		return users, errors.Wrap(err, "could not retrieve all user keys")
 	}
 	for _, val := range keys {
 		userBytes, err := json.Marshal(val)

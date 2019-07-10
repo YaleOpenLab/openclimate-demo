@@ -1,28 +1,26 @@
 package database
 
 import (
-	"log"
 	"encoding/json"
 	edb "github.com/Varunram/essentials/database"
-	utils "github.com/Varunram/essentials/utils"
 	globals "github.com/YaleOpenLab/openclimate/globals"
-	"github.com/boltdb/bolt"
 	"github.com/pkg/errors"
+	"log"
 )
 
 // includes states, regions, provinces, prefectures, etc.
 type Region struct {
-	Index       	int
-	Name        	string
-	Country     	string
-	Area        	float64
-	Iso         	string
-	Population  	int
-	Latitude   		float64
-	Longitude   	float64
-	Revenue     	float64
-	CompanySize 	int
-	HQ          	string
+	Index       int
+	Name        string
+	Country     string
+	Area        float64
+	Iso         string
+	Population  int
+	Latitude    float64
+	Longitude   float64
+	Revenue     float64
+	CompanySize int
+	HQ          string
 	// EntityType		string
 }
 
@@ -76,12 +74,12 @@ func NewRegion(name string, country string) (Region, error) {
 }
 
 func (region *Region) Save() error {
-	return edb.Save(globals.DbDir + "/openclimate.db", RegionBucket, region, region.Index)
+	return edb.Save(globals.DbDir+"/openclimate.db", RegionBucket, region, region.Index)
 }
 
 func RetrieveRegion(key int) (Region, error) {
 	var region Region
-	temp, err := edb.Retrieve(globals.DbDir + "/openclimate.db", RegionBucket, key)
+	temp, err := edb.Retrieve(globals.DbDir+"/openclimate.db", RegionBucket, key)
 
 	if err != nil {
 		return region, errors.Wrap(err, "Error while retrieving key from bucket")
@@ -98,47 +96,30 @@ func RetrieveRegionByName(name string, country string) (Region, error) {
 		return region, errors.Wrap(err, "Error while retrieving all regions from database")
 	}
 
-	db, err := OpenDB()
-	if err != nil {
-		return region, errors.Wrap(err, "Could not open database, quitting")
+	for _, val := range allRegions {
+		if val.Name == name && val.Country == country {
+			region = val
+			return region, nil
+		}
 	}
 
-	defer db.Close()
-
-	err = db.View(func(tx *bolt.Tx) error {
-		bucket := tx.Bucket(RegionBucket)
-
-		limit := len(allRegions) + 1
-		for i := 1; i < limit; i++ {
-			var tempRegion Region
-			tempKey := bucket.Get(utils.ItoB(i))
-
-			err := json.Unmarshal(tempKey, &tempRegion)
-			if err != nil {
-				return errors.Wrap(err, "Could not unmarshal json, quitting")
-			}
-
-			if tempRegion.Name == name && tempRegion.Country == country {
-				region = tempRegion
-				return nil
-			}
-		}
-		return errors.New("Region not found.")
-	})
-	return region, err
+	return region, errors.New("could not find regions")
 }
 
 func RetrieveAllRegions() ([]Region, error) {
-
 	var regions []Region
-	keys, err := edb.RetrieveAllKeys(globals.DbDir + "/openclimate.db", RegionBucket)
+	keys, err := edb.RetrieveAllKeys(globals.DbDir+"/openclimate.db", RegionBucket)
 	if err != nil {
 		return regions, errors.Wrap(err, "error while retrieving all keys")
 	}
 
 	for _, value := range keys {
-		log.Println(value, keys)
-		regions = append(regions, value.(Region))
+		var region Region
+		err := json.Unmarshal(value, region)
+		if err != nil {
+			return regions, err
+		}
+		regions = append(regions, region)
 	}
 
 	return regions, nil

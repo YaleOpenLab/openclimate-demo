@@ -240,8 +240,6 @@ func sendEth() {
 /* REGION HANDLERS */
 /*******************/
 
-
-
 func getAllRegions() {
 	http.HandleFunc("/region/all", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
@@ -335,8 +333,6 @@ func getCity() {
 /********************/
 /* COMPANY HANDLERS */
 /********************/
-
-
 
 func getAllCompanies() {
 	http.HandleFunc("/company/all", func(w http.ResponseWriter, r *http.Request) {
