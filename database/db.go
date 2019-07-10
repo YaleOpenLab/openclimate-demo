@@ -12,6 +12,7 @@ import (
 var UserBucket = []byte("Users")
 var CompanyBucket = []byte("Companies")
 var RegionBucket = []byte("Regions")
+var CityBucket = []byte("Cities")
 
 // CreateHomeDir creates a home directory
 func CreateHomeDir() {

@@ -22,6 +22,8 @@ func setupDBHandlers() {
 	getCompany()
 	getAllRegions()
 	getRegion()
+	getAllCities()
+	getCity()
 }
 
 /*****************/
@@ -247,7 +249,7 @@ func getAllRegions() {
 
 		regions, err := database.RetrieveAllRegions()
 		if err != nil {
-			log.Println("Error while retrieving all companies, quitting")
+			log.Println("Error while retrieving all regions, quitting")
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
@@ -272,7 +274,7 @@ func getRegion() {
 		country := r.URL.Query()["region_country"][0]
 		region, err := database.RetrieveRegionByName(name, country) //************ STOP ***********
 		if err != nil {
-			log.Println("Error while retrieving all companies, quitting")
+			log.Println("Error while retrieving all regions, quitting")
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
@@ -285,9 +287,48 @@ func getRegion() {
 /* CITY HANDLERS */
 /*****************/
 
+func getAllCities() {
+	http.HandleFunc("/city/all", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			return
+		}
 
+		cities, err := database.RetrieveAllCities()
+		if err != nil {
+			log.Println("Error while retrieving all cities, quitting")
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
 
+		erpc.MarshalSend(w, cities)
+	})
+}
 
+func getCity() {
+	http.HandleFunc("/city", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			return
+		}
+
+		if r.URL.Query()["city_name"] == nil || r.URL.Query()["city_region"] == nil {
+			log.Println("City name or city region not passed, quitting")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		}
+
+		name := r.URL.Query()["city_name"][0]
+		region := r.URL.Query()["city_region"][0]
+		city, err := database.RetrieveCityByName(name, region) //************ STOP ***********
+		if err != nil {
+			log.Println("Error while retrieving all cities, quitting")
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, city)
+	})
+}
 
 /********************/
 /* COMPANY HANDLERS */
