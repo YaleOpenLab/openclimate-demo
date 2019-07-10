@@ -2,26 +2,26 @@ package database
 
 import (
 	"encoding/json"
+	edb "github.com/Varunram/essentials/database"
+	utils "github.com/Varunram/essentials/utils"
+	globals "github.com/YaleOpenLab/openclimate/globals"
 	"github.com/boltdb/bolt"
 	"github.com/pkg/errors"
-	utils "github.com/Varunram/essentials/utils"
-	edb "github.com/Varunram/essentials/database"
-	globals "github.com/YaleOpenLab/openclimate/globals"
 )
 
 // includes states, regions, provinces, prefectures, etc.
 type Region struct {
-	Index 			int
-	Name			string
-	Country			string
-	Area			float64
-	Iso				string
-	Population		int
-	Latitude		float64
-	Longitude		float64
-	Revenue			float64
-	CompanySize		int
-	HQ				string
+	Index       int
+	Name        string
+	Country     string
+	Area        float64
+	Iso         string
+	Population  int
+	Latitude    float64
+	Longitude   float64
+	Revenue     float64
+	CompanySize int
+	HQ          string
 	// EntityType		string
 }
 
@@ -62,7 +62,7 @@ func NewRegion(name string, country string) (Region, error) {
 
 }
 
-/* 
+/*
 	ISSUE: edb.Save() asks for an key argument of type INT,
 	but currently we are passing in a key argument of type string.
 	This issue needs to be resolved. Could maybe just use a hash.
@@ -71,11 +71,9 @@ func NewRegion(name string, country string) (Region, error) {
 	incrementing index for each new region, so the key is of type int.
 */
 
-
 func (region *Region) Save() error {
 	return edb.Save(globals.DbDir, RegionBucket, region, region.Index)
 }
-
 
 func RetrieveRegion(key int) (Region, error) {
 	var region Region
@@ -88,7 +86,6 @@ func RetrieveRegion(key int) (Region, error) {
 	region = temp.(Region)
 	return region, region.Save()
 }
-
 
 func RetrieveRegionByName(name string, country string) (Region, error) {
 	var region Region
@@ -103,7 +100,7 @@ func RetrieveRegionByName(name string, country string) (Region, error) {
 	}
 
 	defer db.Close()
-	
+
 	err = db.View(func(tx *bolt.Tx) error {
 		bucket := tx.Bucket(RegionBucket)
 
@@ -127,7 +124,6 @@ func RetrieveRegionByName(name string, country string) (Region, error) {
 	return region, err
 }
 
-
 func RetrieveAllRegions() ([]Region, error) {
 	var regions []Region
 	keys, err := edb.RetrieveAllKeys(globals.DbDir, RegionBucket)
@@ -141,6 +137,3 @@ func RetrieveAllRegions() ([]Region, error) {
 
 	return regions, nil
 }
-
-
-

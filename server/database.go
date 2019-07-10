@@ -30,8 +30,7 @@ func setupDBHandlers() {
 func newUser() {
 	http.HandleFunc("/user/new", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -69,8 +68,7 @@ func authorizeUser(r *http.Request) (database.User, error) {
 func retrieveUser() {
 	http.HandleFunc("/user/retrieve", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -88,8 +86,7 @@ func retrieveUser() {
 func retrieveAllUsers() {
 	http.HandleFunc("/user/retrieve/all", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -114,8 +111,7 @@ func retrieveAllUsers() {
 func deleteUser() {
 	http.HandleFunc("/user/delete", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -140,8 +136,7 @@ func deleteUser() {
 func updateUser() {
 	http.HandleFunc("/user/update", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -182,8 +177,7 @@ func updateUser() {
 func getIpfsHash() {
 	http.HandleFunc("/ipfs/hash", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -222,8 +216,7 @@ func getIpfsHash() {
 func sendEth() {
 	http.HandleFunc("/user/sendeth", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -269,7 +262,6 @@ func getAllRegions() {
 	http.HandleFunc("/region/all", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -295,7 +287,6 @@ func getRegion() {
 	http.HandleFunc("/region", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -323,7 +314,6 @@ func getRegion() {
 	})
 }
 
-
 /********************/
 /* COMPANY HANDLERS */
 /********************/
@@ -331,8 +321,7 @@ func getRegion() {
 func getAllCompanies() {
 	http.HandleFunc("/companies/all", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -357,8 +346,7 @@ func getAllCompanies() {
 func getCompany() {
 	http.HandleFunc("/company", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 

@@ -4,8 +4,8 @@ import (
 	"log"
 	"os"
 
-	"github.com/YaleOpenLab/openclimate/globals"
 	utils "github.com/Varunram/essentials/utils"
+	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/boltdb/bolt"
 )
 
@@ -52,7 +52,6 @@ func OpenDB() (*bolt.DB, error) {
 	})
 	return db, err
 }
-
 
 // DeleteKeyFromBucket deletes a given key from the bucket bucketName but doesn
 // not shift indices of elements succeeding the deleted element's index

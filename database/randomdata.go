@@ -1,7 +1,6 @@
 package database
 
-import (
-)
+import ()
 
 var USStates []string
 

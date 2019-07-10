@@ -4,8 +4,8 @@ package server
 
 import (
 	"encoding/json"
-	utils "github.com/Varunram/essentials/utils"
 	erpc "github.com/Varunram/essentials/rpc"
+	utils "github.com/Varunram/essentials/utils"
 	"github.com/YaleOpenLab/openclimate/database"
 	"io/ioutil"
 	"log"
@@ -36,8 +36,7 @@ type USStatesReturn struct {
 func getUSStates() {
 	http.HandleFunc("/us/states", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -62,8 +61,7 @@ type USStateCountiesReturn struct {
 func getUSCounties() {
 	http.HandleFunc("/us/counties", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -111,8 +109,7 @@ type ParisAgreementReturnFinal struct {
 func getParisAgreement() {
 	http.HandleFunc("/paris/data", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -189,8 +186,7 @@ type OceanDataFinal struct {
 func getOceanData() {
 	http.HandleFunc("/ocean/data", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -240,7 +236,7 @@ func getOceanData() {
 /*****************************************/
 
 type CarbonDataPrelim struct {
-	Year                   int `json:"Year"`
+	Year                   int     `json:"Year"`
 	FossilFuelAndIndustry  float64 `json:"Fossil-Fuel-And-Industry"`
 	LandUseChangeEmissions float64 `json:"Land-Use-Change-Emissions"`
 	AtmosphericGrowth      float64 `json:"Atmospheric-Growth"`
@@ -261,8 +257,7 @@ type CarbonDataFinal struct {
 func getCarbonData() {
 	http.HandleFunc("/carbon/budget", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -308,28 +303,28 @@ func getCarbonData() {
 /*******************************/
 
 type CountriesEmissionsPrelim struct {
-	Nation			string
-	Year			int
-	Total			int
-	SolidFuel		float64
-	LiquidFuel		float64
-	GasFuel			float64
-	Cement			int
-	GasFlaring		float64
-	PerCapita		float64
-	Bunkers			int
+	Nation     string
+	Year       int
+	Total      int
+	SolidFuel  float64
+	LiquidFuel float64
+	GasFuel    float64
+	Cement     int
+	GasFlaring float64
+	PerCapita  float64
+	Bunkers    int
 }
 
 type CountriesEmissionsFinal struct {
-	Year			int
-	Total			int
-	SolidFuel		float64
-	LiquidFuel		float64
-	GasFuel			float64
-	Cement			int
-	GasFlaring		float64
-	PerCapita		float64
-	Bunkers			int
+	Year       int
+	Total      int
+	SolidFuel  float64
+	LiquidFuel float64
+	GasFuel    float64
+	Cement     int
+	GasFlaring float64
+	PerCapita  float64
+	Bunkers    int
 }
 
 func getCountriesEmissionsData() {
@@ -338,7 +333,6 @@ func getCountriesEmissionsData() {
 
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -407,8 +401,7 @@ type NazcaResponse struct {
 func queryNazca() {
 	http.HandleFunc("/nazca/data", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -421,7 +414,10 @@ func queryNazca() {
 
 		for i := 173; i < 174; i++ {
 			apiUrl := "https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid=" + utils.ItoS(i)
-			data, err := Get(apiUrl)
+			// alt url: https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid=173&entitytypeid=3
+			// coutnry code for the US is 173, hence the weird loop here. Once we have the frontend ready for
+			// the US, we can add the other countries here
+			data, err := erpc.GetRequest(apiUrl)
 			if err != nil {
 				log.Println("country: ", i, "not queryable", err)
 				time.Sleep(1 * time.Second)
@@ -443,8 +439,7 @@ func queryNazca() {
 func queryNazcaCountry() {
 	http.HandleFunc("/nazcacountry/data", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
@@ -458,7 +453,7 @@ func queryNazcaCountry() {
 		countryMap := make(map[int]string)
 		for i := 1; i < 181; i++ {
 			apiUrl := "https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid=" + utils.ItoS(i)
-			data, err := Get(apiUrl)
+			data, err := erpc.GetRequest(apiUrl)
 			if err != nil {
 				log.Println("country: ", i, "not queryable", err)
 				time.Sleep(1 * time.Second)
@@ -491,8 +486,7 @@ type CountryIdResponse struct {
 func getCountryId() {
 	http.HandleFunc("/countries/id", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
-		if err !=  nil {
-			responseHandler(w, StatusBadRequest)
+		if err != nil {
 			return
 		}
 
