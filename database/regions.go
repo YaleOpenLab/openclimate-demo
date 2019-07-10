@@ -47,15 +47,15 @@ func NewRegion(name string, country string) (Region, error) {
 	new.Name = name
 	new.Country = country
 
-	// simply initializing these fields to nil for now
-	new.Area = 0
-	new.Iso = ""
-	new.Population = 0
-	new.Latitude = 0
-	new.Longitude = 0
-	new.Revenue = 0
-	new.CompanySize = 0
-	new.HQ = ""
+	// // simply initializing these fields to nil for now
+	// new.Area = 0
+	// new.Iso = ""
+	// new.Population = 0
+	// new.Latitude = 0
+	// new.Longitude = 0
+	// new.Revenue = 0
+	// new.CompanySize = 0
+	// new.HQ = ""
 
 	err = new.Save()
 	return new, err

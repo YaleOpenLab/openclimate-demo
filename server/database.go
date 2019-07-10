@@ -281,6 +281,14 @@ func getRegion() {
 	})
 }
 
+/*****************/
+/* CITY HANDLERS */
+/*****************/
+
+
+
+
+
 /********************/
 /* COMPANY HANDLERS */
 /********************/
@@ -310,14 +318,15 @@ func getCompany() {
 			return
 		}
 
-		if r.URL.Query()["company"] == nil {
-			log.Println("company name not passed, quitting")
+		if r.URL.Query()["company_name"] == nil || r.URL.Query()["company_country"] == nil {
+			log.Println("company name or country not passed, quitting")
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
-		companyName := r.URL.Query()["company"][0]
-		company, err := database.RetrieveCompanyByName(companyName)
+		name := r.URL.Query()["company_name"][0]
+		country := r.URL.Query()["company_country"][0]
+		company, err := database.RetrieveCompanyByName(name, country)
 		if err != nil {
 			log.Println("error while retrieving all companies, quitting")
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
