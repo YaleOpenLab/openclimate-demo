@@ -292,7 +292,7 @@ func getAllRegions() {
 }
 
 func getRegion() {
-	http.HandleFun("/region", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/region", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
 			responseHandler(w, StatusBadRequest)
@@ -305,13 +305,14 @@ func getRegion() {
 			responseHandler(w, StatusBadRequest)
 		}
 
-		if r.URL.Query()["region_name"] == nil {
-			log.Println("Region_name not passed, quitting")
+		if r.URL.Query()["region_name"] == nil || r.URL.Query()["region_country"] == nil {
+			log.Println("Region_name or region_country not passed, quitting")
 			responseHandler(w, StatusBadRequest)
 		}
 
-		regionName := r.UrlQuery()["region_name"][0]
-		region, err := database.RetrieveRegionByName(regionName) //************ STOP ***********
+		name := r.URL.Query()["region_name"][0]
+		country := r.URL.Query()["region_country"][0]
+		region, err := database.RetrieveRegionByName(name, country) //************ STOP ***********
 		if err != nil {
 			log.Println("Error while retrieving all companies, quitting")
 			responseHandler(w, StatusInternalServerError)

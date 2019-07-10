@@ -2,9 +2,11 @@ package database
 
 import (
 	"encoding/json"
-	utils "github.com/Varunram/essentials/utils"
 	"github.com/boltdb/bolt"
 	"github.com/pkg/errors"
+	utils "github.com/Varunram/essentials/utils"
+	edb "github.com/Varunram/essentials/database"
+	globals "github.com/YaleOpenLab/openclimate/globals"
 )
 
 // includes states, regions, provinces, prefectures, etc.
@@ -30,7 +32,7 @@ func NewRegion(name string, country string) (Region, error) {
 
 	// naive implementation of assigning keys to bucket items (simple indexing)
 	regions, err := RetrieveAllRegions()
-	lenRegions := len(allRegions)
+	lenRegions := len(regions)
 
 	if err != nil {
 		return new, errors.Wrap(err, "Error while retrieving all regions from db")
@@ -38,8 +40,7 @@ func NewRegion(name string, country string) (Region, error) {
 
 	if lenRegions == 0 {
 		new.Index = 1
-	}
-	else {
+	} else {
 		new.Index = lenRegions + 1
 	}
 
@@ -47,14 +48,14 @@ func NewRegion(name string, country string) (Region, error) {
 	new.Country = country
 
 	// simply initializing these fields to nil for now
-	new.Area = nil
-	new.Iso = nil
-	new.Population = nil
-	new.Latitude = nil
-	new.Longitude = nil
-	new.Revenue = nil
-	new.CompanySize = nil
-	new.HQ = nil
+	new.Area = 0
+	new.Iso = ""
+	new.Population = 0
+	new.Latitude = 0
+	new.Longitude = 0
+	new.Revenue = 0
+	new.CompanySize = 0
+	new.HQ = ""
 
 	err = new.Save()
 	return new, err
@@ -72,13 +73,13 @@ func NewRegion(name string, country string) (Region, error) {
 
 
 func (region *Region) Save() error {
-	return edb.Save(consts.DbDir, RegionBucket, region, region.index)
+	return edb.Save(globals.DbDir, RegionBucket, region, region.Index)
 }
 
 
 func RetrieveRegion(key int) (Region, error) {
 	var region Region
-	temp, err := edb.Retrieve(consts.DbDir, RegionBucket, key)
+	temp, err := edb.Retrieve(globals.DbDir, RegionBucket, key)
 
 	if err != nil {
 		return region, errors.Wrap(err, "Error while retrieving key from bucket")
@@ -112,7 +113,7 @@ func RetrieveRegionByName(name string, country string) (Region, error) {
 			tempKey := bucket.Get(utils.ItoB(i))
 
 			err := json.Unmarshal(tempKey, &tempRegion)
-			if err := nil {
+			if err != nil {
 				return errors.Wrap(err, "Could not unmarshal json, quitting")
 			}
 
@@ -129,9 +130,9 @@ func RetrieveRegionByName(name string, country string) (Region, error) {
 
 func RetrieveAllRegions() ([]Region, error) {
 	var regions []Region
-	keys, err := edb.RetrieveAllKeys(consts.DbDir, RegionBucket)
+	keys, err := edb.RetrieveAllKeys(globals.DbDir, RegionBucket)
 	if err != nil {
-		return investors, errors.Wrap("error while retrieving all keys")
+		return regions, errors.Wrap(err, "error while retrieving all keys")
 	}
 
 	for _, value := range keys {
