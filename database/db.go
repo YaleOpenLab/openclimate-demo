@@ -1,4 +1,4 @@
-xpackage database
+package database
 
 import (
 	"log"

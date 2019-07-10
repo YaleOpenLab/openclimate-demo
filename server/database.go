@@ -24,7 +24,7 @@ func setupDBHandlers() {
 	getRegion()
 	getAllCities()
 	getCity()
-	newRegion("Connecticut", "USA")
+	// newRegi	on("Connecticut", "USA")
 }
 
 /*****************/
@@ -336,7 +336,7 @@ func getCity() {
 /********************/
 
 func getAllCompanies() {
-	http.HandleFunc("/companies/all", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/company/all", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
 			return
