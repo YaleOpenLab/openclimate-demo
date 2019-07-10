@@ -24,6 +24,7 @@ func setupDBHandlers() {
 	getRegion()
 	getAllCities()
 	getCity()
+	newRegion("Connecticut", "USA")
 }
 
 /*****************/
