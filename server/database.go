@@ -24,7 +24,6 @@ func setupDBHandlers() {
 	getRegion()
 	getAllCities()
 	getCity()
-	// newRegi	on("Connecticut", "USA")
 }
 
 /*****************/
@@ -241,6 +240,8 @@ func sendEth() {
 /* REGION HANDLERS */
 /*******************/
 
+
+
 func getAllRegions() {
 	http.HandleFunc("/region/all", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
@@ -275,7 +276,7 @@ func getRegion() {
 		country := r.URL.Query()["region_country"][0]
 		region, err := database.RetrieveRegionByName(name, country) //************ STOP ***********
 		if err != nil {
-			log.Println("Error while retrieving all regions, quitting")
+			log.Println("Error while retrieving region, quitting")
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
@@ -334,6 +335,8 @@ func getCity() {
 /********************/
 /* COMPANY HANDLERS */
 /********************/
+
+
 
 func getAllCompanies() {
 	http.HandleFunc("/company/all", func(w http.ResponseWriter, r *http.Request) {

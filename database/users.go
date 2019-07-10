@@ -10,8 +10,10 @@ import (
 
 	// keys "github.com/cosmos/cosmos-sdk/crypto/keys"
 	aes "github.com/Varunram/essentials/aes"
+	edb "github.com/Varunram/essentials/database"
 	utils "github.com/Varunram/essentials/utils"
 	"github.com/boltdb/bolt"
+	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -145,47 +147,32 @@ func NewUser(name string, pwhash string, email string) (User, error) {
 
 // Save inserts a passed User object into the database
 func (a *User) Save() error {
-	db, err := OpenDB()
-	if err != nil {
-		return errors.Wrap(err, "Error while opening database")
-	}
-	defer db.Close()
-	err = db.Update(func(tx *bolt.Tx) error {
-		b := tx.Bucket(UserBucket)
-		encoded, err := json.Marshal(a)
-		if err != nil {
-			return errors.Wrap(err, "Error while marshaling json")
-		}
-		return b.Put([]byte(utils.ItoB(a.Index)), encoded)
-	})
-	return err
+	return edb.Save(globals.DbDir + "/openclimate.db", UserBucket, a, a.Index)
 }
 
 // RetrieveAllUsers gets a list of all User in the database
 func RetrieveAllUsers() ([]User, error) {
-	var arr []User
-	db, err := OpenDB()
+	var users []User
+	keys, err := edb.RetrieveAllKeys(globals.DbDir + "/openclimate.db", UserBucket)
 	if err != nil {
-		return arr, errors.Wrap(err, "Error while opening database")
+		log.Println(err)
+		return users ,errors.Wrap(err, "could not retrieve all user keys")
 	}
-	defer db.Close()
-
-	err = db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket(UserBucket)
-		for i := 1; ; i++ {
-			var rUser User
-			x := b.Get(utils.ItoB(i))
-			if x == nil {
-				return nil
-			}
-			err := json.Unmarshal(x, &rUser)
-			if err != nil {
-				return errors.Wrap(err, "Error while unmarshalling json")
-			}
-			arr = append(arr, rUser)
+	for _, val := range keys {
+		userBytes, err := json.Marshal(val)
+		if err != nil {
+			break
 		}
-	})
-	return arr, err
+		var x User
+		err = json.Unmarshal(userBytes, &x)
+		if err != nil {
+			break
+		}
+		users = append(users, x)
+	}
+
+	return users, nil
+
 }
 
 // RetrieveUser retrieves a particular User indexed by key from the database

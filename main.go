@@ -38,6 +38,7 @@ func main() {
 
 	_, err = database.RetrieveAllUsers()
 	if err != nil {
+		log.Println(err)
 		database.CreateHomeDir()
 	}
 
