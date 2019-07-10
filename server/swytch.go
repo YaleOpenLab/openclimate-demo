@@ -33,7 +33,7 @@ type GetAccessTokenData struct {
 
 func getAccessToken() {
 	http.HandleFunc("/swytch/accessToken", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
 			return
 		}
@@ -93,7 +93,7 @@ func getAccessToken() {
 
 func getRefreshToken() {
 	http.HandleFunc("/swytch/refreshToken", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
 			return
 		}
@@ -175,7 +175,7 @@ type GetSwytchUserStruct struct {
 
 func getSwytchUser() {
 	http.HandleFunc("/swytch/getuser", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
 			return
 		}
@@ -262,7 +262,7 @@ type GetAssetStruct struct {
 
 func getAssets() {
 	http.HandleFunc("/swytch/getassets", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
 			return
 		}
@@ -360,7 +360,7 @@ type GetEnergyStruct struct {
 
 func getEnergy() {
 	http.HandleFunc("/swytch/getenergy", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
 			return
 		}
@@ -460,7 +460,7 @@ type GetEnergyAttributionData struct {
 
 func getEnergyAttribution() {
 	http.HandleFunc("/swytch/geteattributes", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
 			return
 		}

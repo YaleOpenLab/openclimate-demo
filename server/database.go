@@ -1,12 +1,14 @@
 package server
 
 import (
-	ipfs "github.com/Varunram/essentials/ipfs"
-	erpc "github.com/Varunram/essentials/rpc"
-	"github.com/YaleOpenLab/openclimate/database"
+	"github.com/pkg/errors"
 	"log"
 	"math/big"
 	"net/http"
+
+	ipfs "github.com/Varunram/essentials/ipfs"
+	erpc "github.com/Varunram/essentials/rpc"
+	"github.com/YaleOpenLab/openclimate/database"
 )
 
 func setupDBHandlers() {
@@ -58,24 +60,35 @@ func newUser() {
 	})
 }
 
-func authorizeUser(r *http.Request) (database.User, error) {
+func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error) {
+	var user database.User
+	err := erpc.CheckGet(w, r)
+	if err != nil {
+		return user, errors.Wrap(err, "could not checkgetauth")
+	}
+
+	if r.URL.Query()["username"] == nil || r.URL.Query()["pwhash"] == nil {
+		log.Println("missing params in call")
+		erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		return user, errors.New("missing params in call")
+	}
+
 	username := r.URL.Query()["username"][0]
 	pwhash := r.URL.Query()["pwhash"][0]
 
-	return database.ValidateUser(username, pwhash)
+	user, err = database.ValidateUser(username, pwhash)
+	if err != nil {
+		log.Println("could not retrieve user from the database, quitting")
+		responseHandler(w, StatusBadRequest)
+		return user, errors.New("user not found in database, quitting")
+	}
+	return user, nil
 }
 
 func retrieveUser() {
 	http.HandleFunc("/user/retrieve", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		user, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		user, err := authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quittting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -87,13 +100,6 @@ func retrieveAllUsers() {
 	http.HandleFunc("/user/retrieve/all", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quittting")
-			responseHandler(w, StatusInternalServerError)
 			return
 		}
 
@@ -110,15 +116,8 @@ func retrieveAllUsers() {
 
 func deleteUser() {
 	http.HandleFunc("/user/delete", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		user, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		user, err := authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quittting")
-			responseHandler(w, StatusInternalServerError)
 			return
 		}
 
@@ -135,15 +134,8 @@ func deleteUser() {
 
 func updateUser() {
 	http.HandleFunc("/user/update", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		user, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		user, err := authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quittting")
-			responseHandler(w, StatusInternalServerError)
 			return
 		}
 
@@ -181,11 +173,6 @@ func getIpfsHash() {
 			return
 		}
 
-		_, err = authorizeUser(r)
-		if err != nil {
-			responseHandler(w, StatusUnauthorized)
-			return
-		}
 		if r.URL.Query()["string"] == nil {
 			responseHandler(w, StatusBadRequest)
 			return
@@ -215,15 +202,8 @@ func getIpfsHash() {
 
 func sendEth() {
 	http.HandleFunc("/user/sendeth", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		user, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		user, err := authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quittting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -265,13 +245,6 @@ func getAllRegions() {
 			return
 		}
 
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("Could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
-			return
-		}
-
 		regions, err := database.RetrieveAllRegions()
 		if err != nil {
 			log.Println("Error while retrieving all companies, quitting")
@@ -288,12 +261,6 @@ func getRegion() {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
 			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("Could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
 		}
 
 		if r.URL.Query()["region_name"] == nil || r.URL.Query()["region_country"] == nil {
@@ -325,13 +292,6 @@ func getAllCompanies() {
 			return
 		}
 
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quittting")
-			responseHandler(w, StatusBadRequest)
-			return
-		}
-
 		companies, err := database.RetrieveAllCompanies()
 		if err != nil {
 			log.Println("error while retrieving all companies, quitting")
@@ -347,13 +307,6 @@ func getCompany() {
 	http.HandleFunc("/company", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 

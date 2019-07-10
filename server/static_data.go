@@ -35,15 +35,8 @@ type USStatesReturn struct {
 
 func getUSStates() {
 	http.HandleFunc("/us/states", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -60,15 +53,8 @@ type USStateCountiesReturn struct {
 
 func getUSCounties() {
 	http.HandleFunc("/us/counties", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -108,15 +94,8 @@ type ParisAgreementReturnFinal struct {
 
 func getParisAgreement() {
 	http.HandleFunc("/paris/data", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -185,15 +164,8 @@ type OceanDataFinal struct {
 
 func getOceanData() {
 	http.HandleFunc("/ocean/data", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -256,15 +228,8 @@ type CarbonDataFinal struct {
 
 func getCarbonData() {
 	http.HandleFunc("/carbon/budget", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -331,15 +296,8 @@ func getCountriesEmissionsData() {
 
 	http.HandleFunc("/countries/emissions", func(w http.ResponseWriter, r *http.Request) {
 
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -400,15 +358,8 @@ type NazcaResponse struct {
 
 func queryNazca() {
 	http.HandleFunc("/nazca/data", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -438,15 +389,8 @@ func queryNazca() {
 
 func queryNazcaCountry() {
 	http.HandleFunc("/nazcacountry/data", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
@@ -485,15 +429,8 @@ type CountryIdResponse struct {
 
 func getCountryId() {
 	http.HandleFunc("/countries/id", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
+		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			return
-		}
-
-		_, err = authorizeUser(r)
-		if err != nil {
-			log.Println("could not retrieve user from the database, quitting")
-			responseHandler(w, StatusBadRequest)
 			return
 		}
 
