@@ -64,7 +64,7 @@ func NewRegion(name string, country string) (Region, error) {
 }
 
 func (region *Region) Save() error {
-	return edb.Save(globals.DbDir+"/openclimate.db", RegionBucket, region, region.Index)
+	return edb.Save(globals.DbPath, RegionBucket, region, region.Index)
 }
 
 func RetrieveRegion(key int) (Region, error) {
@@ -101,7 +101,7 @@ func RetrieveRegionByName(name string, country string) (Region, error) {
 
 func RetrieveAllRegions() ([]Region, error) {
 	var regions []Region
-	keys, err := edb.RetrieveAllKeys(globals.DbDir+"/openclimate.db", RegionBucket)
+	keys, err := edb.RetrieveAllKeys(globals.DbPath, RegionBucket)
 	if err != nil {
 		return regions, errors.Wrap(err, "error while retrieving all keys")
 	}

@@ -62,7 +62,7 @@ func NewCity(name string, region string, country string) (City, error) {
 */
 
 func (city *City) Save() error {
-	return edb.Save(globals.DbDir, CityBucket, city, city.Index)
+	return edb.Save(globals.DbPath, CityBucket, city, city.Index)
 }
 
 func RetrieveCity(key int) (City, error) {
@@ -98,7 +98,7 @@ func RetrieveCityByName(name string, region string) (City, error) {
 
 func RetrieveAllCities() ([]City, error) {
 	var cities []City
-	keys, err := edb.RetrieveAllKeys(globals.DbDir, CityBucket)
+	keys, err := edb.RetrieveAllKeys(globals.DbPath, CityBucket)
 	if err != nil {
 		return cities, errors.Wrap(err, "error while retrieving all keys")
 	}

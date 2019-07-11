@@ -7,6 +7,7 @@ import (
 var (
 	PrivateKey         = ""
 	PrivateKeyPassword = ""
-	DbDir              = os.Getenv("HOME") + "/.openclimate/database"
-	HomeDir            = os.Getenv("HOME") + "/.openx"
+	HomeDir            = os.Getenv("HOME") + "/.openclimate"
+	DbDir              = HomeDir + "/database"
+	DbPath             = DbDir + "/openclimate.db"
 )

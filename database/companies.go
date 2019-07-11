@@ -24,7 +24,6 @@ type Company struct {
 
 // RetrieveUser retrieves a particular User indexed by key from the database
 func RetrieveCompany(key int) (Company, error) {
-
 	var company Company
 	companyBytes, err := RetrieveKey(CompanyBucket, key)
 	if err != nil {
@@ -57,7 +56,7 @@ func RetrieveCompanyByName(name string, country string) (Company, error) {
 // RetrieveAllCompanies gets a list of all companies in the database
 func RetrieveAllCompanies() ([]Company, error) {
 	var companies []Company
-	keys, err := edb.RetrieveAllKeys(globals.DbDir+"/openclimate.db", CompanyBucket)
+	keys, err := edb.RetrieveAllKeys(globals.DbPath, CompanyBucket)
 	if err != nil {
 		log.Println(err)
 		return companies, errors.Wrap(err, "could not retrieve all user keys")
@@ -98,5 +97,5 @@ func NewCompany(name string, country string) (Company, error) {
 }
 
 func (a *Company) Save() error {
-	return edb.Save(globals.DbDir+"/openclimate.db", CompanyBucket, a, a.Index)
+	return edb.Save(globals.DbPath, CompanyBucket, a, a.Index)
 }

@@ -34,17 +34,17 @@ func CreateHomeDir() {
 
 // OpenDB opens the db
 func OpenDB() (*bolt.DB, error) {
-	return edb.CreateDB(globals.DbDir+"/openclimate.db", UserBucket, CompanyBucket, RegionBucket, CityBucket)
+	return edb.CreateDB(globals.DbPath, UserBucket, CompanyBucket, RegionBucket, CityBucket)
 }
 
 // DeleteKeyFromBucket deletes a given key from the bucket bucketName but doesn
 // not shift indices of elements succeeding the deleted element's index
 func DeleteKeyFromBucket(key int, bucketName []byte) error {
-	return edb.DeleteKeyFromBucket(globals.DbDir+"/openclimate.db", key, bucketName)
+	return edb.DeleteKeyFromBucket(globals.DbPath, key, bucketName)
 }
 
 func RetrieveKey(bucketName []byte, key int) ([]byte, error) {
-	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", CompanyBucket, key)
+	x, err := edb.Retrieve(globals.DbPath, CompanyBucket, key)
 	if err != nil {
 		log.Println(x)
 		return nil, errors.Wrap(err, "error while retrieving key from bucket")

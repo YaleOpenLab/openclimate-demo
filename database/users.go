@@ -145,13 +145,13 @@ func NewUser(name string, pwhash string, email string) (User, error) {
 
 // Save inserts a passed User object into the database
 func (a *User) Save() error {
-	return edb.Save(globals.DbDir+"/openclimate.db", UserBucket, a, a.Index)
+	return edb.Save(globals.DbPath, UserBucket, a, a.Index)
 }
 
 // RetrieveAllUsers gets a list of all User in the database
 func RetrieveAllUsers() ([]User, error) {
 	var users []User
-	keys, err := edb.RetrieveAllKeys(globals.DbDir+"/openclimate.db", UserBucket)
+	keys, err := edb.RetrieveAllKeys(globals.DbPath, UserBucket)
 	if err != nil {
 		log.Println(err)
 		return users, errors.Wrap(err, "could not retrieve all user keys")
