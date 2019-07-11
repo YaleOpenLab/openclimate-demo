@@ -170,7 +170,6 @@ func RetrieveAllUsers() ([]User, error) {
 	}
 
 	return users, nil
-
 }
 
 // RetrieveUser retrieves a particular User indexed by key from the database

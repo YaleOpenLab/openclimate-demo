@@ -2,9 +2,10 @@ package database
 
 import (
 	"encoding/json"
-	utils "github.com/Varunram/essentials/utils"
-	"github.com/boltdb/bolt"
+	edb "github.com/Varunram/essentials/database"
+	globals "github.com/YaleOpenLab/openclimate/globals"
 	"github.com/pkg/errors"
+	"log"
 )
 
 type Company struct {
@@ -24,8 +25,8 @@ type Company struct {
 // RetrieveUser retrieves a particular User indexed by key from the database
 func RetrieveCompany(key int) (Company, error) {
 
-	var company User
-	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", CompaniesBucket, key)
+	var company Company
+	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", CompanyBucket, key)
 	if err != nil {
 		log.Println(x)
 		return company, errors.Wrap(err, "error while retrieving key from bucket")
@@ -33,7 +34,7 @@ func RetrieveCompany(key int) (Company, error) {
 
 	companyBytes, err := json.Marshal(x)
 	if err != nil {
-		return user, errors.Wrap(err, "could not marshal json, quitting")
+		return company, errors.Wrap(err, "could not marshal json, quitting")
 	}
 	err = json.Unmarshal(companyBytes, &company)
 	if err != nil {
@@ -45,79 +46,42 @@ func RetrieveCompany(key int) (Company, error) {
 // ValidateUser validates a particular user
 func RetrieveCompanyByName(name string, country string) (Company, error) {
 	var company Company
-	temp, err := RetrieveAllUsers()
+	temp, err := RetrieveAllCompanies()
 	if err != nil {
 		return company, errors.Wrap(err, "error while retrieving all users from database")
 	}
-	limit := len(temp) + 1
-	db, err := OpenDB()
-	if err != nil {
-		return company, errors.Wrap(err, "could not open db, quitting!")
-	}
-	defer db.Close()
-	err = db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket(UserBucket)
-		for i := 1; i < limit; i++ {
-			var rCompany Company
-			x := b.Get(utils.ItoB(i))
-			err := json.Unmarshal(x, &rCompany)
-			if err != nil {
-				return errors.Wrap(err, "could not unmarshal json, quitting!")
-			}
-			// check name
-			if rCompany.Name == name && rCompany.Country == country {
-				company = rCompany
-				return nil
-			}
+
+	for _, company := range temp {
+		if company.Name == name && company.Country == country {
+			return company, nil
 		}
-		return errors.New("Not Found")
-	})
-	return company, err
+	}
+
+	return company, errors.New("company not found, quitting")
 }
 
-// RetrieveAllUsers gets a list of all User in the database
+// RetrieveAllCompanies gets a list of all companies in the database
 func RetrieveAllCompanies() ([]Company, error) {
-	var arr []Company
-	db, err := OpenDB()
+	var companies []Company
+	keys, err := edb.RetrieveAllKeys(globals.DbDir+"/openclimate.db", CompanyBucket)
 	if err != nil {
-		return arr, errors.Wrap(err, "Error while opening database")
+		log.Println(err)
+		return companies, errors.Wrap(err, "could not retrieve all user keys")
 	}
-	defer db.Close()
-
-	err = db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket(UserBucket)
-		for i := 1; ; i++ {
-			var rCompany Company
-			x := b.Get(utils.ItoB(i))
-			if x == nil {
-				return nil
-			}
-			err := json.Unmarshal(x, &rCompany)
-			if err != nil {
-				return errors.Wrap(err, "Error while unmarshalling json")
-			}
-			arr = append(arr, rCompany)
-		}
-	})
-	return arr, err
-}
-
-// Save inserts a passed User object into the database
-func (a *Company) Save() error {
-	db, err := OpenDB()
-	if err != nil {
-		return errors.Wrap(err, "Error while opening database")
-	}
-	defer db.Close()
-	err = db.Update(func(tx *bolt.Tx) error {
-		b := tx.Bucket(UserBucket)
-		encoded, err := json.Marshal(a)
+	for _, val := range keys {
+		companyBytes, err := json.Marshal(val)
 		if err != nil {
-			return errors.Wrap(err, "Error while marshaling json")
+			break
 		}
-		return b.Put([]byte(utils.ItoB(a.Index)), encoded)
-	})
-	return err
+		var x Company
+		err = json.Unmarshal(companyBytes, &x)
+		if err != nil {
+			break
+		}
+		companies = append(companies, x)
+	}
+
+	return companies, nil
 }
 
 func NewCompany(name string, country string) (Company, error) {
@@ -137,4 +101,8 @@ func NewCompany(name string, country string) (Company, error) {
 	company.Name = name
 	company.Country = country
 	return company, company.Save()
+}
+
+func (a *Company) Save() error {
+	return edb.Save(globals.DbDir+"/openclimate.db", CompanyBucket, a, a.Index)
 }
