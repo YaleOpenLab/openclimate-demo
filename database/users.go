@@ -157,12 +157,8 @@ func RetrieveAllUsers() ([]User, error) {
 		return users, errors.Wrap(err, "could not retrieve all user keys")
 	}
 	for _, val := range keys {
-		userBytes, err := json.Marshal(val)
-		if err != nil {
-			break
-		}
 		var x User
-		err = json.Unmarshal(userBytes, &x)
+		err = json.Unmarshal(val, &x)
 		if err != nil {
 			break
 		}
@@ -175,9 +171,9 @@ func RetrieveAllUsers() ([]User, error) {
 // RetrieveUser retrieves a particular User indexed by key from the database
 func RetrieveUser(key int) (User, error) {
 	var user User
-	userBytes, err := RetrieveKey(UserBucket, key)
+	userBytes, err := edb.Retrieve(globals.DbPath, UserBucket, key)
 	if err != nil {
-		return user, errors.Wrap(err, "could not marshal json, quitting")
+		return user, errors.Wrap(err, "error while retrieving key from bucket")
 	}
 	err = json.Unmarshal(userBytes, &user)
 	if err != nil {

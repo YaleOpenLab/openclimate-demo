@@ -106,13 +106,9 @@ func RetrieveAllRegions() ([]Region, error) {
 		return regions, errors.Wrap(err, "error while retrieving all keys")
 	}
 
-	for _, value := range keys {
+	for _, val := range keys {
 		var region Region
-		regionBytes, err := json.Marshal(value)
-		if err != nil {
-			break
-		}
-		err = json.Unmarshal(regionBytes, region)
+		err = json.Unmarshal(val, region)
 		if err != nil {
 			return regions, err
 		}

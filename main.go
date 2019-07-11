@@ -42,6 +42,11 @@ func main() {
 		database.CreateHomeDir()
 	}
 
+	user, err := database.RetrieveUser(41)
+	if err != nil {
+		log.Fatal(err)
+	}
+	log.Println(user)
 	// log.Println(blockchain.CommitToChain("ethereum", "top", "secret"))
 	server.StartServer("8001", true)
 }

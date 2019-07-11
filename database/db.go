@@ -1,7 +1,6 @@
 package database
 
 import (
-	"encoding/json"
 	"github.com/pkg/errors"
 	"log"
 	"os"
@@ -44,16 +43,12 @@ func DeleteKeyFromBucket(key int, bucketName []byte) error {
 }
 
 func RetrieveKey(bucketName []byte, key int) ([]byte, error) {
-	x, err := edb.Retrieve(globals.DbPath, CompanyBucket, key)
+	log.Println("BUCKET NAME: ", string(bucketName), key)
+	x, err := edb.Retrieve(globals.DbPath, bucketName, key)
 	if err != nil {
 		log.Println(x)
 		return nil, errors.Wrap(err, "error while retrieving key from bucket")
 	}
 
-	xBytes, err := json.Marshal(x)
-	if err != nil {
-		return nil, errors.Wrap(err, "could not marshal json, quitting")
-	}
-
-	return xBytes, nil
+	return x, nil
 }

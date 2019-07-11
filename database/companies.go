@@ -62,12 +62,8 @@ func RetrieveAllCompanies() ([]Company, error) {
 		return companies, errors.Wrap(err, "could not retrieve all user keys")
 	}
 	for _, val := range keys {
-		companyBytes, err := json.Marshal(val)
-		if err != nil {
-			break
-		}
 		var x Company
-		err = json.Unmarshal(companyBytes, &x)
+		err = json.Unmarshal(val, &x)
 		if err != nil {
 			break
 		}
