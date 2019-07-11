@@ -1,16 +1,20 @@
 package database
 
-// import (
+import (
+	"log"
+)
 
-// 	"encoding/json"
-// 	edb "github.com/Varunram/essentials/database"
-// 	utils "github.com/Varunram/essentials/utils"
-// 	globals "github.com/YaleOpenLab/openclimate/globals"
-// 	"github.com/boltdb/bolt"
-// 	"github.com/pkg/errors"
+func Populate() {
+	PopulateUSStates()
+}
 
-// )
-
-func PopulateDummyRegion(name string, country string) error {
-	return nil
+func PopulateUSStates() {
+	USStates = []string{"Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Federated States of Micronesia", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Marshall Islands", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Northern Mariana Islands", "Ohio", "Oklahoma", "Oregon", "Palau", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Island", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"}
+	for _, state := range USStates {
+		_, err := NewRegion(state, "USA")
+		if err != nil {
+			log.Println("INSIDE POPULATE: ", err)
+			return
+		}
+	}
 }

@@ -5,11 +5,12 @@ import (
 	"net/http"
 
 	erpc "github.com/Varunram/essentials/rpc"
-	//"github.com/YaleOpenLab/openclimate/database"
+	"github.com/YaleOpenLab/openclimate/database"
 )
 
 func StartServer(port string, insecure bool) {
 
+	database.Populate()
 	erpc.SetupBasicHandlers()
 	setupDBHandlers()
 	setupSwytchApis()
