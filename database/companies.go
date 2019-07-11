@@ -23,21 +23,23 @@ type Company struct {
 
 // RetrieveUser retrieves a particular User indexed by key from the database
 func RetrieveCompany(key int) (Company, error) {
-	var company Company
-	db, err := OpenDB()
+
+	var company User
+	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", CompaniesBucket, key)
 	if err != nil {
-		return company, errors.Wrap(err, "error while opening database")
+		log.Println(x)
+		return company, errors.Wrap(err, "error while retrieving key from bucket")
 	}
-	defer db.Close()
-	err = db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket(UserBucket)
-		x := b.Get(utils.ItoB(key))
-		if x == nil {
-			return errors.New("retrieved user nil, quitting!")
-		}
-		return json.Unmarshal(x, &company)
-	})
-	return company, err
+
+	companyBytes, err := json.Marshal(x)
+	if err != nil {
+		return user, errors.Wrap(err, "could not marshal json, quitting")
+	}
+	err = json.Unmarshal(companyBytes, &company)
+	if err != nil {
+		return company, errors.Wrap(err, "could not unmarshal json, quitting")
+	}
+	return company, nil
 }
 
 // ValidateUser validates a particular user

@@ -3,10 +3,9 @@ package database
 import (
 	"encoding/json"
 	edb "github.com/Varunram/essentials/database"
-	utils "github.com/Varunram/essentials/utils"
 	globals "github.com/YaleOpenLab/openclimate/globals"
-	"github.com/boltdb/bolt"
 	"github.com/pkg/errors"
+	"log"
 )
 
 // includes cities, municipalities, towns, shires, villages, communes, etc.
@@ -49,16 +48,6 @@ func NewCity(name string, region string, country string) (City, error) {
 	new.Region = region
 	new.Country = country
 
-	// // simply initializing these fields to nil for now
-	// new.Area = 0
-	// new.Iso = ""
-	// new.Population = 0
-	// new.Latitude = 0
-	// new.Longitude = 0
-	// new.Revenue = 0
-	// new.CompanySize = 0
-	// new.HQ = ""
-
 	err = new.Save()
 	return new, err
 
@@ -79,14 +68,21 @@ func (city *City) Save() error {
 
 func RetrieveCity(key int) (City, error) {
 	var city City
-	temp, err := edb.Retrieve(globals.DbDir, CityBucket, key)
-
+	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", CityBucket, key)
 	if err != nil {
-		return city, errors.Wrap(err, "Error while retrieving key from bucket")
+		log.Println(x)
+		return city, errors.Wrap(err, "error while retrieving key from bucket")
 	}
 
-	city = temp.(City)
-	return city, city.Save()
+	cityBytes, err := json.Marshal(x)
+	if err != nil {
+		return city, errors.Wrap(err, "could not marshal json, quitting")
+	}
+	err = json.Unmarshal(cityBytes, &city)
+	if err != nil {
+		return city, errors.Wrap(err, "could not unmarshal json, quitting")
+	}
+	return city, nil
 }
 
 func RetrieveCityByName(name string, region string) (City, error) {
@@ -96,34 +92,14 @@ func RetrieveCityByName(name string, region string) (City, error) {
 		return city, errors.Wrap(err, "Error while retrieving all cities from database")
 	}
 
-	db, err := OpenDB()
-	if err != nil {
-		return city, errors.Wrap(err, "Could not open database, quitting")
+	for _, val := range allCities {
+		if val.Name == name && val.Region == region {
+			city = val
+			return city, nil
+		}
 	}
 
-	defer db.Close()
-
-	err = db.View(func(tx *bolt.Tx) error {
-		bucket := tx.Bucket(CityBucket)
-
-		limit := len(allCities) + 1
-		for i := 1; i < limit; i++ {
-			var tempCity City
-			tempKey := bucket.Get(utils.ItoB(i))
-
-			err := json.Unmarshal(tempKey, &tempCity)
-			if err != nil {
-				return errors.Wrap(err, "Could not unmarshal json, quitting")
-			}
-
-			if tempCity.Name == name && tempCity.Region == region {
-				city = tempCity
-				return nil
-			}
-		}
-		return errors.New("City not found.")
-	})
-	return city, err
+	return city, errors.New("city not found")
 }
 
 func RetrieveAllCities() ([]City, error) {

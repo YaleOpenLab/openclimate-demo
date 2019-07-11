@@ -11,9 +11,7 @@ import (
 	// keys "github.com/cosmos/cosmos-sdk/crypto/keys"
 	aes "github.com/Varunram/essentials/aes"
 	edb "github.com/Varunram/essentials/database"
-	utils "github.com/Varunram/essentials/utils"
 	"github.com/YaleOpenLab/openclimate/globals"
-	"github.com/boltdb/bolt"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
@@ -178,53 +176,38 @@ func RetrieveAllUsers() ([]User, error) {
 // RetrieveUser retrieves a particular User indexed by key from the database
 func RetrieveUser(key int) (User, error) {
 	var user User
-	db, err := OpenDB()
+	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", UserBucket, key)
 	if err != nil {
-		return user, errors.Wrap(err, "error while opening database")
+		log.Println(x)
+		return user, errors.Wrap(err, "error while retrieving key from bucket")
 	}
-	defer db.Close()
-	err = db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket(UserBucket)
-		x := b.Get(utils.ItoB(key))
-		if x == nil {
-			return errors.New("retrieved user nil, quitting!")
-		}
-		return json.Unmarshal(x, &user)
-	})
-	return user, err
+
+	userBytes, err := json.Marshal(x)
+	if err != nil {
+		return user, errors.Wrap(err, "could not marshal json, quitting")
+	}
+	err = json.Unmarshal(userBytes, &user)
+	if err != nil {
+		return user, errors.Wrap(err, "could not unmarshal json, quitting")
+	}
+	return user, nil
 }
 
 // ValidateUser validates a particular user
 func ValidateUser(name string, pwhash string) (User, error) {
 	var user User
-	temp, err := RetrieveAllUsers()
+	users, err := RetrieveAllUsers()
 	if err != nil {
 		return user, errors.Wrap(err, "error while retrieving all users from database")
 	}
-	limit := len(temp) + 1
-	db, err := OpenDB()
-	if err != nil {
-		return user, errors.Wrap(err, "could not open db, quitting!")
-	}
-	defer db.Close()
-	err = db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket(UserBucket)
-		for i := 1; i < limit; i++ {
-			var rUser User
-			x := b.Get(utils.ItoB(i))
-			err := json.Unmarshal(x, &rUser)
-			if err != nil {
-				return errors.Wrap(err, "could not unmarshal json, quitting!")
-			}
-			// check names
-			if rUser.Name == name && rUser.Pwhash == pwhash {
-				user = rUser
-				return nil
-			}
+
+	for _, user := range users {
+		if user.Name == name && user.Pwhash == pwhash {
+			return user, nil
 		}
-		return errors.New("Not Found")
-	})
-	return user, err
+	}
+
+	return user, errors.New("user not found")
 }
 
 func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {

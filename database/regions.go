@@ -58,16 +58,6 @@ func NewRegion(name string, country string) (Region, error) {
 	new.Name = name
 	new.Country = country
 
-	// // simply initializing these fields to nil for now
-	// new.Area = 0
-	// new.Iso = ""
-	// new.Population = 0
-	// new.Latitude = 0
-	// new.Longitude = 0
-	// new.Revenue = 0
-	// new.CompanySize = 0
-	// new.HQ = ""
-
 	err = new.Save()
 	return new, err
 
@@ -79,14 +69,21 @@ func (region *Region) Save() error {
 
 func RetrieveRegion(key int) (Region, error) {
 	var region Region
-	temp, err := edb.Retrieve(globals.DbDir+"/openclimate.db", RegionBucket, key)
-
+	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", RegionBucket, key)
 	if err != nil {
-		return region, errors.Wrap(err, "Error while retrieving key from bucket")
+		log.Println(x)
+		return region, errors.Wrap(err, "error while retrieving key from bucket")
 	}
 
-	region = temp.(Region)
-	return region, region.Save()
+	regionBytes, err := json.Marshal(x)
+	if err != nil {
+		return region, errors.Wrap(err, "could not marshal json, quitting")
+	}
+	err = json.Unmarshal(regionBytes, &region)
+	if err != nil {
+		return region, errors.Wrap(err, "could not unmarshal json, quitting")
+	}
+	return region, nil
 }
 
 func RetrieveRegionByName(name string, country string) (Region, error) {
