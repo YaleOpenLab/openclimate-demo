@@ -5,7 +5,6 @@ import (
 	edb "github.com/Varunram/essentials/database"
 	globals "github.com/YaleOpenLab/openclimate/globals"
 	"github.com/pkg/errors"
-	"log"
 )
 
 // includes cities, municipalities, towns, shires, villages, communes, etc.
@@ -68,16 +67,11 @@ func (city *City) Save() error {
 
 func RetrieveCity(key int) (City, error) {
 	var city City
-	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", CityBucket, key)
-	if err != nil {
-		log.Println(x)
-		return city, errors.Wrap(err, "error while retrieving key from bucket")
-	}
-
-	cityBytes, err := json.Marshal(x)
+	cityBytes, err := RetrieveKey(CompanyBucket, key)
 	if err != nil {
 		return city, errors.Wrap(err, "could not marshal json, quitting")
 	}
+
 	err = json.Unmarshal(cityBytes, &city)
 	if err != nil {
 		return city, errors.Wrap(err, "could not unmarshal json, quitting")

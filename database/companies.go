@@ -26,13 +26,7 @@ type Company struct {
 func RetrieveCompany(key int) (Company, error) {
 
 	var company Company
-	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", CompanyBucket, key)
-	if err != nil {
-		log.Println(x)
-		return company, errors.Wrap(err, "error while retrieving key from bucket")
-	}
-
-	companyBytes, err := json.Marshal(x)
+	companyBytes, err := RetrieveKey(CompanyBucket, key)
 	if err != nil {
 		return company, errors.Wrap(err, "could not marshal json, quitting")
 	}

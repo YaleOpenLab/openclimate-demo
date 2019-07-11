@@ -68,17 +68,13 @@ func (region *Region) Save() error {
 }
 
 func RetrieveRegion(key int) (Region, error) {
-	var region Region
-	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", RegionBucket, key)
-	if err != nil {
-		log.Println(x)
-		return region, errors.Wrap(err, "error while retrieving key from bucket")
-	}
 
-	regionBytes, err := json.Marshal(x)
+	var region Region
+	regionBytes, err := RetrieveKey(CompanyBucket, key)
 	if err != nil {
 		return region, errors.Wrap(err, "could not marshal json, quitting")
 	}
+
 	err = json.Unmarshal(regionBytes, &region)
 	if err != nil {
 		return region, errors.Wrap(err, "could not unmarshal json, quitting")

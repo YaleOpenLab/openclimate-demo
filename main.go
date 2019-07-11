@@ -4,7 +4,7 @@ import (
 	"github.com/pkg/errors"
 	"log"
 
-	"github.com/YaleOpenLab/openclimate/blockchain"
+	//"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/database"
 	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/YaleOpenLab/openclimate/server"
@@ -36,18 +36,12 @@ func main() {
 
 	log.Printf("PRIVATEKEY: %s \nPRIVATE KEY PASSWORD: %s", globals.PrivateKey, globals.PrivateKeyPassword)
 
-	users, err := database.RetrieveAllUsers()
+	_, err = database.RetrieveAllUsers()
 	if err != nil {
 		log.Println(err)
 		database.CreateHomeDir()
 	}
 
-	log.Println(len(users))
-	user, err := database.RetrieveUser(10)
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println("user=", user)
-	log.Println(blockchain.CommitToChain("ethereum", "top", "secret"))
+	// log.Println(blockchain.CommitToChain("ethereum", "top", "secret"))
 	server.StartServer("8001", true)
 }

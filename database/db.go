@@ -1,11 +1,13 @@
 package database
 
 import (
+	"encoding/json"
+	"github.com/pkg/errors"
 	"log"
 	"os"
 
-	"github.com/YaleOpenLab/openclimate/globals"
 	edb "github.com/Varunram/essentials/database"
+	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/boltdb/bolt"
 )
 
@@ -39,4 +41,19 @@ func OpenDB() (*bolt.DB, error) {
 // not shift indices of elements succeeding the deleted element's index
 func DeleteKeyFromBucket(key int, bucketName []byte) error {
 	return edb.DeleteKeyFromBucket(globals.DbDir+"/openclimate.db", key, bucketName)
+}
+
+func RetrieveKey(bucketName []byte, key int) ([]byte, error) {
+	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", CompanyBucket, key)
+	if err != nil {
+		log.Println(x)
+		return nil, errors.Wrap(err, "error while retrieving key from bucket")
+	}
+
+	xBytes, err := json.Marshal(x)
+	if err != nil {
+		return nil, errors.Wrap(err, "could not marshal json, quitting")
+	}
+
+	return xBytes, nil
 }

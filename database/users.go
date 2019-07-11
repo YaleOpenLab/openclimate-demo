@@ -175,13 +175,7 @@ func RetrieveAllUsers() ([]User, error) {
 // RetrieveUser retrieves a particular User indexed by key from the database
 func RetrieveUser(key int) (User, error) {
 	var user User
-	x, err := edb.Retrieve(globals.DbDir+"/openclimate.db", UserBucket, key)
-	if err != nil {
-		log.Println(x)
-		return user, errors.Wrap(err, "error while retrieving key from bucket")
-	}
-
-	userBytes, err := json.Marshal(x)
+	userBytes, err := RetrieveKey(UserBucket, key)
 	if err != nil {
 		return user, errors.Wrap(err, "could not marshal json, quitting")
 	}
