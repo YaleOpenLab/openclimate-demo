@@ -115,7 +115,11 @@ func RetrieveAllRegions() ([]Region, error) {
 
 	for _, value := range keys {
 		var region Region
-		err := json.Unmarshal(value, region)
+		regionBytes, err := json.Marshal(value)
+		if err != nil {
+			break
+		}
+		err = json.Unmarshal(regionBytes, region)
 		if err != nil {
 			return regions, err
 		}

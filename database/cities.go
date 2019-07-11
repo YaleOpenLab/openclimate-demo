@@ -135,7 +135,12 @@ func RetrieveAllCities() ([]City, error) {
 
 	for _, value := range keys {
 		var city City
-		err := json.Unmarshal(value, city)
+		cityBytes, err := json.Marshal(value)
+		if err != nil {
+			break
+		}
+
+		err = json.Unmarshal(cityBytes, city)
 		if err != nil {
 			return cities, err
 		}
