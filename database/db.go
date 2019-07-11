@@ -1,7 +1,6 @@
 package database
 
 import (
-	"github.com/pkg/errors"
 	"log"
 	"os"
 
@@ -40,15 +39,4 @@ func OpenDB() (*bolt.DB, error) {
 // not shift indices of elements succeeding the deleted element's index
 func DeleteKeyFromBucket(key int, bucketName []byte) error {
 	return edb.DeleteKeyFromBucket(globals.DbPath, key, bucketName)
-}
-
-func RetrieveKey(bucketName []byte, key int) ([]byte, error) {
-	log.Println("BUCKET NAME: ", string(bucketName), key)
-	x, err := edb.Retrieve(globals.DbPath, bucketName, key)
-	if err != nil {
-		log.Println(x)
-		return nil, errors.Wrap(err, "error while retrieving key from bucket")
-	}
-
-	return x, nil
 }

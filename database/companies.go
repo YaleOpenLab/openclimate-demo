@@ -25,9 +25,9 @@ type Company struct {
 // RetrieveUser retrieves a particular User indexed by key from the database
 func RetrieveCompany(key int) (Company, error) {
 	var company Company
-	companyBytes, err := RetrieveKey(CompanyBucket, key)
+	companyBytes, err := edb.Retrieve(globals.DbPath, CompanyBucket, key)
 	if err != nil {
-		return company, errors.Wrap(err, "could not marshal json, quitting")
+		return company, errors.Wrap(err, "error while retrieving key from bucket")
 	}
 	err = json.Unmarshal(companyBytes, &company)
 	if err != nil {

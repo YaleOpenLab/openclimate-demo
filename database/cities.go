@@ -67,9 +67,9 @@ func (city *City) Save() error {
 
 func RetrieveCity(key int) (City, error) {
 	var city City
-	cityBytes, err := RetrieveKey(CompanyBucket, key)
+	cityBytes, err := edb.Retrieve(globals.DbPath, CityBucket, key)
 	if err != nil {
-		return city, errors.Wrap(err, "could not marshal json, quitting")
+		return city, errors.Wrap(err, "error while retrieving key from bucket")
 	}
 
 	err = json.Unmarshal(cityBytes, &city)

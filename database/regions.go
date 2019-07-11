@@ -68,13 +68,11 @@ func (region *Region) Save() error {
 }
 
 func RetrieveRegion(key int) (Region, error) {
-
 	var region Region
-	regionBytes, err := RetrieveKey(CompanyBucket, key)
+	regionBytes, err := edb.Retrieve(globals.DbPath, RegionBucket, key)
 	if err != nil {
-		return region, errors.Wrap(err, "could not marshal json, quitting")
+		return region, errors.Wrap(err, "error while retrieving key from bucket")
 	}
-
 	err = json.Unmarshal(regionBytes, &region)
 	if err != nil {
 		return region, errors.Wrap(err, "could not unmarshal json, quitting")
