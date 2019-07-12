@@ -1,9 +1,5 @@
 package ipfs
 
-// this package contains the ipfs interacting parts
-// when we are adding a file to ipfs, we either could use the javascript handler
-// to call the ipfs api and then use the hash ourselves to decrypt it. Or we need to
-// process a pdf file (ie build an xref table) and then convert that into an ipfs file
 import (
 	"bytes"
 	"io/ioutil"
