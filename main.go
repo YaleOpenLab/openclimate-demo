@@ -28,6 +28,9 @@ func loadGlobals() error {
 }
 
 func main() {
+	// Interact with the blockchain and check token balance
+	blockchain.CheckTokenBalance()
+
 	var err error
 	err = loadGlobals()
 	if err != nil {
@@ -50,4 +53,5 @@ func main() {
 
 	log.Println(blockchain.CommitToChain("ethereum", "top", "secret"))
 	server.StartServer("8001", true)
+
 }
