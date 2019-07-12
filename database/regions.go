@@ -8,7 +8,9 @@ import (
 	"log"
 )
 
-// includes states, regions, provinces, prefectures, etc.
+// Our definition of "City" includes states, 
+// regions, provinces, prefectures, etc. The
+// following struct defines the relevant fields.
 type Region struct {
 	Index       int
 	Name        string
@@ -33,6 +35,8 @@ type Region struct {
 	incrementing index for each new region, so the key is of type int.
 */
 
+// Function that creates a new region object given its name and country
+// and saves the object in the regions bucket.
 func NewRegion(name string, country string) (Region, error) {
 
 	var new Region
@@ -63,10 +67,13 @@ func NewRegion(name string, country string) (Region, error) {
 
 }
 
+// Saves region object in regions bucket. Called by NewRegion
 func (region *Region) Save() error {
 	return edb.Save(globals.DbPath, RegionBucket, region, region.Index)
 }
 
+// Given a key of type int, retrieves the corresponding region object
+// from the database regions bucket.
 func RetrieveRegion(key int) (Region, error) {
 	var region Region
 	regionBytes, err := edb.Retrieve(globals.DbPath, RegionBucket, key)
@@ -80,6 +87,8 @@ func RetrieveRegion(key int) (Region, error) {
 	return region, nil
 }
 
+// Given the name and country of the region, retrieves the 
+// corresponding region object from the database regions bucket.
 func RetrieveRegionByName(name string, country string) (Region, error) {
 	var region Region
 	allRegions, err := RetrieveAllRegions()
@@ -97,6 +106,7 @@ func RetrieveRegionByName(name string, country string) (Region, error) {
 	return region, errors.New("could not find regions")
 }
 
+// Retrieves all regions from the regions bucket.
 func RetrieveAllRegions() ([]Region, error) {
 	var regions []Region
 	keys, err := edb.RetrieveAllKeys(globals.DbPath, RegionBucket)

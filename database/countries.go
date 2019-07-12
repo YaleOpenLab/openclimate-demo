@@ -8,7 +8,7 @@ import (
 	"log"
 )
 
-// includes states, regions, provinces, prefectures, etc.
+// Nation-states, countries
 type Country struct {
 	Index       int
 	Name        string
@@ -32,6 +32,9 @@ type Country struct {
 	incrementing index for each new region, so the key is of type int.
 */
 
+
+// Function that creates a new country object given its name and saves
+// the object in the countries bucket.
 func NewCountry(name string) (Country, error) {
 
 	var new Country
@@ -61,10 +64,13 @@ func NewCountry(name string) (Country, error) {
 
 }
 
+// Saves country object in countries bucket. Called by NewCountry
 func (country *Country) Save() error {
 	return edb.Save(globals.DbPath, CountryBucket, country, country.Index)
 }
 
+// Given a key of type int, retrieves the corresponding country object
+// from the database countries bucket.
 func RetrieveCountry(key int) (Country, error) {
 	var country Country
 	countryBytes, err := edb.Retrieve(globals.DbPath, CountryBucket, key)
@@ -78,6 +84,8 @@ func RetrieveCountry(key int) (Country, error) {
 	return country, nil
 }
 
+// Given the name of the country, retrieves the corresponding country object
+// from the database countries bucket.
 func RetrieveCountryByName(name string) (Country, error) {
 	var country Country
 	allCountries, err := RetrieveAllCountries()
@@ -95,6 +103,7 @@ func RetrieveCountryByName(name string) (Country, error) {
 	return country, errors.New("could not find countries")
 }
 
+// Retrieves all countries from the countries bucket.
 func RetrieveAllCountries() ([]Country, error) {
 	var countries []Country
 	keys, err := edb.RetrieveAllKeys(globals.DbPath, CountryBucket)

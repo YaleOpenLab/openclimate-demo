@@ -7,7 +7,9 @@ import (
 	"github.com/pkg/errors"
 )
 
-// includes cities, municipalities, towns, shires, villages, communes, etc.
+// Our definition of "City" includes cities, municipalities, 
+// towns, shires, villages, communes, etc. The following struct
+// defines the relevant fields.
 type City struct {
 	Index       int
 	Name        string
@@ -24,6 +26,8 @@ type City struct {
 	// EntityType		string
 }
 
+// Function that creates a new city object given its name, region,
+// and country and saves the object in the countries bucket.
 func NewCity(name string, region string, country string) (City, error) {
 
 	var new City
@@ -61,10 +65,13 @@ func NewCity(name string, region string, country string) (City, error) {
 	incrementing index for each new city, so the key is of type int.
 */
 
+// Saves city object in cities bucket. Called by NewCity
 func (city *City) Save() error {
 	return edb.Save(globals.DbPath, CityBucket, city, city.Index)
 }
 
+// Given a key of type int, retrieves the corresponding city object
+// from the database cities bucket.
 func RetrieveCity(key int) (City, error) {
 	var city City
 	cityBytes, err := edb.Retrieve(globals.DbPath, CityBucket, key)
@@ -79,6 +86,8 @@ func RetrieveCity(key int) (City, error) {
 	return city, nil
 }
 
+// Given a name and region, retrieves the corresponding city object
+// from the database cities bucket.
 func RetrieveCityByName(name string, region string) (City, error) {
 	var city City
 	allCities, err := RetrieveAllCities()
@@ -96,6 +105,7 @@ func RetrieveCityByName(name string, region string) (City, error) {
 	return city, errors.New("city not found")
 }
 
+// Retrieves all countries from the countries bucket.
 func RetrieveAllCities() ([]City, error) {
 	var cities []City
 	keys, err := edb.RetrieveAllKeys(globals.DbPath, CityBucket)

@@ -8,6 +8,8 @@ import (
 	"log"
 )
 
+// Our definition of "Company" includes .... 
+// The following struct defines the relevant fields.
 type Company struct {
 	Index       int
 	Name        string
@@ -22,7 +24,34 @@ type Company struct {
 	HQ          string
 }
 
-// RetrieveUser retrieves a particular User indexed by key from the database
+// Function that creates a new company object given its name
+// and country and saves the object in the countries bucket.
+func NewCompany(name string, country string) (Company, error) {
+	var company Company
+
+	companies, err := RetrieveAllCompanies()
+	if err != nil {
+		return company, errors.Wrap(err, "could not retrieve all companies, quitting")
+	}
+
+	if len(companies) == 0 {
+		company.Index = 1
+	} else {
+		company.Index = len(companies) + 1
+	}
+
+	company.Name = name
+	company.Country = country
+	return company, company.Save()
+}
+
+// Saves company object in companies bucket. Called by NewCompany
+func (a *Company) Save() error {
+	return edb.Save(globals.DbPath, CompanyBucket, a, a.Index)
+}
+
+// Given a key of type int, retrieves the corresponding company object
+// from the database companies bucket.
 func RetrieveCompany(key int) (Company, error) {
 	var company Company
 	companyBytes, err := edb.Retrieve(globals.DbPath, CompanyBucket, key)
@@ -36,7 +65,8 @@ func RetrieveCompany(key int) (Company, error) {
 	return company, nil
 }
 
-// ValidateUser validates a particular user
+// Given a name and country, retrieves the corresponding company object
+// from the database companies bucket.
 func RetrieveCompanyByName(name string, country string) (Company, error) {
 	var company Company
 	temp, err := RetrieveAllCompanies()
@@ -71,27 +101,4 @@ func RetrieveAllCompanies() ([]Company, error) {
 	}
 
 	return companies, nil
-}
-
-func NewCompany(name string, country string) (Company, error) {
-	var company Company
-
-	companies, err := RetrieveAllCompanies()
-	if err != nil {
-		return company, errors.Wrap(err, "could not retrieve all companies, quitting")
-	}
-
-	if len(companies) == 0 {
-		company.Index = 1
-	} else {
-		company.Index = len(companies) + 1
-	}
-
-	company.Name = name
-	company.Country = country
-	return company, company.Save()
-}
-
-func (a *Company) Save() error {
-	return edb.Save(globals.DbPath, CompanyBucket, a, a.Index)
 }
