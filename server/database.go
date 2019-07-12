@@ -24,6 +24,8 @@ func setupDBHandlers() {
 	getRegion()
 	getAllCities()
 	getCity()
+	getAllCountries()
+	getCountry()
 
 }
 
