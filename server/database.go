@@ -24,6 +24,7 @@ func setupDBHandlers() {
 	getRegion()
 	getAllCities()
 	getCity()
+
 }
 
 /*****************/
@@ -38,11 +39,17 @@ func newUser() {
 			return
 		}
 
-		if r.URL.Query()["username"] == nil || r.URL.Query()["pwhash"] == nil || r.URL.Query()["email"] == nil {
-			log.Println("required params - username, pwhash, email missing")
+		if r.URL.Query()["username"] == nil || 
+		r.URL.Query()["pwhash"] == nil || 
+		r.URL.Query()["email"] == nil ||
+		r.URL.Query()["entity_type"] == nil ||
+		r.URL.Query()["entity_name"] == nil {
+			log.Println("required params - username, pwhash, email, entity_type, entity_name missing")
 			log.Println(r.URL.Query()["username"])
 			log.Println(r.URL.Query()["pwhash"])
 			log.Println(r.URL.Query()["email"])
+			log.Println(r.URL.Query()["entity_type"])
+			log.Println(r.URL.Query()["entity_name"])
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
@@ -50,8 +57,10 @@ func newUser() {
 		username := r.URL.Query()["username"][0]
 		pwhash := r.URL.Query()["pwhash"][0]
 		email := r.URL.Query()["email"][0]
+		entityType := r.URL.Query()["entity_type"][0]
+		entityName := r.URL.Query()["entity_name"][0]
 
-		user, err := database.NewUser(username, pwhash, email)
+		user, err := database.NewUser(username, pwhash, email, entityType, entityName)
 		if err != nil {
 			log.Println("couldn't create new user", err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -378,3 +387,56 @@ func getCompany() {
 		erpc.MarshalSend(w, company)
 	})
 }
+
+/**********************/
+/* COUNTRIES HANDLERS */
+/**********************/
+
+func getAllCountries() {
+	http.HandleFunc("/country/all", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			return
+		}
+
+		countries, err := database.RetrieveAllCountries()
+		if err != nil {
+			log.Println("error while retrieving all countries, quitting")
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, countries)
+	})
+}
+
+func getCountry() {
+	http.HandleFunc("/country", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			return
+		}
+
+		if r.URL.Query()["country_name"] == nil {
+			log.Println("country name not passed, quitting")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		name := r.URL.Query()["country_name"][0]
+		country, err := database.RetrieveCountryByName(name)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, country)
+	})
+}
+
+
+
+
+
+
+

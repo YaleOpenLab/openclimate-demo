@@ -13,6 +13,7 @@ var UserBucket = []byte("Users")
 var CompanyBucket = []byte("Companies")
 var RegionBucket = []byte("Regions")
 var CityBucket = []byte("Cities")
+var CountryBucket = []byte("Countries")
 
 // CreateHomeDir creates a home directory
 func CreateHomeDir() {
@@ -32,7 +33,7 @@ func CreateHomeDir() {
 
 // OpenDB opens the db
 func OpenDB() (*bolt.DB, error) {
-	return edb.CreateDB(globals.DbPath, UserBucket, CompanyBucket, RegionBucket, CityBucket)
+	return edb.CreateDB(globals.DbPath, UserBucket, CompanyBucket, RegionBucket, CityBucket, CountryBucket)
 }
 
 // DeleteKeyFromBucket deletes a given key from the bucket bucketName but doesn

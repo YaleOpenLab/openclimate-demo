@@ -20,12 +20,17 @@ import (
 )
 
 type User struct {
-	Index          int
-	Name           string
-	Email          string
-	Pwhash         string
-	EthereumWallet EthWallet
-	CosmosWallet   CosmWallet
+
+	Index        	int
+	Name        	string
+	Email        	string
+	Pwhash        	string
+	EthereumWallet	EthWallet
+	CosmosWallet	CosmWallet
+
+	EntityType		string // can be user, company, city, state, or country
+	EntityName		string // the name of the entity type the account is associated with
+
 }
 
 // EthWallet contains the structures needed for an ethereum wallet
@@ -117,7 +122,7 @@ func (a *User) GenEthKeys(seedpwd string) error {
 }
 
 // NewUser creates a new user
-func NewUser(name string, pwhash string, email string) (User, error) {
+func NewUser(name string, pwhash string, email string, entityType string, entityName string) (User, error) {
 	var user User
 
 	if len(pwhash) != 128 {
@@ -139,6 +144,8 @@ func NewUser(name string, pwhash string, email string) (User, error) {
 	user.Name = name
 	user.Pwhash = pwhash
 	user.Email = email
+	user.EntityType = entityType
+	user.EntityName = entityName
 
 	return user, user.Save()
 }
