@@ -4,7 +4,7 @@ import (
 	"github.com/pkg/errors"
 	"log"
 
-	//"github.com/YaleOpenLab/openclimate/blockchain"
+	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/database"
 	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/YaleOpenLab/openclimate/server"
