@@ -1,7 +1,7 @@
 package blockchain
 
 import (
-	"github.com/bcl-chain/web3.go/mobile"
+	web3go "github.com/bcl-chain/web3.go/mobile"
 	"fmt"
 	"log"
 )
@@ -33,11 +33,12 @@ func CheckTokenBalance() {
 
 	//Access the Token
 	contractAddress, _ := web3go.NewAddressFromHex(contractAddress)
-	YToken, err := web3go.NewYToken(contractAddress, client)
+	YToken, err := web3go.NewERC20(contractAddress, client)
 	if err != nil {
 		log.Fatal(err)
 	}
 
+	/*
 	//Check if the address is a Token owner
 	isMinter, _ := YToken.IsMinter(address)
 	if isMinter {
@@ -45,7 +46,7 @@ func CheckTokenBalance() {
 	}else{
 		fmt.Println("False")
 	}
-
+	*/
 	tokenBalance, err := YToken.BalanceOf(address)
 	if err != nil {
 		log.Fatal(err)
