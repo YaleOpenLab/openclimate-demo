@@ -6,6 +6,7 @@ import (
 
 func Populate() {
 	PopulateUSStates()
+	PopulateCountries()
 }
 
 /* Test functions: populating the database with dummy values
@@ -23,7 +24,7 @@ func PopulateUSStates() {
 }
 
 func PopulateCountries() {
-	countries := []string{"USA, China, Japan, Mexico, Ethiopia"}
+	countries := []string{"USA", "China", "Japan", "Mexico", "Ethiopia"}
 	for _, country := range countries {
 		_, err := NewCountry(country)
 		if err != nil {
