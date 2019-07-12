@@ -9,9 +9,9 @@ import (
 )
 
 // footerString is a common footer string that is used by all emails
-var footerString = "Have a nice day!\n\nWarm Regards, \nThe Openclimate Team\n\n\n\n" +
+var footerString = "Have a nice day!\n\nWarm Regards, \nThe OpenClimate Team\n\n\n\n" +
 	"You're receiving this email because your contact was given" +
-	" on the openclimate platform for receiving notifications on reports in which you're a party.\n\n\n"
+	" on the OpenClimate platform for receiving notifications on reports in which you're a party.\n\n\n"
 
 // sendMail is a handler for sending out an email to an entity, reading required params
 // from the config file
@@ -32,7 +32,7 @@ func sendMail(body string, to string) error {
 	// to can also be an array of addresses if needed
 	msg := "From: " + from + "\n" +
 		"To: " + to + "\n" +
-		"Subject: Openclimate Notification\n\n" + body
+		"Subject: OpenClimate Notification\n\n" + body
 
 	err = smtp.SendMail("smtp.gmail.com:587", auth, from, []string{to}, []byte(msg))
 	if err != nil {
@@ -41,11 +41,10 @@ func sendMail(body string, to string) error {
 	return nil
 }
 
-// SendInvestmentNotifToRecipient sends a notification to the recipient when an investor
-// invests in an order he's the recipient of
+// SendReminder sends a reminder to platform participants to submit their data
 func SendReminder(to string) error {
 	// this is sent to the recipient on investment from an investor
-	body := "Greetings from the openclimate platform! \n\n" +
+	body := "Greetings from the OpenClimate platform! \n\n" +
 		"This is a reminder to let you know that your reports for the next month are due\n\n" +
 		"Please submit them within the submission window in order to enable analysis on the platform dashboard\n" +
 		footerString
