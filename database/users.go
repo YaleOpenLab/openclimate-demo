@@ -22,14 +22,22 @@ import (
 type User struct {
 
 	Index        	int
-	Name        	string
+	Username        string
+	EntityType		string // choices are: individual, company, city, region, or country
+
 	Email        	string
 	Pwhash        	string
 	EthereumWallet	EthWallet
 	CosmosWallet	CosmWallet
 
-	EntityType		string // can be user, company, city, state, or country
-	EntityName		string // the name of the entity type the account is associated with
+	// For companies: children = assets
+	// For regions: children = companies (divided by region)
+	// For countries: children = regions
+	// For earth: children = countries
+	Children		[]string
+
+	DirectCO2e		DirCO2eInfo
+	ReportedCO2e	RepCO2eInfo
 
 }
 
@@ -41,54 +49,48 @@ type EthWallet struct {
 }
 
 type CosmWallet struct {
-	PrivateKey string
-	PublicKey  string
+	PrivateKey 			string
+	PublicKey  			string
 }
 
-/*
-func (a *User) GenCosmosKeys() error {
-	// Select the encryption and storage for your cryptostore
-	cstore := keys.NewInMemory()
+// Struct to store information regarding emissions data
+// aggregated from its sub-parts (e.g. for the U.S., 
+// the aggregated emissions of all the states)
+type DirCO2eInfo struct {
 
-	sec := keys.Secp256k1
+	// The sum of CO2e emissions (metric tons)
+	Amount 			float64
 
-	// Add keys and see they return in alphabetical order
-	bob, _, err := cstore.CreateMnemonic("Bob", keys.English, "friend", sec)
-	if err != nil {
-		// this should never happen
-		log.Println(err)
-	} else {
-		// return info here just like in List
-		log.Println(bob.GetName())
-	}
-	_, _, _ = cstore.CreateMnemonic("Alice", keys.English, "secret", sec)
-	_, _, _ = cstore.CreateMnemonic("Carl", keys.English, "mitm", sec)
-	info, _ := cstore.List()
-	for _, i := range info {
-		log.Println(i.GetName())
-	}
+	// how were the direct CO2 emissions aggregated?
+	Methodology 	string
 
-	// We need to use passphrase to generate a signature
-	tx := []byte("deadbeef")
-	sig, pub, err := cstore.Sign("Bob", "friend", tx)
-	if err != nil {
-		log.Println("don't accept real passphrase")
-	}
-
-	// and we can validate the signature with publicly available info
-	binfo, _ := cstore.Get("Bob")
-	if !binfo.GetPubKey().Equals(bob.GetPubKey()) {
-		log.Println("Get and Create return different keys")
-	}
-
-	if pub.Equals(binfo.GetPubKey()) {
-		log.Println("signed by Bob")
-	}
-	if !pub.VerifyBytes(tx, sig) {
-		log.Println("invalid signature")
-	}
+	// "verified" represents if the data is approved to be 
+	// committed to a blockchain, or if further verification
+	// is required.
+	Verified 		bool
 }
-*/
+
+// Struct to store information regarding reported emissions data
+type RepCO2eInfo struct {
+
+	// The total amount of reported CO2e emissions (metric tons)
+	Amount 			float64
+
+	// Where is the data from?
+	Source 			string
+
+	// what methodology was used in the reporting and
+	// verification of the emissions data?
+	Methodology		string
+
+	// "verified" represents if the data is approved to be 
+	// committed to a blockchain, or if further verification
+	// is required.
+	Verified		bool
+
+
+}
+
 func (a *User) GenEthKeys(seedpwd string) error {
 	ecdsaPrivkey, err := crypto.GenerateKey()
 	if err != nil {
@@ -122,7 +124,7 @@ func (a *User) GenEthKeys(seedpwd string) error {
 }
 
 // NewUser creates a new user
-func NewUser(name string, pwhash string, email string, entityType string, entityName string) (User, error) {
+func NewUser(username string, pwhash string, email string, entityType string) (User, error) {
 	var user User
 
 	if len(pwhash) != 128 {
@@ -141,11 +143,10 @@ func NewUser(name string, pwhash string, email string, entityType string, entity
 		user.Index = len(allUsers) + 1
 	}
 
-	user.Name = name
+	user.Username = username
 	user.Pwhash = pwhash
 	user.Email = email
 	user.EntityType = entityType
-	user.EntityName = entityName
 
 	return user, user.Save()
 }
@@ -153,6 +154,16 @@ func NewUser(name string, pwhash string, email string, entityType string, entity
 // Save inserts a passed User object into the database
 func (a *User) Save() error {
 	return edb.Save(globals.DbPath, UserBucket, a, a.Index)
+}
+
+// 
+func (user *User) AddChild(child string) error {
+	user.Children = append(user.Children, child)
+	err := user.Save()
+	if err != nil {
+		return errors.Wrap(err, "Failed to add child")
+	}
+	return nil
 }
 
 // RetrieveAllUsers gets a list of all User in the database
@@ -189,8 +200,24 @@ func RetrieveUser(key int) (User, error) {
 	return user, nil
 }
 
+func RetrieveUserByUsername(username string) (User, error) {
+	var user User
+	allUsers, err := RetrieveAllUsers()
+	if err != nil {
+		return user, errors.Wrap(err, "Could not retrieve all users from db")
+	}
+
+	for _, val := range allUsers {
+		if val.Username == username {
+			user = val
+			return user, nil
+		}
+	}
+	return user, errors.New("User not found")
+}
+
 // ValidateUser validates a particular user
-func ValidateUser(name string, pwhash string) (User, error) {
+func ValidateUser(username string, pwhash string) (User, error) {
 	var user User
 	users, err := RetrieveAllUsers()
 	if err != nil {
@@ -198,7 +225,7 @@ func ValidateUser(name string, pwhash string) (User, error) {
 	}
 
 	for _, user := range users {
-		if user.Name == name && user.Pwhash == pwhash {
+		if user.Username == username && user.Pwhash == pwhash {
 			return user, nil
 		}
 	}
@@ -252,3 +279,48 @@ func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {
 
 	return signedTx.Hash().Hex(), nil
 }
+
+/*
+func (a *User) GenCosmosKeys() error {
+	// Select the encryption and storage for your cryptostore
+	cstore := keys.NewInMemory()
+
+	sec := keys.Secp256k1
+
+	// Add keys and see they return in alphabetical order
+	bob, _, err := cstore.CreateMnemonic("Bob", keys.English, "friend", sec)
+	if err != nil {
+		// this should never happen
+		log.Println(err)
+	} else {
+		// return info here just like in List
+		log.Println(bob.GetName())
+	}
+	_, _, _ = cstore.CreateMnemonic("Alice", keys.English, "secret", sec)
+	_, _, _ = cstore.CreateMnemonic("Carl", keys.English, "mitm", sec)
+	info, _ := cstore.List()
+	for _, i := range info {
+		log.Println(i.GetName())
+	}
+
+	// We need to use passphrase to generate a signature
+	tx := []byte("deadbeef")
+	sig, pub, err := cstore.Sign("Bob", "friend", tx)
+	if err != nil {
+		log.Println("don't accept real passphrase")
+	}
+
+	// and we can validate the signature with publicly available info
+	binfo, _ := cstore.Get("Bob")
+	if !binfo.GetPubKey().Equals(bob.GetPubKey()) {
+		log.Println("Get and Create return different keys")
+	}
+
+	if pub.Equals(binfo.GetPubKey()) {
+		log.Println("signed by Bob")
+	}
+	if !pub.VerifyBytes(tx, sig) {
+		log.Println("invalid signature")
+	}
+}
+*/

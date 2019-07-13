@@ -11,13 +11,17 @@ import (
 	"github.com/YaleOpenLab/openclimate/database"
 )
 
+// Calls all database handlers
 func setupDBHandlers() {
 	newUser()
 	retrieveUser()
 	retrieveAllUsers()
 	deleteUser()
 	updateUser()
+	newChild()
+
 	getIpfsHash()
+
 	getAllCompanies()
 	getCompany()
 	getAllRegions()
@@ -27,11 +31,44 @@ func setupDBHandlers() {
 	getAllCountries()
 	getCountry()
 
+
 }
 
 /*****************/
 /* USER HANDLERS */
 /*****************/
+
+func newChild() {
+	http.HandleFunc("/user/add/child", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			return
+		}
+
+		if r.URL.Query()["child"] == nil {
+			log.Println("required param child missing")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		username := r.URL.Query()["username"][0]
+		child := r.URL.Query()["child"][0]
+
+		user, err := database.RetrieveUserByUsername(username)
+		if err != nil {
+			log.Println("failed to retrieve user, quitting")
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
+
+		err = user.AddChild(child)
+		if err != nil {
+			log.Println("failed to add child, quitting")
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
+
+		erpc.MarshalSend(w, user)
+	})
+}
 
 // setupPingHandler is a ping route for remote callers to check if the platform is up
 func newUser() {
@@ -44,14 +81,12 @@ func newUser() {
 		if r.URL.Query()["username"] == nil || 
 		r.URL.Query()["pwhash"] == nil || 
 		r.URL.Query()["email"] == nil ||
-		r.URL.Query()["entity_type"] == nil ||
-		r.URL.Query()["entity_name"] == nil {
-			log.Println("required params - username, pwhash, email, entity_type, entity_name missing")
+		r.URL.Query()["entity_type"] == nil {
+			log.Println("required params - username, pwhash, email, or entity_type missing")
 			log.Println(r.URL.Query()["username"])
 			log.Println(r.URL.Query()["pwhash"])
 			log.Println(r.URL.Query()["email"])
 			log.Println(r.URL.Query()["entity_type"])
-			log.Println(r.URL.Query()["entity_name"])
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
@@ -60,9 +95,8 @@ func newUser() {
 		pwhash := r.URL.Query()["pwhash"][0]
 		email := r.URL.Query()["email"][0]
 		entityType := r.URL.Query()["entity_type"][0]
-		entityName := r.URL.Query()["entity_name"][0]
 
-		user, err := database.NewUser(username, pwhash, email, entityType, entityName)
+		user, err := database.NewUser(username, pwhash, email, entityType)
 		if err != nil {
 			log.Println("couldn't create new user", err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -157,7 +191,7 @@ func updateUser() {
 		} else if r.URL.Query()["newpwhash"] != nil {
 			user.Pwhash = r.URL.Query()["newpwhash"][0]
 		} else if r.URL.Query()["newusername"] != nil {
-			user.Name = r.URL.Query()["newusername"][0]
+			user.Username = r.URL.Query()["newusername"][0]
 		} else {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
@@ -242,7 +276,7 @@ func sendEth() {
 			return
 		}
 
-		log.Println("user: ", user.Name, "has sent tx with txhash: ", txhash)
+		log.Println("user: ", user.Username, "has sent tx with txhash: ", txhash)
 		erpc.ResponseHandler(w, erpc.StatusOK)
 	})
 }
