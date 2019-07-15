@@ -197,7 +197,13 @@ func getOceanData() {
 			temp.NorESMOC = values.NorESMOC
 			temp.Landschutzer = values.Landschutzer
 			temp.Rodenbeck = values.Rodenbeck
-			y[utils.ItoS(values.Year)] = temp
+			yearString, err := utils.ToString(values.Year)
+			if err != nil {
+				log.Println(err)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+			y[yearString] = temp
 		}
 		erpc.MarshalSend(w, y)
 	})
@@ -257,7 +263,13 @@ func getCarbonData() {
 			temp.OceanSink = values.OceanSink
 			temp.LandSink = values.LandSink
 			temp.BudgetImbalance = values.BudgetImbalance
-			y[utils.ItoS(values.Year)] = temp
+			yearString, err := utils.ToString(values.Year)
+			if err != nil {
+				log.Println(err)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+			y[yearString] = temp
 		}
 		erpc.MarshalSend(w, y)
 	})
@@ -363,7 +375,13 @@ func queryNazca() {
 		}
 
 		for i := 173; i < 174; i++ {
-			apiUrl := "https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid=" + utils.ItoS(i)
+			iString, err := utils.ToString(i)
+			if err != nil {
+				log.Println(err)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+			apiUrl := "https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid=" + iString
 			// alt url: https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid=173&entitytypeid=3
 			// coutnry code for the US is 173, hence the weird loop here. Once we have the frontend ready for
 			// the US, we can add the other countries here
@@ -395,7 +413,13 @@ func queryNazcaCountry() {
 
 		countryMap := make(map[int]string)
 		for i := 1; i < 181; i++ {
-			apiUrl := "https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid=" + utils.ItoS(i)
+			iString, err := utils.ToString(i)
+			if err != nil {
+				log.Println(err)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+			apiUrl := "https://nazcaapiprod.howoco.com/handlers/countrystakeholders.ashx?countryid=" + iString
 			data, err := erpc.GetRequest(apiUrl)
 			if err != nil {
 				log.Println("country: ", i, "not queryable", err)
