@@ -31,44 +31,11 @@ func setupDBHandlers() {
 	getAllCountries()
 	getCountry()
 
-
 }
 
 /*****************/
 /* USER HANDLERS */
 /*****************/
-
-func newChild() {
-	http.HandleFunc("/user/add/child", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
-		if err != nil {
-			return
-		}
-
-		if r.URL.Query()["child"] == nil {
-			log.Println("required param child missing")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			return
-		}
-
-		username := r.URL.Query()["username"][0]
-		child := r.URL.Query()["child"][0]
-
-		user, err := database.RetrieveUserByUsername(username)
-		if err != nil {
-			log.Println("failed to retrieve user, quitting")
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		}
-
-		err = user.AddChild(child)
-		if err != nil {
-			log.Println("failed to add child, quitting")
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		}
-
-		erpc.MarshalSend(w, user)
-	})
-}
 
 // setupPingHandler is a ping route for remote callers to check if the platform is up
 func newUser() {
@@ -101,6 +68,38 @@ func newUser() {
 			log.Println("couldn't create new user", err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
+		}
+
+		erpc.MarshalSend(w, user)
+	})
+}
+
+func newChild() {
+	http.HandleFunc("/user/add/child", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			return
+		}
+
+		if r.URL.Query()["child"] == nil {
+			log.Println("required param child missing")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		username := r.URL.Query()["username"][0]
+		child := r.URL.Query()["child"][0]
+
+		user, err := database.RetrieveUserByUsername(username)
+		if err != nil {
+			log.Println("failed to retrieve user, quitting")
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
+
+		err = user.AddChild(child)
+		if err != nil {
+			log.Println("failed to add child, quitting")
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 		}
 
 		erpc.MarshalSend(w, user)
@@ -469,10 +468,5 @@ func getCountry() {
 		erpc.MarshalSend(w, country)
 	})
 }
-
-
-
-
-
 
 
