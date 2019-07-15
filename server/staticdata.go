@@ -264,7 +264,7 @@ func getCarbonData() {
 }
 
 /*******************************/
-/* PARIS AGREEMENT API HANDLER */
+/* COUNTRIES EMISSIONS HANDLER */
 /*******************************/
 
 type CountriesEmissionsPrelim struct {

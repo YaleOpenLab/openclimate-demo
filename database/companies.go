@@ -11,9 +11,13 @@ import (
 // Our definition of "Company" includes .... 
 // The following struct defines the relevant fields.
 type Company struct {
+
+	// Identifying info
 	Index       int
 	Name        string
 	Country     string
+
+	// Contextual data
 	Area        float64
 	Iso         string
 	Population  int
@@ -22,6 +26,7 @@ type Company struct {
 	Revenue     float64
 	CompanySize int
 	HQ          string
+
 }
 
 // Function that creates a new company object given its name

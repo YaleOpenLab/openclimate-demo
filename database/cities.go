@@ -11,10 +11,14 @@ import (
 // towns, shires, villages, communes, etc. The following struct
 // defines the relevant fields.
 type City struct {
+
+	// Identifying info
 	Index       int
 	Name        string
 	Region      string
 	Country     string
+
+	// Contextual data
 	Area        float64
 	Iso         string
 	Population  int

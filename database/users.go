@@ -30,10 +30,10 @@ type User struct {
 	EthereumWallet	EthWallet
 	CosmosWallet	CosmWallet
 
-	// For companies: children = assets
-	// For regions: children = companies (divided by region)
-	// For countries: children = regions
-	// For earth: children = countries
+	//	For companies: children = assets
+	//	For regions: children = companies (divided by region)
+	//	For countries: children = regions
+	//	For earth: children = countries
 	Children		[]string
 
 	DirectCO2e		DirCO2eInfo
@@ -156,7 +156,8 @@ func (a *User) Save() error {
 	return edb.Save(globals.DbPath, UserBucket, a, a.Index)
 }
 
-// 
+// Adds a new child to the User object
+// Needed to allow companies to onboard new assets
 func (user *User) AddChild(child string) error {
 	user.Children = append(user.Children, child)
 	err := user.Save()
