@@ -45,10 +45,10 @@ func newUser() {
 			return
 		}
 
-		if r.URL.Query()["username"] == nil || 
-		r.URL.Query()["pwhash"] == nil || 
-		r.URL.Query()["email"] == nil ||
-		r.URL.Query()["entity_type"] == nil {
+		if r.URL.Query()["username"] == nil ||
+			r.URL.Query()["pwhash"] == nil ||
+			r.URL.Query()["email"] == nil ||
+			r.URL.Query()["entity_type"] == nil {
 			log.Println("required params - username, pwhash, email, or entity_type missing")
 			log.Println(r.URL.Query()["username"])
 			log.Println(r.URL.Query()["pwhash"])
@@ -225,14 +225,14 @@ func getIpfsHash() {
 		}
 
 		hashString := r.URL.Query()["string"][0]
-		hash, err := ipfs.AddStringToIpfs(hashString)
+		hash, err := ipfs.IpfsAddString(hashString)
 		if err != nil {
 			log.Println("did not add string to ipfs", err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
-		hashCheck, err := ipfs.GetStringFromIpfs(hash)
+		hashCheck, err := ipfs.IpfsGetString(hash)
 		if err != nil || hashCheck != hashString {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
@@ -468,5 +468,3 @@ func getCountry() {
 		erpc.MarshalSend(w, country)
 	})
 }
-
-

@@ -348,7 +348,6 @@ func getCountriesEmissionsData() {
 	})
 }
 
-
 /**************************/
 /* COUNTRY ID API HANDLER */
 /**************************/

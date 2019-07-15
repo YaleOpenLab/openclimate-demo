@@ -1,8 +1,8 @@
 package blockchain
 
 import (
-	web3go "github.com/bcl-chain/web3.go/mobile"
 	"fmt"
+	web3go "github.com/bcl-chain/web3.go/mobile"
 	"log"
 )
 
@@ -12,9 +12,9 @@ import (
 
 const (
 	contractAddress = "0xb19ac159b87a4491b3b8bef4554b59da2bf42555"
-	ownerAddress = "0xfE1827f2F1C366c04d458b3c07B8Bd207D42eab4"
- 	rpcUrl = "https://kovan.infura.io/v3/def7370cf49d49d791b9df949986b9a0"
- 	)
+	ownerAddress    = "0xfE1827f2F1C366c04d458b3c07B8Bd207D42eab4"
+	rpcUrl          = "https://kovan.infura.io/v3/def7370cf49d49d791b9df949986b9a0"
+)
 
 func CheckTokenBalance() {
 	//New Ethereum Client
@@ -39,17 +39,17 @@ func CheckTokenBalance() {
 	}
 
 	/*
-	//Check if the address is a Token owner
-	isMinter, _ := YToken.IsMinter(address)
-	if isMinter {
-		fmt.Println("True")
-	}else{
-		fmt.Println("False")
-	}
+		//Check if the address is a Token owner
+		isMinter, _ := YToken.IsMinter(address)
+		if isMinter {
+			fmt.Println("True")
+		}else{
+			fmt.Println("False")
+		}
 	*/
 	tokenBalance, err := YToken.BalanceOf(address)
 	if err != nil {
 		log.Fatal(err)
 	}
-	fmt.Println("YOCL Token Balance",tokenBalance.String())
+	fmt.Println("YOCL Token Balance", tokenBalance.String())
 }

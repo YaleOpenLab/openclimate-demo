@@ -12,8 +12,8 @@ import (
 type Country struct {
 
 	// Identifying info
-	Index       int
-	Name        string
+	Index int
+	Name  string
 
 	// Contextual data
 	Area        float64
@@ -35,7 +35,6 @@ type Country struct {
 	RESOLVED: currently using solution previously implemented in OpenX;
 	incrementing index for each new region, so the key is of type int.
 */
-
 
 // Function that creates a new country object given its name and saves
 // the object in the countries bucket.

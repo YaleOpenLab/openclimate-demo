@@ -1,6 +1,7 @@
 package main
 
 import (
+	"encoding/json"
 	"github.com/pkg/errors"
 	"log"
 
@@ -8,6 +9,7 @@ import (
 	"github.com/YaleOpenLab/openclimate/database"
 	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/YaleOpenLab/openclimate/server"
+	//"github.com/Varunram/essentials/ipfs"
 	//"github.com/YaleOpenLab/openclimate/notif"
 	"github.com/spf13/viper"
 )
@@ -31,7 +33,6 @@ func main() {
 	// Interact with the blockchain and check token balance
 	blockchain.CheckTokenBalance()
 
-	var err error
 	err = loadGlobals()
 	if err != nil {
 		log.Fatal(err)
@@ -44,7 +45,6 @@ func main() {
 		log.Println(err)
 		database.CreateHomeDir()
 	}
-
 
 	// log.Println(blockchain.CommitToChain("ethereum", "top", "secret"))
 	server.StartServer("8001", true)

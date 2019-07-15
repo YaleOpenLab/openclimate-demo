@@ -7,16 +7,16 @@ import (
 	"github.com/pkg/errors"
 )
 
-// Our definition of "City" includes cities, municipalities, 
+// Our definition of "City" includes cities, municipalities,
 // towns, shires, villages, communes, etc. The following struct
 // defines the relevant fields.
 type City struct {
 
 	// Identifying info
-	Index       int
-	Name        string
-	Region      string
-	Country     string
+	Index   int
+	Name    string
+	Region  string
+	Country string
 
 	// Contextual data
 	Area        float64

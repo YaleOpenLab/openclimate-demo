@@ -8,15 +8,15 @@ import (
 	"log"
 )
 
-// Our definition of "City" includes states, 
+// Our definition of "City" includes states,
 // regions, provinces, prefectures, etc. The
 // following struct defines the relevant fields.
 type Region struct {
 
 	// Identifying info
-	Index       int
-	Name        string
-	Country     string
+	Index   int
+	Name    string
+	Country string
 
 	// Contextual data
 	Area        float64
@@ -91,7 +91,7 @@ func RetrieveRegion(key int) (Region, error) {
 	return region, nil
 }
 
-// Given the name and country of the region, retrieves the 
+// Given the name and country of the region, retrieves the
 // corresponding region object from the database regions bucket.
 func RetrieveRegionByName(name string, country string) (Region, error) {
 	var region Region

@@ -20,25 +20,23 @@ import (
 )
 
 type User struct {
+	Index      int
+	Username   string
+	EntityType string // choices are: individual, company, city, region, or country
 
-	Index        	int
-	Username        string
-	EntityType		string // choices are: individual, company, city, region, or country
-
-	Email        	string
-	Pwhash        	string
-	EthereumWallet	EthWallet
-	CosmosWallet	CosmWallet
+	Email          string
+	Pwhash         string
+	EthereumWallet EthWallet
+	CosmosWallet   CosmWallet
 
 	//	For companies: children = assets
 	//	For regions: children = companies (divided by region)
 	//	For countries: children = regions
 	//	For earth: children = countries
-	Children		[]string
+	Children []string
 
-	DirectCO2e		DirCO2eInfo
-	ReportedCO2e	RepCO2eInfo
-
+	DirectCO2e   DirCO2eInfo
+	ReportedCO2e RepCO2eInfo
 }
 
 // EthWallet contains the structures needed for an ethereum wallet
@@ -49,46 +47,44 @@ type EthWallet struct {
 }
 
 type CosmWallet struct {
-	PrivateKey 			string
-	PublicKey  			string
+	PrivateKey string
+	PublicKey  string
 }
 
 // Struct to store information regarding emissions data
-// aggregated from its sub-parts (e.g. for the U.S., 
+// aggregated from its sub-parts (e.g. for the U.S.,
 // the aggregated emissions of all the states)
 type DirCO2eInfo struct {
 
 	// The sum of CO2e emissions (metric tons)
-	Amount 			float64
+	Amount float64
 
 	// how were the direct CO2 emissions aggregated?
-	Methodology 	string
+	Methodology string
 
-	// "verified" represents if the data is approved to be 
+	// "verified" represents if the data is approved to be
 	// committed to a blockchain, or if further verification
 	// is required.
-	Verified 		bool
+	Verified bool
 }
 
 // Struct to store information regarding reported emissions data
 type RepCO2eInfo struct {
 
 	// The total amount of reported CO2e emissions (metric tons)
-	Amount 			float64
+	Amount float64
 
 	// Where is the data from?
-	Source 			string
+	Source string
 
 	// what methodology was used in the reporting and
 	// verification of the emissions data?
-	Methodology		string
+	Methodology string
 
-	// "verified" represents if the data is approved to be 
+	// "verified" represents if the data is approved to be
 	// committed to a blockchain, or if further verification
 	// is required.
-	Verified		bool
-
-
+	Verified bool
 }
 
 func (a *User) GenEthKeys(seedpwd string) error {
