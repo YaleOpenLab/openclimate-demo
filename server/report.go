@@ -1,11 +1,11 @@
 package server
 
 import (
-	// "encoding/json"
+	"encoding/json"
 	ipfs "github.com/Varunram/essentials/ipfs"
 	erpc "github.com/Varunram/essentials/rpc"
 	"io/ioutil"
-	// "log"
+	//"log"
 	"net/http"
 )
 
@@ -35,8 +35,8 @@ type CompanyData struct {
 }
 
 type AssetData struct {
-	AssetID 	 int
-	AssetName	 string
+	AssetID      int
+	AssetName    string
 	ScopeICO2e   float64
 	ScopeIICO2e  float64
 	ScopeIIICO2e float64
@@ -68,7 +68,12 @@ func SelfReportData() {
 			return
 		}
 
-		// log.Println("BYTES: ", bytes)
+		var x CompanyData
+		err = json.Unmarshal(bytes, &x)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
 
 		hash, err := ipfs.IpfsAddBytes(bytes)
 		if err != nil {
@@ -77,9 +82,7 @@ func SelfReportData() {
 
 		erpc.MarshalSend(w, hash)
 
-
 		/* NEXT STEP: COMMIT TO CHAIN */
-
 
 		// var data CompanyData
 		// err = json.Unmarshal(b, &data)
