@@ -31,8 +31,6 @@ func setupDBHandlers() {
 	getAllCountries()
 	getCountry()
 
-	SelfReportData()
-
 }
 
 /*****************/

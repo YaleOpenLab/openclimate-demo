@@ -9,6 +9,11 @@ import (
 	"net/http"
 )
 
+
+func setupReportHandlers() {
+	SelfReportData()
+}
+
 /*
 
 	RPC handlers to allow users of the platform to self-report data.
@@ -27,8 +32,9 @@ import (
 type CompanyData struct {
 
 	// Meta-data
-	UserIdx int
-	Year    int
+	UserID 		int
+	EntityType	string
+	Year    	int
 
 	// Emissions data (by asset)
 	Assets []AssetData
@@ -68,42 +74,22 @@ func SelfReportData() {
 			return
 		}
 
-		var x CompanyData
-		err = json.Unmarshal(bytes, &x)
+		// Check if the bytes is in a valid JSON format
+		var data CompanyData
+		err = json.Unmarshal(bytes, &data)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
+		// add data (in byte format) to IPFS
 		hash, err := ipfs.IpfsAddBytes(bytes)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 		}
 
+		// *** COMMIT HASH TO A BLOCKCHAIN, HASH LOOKUP USING SMART CONTRACT *** 
+
 		erpc.MarshalSend(w, hash)
-
-		/* NEXT STEP: COMMIT TO CHAIN */
-
-		// var data CompanyData
-		// err = json.Unmarshal(b, &data)
-		// if err != nil {
-		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 	return
-		// }
-
-		// dataBytes, err := json.Marshal(data)
-		// if err != nil {
-		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 	return
-		// }
-
-		// log.Println("DBYTES: ", dataBytes)
-		// tmp, err := ipfs.IpfsAddBytes(dataBytes)
-		// if err != nil {
-		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 	return
-		// }
-
-		// log.Println("IFPS HASH: ", tmp)
 	})
 }

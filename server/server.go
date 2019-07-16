@@ -13,6 +13,7 @@ func StartServer(port string, insecure bool) {
 	ocdb.Populate()
 	erpc.SetupBasicHandlers()
 	setupDBHandlers()
+	setupReportHandlers()
 	setupSwytchApis()
 	dataHandler()
 	log.Println("Starting RPC Server on Port: ", port)
