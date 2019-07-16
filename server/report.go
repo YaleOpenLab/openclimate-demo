@@ -1,10 +1,11 @@
 package server
 
 import (
-	"encoding/json"
+	// "encoding/json"
 	ipfs "github.com/Varunram/essentials/ipfs"
 	erpc "github.com/Varunram/essentials/rpc"
-	"log"
+	"io/ioutil"
+	// "log"
 	"net/http"
 )
 
@@ -34,6 +35,8 @@ type CompanyData struct {
 }
 
 type AssetData struct {
+	AssetID 	 int
+	AssetName	 string
 	ScopeICO2e   float64
 	ScopeIICO2e  float64
 	ScopeIIICO2e float64
@@ -48,42 +51,56 @@ type AssetData struct {
 
 	// "verified" represents if the data is sufficiently reviewed
 	// and confirmed/corroborated (from oracle, third-party auditor, etc)
-	Verified bool
+	Verified string
 }
 
 func SelfReportData() {
 	http.HandleFunc("/user/self-report", func(w http.ResponseWriter, r *http.Request) {
-		user, err := CheckGetAuth(w, r)
+		err := erpc.CheckPost(w, r)
 		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
-		year := r.URL.Query()["year"][0]
-		repAssetData := r.URL.Query()["asset_data"][0]
 
-		var newData AssetData
-
-		for _, asset := range repAssetData {
-			var newData AssetData
-			newData.ScopeICO2e = -1.0
-			newData.ScopeIICO2e = -1.0
-			newData.ScopeIIICO2e = -1.0
-			newData.Source = "cool"
-			newData.Methodology = "cool"
-			newData.Verified = false
-
-			dataBytes, err := json.Marshal(newData)
-			if err != nil {
-				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-				return
-			}
-			log.Println("DBYTES: ", dataBytes)
-			tmp, err := ipfs.IpfsAddBytes(dataBytes)
-			if err != nil {
-				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-				return
-			}
-			log.Println("IFPS HASH: ", tmp)
+		bytes, err := ioutil.ReadAll(r.Body)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
 		}
-		// Commit the data to ipfs
+
+		// log.Println("BYTES: ", bytes)
+
+		hash, err := ipfs.IpfsAddBytes(bytes)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
+
+		erpc.MarshalSend(w, hash)
+
+
+		/* NEXT STEP: COMMIT TO CHAIN */
+
+
+		// var data CompanyData
+		// err = json.Unmarshal(b, &data)
+		// if err != nil {
+		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		// 	return
+		// }
+
+		// dataBytes, err := json.Marshal(data)
+		// if err != nil {
+		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		// 	return
+		// }
+
+		// log.Println("DBYTES: ", dataBytes)
+		// tmp, err := ipfs.IpfsAddBytes(dataBytes)
+		// if err != nil {
+		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		// 	return
+		// }
+
+		// log.Println("IFPS HASH: ", tmp)
 	})
 }

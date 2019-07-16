@@ -1,7 +1,7 @@
 package main
 
 import (
-	"encoding/json"
+	// "encoding/json"
 	"github.com/pkg/errors"
 	"log"
 
@@ -33,7 +33,7 @@ func main() {
 	// Interact with the blockchain and check token balance
 	blockchain.CheckTokenBalance()
 
-	err = loadGlobals()
+	err := loadGlobals()
 	if err != nil {
 		log.Fatal(err)
 	}
