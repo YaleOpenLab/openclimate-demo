@@ -35,9 +35,14 @@ type User struct {
 	//	For earth: children = countries
 	Children 			[]string
 
-	ReportedData		[]RepData // IPFS hashes of all data reported and commited to IPFS
-	AggregatedData   	AggData  // data aggregated from children
-	// ReportedCO2e 	RepCO2eInfo
+	// Data that is reported (through self-reporting, databases, IoT, etc.)
+	// as opposed to data that is aggregated from its parts/children. Data
+	// is stored on IPFS, so Reports holds the IPFS hashes.
+	Reports				[]RepData
+	
+	AggEmissions 		AggEmiData
+	AggMitigation		AggMitData
+	AggAdaptation 		AggAdptData
 }
 
 // EthWallet contains the structures needed for an ethereum wallet
@@ -53,6 +58,8 @@ type CosmWallet struct {
 }
 
 type RepData struct {
+	// pledge, emissions, mitigation, adaption, etc.
+	ReportType 		string
 	Year 			int
 	IpfsHash 		string
 }
@@ -60,13 +67,17 @@ type RepData struct {
 // Data aggregated from children; ex: The U.S. user will aggregate
 // the emissions of all its states/regions to get its sum total
 // of emissions for the whole country.
-type AggData struct {
+type AggEmiData struct {
 	ScopeICO2e   	float64
 	ScopeIICO2e  	float64
 	ScopeIIICO2e 	float64
 }
 
+type AggMitData struct {
+}
 
+type AggAdptData struct {
+}
 
 // // Struct to store information regarding emissions data
 // // aggregated from its sub-parts (e.g. for the U.S.,

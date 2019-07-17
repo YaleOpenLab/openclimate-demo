@@ -20,7 +20,7 @@ func setupReportHandlers() {
 	----------------------------------------------------------------
 
 	* Self-report: emissions, mitigation, adaptation, pledge data
-	* Set up automatic reporting (connect to database, etc.)
+	* TODO: Provide access to/specify database that has your data
 
 	* TODO: Add logic (probably a function) that checks if
 		the methodology used is acceptable and thus verified.
@@ -97,20 +97,52 @@ type ChildEmissionsData struct {
 	// Verified string
 }
 
-/******************************/
-/* OTHER ACTIONS DATA STRUCTS */
-/******************************/
+/***************************/
+/* MITIGATION DATA STRUCTS */
+/***************************/
 
 type Mitigation struct {
+	// Meta-data
+	UserID 			int
+	EntityType		string
+	Year    		int
 
+	// Emissions data (by asset)
+	// Country children: regions
+	// Region children: companies & cities
+	// Company children: assets
+	ByChild 		[]ChildMitigationData
 }
+
+type ChildMitigationData struct {
+
+	ChildID     	int
+	ChildName 		string
+	CarbonOffset	float64
+	EnergySaved 	float64
+	EnergyGen 		float64
+
+	// Where is the report and its data from?
+	// (options: internally conducted report, consulting group, etc.)
+	Source string
+
+	// what methodology was used in the reporting and
+	// verification of the mitigation data?
+	Methodology string
+}
+
+/***************************/
+/* ADAPTATION DATA STRUCTS */
+/***************************/
 
 type Adaptation struct {
+}
 
+type ChildAdaptationData struct {
 }
 
 
-func SelfReportEmissionsData() {
+func SelfReportData() {
 	http.HandleFunc("/user/self-report", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
 		if err != nil {
@@ -124,45 +156,46 @@ func SelfReportEmissionsData() {
 			return
 		}
 
-		// Check if the bytes is in a valid JSON format
-		var data interface{}
-
-		// switch reportType := r.URL.Query()["Type"]; reportType {
-		// case "Emissions":	
-		// 	var data Emissions
-		// 	err = json.Unmarshal(bytes, &data)
-		// 	if err != nil {
-		// 		erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 		return
-		// 	}
-		// case "Pledges":
-		// 	var data Pledges
-		// 	err = json.Unmarshal(bytes, &data)
-		// 	if err != nil {
-		// 		erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 		return
-		// 	}
-		// case "Mitigation":
-		// 	var data Mitigation
-		// 	err = json.Unmarshal(bytes, &data)
-		// 	if err != nil {
-		// 		erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 		return
-		// 	}
-		// case "Adaptation":
-		// 	var data Adaptation
-		// 	err = json.Unmarshal(bytes, &data)
-		// 	if err != nil {
-		// 		erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 		return
-		// 	}
-		// }
-
-		err = json.Unmarshal(bytes, &data)
-		if err != nil {
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
+		switch reportType := r.URL.Query()["Type"]; reportType {
+		case "Emissions":	
+			var data Emissions
+			err = json.Unmarshal(bytes, &data)
+			if err != nil {
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+		case "Pledges":
+			var data Pledges
+			err = json.Unmarshal(bytes, &data)
+			if err != nil {
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+		case "Mitigation":
+			var data Mitigation
+			err = json.Unmarshal(bytes, &data)
+			if err != nil {
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+		case "Adaptation":
+			var data Adaptation
+			err = json.Unmarshal(bytes, &data)
+			if err != nil {
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
 		}
+
+
+		// // Check if the bytes is in a valid JSON format
+		// var data interface{}
+
+		// err = json.Unmarshal(bytes, &data)
+		// if err != nil {
+		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		// 	return
+		// }
 
 		// add data (in byte format) to IPFS
 		hash, err := ipfs.IpfsAddBytes(bytes)
@@ -176,6 +209,3 @@ func SelfReportEmissionsData() {
 	})
 }
 
-
-func SelfReportPledge() {
-}
