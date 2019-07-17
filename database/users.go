@@ -24,27 +24,27 @@ type User struct {
 	Username   			string
 
 	EntityType 			string // choices are: individual, company, city, region, or country
-	EntityID 			int
+	EntityID 			int    // index of the entity the user is associated with
 
 	Email          		string
 	Pwhash         		string
 	EthereumWallet 		EthWallet
 	CosmosWallet   		CosmWallet
 
-	//	For companies: children = assets
-	//	For regions: children = companies (divided by region)
-	//	For countries: children = regions
-	//	For earth: children = countries
+	// //	For companies: children = assets
+	// //	For regions: children = companies (divided by region)
+	// //	For countries: children = regions
+	// //	For earth: children = countries
 	Children 			[]string
 
-	// Data that is reported (through self-reporting, databases, IoT, etc.)
-	// as opposed to data that is aggregated from its parts/children. Data
-	// is stored on IPFS, so Reports holds the IPFS hashes.
-	Reports				[]RepData
+	// // Data that is reported (through self-reporting, databases, IoT, etc.)
+	// // as opposed to data that is aggregated from its parts/children. Data
+	// // is stored on IPFS, so Reports holds the IPFS hashes.
+	// Reports				[]RepData
 	
-	AggEmissions 		AggEmiData
-	AggMitigation		AggMitData
-	AggAdaptation 		AggAdptData
+	// AggEmissions 		AggEmiData
+	// AggMitigation		AggMitData
+	// AggAdaptation 		AggAdptData
 }
 
 // EthWallet contains the structures needed for an ethereum wallet
@@ -59,63 +59,6 @@ type CosmWallet struct {
 	PublicKey  		string
 }
 
-type RepData struct {
-	// pledge, emissions, mitigation, adaption, etc.
-	ReportType 		string
-	Year 			int
-	IpfsHash 		string
-}
-
-// Data aggregated from children; ex: The U.S. user will aggregate
-// the emissions of all its states/regions to get its sum total
-// of emissions for the whole country.
-type AggEmiData struct {
-	ScopeICO2e   	float64
-	ScopeIICO2e  	float64
-	ScopeIIICO2e 	float64
-}
-
-type AggMitData struct {
-}
-
-type AggAdptData struct {
-}
-
-// // Struct to store information regarding emissions data
-// // aggregated from its sub-parts (e.g. for the U.S.,
-// // the aggregated emissions of all the states)
-// type DirCO2eInfo struct {
-
-// 	// The sum of CO2e emissions (metric tons)
-// 	Amount float64
-
-// 	// how were the direct CO2 emissions aggregated?
-// 	Methodology string
-
-// 	// "verified" represents if the data is approved to be
-// 	// committed to a blockchain, or if further verification
-// 	// is required.
-// 	Verified bool
-// }
-
-// // Struct to store information regarding reported emissions data
-// type RepCO2eInfo struct {
-
-// 	// The total amount of reported CO2e emissions (metric tons)
-// 	Amount float64
-
-// 	// Where is the data from?
-// 	Source string
-
-// 	// what methodology was used in the reporting and
-// 	// verification of the emissions data?
-// 	Methodology string
-
-// 	// "verified" represents if the data is approved to be
-// 	// committed to a blockchain, or if further verification
-// 	// is required.
-// 	Verified bool
-// }
 
 func (a *User) GenEthKeys(seedpwd string) error {
 	ecdsaPrivkey, err := crypto.GenerateKey()

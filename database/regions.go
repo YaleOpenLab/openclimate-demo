@@ -29,6 +29,18 @@ type Region struct {
 	CompanySize int
 	HQ          string
 	// EntityType		string
+
+	//	For regions: children = companies (divided by region)
+	Children 			[]string
+
+	// Data that is reported (through self-reporting, databases, IoT, etc.)
+	// as opposed to data that is aggregated from its parts/children. Data
+	// is stored on IPFS, so Reports holds the IPFS hashes.
+	Reports				[]RepData
+	
+	AggEmissions 		AggEmiData
+	AggMitigation		AggMitData
+	AggAdaptation 		AggAdptData
 }
 
 /*

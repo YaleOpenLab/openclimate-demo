@@ -16,6 +16,6 @@ func main() {
 	blockchain.CheckTokenBalance()
 	database.FlushDB()
 	database.CreateHomeDir()
-	log.Println("flusehd and created new db")
+	log.Println("flushed and created new db")
 	server.StartServer("8001", true)
 }
