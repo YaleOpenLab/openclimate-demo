@@ -99,7 +99,7 @@ func getParisAgreement() {
 			return
 		}
 
-		data, err := ioutil.ReadFile("data/json_data/paris_agreement_entry_into_force.json")
+		data, err := ioutil.ReadFile("staticdata/json_data/paris_agreement_entry_into_force.json")
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -169,7 +169,7 @@ func getOceanData() {
 			return
 		}
 
-		data, err := ioutil.ReadFile("data/json_data/ocean_sink.json")
+		data, err := ioutil.ReadFile("staticdata/json_data/ocean_sink.json")
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -239,7 +239,7 @@ func getCarbonData() {
 			return
 		}
 
-		data, err := ioutil.ReadFile("data/json_data/global_carbon_budget.json")
+		data, err := ioutil.ReadFile("staticdata/json_data/global_carbon_budget.json")
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -312,7 +312,7 @@ func getCountriesEmissionsData() {
 			return
 		}
 
-		data, err := ioutil.ReadFile("data/json_data/countries_emissions_2014.json")
+		data, err := ioutil.ReadFile("staticdata/json_data/countries_emissions_2014.json")
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)

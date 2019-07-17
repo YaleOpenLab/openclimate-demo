@@ -34,7 +34,7 @@ type City struct {
 	// as opposed to data that is aggregated from its parts/children. Data
 	// is stored on IPFS, so Reports holds the IPFS hashes.
 	Reports				[]RepData
-	
+
 	AggEmissions 		AggEmiData
 	AggMitigation		AggMitData
 	AggAdaptation 		AggAdptData
@@ -43,41 +43,25 @@ type City struct {
 // Function that creates a new city object given its name, region,
 // and country and saves the object in the countries bucket.
 func NewCity(name string, region string, country string) (City, error) {
-
 	var new City
 	var err error
-
+	var lenCities int
 	// naive implementation of assigning keys to bucket items (simple indexing)
 	cities, err := RetrieveAllCities()
-	lenCities := len(cities)
-
 	if err != nil {
-		return new, errors.Wrap(err, "Error while retrieving all cities from db")
-	}
-
-	if lenCities == 0 {
-		new.Index = 1
+		// regions doesn't exist yet
+		lenCities = 0
 	} else {
-		new.Index = lenCities + 1
+		lenCities = len(cities)
 	}
 
+	new.Index = lenCities + 1
 	new.Name = name
-	new.Region = region
 	new.Country = country
 
 	err = new.Save()
 	return new, err
-
 }
-
-/*
-	ISSUE: edb.Save() asks for an key argument of type INT,
-	but currently we are passing in a key argument of type string.
-	This issue needs to be resolved. Could maybe just use a hash.
-
-	RESOLVED: currently using solution previously implemented in OpenX;
-	incrementing index for each new city, so the key is of type int.
-*/
 
 // Saves city object in cities bucket. Called by NewCity
 func (city *City) Save() error {
@@ -131,7 +115,7 @@ func RetrieveAllCities() ([]City, error) {
 		var city City
 		err = json.Unmarshal(val, city)
 		if err != nil {
-			return cities, err
+			return cities, errors.Wrap(err, "could not unmarshal struct")
 		}
 		cities = append(cities, city)
 	}

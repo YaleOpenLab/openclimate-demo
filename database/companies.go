@@ -36,7 +36,7 @@ type Company struct {
 	// as opposed to data that is aggregated from its parts/children. Data
 	// is stored on IPFS, so Reports holds the IPFS hashes.
 	Reports				[]RepData
-	
+
 	AggEmissions 		AggEmiData
 	AggMitigation		AggMitData
 	AggAdaptation 		AggAdptData
@@ -77,10 +77,7 @@ func RetrieveCompany(key int) (Company, error) {
 		return company, errors.Wrap(err, "error while retrieving key from bucket")
 	}
 	err = json.Unmarshal(companyBytes, &company)
-	if err != nil {
-		return company, errors.Wrap(err, "could not unmarshal json, quitting")
-	}
-	return company, nil
+	return company, err
 }
 
 // Given a name and country, retrieves the corresponding company object

@@ -3,6 +3,7 @@ package database
 import (
 	"log"
 	"os"
+	"github.com/pkg/errors"
 
 	edb "github.com/Varunram/essentials/database"
 	"github.com/YaleOpenLab/openclimate/globals"
@@ -16,32 +17,40 @@ var CityBucket = []byte("Cities")
 var CountryBucket = []byte("Countries")
 
 // CreateHomeDir creates a home directory
-func CreateHomeDir() {
+func CreateHomeDir() error {
 	if _, err := os.Stat(globals.HomeDir); os.IsNotExist(err) {
 		// directory does not exist, create one
-		os.MkdirAll(globals.HomeDir, os.ModePerm)
+		err = os.MkdirAll(globals.HomeDir, os.ModePerm)
+		if err != nil {
+			return errors.Wrap(err, "could not create directory")
+		}
 	}
 
 	if _, err := os.Stat(globals.DbDir); os.IsNotExist(err) {
-		os.MkdirAll(globals.DbDir, os.ModePerm)
+		err = os.MkdirAll(globals.DbDir, os.ModePerm)
+		if err != nil {
+			return errors.Wrap(err, "could not create directory")
+		}
 		_, err = os.Create(globals.DbPath)
 		db, err := edb.CreateDB(globals.DbPath, UserBucket, CompanyBucket, RegionBucket, CityBucket, CountryBucket)
 		if err != nil {
-			log.Fatal(err)
+			return errors.Wrap(err, "could not create database")
 		}
 		db.Close()
 	}
 
 	log.Println("created new db and home directory")
+	return nil
 }
 
-func FlushDB() {
+func FlushDB() error {
 	if _, err := os.Stat(globals.HomeDir); os.IsNotExist(err) {
 	} else {
 		// directory exists, flush db
 		log.Println("deleting database")
-		os.RemoveAll(globals.HomeDir)
+		return os.RemoveAll(globals.HomeDir)
 	}
+	return nil
 }
 
 // don't lock since boltdb can only process one operation at a time. As the application

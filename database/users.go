@@ -41,7 +41,7 @@ type User struct {
 	// // as opposed to data that is aggregated from its parts/children. Data
 	// // is stored on IPFS, so Reports holds the IPFS hashes.
 	// Reports				[]RepData
-	
+
 	// AggEmissions 		AggEmiData
 	// AggMitigation		AggMitData
 	// AggAdaptation 		AggAdptData
@@ -88,8 +88,7 @@ func (a *User) GenEthKeys(seedpwd string) error {
 		return errors.Wrap(err, "addresses don't match, quitting!")
 	}
 
-	err = a.Save()
-	return err
+	return a.Save()
 }
 
 // NewUser creates a new user
@@ -129,11 +128,7 @@ func (a *User) Save() error {
 // Needed to allow companies to onboard new assets
 func (user *User) AddChild(child string) error {
 	user.Children = append(user.Children, child)
-	err := user.Save()
-	if err != nil {
-		return errors.Wrap(err, "Failed to add child")
-	}
-	return nil
+	return user.Save()
 }
 
 // RetrieveAllUsers gets a list of all User in the database
@@ -164,10 +159,7 @@ func RetrieveUser(key int) (User, error) {
 		return user, errors.Wrap(err, "error while retrieving key from bucket")
 	}
 	err = json.Unmarshal(userBytes, &user)
-	if err != nil {
-		return user, errors.Wrap(err, "could not unmarshal json, quitting")
-	}
-	return user, nil
+	return user, err
 }
 
 func RetrieveUserByUsername(username string) (User, error) {
@@ -206,12 +198,12 @@ func ValidateUser(username string, pwhash string) (User, error) {
 func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {
 	client, err := ethclient.Dial("https://ropsten.infura.io")
 	if err != nil {
-		return "", err
+		return "", errors.Wrap(err, "could not contact infura")
 	}
 
 	privateKey, err := crypto.HexToECDSA(a.EthereumWallet.EncryptedPrivateKey)
 	if err != nil {
-		return "", err
+		return "", errors.Wrap(err, "could not generate private key")
 	}
 
 	publicKey := privateKey.Public()
@@ -246,7 +238,6 @@ func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {
 	}
 
 	log.Printf("tx sent: %s", signedTx.Hash().Hex())
-
 	return signedTx.Hash().Hex(), nil
 }
 

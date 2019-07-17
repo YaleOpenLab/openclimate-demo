@@ -1,11 +1,7 @@
 package database
 
-import ()
-
 var USStates []string
-
 var USStateCities map[string][]string
-
 var CountryIds map[int]string
 
 func InitUSStates() map[int]string {

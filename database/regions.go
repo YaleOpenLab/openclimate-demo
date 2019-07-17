@@ -37,7 +37,7 @@ type Region struct {
 	// as opposed to data that is aggregated from its parts/children. Data
 	// is stored on IPFS, so Reports holds the IPFS hashes.
 	Reports				[]RepData
-	
+
 	AggEmissions 		AggEmiData
 	AggMitigation		AggMitData
 	AggAdaptation 		AggAdptData
@@ -71,8 +71,7 @@ func NewRegion(name string, country string) (Region, error) {
 	new.Name = name
 	new.Country = country
 
-	err = new.Save()
-	return new, err
+	return new, new.Save()
 }
 
 // Saves region object in regions bucket. Called by NewRegion
@@ -89,10 +88,7 @@ func RetrieveRegion(key int) (Region, error) {
 		return region, errors.Wrap(err, "error while retrieving key from bucket")
 	}
 	err = json.Unmarshal(regionBytes, &region)
-	if err != nil {
-		return region, errors.Wrap(err, "could not unmarshal json, quitting")
-	}
-	return region, nil
+	return region, err
 }
 
 // Given the name and country of the region, retrieves the
@@ -127,7 +123,7 @@ func RetrieveAllRegions() ([]Region, error) {
 		var region Region
 		err = json.Unmarshal(val, &region)
 		if err != nil {
-			return regions, err
+			return regions, errors.Wrap(err, "could not unmarshal json")
 		}
 		regions = append(regions, region)
 	}

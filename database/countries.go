@@ -23,7 +23,7 @@ type Country struct {
 	Revenue     		float64
 	CompanySize 		int
 	HQ         			string
-	
+
 	// For countries: children = regions
 	Children 			[]string
 
@@ -31,7 +31,7 @@ type Country struct {
 	// as opposed to data that is aggregated from its parts/children. Data
 	// is stored on IPFS, so Reports holds the IPFS hashes.
 	Reports				[]RepData
-	
+
 	AggEmissions 		AggEmiData
 	AggMitigation		AggMitData
 	AggAdaptation 		AggAdptData
@@ -66,8 +66,7 @@ func NewCountry(name string) (Country, error) {
 	new.Index = lenRegions + 1
 	new.Name = name
 
-	err = new.Save()
-	return new, err
+	return new, new.Save()
 }
 
 // Saves country object in countries bucket. Called by NewCountry
@@ -84,10 +83,7 @@ func RetrieveCountry(key int) (Country, error) {
 		return country, errors.Wrap(err, "error while retrieving key from bucket")
 	}
 	err = json.Unmarshal(countryBytes, &country)
-	if err != nil {
-		return country, errors.Wrap(err, "could not unmarshal json, quitting")
-	}
-	return country, nil
+	return country, err
 }
 
 // Given the name of the country, retrieves the corresponding country object
@@ -121,7 +117,7 @@ func RetrieveAllCountries() ([]Country, error) {
 		var country Country
 		err = json.Unmarshal(val, &country)
 		if err != nil {
-			return countries, err
+			return countries, errors.Wrap(err, "could not unmarshal json")
 		}
 		countries = append(countries, country)
 	}
