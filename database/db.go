@@ -19,17 +19,20 @@ var CountryBucket = []byte("Countries")
 func CreateHomeDir() {
 	if _, err := os.Stat(globals.HomeDir); os.IsNotExist(err) {
 		// directory does not exist, create one
-		log.Println("Creating home directory")
 		os.MkdirAll(globals.HomeDir, os.ModePerm)
 	}
 
 	if _, err := os.Stat(globals.DbDir); os.IsNotExist(err) {
-		log.Println("Creating new db")
 		os.MkdirAll(globals.DbDir, os.ModePerm)
-		edb.CreateDB(globals.DbPath, UserBucket, CompanyBucket, RegionBucket, CityBucket, CountryBucket)
+		_, err = os.Create(globals.DbPath)
+		db, err := edb.CreateDB(globals.DbPath, UserBucket, CompanyBucket, RegionBucket, CityBucket, CountryBucket)
+		if err != nil {
+			log.Fatal(err)
+		}
+		db.Close()
 	}
 
-	log.Println("exiting here")
+	log.Println("created new db and home directory")
 }
 
 func FlushDB() {
