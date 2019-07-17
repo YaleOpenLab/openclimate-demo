@@ -44,6 +44,8 @@ func main() {
 	if err != nil {
 		log.Println(err)
 		database.CreateHomeDir()
+	} else {
+		// delete the database if it 
 	}
 
 	// log.Println(blockchain.CommitToChain("ethereum", "top", "secret"))

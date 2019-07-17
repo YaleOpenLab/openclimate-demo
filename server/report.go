@@ -187,7 +187,6 @@ func SelfReportData() {
 			}
 		}
 
-
 		// // Check if the bytes is in a valid JSON format
 		// var data interface{}
 
