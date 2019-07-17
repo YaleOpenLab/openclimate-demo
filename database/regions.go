@@ -49,7 +49,6 @@ func NewRegion(name string, country string) (Region, error) {
 	// naive implementation of assigning keys to bucket items (simple indexing)
 	regions, err := RetrieveAllRegions()
 	if err != nil {
-		log.Println("retrieve all regions doesn't work")
 		// regions doesn't exist yet
 		lenRegions = 0
 	} else {

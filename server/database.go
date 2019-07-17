@@ -293,8 +293,6 @@ func getAllRegions() {
 
 		regions, err := database.RetrieveAllRegions()
 		if err != nil {
-			log.Println("INSIDE GETALLREGIONS: ", err)
-			log.Println("Error while retrieving all regions, quitting")
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
