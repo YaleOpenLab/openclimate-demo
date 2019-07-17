@@ -11,7 +11,7 @@ import (
 
 
 func setupReportHandlers() {
-	SelfReportEmissionsData()
+	SelfReportData()
 }
 
 /*
@@ -156,7 +156,7 @@ func SelfReportData() {
 			return
 		}
 
-		switch reportType := r.URL.Query()["Type"]; reportType {
+		switch reportType := r.URL.Query()["Type"][0]; reportType {
 		case "Emissions":	
 			var data Emissions
 			err = json.Unmarshal(bytes, &data)
