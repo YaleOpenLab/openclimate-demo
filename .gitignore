@@ -4,3 +4,4 @@ relayer/relayer
 load-data/load-data
 .DS_Store
 blockchain/wallet
+__pycache__

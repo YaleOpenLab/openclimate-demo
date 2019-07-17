@@ -1,9 +1,9 @@
 package database
 
 import (
+	"github.com/pkg/errors"
 	"log"
 	"os"
-	"github.com/pkg/errors"
 
 	edb "github.com/Varunram/essentials/database"
 	"github.com/YaleOpenLab/openclimate/globals"

@@ -100,6 +100,5 @@ func queryNazcaCountry() {
 			}
 			time.Sleep(1 * time.Second)
 		}
-
 	})
 }

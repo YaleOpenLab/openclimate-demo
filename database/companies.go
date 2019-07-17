@@ -13,11 +13,11 @@ import (
 type Company struct {
 
 	// Identifying info
-	Index   	int
-	Name    	string
-	Country 	string
+	Index   int
+	Name    string
+	Country string
 
-	UserID  	int
+	UserID int
 
 	// Contextual data
 	Area        float64
@@ -30,16 +30,16 @@ type Company struct {
 	HQ          string
 
 	//	For companies: children = assets
-	Children 			[]string
+	Children []string
 
 	// Data that is reported (through self-reporting, databases, IoT, etc.)
 	// as opposed to data that is aggregated from its parts/children. Data
 	// is stored on IPFS, so Reports holds the IPFS hashes.
-	Reports				[]RepData
+	Reports []RepData
 
-	AggEmissions 		AggEmiData
-	AggMitigation		AggMitData
-	AggAdaptation 		AggAdptData
+	AggEmissions  AggEmiData
+	AggMitigation AggMitData
+	AggAdaptation AggAdptData
 }
 
 // Function that creates a new company object given its name

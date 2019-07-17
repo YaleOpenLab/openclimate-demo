@@ -9,25 +9,9 @@ import (
 	"net/http"
 )
 
-
 func setupReportHandlers() {
 	SelfReportData()
 }
-
-/*
-
-	RPC handlers to allow users of the platform to report data.
-	----------------------------------------------------------------
-
-	* Self-report: emissions, mitigation, adaptation, pledge data
-	* TODO: Provide access to/specify database that has your data
-
-	* TODO: Add logic (probably a function) that checks if
-		the methodology used is acceptable and thus verified.
-
-	* TODO: hook up IoT devices?
-
-*/
 
 /**************************/
 /* PLEDGE DATA STRUCTS */
@@ -36,26 +20,24 @@ func setupReportHandlers() {
 type Pledges struct {
 
 	// Meta-data
-	UserID 			int
-	EntityType 		string
+	UserID     int
+	EntityType string
 
 	// Info on specific pledges
-	Pledges			[]PledgeData
+	Pledges []PledgeData
 }
 
 type PledgeData struct {
-
 	// * emissions reductions
 	// * mitigation actions (energy efficiency, renewables, etc.)
 	// * adaptation actions
-	PledgeType 		string
-	BaseYear		int
-	TargetYear 		int
-	Goal 			int
+	PledgeType string
+	BaseYear   int
+	TargetYear int
+	Goal       int
 	// is this goal determined by a regulator, or voluntarily
 	// adopted by the climate actor?
-	Regulatory 		bool 
-
+	Regulatory bool
 }
 
 /**************************/
@@ -63,26 +45,23 @@ type PledgeData struct {
 /**************************/
 
 type Emissions struct {
-
 	// Meta-data
-	UserID 			int
-	EntityType		string
-	Year    		int
-
+	UserID     int
+	EntityType string
+	Year       int
 	// Emissions data (by asset)
 	// Country children: regions
 	// Region children: companies & cities
 	// Company children: assets
-	ByChild 		[]ChildEmissionsData
+	ByChild []ChildEmissionsData
 }
 
 type ChildEmissionsData struct {
-
-	ChildID     	int
-	ChildName 		string
-	ScopeICO2e 		float64
-	ScopeIICO2e 	float64
-	ScopeIIICO2e 	float64
+	ChildID      int
+	ChildName    string
+	ScopeICO2e   float64
+	ScopeIICO2e  float64
+	ScopeIIICO2e float64
 
 	// Where is the report and its data from?
 	// (options: internally conducted report, consulting group, etc.)
@@ -103,24 +82,23 @@ type ChildEmissionsData struct {
 
 type Mitigation struct {
 	// Meta-data
-	UserID 			int
-	EntityType		string
-	Year    		int
+	UserID     int
+	EntityType string
+	Year       int
 
 	// Emissions data (by asset)
 	// Country children: regions
 	// Region children: companies & cities
 	// Company children: assets
-	ByChild 		[]ChildMitigationData
+	ByChild []ChildMitigationData
 }
 
 type ChildMitigationData struct {
-
-	ChildID     	int
-	ChildName 		string
-	CarbonOffset	float64
-	EnergySaved 	float64
-	EnergyGen 		float64
+	ChildID      int
+	ChildName    string
+	CarbonOffset float64
+	EnergySaved  float64
+	EnergyGen    float64
 
 	// Where is the report and its data from?
 	// (options: internally conducted report, consulting group, etc.)
@@ -141,7 +119,6 @@ type Adaptation struct {
 type ChildAdaptationData struct {
 }
 
-
 func SelfReportData() {
 	http.HandleFunc("/user/self-report", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
@@ -157,7 +134,7 @@ func SelfReportData() {
 		}
 
 		switch reportType := r.URL.Query()["Type"][0]; reportType {
-		case "Emissions":	
+		case "Emissions":
 			var data Emissions
 			err = json.Unmarshal(bytes, &data)
 			if err != nil {
@@ -202,9 +179,8 @@ func SelfReportData() {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 		}
 
-		// *** COMMIT HASH TO A BLOCKCHAIN, HASH LOOKUP USING SMART CONTRACT *** 
+		// *** COMMIT HASH TO A BLOCKCHAIN, HASH LOOKUP USING SMART CONTRACT ***
 
 		erpc.MarshalSend(w, hash)
 	})
 }
-

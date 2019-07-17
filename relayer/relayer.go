@@ -5,6 +5,8 @@ import (
 	"net/http"
 	"os"
 	"os/exec"
+
+	erpc "github.com/Varunram/essentials/rpc"
 )
 
 func setupRelayHandlers() {
@@ -14,9 +16,11 @@ func setupRelayHandlers() {
 // setupPingHandler is a ping route for remote callers to check if the platform is up
 func setupRelayPingHandler() {
 	http.HandleFunc("/relay/ping", func(w http.ResponseWriter, r *http.Request) {
-		checkGet(w, r)
-		checkOrigin(w, r)
-		responseHandler(w, StatusOK)
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			return
+		}
+		erpc.ResponseHandler(w, erpc.StatusOK)
 	})
 }
 

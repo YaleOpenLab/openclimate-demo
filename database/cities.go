@@ -28,16 +28,16 @@ type City struct {
 	CompanySize int
 	HQ          string
 
-	Children 			[]string
+	Children []string
 
 	// Data that is reported (through self-reporting, databases, IoT, etc.)
 	// as opposed to data that is aggregated from its parts/children. Data
 	// is stored on IPFS, so Reports holds the IPFS hashes.
-	Reports				[]RepData
+	Reports []RepData
 
-	AggEmissions 		AggEmiData
-	AggMitigation		AggMitData
-	AggAdaptation 		AggAdptData
+	AggEmissions  AggEmiData
+	AggMitigation AggMitData
+	AggAdaptation AggAdptData
 }
 
 // Function that creates a new city object given its name, region,

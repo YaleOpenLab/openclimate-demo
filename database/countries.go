@@ -15,27 +15,26 @@ type Country struct {
 	Name  string
 
 	// Contextual data
-	Area        		float64
-	Iso         		string
-	Population  		int
-	Latitude    		float64
-	Longitude   		float64
-	Revenue     		float64
-	CompanySize 		int
-	HQ         			string
+	Area        float64
+	Iso         string
+	Population  int
+	Latitude    float64
+	Longitude   float64
+	Revenue     float64
+	CompanySize int
+	HQ          string
 
 	// For countries: children = regions
-	Children 			[]string
+	Children []string
 
 	// Data that is reported (through self-reporting, databases, IoT, etc.)
 	// as opposed to data that is aggregated from its parts/children. Data
 	// is stored on IPFS, so Reports holds the IPFS hashes.
-	Reports				[]RepData
+	Reports []RepData
 
-	AggEmissions 		AggEmiData
-	AggMitigation		AggMitData
-	AggAdaptation 		AggAdptData
-
+	AggEmissions  AggEmiData
+	AggMitigation AggMitData
+	AggAdaptation AggAdptData
 }
 
 /*

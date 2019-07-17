@@ -20,22 +20,22 @@ import (
 )
 
 type User struct {
-	Index      			int
-	Username   			string
+	Index    int
+	Username string
 
-	EntityType 			string // choices are: individual, company, city, region, or country
-	EntityID 			int    // index of the entity the user is associated with
+	EntityType string // choices are: individual, company, city, region, or country
+	EntityID   int    // index of the entity the user is associated with
 
-	Email          		string
-	Pwhash         		string
-	EthereumWallet 		EthWallet
-	CosmosWallet   		CosmWallet
+	Email          string
+	Pwhash         string
+	EthereumWallet EthWallet
+	CosmosWallet   CosmWallet
 
 	// //	For companies: children = assets
 	// //	For regions: children = companies (divided by region)
 	// //	For countries: children = regions
 	// //	For earth: children = countries
-	Children 			[]string
+	Children []string
 
 	// // Data that is reported (through self-reporting, databases, IoT, etc.)
 	// // as opposed to data that is aggregated from its parts/children. Data
@@ -55,10 +55,9 @@ type EthWallet struct {
 }
 
 type CosmWallet struct {
-	PrivateKey 		string
-	PublicKey  		string
+	PrivateKey string
+	PublicKey  string
 }
-
 
 func (a *User) GenEthKeys(seedpwd string) error {
 	ecdsaPrivkey, err := crypto.GenerateKey()
