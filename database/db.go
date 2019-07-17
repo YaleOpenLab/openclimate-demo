@@ -24,7 +24,20 @@ func CreateHomeDir() {
 	}
 
 	if _, err := os.Stat(globals.DbDir); os.IsNotExist(err) {
+		log.Println("Creating new db")
 		os.MkdirAll(globals.DbDir, os.ModePerm)
+		edb.CreateDB(globals.DbPath, UserBucket, CompanyBucket, RegionBucket, CityBucket, CountryBucket)
+	}
+
+	log.Println("exiting here")
+}
+
+func FlushDB() {
+	if _, err := os.Stat(globals.HomeDir); os.IsNotExist(err) {
+	} else {
+		// directory exists, flush db
+		log.Println("deleting database")
+		os.RemoveAll(globals.HomeDir)
 	}
 }
 

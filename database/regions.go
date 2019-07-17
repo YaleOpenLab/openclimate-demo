@@ -1,11 +1,12 @@
 package database
 
 import (
+	"log"
 	"encoding/json"
+	"github.com/pkg/errors"
+
 	edb "github.com/Varunram/essentials/database"
 	globals "github.com/YaleOpenLab/openclimate/globals"
-	"github.com/pkg/errors"
-	"log"
 )
 
 // Our definition of "City" includes states,
@@ -42,33 +43,26 @@ type Region struct {
 // Function that creates a new region object given its name and country
 // and saves the object in the regions bucket.
 func NewRegion(name string, country string) (Region, error) {
-
 	var new Region
 	var err error
-
+	var lenRegions int
 	// naive implementation of assigning keys to bucket items (simple indexing)
 	regions, err := RetrieveAllRegions()
 	if err != nil {
-		log.Println(err)
-		return new, errors.Wrap(err, "could not retreive all regions")
-	}
-	lenRegions := len(regions)
-	if err != nil {
-		return new, errors.Wrap(err, "Error while retrieving all regions from db")
-	}
-
-	if lenRegions == 0 {
-		new.Index = 1
+		log.Println("retreive all regions doesn't work")
+		// regions doesn't exist yet
+		lenRegions = 0
 	} else {
-		new.Index = lenRegions + 1
+		lenRegions = len(regions)
 	}
 
+	log.Println("CHK THIS")
+	new.Index = lenRegions + 1
 	new.Name = name
 	new.Country = country
 
 	err = new.Save()
 	return new, err
-
 }
 
 // Saves region object in regions bucket. Called by NewRegion
@@ -115,9 +109,11 @@ func RetrieveAllRegions() ([]Region, error) {
 	var regions []Region
 	keys, err := edb.RetrieveAllKeys(globals.DbPath, RegionBucket)
 	if err != nil {
-		return regions, errors.Wrap(err, "error while retrieving all keys")
+		log.Println("couldn't retrieve regions")
+		return regions, errors.Wrap(err, "error while retrieving all regions")
 	}
 
+	log.Println("could retrieve regions")
 	for _, val := range keys {
 		var region Region
 		err = json.Unmarshal(val, &region)

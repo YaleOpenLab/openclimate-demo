@@ -5,7 +5,6 @@ import (
 	edb "github.com/Varunram/essentials/database"
 	globals "github.com/YaleOpenLab/openclimate/globals"
 	"github.com/pkg/errors"
-	"log"
 )
 
 // Nation-states, countries
@@ -42,29 +41,21 @@ func NewCountry(name string) (Country, error) {
 
 	var new Country
 	var err error
-
+	var lenRegions int
 	// naive implementation of assigning keys to bucket items (simple indexing)
 	countries, err := RetrieveAllCountries()
 	if err != nil {
-		log.Println(err)
-		return new, errors.Wrap(err, "could not retreive all countries")
-	}
-	lenCountries := len(countries)
-	if err != nil {
-		return new, errors.Wrap(err, "Error while retrieving all countries from db")
-	}
-
-	if lenCountries == 0 {
-		new.Index = 1
+		// regions doesn't exist yet
+		lenRegions = 0
 	} else {
-		new.Index = lenCountries + 1
+		lenRegions = len(countries)
 	}
 
+	new.Index = lenRegions + 1
 	new.Name = name
 
 	err = new.Save()
 	return new, err
-
 }
 
 // Saves country object in countries bucket. Called by NewCountry

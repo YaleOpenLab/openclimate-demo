@@ -19,6 +19,7 @@ func PopulateUSStates() {
 			return
 		}
 	}
+	log.Println("Populated US states")
 }
 
 // Test function populating the countries bucket with dummy values
