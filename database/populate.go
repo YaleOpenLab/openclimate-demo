@@ -1,4 +1,4 @@
-package database
+ package database
 
 import (
 	"log"
@@ -19,7 +19,14 @@ func PopulateUSStates() {
 			return
 		}
 	}
-	log.Println("Populated US states")
+}
+
+func PopulateRegionsTest() {
+	_, err := NewRegion("Shanghai", "China")
+	_, err = NewRegion("Osaka", "Japan")
+	_, err = NewRegion("Cancun", "Mexico")
+	_, err = NewRegion("Addis Ababa", "Ethiopia")
+	log.Println(err)
 }
 
 // Test function populating the countries bucket with dummy values

@@ -49,14 +49,13 @@ func NewRegion(name string, country string) (Region, error) {
 	// naive implementation of assigning keys to bucket items (simple indexing)
 	regions, err := RetrieveAllRegions()
 	if err != nil {
-		log.Println("retreive all regions doesn't work")
+		log.Println("retrieve all regions doesn't work")
 		// regions doesn't exist yet
 		lenRegions = 0
 	} else {
 		lenRegions = len(regions)
 	}
 
-	log.Println("CHK THIS")
 	new.Index = lenRegions + 1
 	new.Name = name
 	new.Country = country
@@ -113,7 +112,6 @@ func RetrieveAllRegions() ([]Region, error) {
 		return regions, errors.Wrap(err, "error while retrieving all regions")
 	}
 
-	log.Println("could retrieve regions")
 	for _, val := range keys {
 		var region Region
 		err = json.Unmarshal(val, &region)
