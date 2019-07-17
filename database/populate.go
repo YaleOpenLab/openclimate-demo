@@ -60,7 +60,6 @@ func PopulateAdminUsers() {
 	}
 }
 
-
 // Test function populating the countries bucket with dummy values
 // to test the rpc endpoint for countries
 func PopulateCountries() {
