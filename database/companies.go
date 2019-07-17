@@ -13,9 +13,11 @@ import (
 type Company struct {
 
 	// Identifying info
-	Index   int
-	Name    string
-	Country string
+	Index   	int
+	Name    	string
+	Country 	string
+
+	UserID  	int
 
 	// Contextual data
 	Area        float64

@@ -22,7 +22,9 @@ import (
 type User struct {
 	Index      			int
 	Username   			string
+
 	EntityType 			string // choices are: individual, company, city, region, or country
+	EntityID 			int
 
 	Email          		string
 	Pwhash         		string
