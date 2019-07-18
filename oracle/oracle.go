@@ -73,5 +73,13 @@ func Verify(data map[string]string, reportType string) (string, error) {
 		return "", err
 	}
 
+	// COMMIT TO CHAIN
+
+	
+
+
+
+
+
 	return ipfsHash, err
 }
