@@ -46,3 +46,29 @@ func SelfReportData() {
 		erpc.MarshalSend(w, ipfsHash)
 	})
 }
+
+func ConnectDatabase() {
+	http.HandleFunc("/user/existing-database", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckPost(w, r)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		// entityType := r.URL.Query()["entity_type"][0]
+		// username := r.URL.Query()["username"][0]
+		// user, err := database.RetrieveUserbyUsername(username)
+		// if err != nil {
+		// 	log.Println("failed to find user")
+		// 	return
+		// }
+
+		// for _, db := range r.URL.Query()["database"] {
+
+		// }
+
+	})
+}
+
+
+
