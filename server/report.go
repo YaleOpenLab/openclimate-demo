@@ -1,14 +1,13 @@
 package server
 
 import (
-	"encoding/json"
-	// ipfs "github.com/Varunram/essentials/ipfs"
-	erpc "github.com/Varunram/essentials/rpc"
-	"github.com/YaleOpenLab/openclimate/oracle"
-
 	"io/ioutil"
 	"log"
 	"net/http"
+	"encoding/json"
+
+	erpc "github.com/Varunram/essentials/rpc"
+	"github.com/YaleOpenLab/openclimate/oracle"
 )
 
 func setupReportHandlers() {

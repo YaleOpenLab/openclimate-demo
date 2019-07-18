@@ -6,7 +6,6 @@ import (
 	"github.com/Varunram/essentials/ipfs"
 )
 
-
 func IpfsCommitData(data interface{}) (string, error) {
 
 	dataBytes, err := json.Marshal(data)
@@ -16,4 +15,3 @@ func IpfsCommitData(data interface{}) (string, error) {
 	}
 	return hash, err
 }
-
