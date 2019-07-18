@@ -1,7 +1,7 @@
 package main
 
 import (
-	"fmt"
+	// "fmt"
 	"math"
 	"strconv"
 	"strings"
@@ -125,10 +125,10 @@ func average(dat []float64) float64 {
 	return avg
 }
 
-func main() {
-	// Example use case: dat holds measurements of temperature taken from IoT devices
-	// Devices are in the same general region and measurements are taken within the same hour
-	dat := []interface{}{0.0, 70.1, 70.2, 74.0, 75.1, 73.3, 72.0, 71.6, 75.0, 89.0, 71.1, 200.3}
-	fmt.Println(data_value(dat))                           // 74, which is approximately the average temperature from these
-	fmt.Println(data_score(dat, valid_record_temperature)) // 4.4 out of 5, which makes sense because only 2 values are "off"
-}
+// func main() {
+// 	// Example use case: dat holds measurements of temperature taken from IoT devices
+// 	// Devices are in the same general region and measurements are taken within the same hour
+// 	dat := []interface{}{0.0, 70.1, 70.2, 74.0, 75.1, 73.3, 72.0, 71.6, 75.0, 89.0, 71.1, 200.3}
+// 	fmt.Println(data_value(dat))                           // 74, which is approximately the average temperature from these
+// 	fmt.Println(data_score(dat, valid_record_temperature)) // 4.4 out of 5, which makes sense because only 2 values are "off"
+// }

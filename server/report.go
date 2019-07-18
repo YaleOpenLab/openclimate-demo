@@ -2,8 +2,11 @@ package server
 
 import (
 	"encoding/json"
-	ipfs "github.com/Varunram/essentials/ipfs"
+	// ipfs "github.com/Varunram/essentials/ipfs"
 	erpc "github.com/Varunram/essentials/rpc"
+
+	"github.com/YaleOpenLab/openclimate/oracle"
+
 	"io/ioutil"
 	//"log"
 	"net/http"
@@ -133,54 +136,24 @@ func SelfReportData() {
 			return
 		}
 
-		switch reportType := r.URL.Query()["Type"][0]; reportType {
-		case "Emissions":
-			var data Emissions
-			err = json.Unmarshal(bytes, &data)
-			if err != nil {
-				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-				return
-			}
-		case "Pledges":
-			var data Pledges
-			err = json.Unmarshal(bytes, &data)
-			if err != nil {
-				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-				return
-			}
-		case "Mitigation":
-			var data Mitigation
-			err = json.Unmarshal(bytes, &data)
-			if err != nil {
-				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-				return
-			}
-		case "Adaptation":
-			var data Adaptation
-			err = json.Unmarshal(bytes, &data)
-			if err != nil {
-				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-				return
-			}
-		}
-
-		// // Check if the bytes is in a valid JSON format
-		// var data interface{}
-
-		// err = json.Unmarshal(bytes, &data)
-		// if err != nil {
-		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 	return
-		// }
-
-		// add data (in byte format) to IPFS
-		hash, err := ipfs.IpfsAddBytes(bytes)
+		data := make(map[string]string)
+		err = json.Unmarshal(bytes, &data)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
 		}
 
-		// *** COMMIT HASH TO A BLOCKCHAIN, HASH LOOKUP USING SMART CONTRACT ***
+		switch reportType := r.URL.Query()["Type"][0]; reportType {
+		case "Emissions":
+			oracle.IngestEmissions(data)
+		case "Pledges":
+			oracle.IngestPledges(data)
+		case "Mitigation":
+			oracle.IngestMitigation(data)
+		case "Adaptation":
+			oracle.IngestAdaptation(data)
+		}
 
-		erpc.MarshalSend(w, hash)
+		erpc.MarshalSend(w, data)
 	})
 }

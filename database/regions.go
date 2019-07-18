@@ -38,9 +38,9 @@ type Region struct {
 	// is stored on IPFS, so Reports holds the IPFS hashes.
 	Reports []RepData
 
-	AggEmissions  AggEmiData
-	AggMitigation AggMitData
-	AggAdaptation AggAdptData
+	// AggEmissions  AggEmiData
+	// AggMitigation AggMitData
+	// AggAdaptation AggAdptData
 }
 
 /*

@@ -11,8 +11,8 @@ import (
 type Country struct {
 
 	// Identifying info
-	Index int
-	Name  string
+	Index 		int
+	Name 		string
 
 	// Contextual data
 	Area        float64
@@ -32,7 +32,7 @@ type Country struct {
 	// is stored on IPFS, so Reports holds the IPFS hashes.
 	Reports []RepData
 
-	Emissions  map[string]string // accept whatever emissions the frontend passes
+	Emissions  map[string]string // accept whatever emissions data the frontend passes
 	Mitigation map[string]string
 	Adaptation map[string]string
 }
