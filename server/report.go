@@ -30,6 +30,7 @@ func SelfReportData() {
 
 		reportType := r.URL.Query()["report_type"][0]
 		bytes, err := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
@@ -47,6 +48,9 @@ func SelfReportData() {
 	})
 }
 
+
+// Submit a request to connect with an external database that contains
+// emissions/mitigation/adaptation data that users would like to report.
 func ConnectDatabase() {
 	http.HandleFunc("/user/existing-database", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
@@ -54,6 +58,15 @@ func ConnectDatabase() {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
+
+		b, err := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		log.Println("BYTES: ", b)
 
 		// entityType := r.URL.Query()["entity_type"][0]
 		// username := r.URL.Query()["username"][0]
@@ -69,6 +82,5 @@ func ConnectDatabase() {
 
 	})
 }
-
 
 

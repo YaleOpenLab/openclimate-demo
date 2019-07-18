@@ -1,4 +1,4 @@
-// Rename to "static_data.go"
+// Rename to "staticdata.go"
 
 package server
 

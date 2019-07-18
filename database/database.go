@@ -15,6 +15,7 @@ var CompanyBucket = []byte("Companies")
 var RegionBucket = []byte("Regions")
 var CityBucket = []byte("Cities")
 var CountryBucket = []byte("Countries")
+var AssetBucket = []byte("Assets")
 
 // CreateHomeDir creates a home directory
 func CreateHomeDir() error {
