@@ -2,7 +2,6 @@ package oracle
 
 import (
 	"log"
-
 )
 
 // Helper functions check if the methodology used is valid. Functions should
@@ -30,7 +29,6 @@ func VerifyAdaptation(data map[string]string) (Adaptation, error) {
 	return verifiedData, nil
 }
 
-
 // Calls the relevant verify helper-function to process the data,
 // then commits the data to IPFS and returns the hash
 func Verify(data map[string]string, reportType string) (string, error) {
@@ -41,36 +39,25 @@ func Verify(data map[string]string, reportType string) (string, error) {
 	var verifiedData interface{}
 
 	switch reportType {
-		case "Emissions":
-			verifiedData, err = VerifyEmissions(data)
-			if err != nil {
-				log.Println("failed verify emissions")
-				return "", err
-			}
-		case "Pledges":	
-			verifiedData, err = VerifyPledge(data)
-			if err != nil {
-				log.Println("failed verify pledges")
-				return "", err
-			}
-		case "Mitigation":
-			verifiedData, err = VerifyMitigation(data)
-			if err != nil {
-				log.Println("failed verify mitigation")
-				return "", err				
-			}
-		case "Adaptation":
-			verifiedData, err = VerifyAdaptation(data)
-			if err != nil {
-				log.Println("failed verify adaptation")
-				return "", err
-			}
-		}	
+	case "Emissions":
+		verifiedData, err = VerifyEmissions(data)
+	case "Pledges":
+		verifiedData, err = VerifyPledge(data)
+	case "Mitigation":
+		verifiedData, err = VerifyMitigation(data)
+	case "Adaptation":
+		verifiedData, err = VerifyAdaptation(data)
+	}
+
+	if err != nil {
+		log.Println("failed to verify data")
+		return ipfsHash, err
+	}
 
 	ipfsHash, err = IpfsCommitData(verifiedData)
 	if err != nil {
 		log.Println("Failed to commit data to IPFS")
-		return "", err
+		return ipfsHash, err
 	}
 
 	// COMMIT TO CHAIN

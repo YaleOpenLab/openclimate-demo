@@ -1,17 +1,16 @@
 package oracle
 
 import (
-	"log"
 	"encoding/json"
 	"github.com/Varunram/essentials/ipfs"
+	"log"
 )
 
 func IpfsCommitData(data interface{}) (string, error) {
-
 	dataBytes, err := json.Marshal(data)
-	hash, err := ipfs.IpfsAddBytes(dataBytes)
 	if err != nil {
 		log.Println(err)
+		return "", err
 	}
-	return hash, err
+	return ipfs.IpfsAddBytes(dataBytes)
 }
