@@ -1,9 +1,9 @@
-package database
+©package database
 
 import (
 	"encoding/json"
 	"github.com/pkg/errors"
-	"log"
+	//"log"
 
 	edb "github.com/Varunram/essentials/database"
 	globals "github.com/YaleOpenLab/openclimate/globals"
@@ -38,9 +38,9 @@ type Region struct {
 	// is stored on IPFS, so Reports holds the IPFS hashes.
 	Reports []RepData
 
-	// AggEmissions  AggEmiData
-	// AggMitigation AggMitData
-	// AggAdaptation AggAdptData
+	Emissions  map[string]string // accept whatever emissions the frontend passes
+	Mitigation map[string]string
+	Adaptation map[string]string
 }
 
 
@@ -107,7 +107,6 @@ func RetrieveAllRegions() ([]Region, error) {
 	var regions []Region
 	keys, err := edb.RetrieveAllKeys(globals.DbPath, RegionBucket)
 	if err != nil {
-		log.Println("couldn't retrieve regions")
 		return regions, errors.Wrap(err, "error while retrieving all regions")
 	}
 

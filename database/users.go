@@ -29,7 +29,7 @@ type User struct {
 	Email          string
 	Pwhash         string
 	EthereumWallet EthWallet
-	CosmosWallet   CosmWallet
+	//CosmosWallet   CosmWallet
 
 	// //	For companies: children = assets
 	// //	For regions: children = companies (divided by region)
@@ -54,10 +54,12 @@ type EthWallet struct {
 	Address             string
 }
 
+/*
 type CosmWallet struct {
 	PrivateKey string
 	PublicKey  string
 }
+*/
 
 func (a *User) GenEthKeys(seedpwd string) error {
 	ecdsaPrivkey, err := crypto.GenerateKey()
@@ -103,17 +105,28 @@ func NewUser(username string, pwhash string, email string, entityType string) (U
 		return user, errors.Wrap(err, "Error while retrieving all users from database")
 	}
 
-	// the ugly indexing thing again, need to think of something better here
 	if len(allUsers) == 0 {
 		user.Index = 1
 	} else {
 		user.Index = len(allUsers) + 1
 	}
 
+	switch entityType {
+	case "individual":
+		user.EntityType = "individual"
+	case "company":
+		user.EntityType = "company"
+	case "city":
+		user.EntityType = "city"
+	case "country":
+		user.EntityType = "country"
+	default:
+		return user, errors.New("entity type not defined")
+	}
+
 	user.Username = username
 	user.Pwhash = pwhash
 	user.Email = email
-	user.EntityType = entityType
 
 	return user, user.Save()
 }
@@ -124,7 +137,6 @@ func (a *User) Save() error {
 }
 
 // Adds a new child to the User object
-// Needed to allow companies to onboard new assets
 func (user *User) AddChild(child string) error {
 	user.Children = append(user.Children, child)
 	return user.Save()
