@@ -17,7 +17,7 @@ type Company struct {
 	Name    string
 	Country string
 
-	UserID int
+	UserIDs []int
 
 	// Contextual data
 	Area        float64
@@ -37,9 +37,9 @@ type Company struct {
 	// is stored on IPFS, so Reports holds the IPFS hashes.
 	Reports []RepData
 
-	AggEmissions  AggEmiData
-	AggMitigation AggMitData
-	AggAdaptation AggAdptData
+	Emissions  map[string]string // accept whatever emissions the frontend passes
+	Mitigation map[string]string
+	Adaptation map[string]string
 }
 
 // Function that creates a new company object given its name
