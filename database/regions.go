@@ -3,7 +3,7 @@ package database
 import (
 	"encoding/json"
 	"github.com/pkg/errors"
-	"log"
+	//"log"
 
 	edb "github.com/Varunram/essentials/database"
 	globals "github.com/YaleOpenLab/openclimate/globals"
@@ -38,19 +38,10 @@ type Region struct {
 	// is stored on IPFS, so Reports holds the IPFS hashes.
 	Reports []RepData
 
-	// AggEmissions  AggEmiData
-	// AggMitigation AggMitData
-	// AggAdaptation AggAdptData
+	Emissions  map[string]string // accept whatever emissions the frontend passes
+	Mitigation map[string]string
+	Adaptation map[string]string
 }
-
-/*
-	ISSUE: edb.Save() asks for an key argument of type INT,
-	but currently we are passing in a key argument of type string.
-	This issue needs to be resolved. Could maybe just use a hash.
-
-	RESOLVED: currently using solution previously implemented in OpenX;
-	incrementing index for each new region, so the key is of type int.
-*/
 
 // Function that creates a new region object given its name and country
 // and saves the object in the regions bucket.
@@ -115,7 +106,6 @@ func RetrieveAllRegions() ([]Region, error) {
 	var regions []Region
 	keys, err := edb.RetrieveAllKeys(globals.DbPath, RegionBucket)
 	if err != nil {
-		log.Println("couldn't retrieve regions")
 		return regions, errors.Wrap(err, "error while retrieving all regions")
 	}
 

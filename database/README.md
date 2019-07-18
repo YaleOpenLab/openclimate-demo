@@ -11,7 +11,6 @@ Contains database handlers, defines structs for storing data in the database, an
  - db.go: defines boltDB buckets and functions to handle DB
  - landing.go:
  - populate.go: Populates the local test database with static test data.
- - randomdata.go: 
+ - static.go: 
  - regions.go: Contains functions to create, save, or retrieve regions from db
  - users.go:
-
