@@ -43,14 +43,6 @@ type Region struct {
 	// AggAdaptation AggAdptData
 }
 
-/*
-	ISSUE: edb.Save() asks for an key argument of type INT,
-	but currently we are passing in a key argument of type string.
-	This issue needs to be resolved. Could maybe just use a hash.
-
-	RESOLVED: currently using solution previously implemented in OpenX;
-	incrementing index for each new region, so the key is of type int.
-*/
 
 // Function that creates a new region object given its name and country
 // and saves the object in the regions bucket.
