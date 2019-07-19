@@ -128,7 +128,7 @@ type ChildAdaptationData struct {
 /**********************/
 
 
-type Carbon struct {
+type GHG struct {
 	
 }
 

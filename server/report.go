@@ -14,7 +14,6 @@ func setupReportHandlers() {
 	SelfReportData()
 }
 
-
 func SelfReportData() {
 	http.HandleFunc("/user/self-report", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
@@ -26,19 +25,22 @@ func SelfReportData() {
 		if r.URL.Query()["report_type"] == nil {
 			log.Println("report type not passed, quitting")
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
 		}
 
 		reportType := r.URL.Query()["report_type"][0]
 		bytes, err := ioutil.ReadAll(r.Body)
 		defer r.Body.Close()
 		if err != nil {
+			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
-		data := make(map[string]string)
+		var data interface{}
 		err = json.Unmarshal(bytes, &data)
 		if err != nil {
+			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
