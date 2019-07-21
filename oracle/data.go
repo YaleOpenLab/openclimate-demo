@@ -1,7 +1,6 @@
 package oracle
 
-import (
-)
+import ()
 
 /*
 
@@ -115,30 +114,20 @@ type ChildMitigationData struct {
 /***************************/
 
 type Adaptation struct {
-
 }
 
 type ChildAdaptationData struct {
-	
 }
-
 
 /**********************/
 /* EARTH DATA STRUCTS */
 /**********************/
 
-
 type GHG struct {
-	
 }
-
 
 type Ocean struct {
-
 }
-
 
 type LandUse struct {
-
 }
-

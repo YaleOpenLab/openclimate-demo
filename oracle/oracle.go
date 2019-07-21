@@ -24,7 +24,6 @@ func VerifyMitigation(data interface{}) (Mitigation, error) {
 }
 
 func VerifyAdaptation(data interface{}) (Adaptation, error) {
-
 	var verifiedData Adaptation
 	return verifiedData, nil
 }
@@ -32,7 +31,6 @@ func VerifyAdaptation(data interface{}) (Adaptation, error) {
 // Calls the relevant verify helper-function to process the data,
 // then commits the data to IPFS and returns the hash
 func Verify(data interface{}, reportType string) (string, error) {
-
 	var ipfsHash string
 	var err error
 
@@ -59,14 +57,6 @@ func Verify(data interface{}, reportType string) (string, error) {
 		log.Println("Failed to commit data to IPFS")
 		return ipfsHash, err
 	}
-
-	// COMMIT TO CHAIN
-
-	
-
-
-
-
 
 	return ipfsHash, err
 }
