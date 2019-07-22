@@ -39,6 +39,7 @@ func SelfReportData() {
 			return
 		}
 
+
 		var data interface{}
 		err = json.Unmarshal(bytes, &data)
 		if err != nil {

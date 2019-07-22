@@ -138,8 +138,6 @@ type AdaptationChild struct {
 /**********************/
 
 type Earth struct {
-
-	Source string
 	
 	AtmosCO2 float64
 	TropOzone float64 // tropospheric ozone concentration
