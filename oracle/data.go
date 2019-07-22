@@ -53,7 +53,7 @@ type Emissions struct {
 	// Country children: regions
 	// Region children: companies & cities
 	// Company children: assets
-	ByChild []ChildEmissionsData
+	ByChild []EmissionsChild
 }
 
 type EmissionsChild struct {
@@ -90,7 +90,7 @@ type Mitigation struct {
 	// Country children: regions
 	// Region children: companies & cities
 	// Company children: assets
-	ByChild []ChildMitigationData
+	ByChild []MitigationChild
 }
 
 type MitigationChild struct {
@@ -99,6 +99,20 @@ type MitigationChild struct {
 	CarbonOffset float64
 	EnergySaved  float64
 	EnergyGen    float64
+
+	// Options:
+	// - Renewable energy
+	// - Energy efficiency
+	// - Agriculture, Forestry & Other
+	// - Carbon sequestrations
+	Type string
+
+	// Options:
+	// - Reduction of GHG sources
+	// - Enhancement of GHG sinks
+	// - Both
+	Category string
+
 
 	// Where is the report and its data from?
 	// (options: internally conducted report, consulting group, etc.)
@@ -128,10 +142,15 @@ type Earth struct {
 	Source string
 	
 	AtmosCO2 float64
+	TropOzone float64 // tropospheric ozone concentration
+	StratOzone float64 // stratospheric ozone concentration
+
 	GlobalTemp float64
 	ArcticIceMin float64
 	IceSheets float64
 	SeaLevelRise float64
+
+	LandUse float64
 
 }
 

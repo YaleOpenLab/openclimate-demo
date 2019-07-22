@@ -12,6 +12,7 @@ import (
 
 func setupReportHandlers() {
 	SelfReportData()
+	ConnectDatabase()
 }
 
 func SelfReportData() {
@@ -50,10 +51,23 @@ func SelfReportData() {
 	})
 }
 
+type DatabaseRequest struct {
+	DBName 			string
+	OrgName			string
+
+	DBActorTypes 	[]string 	// what type of actors does the DB cover?
+	DBActionTypes 	[]string 	// what type of actions does the DB track?
+
+	API 			string
+	Links 			[]string 	// links with more info
+
+}
+
+
 // Submit a request to connect with an external database that contains
 // emissions/mitigation/adaptation data that users would like to report.
 func ConnectDatabase() {
-	http.HandleFunc("/user/existing-database", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/user/request-database", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -67,7 +81,16 @@ func ConnectDatabase() {
 			return
 		}
 
-		log.Println("BYTES: ", b)
+		var request DatabaseRequest
+		err = json.Unmarshal(b, &request)
+		if err != nil {
+			log.Println("Error: failed to unmarshal bytes into Request struct")
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
+
+		erpc.MarshalSend(w, request)
+
+		// log.Println("BYTES: ", b)
 
 		// entityType := r.URL.Query()["entity_type"][0]
 		// username := r.URL.Query()["username"][0]
