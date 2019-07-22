@@ -12,14 +12,34 @@ func VerifyEarth(data interface{}) (Earth, error) {
 	return verifiedData, nil
 }
 
-func VerifyGHG() {
+func VerifyAtmosCO2() {
 	
 }
 
-func VerifyTemp() {
+func VerifyTropOzone() {
 
 }
 
-func VerifySeaLevels() {
+func VerifyStratOzone() {
+
+}
+
+func VerifyArcticIceMin() {
+
+}
+
+func VerifyIceSheets() {
+
+}
+
+func VerifyGlobalTemp() {
+
+}
+
+func VerifySeaLevelRise() {
+
+}
+
+func VerifyLandUse() {
 
 }

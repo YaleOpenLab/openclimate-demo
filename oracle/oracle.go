@@ -35,8 +35,7 @@ func Verify(data interface{}, reportType string) (string, error) {
 	var ipfsHash string
 	var err error
 
-	var verifiedData interface{}
-
+	var verifiedData interface{} 
 	switch reportType {
 	case "Earth":
 		verifiedData, err = VerifyEarth(data)

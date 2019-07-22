@@ -1,9 +1,9 @@
 package database
 
 import (
+	"encoding/json"
 	"github.com/pkg/errors"
 	globals "github.com/YaleOpenLab/openclimate/globals"
-	"encoding/json"
 	edb "github.com/Varunram/essentials/database"
 )
 
@@ -22,7 +22,6 @@ type ConnectRequest struct {
 
 
 func NewRequest(request ConnectRequest) error {
-
 	allRequests, err := RetrieveAllRequests()
 	if err != nil {
 		return errors.Wrap(err, "could not retrieve all requests, quitting")
@@ -35,8 +34,8 @@ func NewRequest(request ConnectRequest) error {
 	}
 
 	return request.Save()
-
 }
+
 
 func (a *ConnectRequest) Save() error {
 	return edb.Save(globals.DbPath, RequestBucket, a, a.Index)
