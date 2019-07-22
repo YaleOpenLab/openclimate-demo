@@ -43,7 +43,6 @@ type Region struct {
 	Adaptation map[string]string
 }
 
-
 // Function that creates a new region object given its name and country
 // and saves the object in the regions bucket.
 func NewRegion(name string, country string) (Region, error) {

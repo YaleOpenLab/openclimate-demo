@@ -9,14 +9,12 @@ import (
 )
 
 type Asset struct {
-
-	Index int
-	Name string
+	Index   int
+	Name    string
 	Company string
 
 	AssetType string
-	Reports []RepData
-
+	Reports   []RepData
 }
 
 func NewAsset(name string, company string) (Asset, error) {

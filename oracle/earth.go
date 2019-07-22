@@ -1,8 +1,6 @@
 package oracle
 
-import (
-
-)
+import ()
 
 /*
 	Holds all the functionality that verifies data concerning the

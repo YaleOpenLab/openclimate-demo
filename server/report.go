@@ -1,10 +1,10 @@
 package server
 
 import (
+	"encoding/json"
 	"io/ioutil"
 	"log"
 	"net/http"
-	"encoding/json"
 
 	erpc "github.com/Varunram/essentials/rpc"
 	"github.com/YaleOpenLab/openclimate/oracle"
@@ -50,7 +50,6 @@ func SelfReportData() {
 	})
 }
 
-
 // Submit a request to connect with an external database that contains
 // emissions/mitigation/adaptation data that users would like to report.
 func ConnectDatabase() {
@@ -84,5 +83,3 @@ func ConnectDatabase() {
 
 	})
 }
-
-

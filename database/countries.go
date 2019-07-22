@@ -11,8 +11,8 @@ import (
 type Country struct {
 
 	// Identifying info
-	Index 		int
-	Name 		string
+	Index int
+	Name  string
 
 	// Contextual data
 	Area        float64
