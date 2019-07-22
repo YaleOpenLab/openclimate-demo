@@ -31,6 +31,8 @@ func setupDBHandlers() {
 	getAllCountries()
 	getCountry()
 
+	getAllRequests()
+
 }
 
 /*****************/
@@ -464,5 +466,27 @@ func getCountry() {
 		}
 
 		erpc.MarshalSend(w, country)
+	})
+}
+
+/****************************/
+/* CONNECT REQUEST HANDLERS */
+/****************************/
+
+func getAllRequests() {
+	http.HandleFunc("/requests/all", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			return
+		}
+
+		requests, err := database.RetrieveAllRequests()
+		if err != nil {
+			log.Println("error while retrieving all requests, quitting")
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, requests)
 	})
 }

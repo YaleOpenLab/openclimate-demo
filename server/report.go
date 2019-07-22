@@ -8,6 +8,7 @@ import (
 
 	erpc "github.com/Varunram/essentials/rpc"
 	"github.com/YaleOpenLab/openclimate/oracle"
+	"github.com/YaleOpenLab/openclimate/database"
 )
 
 func setupReportHandlers() {
@@ -51,18 +52,6 @@ func SelfReportData() {
 	})
 }
 
-type DatabaseRequest struct {
-	DBName 			string
-	OrgName			string
-
-	DBActorTypes 	[]string 	// what type of actors does the DB cover?
-	DBActionTypes 	[]string 	// what type of actions does the DB track?
-
-	API 			string
-	Links 			[]string 	// links with more info
-
-}
-
 
 // Submit a request to connect with an external database that contains
 // emissions/mitigation/adaptation data that users would like to report.
@@ -81,13 +70,14 @@ func ConnectDatabase() {
 			return
 		}
 
-		var request DatabaseRequest
+		var request database.ConnectRequest
 		err = json.Unmarshal(b, &request)
 		if err != nil {
 			log.Println("Error: failed to unmarshal bytes into Request struct")
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 		}
 
+		database.NewRequest(request) 	// store request into request bucket, to be reviewed later
 		erpc.MarshalSend(w, request)
 
 		// log.Println("BYTES: ", b)
