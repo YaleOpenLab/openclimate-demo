@@ -7,8 +7,8 @@ import (
 	"net/http"
 
 	erpc "github.com/Varunram/essentials/rpc"
-	"github.com/YaleOpenLab/openclimate/oracle"
 	"github.com/YaleOpenLab/openclimate/database"
+	"github.com/YaleOpenLab/openclimate/oracle"
 )
 
 func setupReportHandlers() {
@@ -39,7 +39,6 @@ func SelfReportData() {
 			return
 		}
 
-
 		var data interface{}
 		err = json.Unmarshal(bytes, &data)
 		if err != nil {
@@ -52,7 +51,6 @@ func SelfReportData() {
 		erpc.MarshalSend(w, ipfsHash)
 	})
 }
-
 
 // Submit a request to connect with an external database that contains
 // emissions/mitigation/adaptation data that users would like to report.
@@ -78,7 +76,7 @@ func ConnectDatabase() {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 		}
 
-		database.NewRequest(request) 	// store request into request bucket, to be reviewed later
+		database.NewRequest(request) // store request into request bucket, to be reviewed later
 		erpc.MarshalSend(w, request)
 
 		// log.Println("BYTES: ", b)

@@ -113,7 +113,6 @@ type MitigationChild struct {
 	// - Both
 	Category string
 
-
 	// Where is the report and its data from?
 	// (options: internally conducted report, consulting group, etc.)
 	Source string
@@ -138,17 +137,14 @@ type AdaptationChild struct {
 /**********************/
 
 type Earth struct {
-	
-	AtmosCO2 float64
-	TropOzone float64 // tropospheric ozone concentration
+	AtmosCO2   float64
+	TropOzone  float64 // tropospheric ozone concentration
 	StratOzone float64 // stratospheric ozone concentration
 
-	GlobalTemp float64
+	GlobalTemp   float64
 	ArcticIceMin float64
-	IceSheets float64
+	IceSheets    float64
 	SeaLevelRise float64
 
 	LandUse float64
-
 }
-

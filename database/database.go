@@ -34,12 +34,12 @@ func CreateHomeDir() error {
 			return errors.Wrap(err, "could not create directory")
 		}
 		_, err = os.Create(globals.DbPath)
-		db, err := edb.CreateDB(globals.DbPath, 
-			UserBucket, 
-			CompanyBucket, 
-			RegionBucket, 
-			CityBucket, 
-			CountryBucket, 
+		db, err := edb.CreateDB(globals.DbPath,
+			UserBucket,
+			CompanyBucket,
+			RegionBucket,
+			CityBucket,
+			CountryBucket,
 			RequestBucket)
 		if err != nil {
 			return errors.Wrap(err, "could not create database")

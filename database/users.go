@@ -20,15 +20,15 @@ import (
 )
 
 type User struct {
-	Index    int
+	Index int
 
-	Username 	string
-	Email       string
-	Pwhash      string
+	Username string
+	Email    string
+	Pwhash   string
 
-	EntityType 	string 	// choices are: individual, company, city, region, country, oversight
-	EntityID	int   	// index of the entity the user is associated with
-	Admin 		bool 	// is the user an admin for its entity?
+	EntityType string // choices are: individual, company, city, region, country, oversight
+	EntityID   int    // index of the entity the user is associated with
+	Admin      bool   // is the user an admin for its entity?
 
 	EthereumWallet EthWallet
 	//CosmosWallet   CosmWallet

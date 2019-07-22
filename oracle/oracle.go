@@ -23,7 +23,6 @@ func VerifyPledge(data interface{}) (Pledges, error) {
 	// actorPledges.UserID = data["UserID"]
 	// actorPledges.EntityType = data["EntityType"]
 
-
 	return actorPledges, nil
 }
 
@@ -43,7 +42,7 @@ func Verify(data interface{}, reportType string) (string, error) {
 	var ipfsHash string
 	var err error
 
-	var verifiedData interface{} 
+	var verifiedData interface{}
 	switch reportType {
 	case "Earth":
 		verifiedData, err = VerifyEarth(data)

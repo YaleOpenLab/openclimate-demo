@@ -13,7 +13,7 @@ func VerifyEarth(data interface{}) (Earth, error) {
 }
 
 func VerifyAtmosCO2() {
-	
+
 }
 
 func VerifyTropOzone() {

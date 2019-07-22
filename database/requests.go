@@ -2,24 +2,22 @@ package database
 
 import (
 	"encoding/json"
-	"github.com/pkg/errors"
-	globals "github.com/YaleOpenLab/openclimate/globals"
 	edb "github.com/Varunram/essentials/database"
+	globals "github.com/YaleOpenLab/openclimate/globals"
+	"github.com/pkg/errors"
 )
 
 type ConnectRequest struct {
+	Index   int
+	DBName  string
+	OrgName string
 
-	Index 			int
-	DBName 			string
-	OrgName			string
+	DBActorTypes  []string // what type of actors does the DB cover?
+	DBActionTypes []string // what type of actions does the DB track?
 
-	DBActorTypes 	[]string 	// what type of actors does the DB cover?
-	DBActionTypes 	[]string 	// what type of actions does the DB track?
-
-	API 			string
-	Links 			[]string 	// links with more info
+	ContactInfo string
+	Links       []string // links with more info
 }
-
 
 func NewRequest(request ConnectRequest) error {
 	allRequests, err := RetrieveAllRequests()
@@ -36,11 +34,9 @@ func NewRequest(request ConnectRequest) error {
 	return request.Save()
 }
 
-
 func (a *ConnectRequest) Save() error {
 	return edb.Save(globals.DbPath, RequestBucket, a, a.Index)
 }
-
 
 func RetrieveAllRequests() ([]ConnectRequest, error) {
 	var requests []ConnectRequest
