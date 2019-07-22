@@ -9,8 +9,9 @@ import (
 	state of the earth.
 */
 
-func VerifyEarth(data interface{}) error {
-	return nil
+func VerifyEarth(data interface{}) (Earth, error) {
+	var verifiedData Earth
+	return verifiedData, nil
 }
 
 func VerifyGHG() {

@@ -39,6 +39,8 @@ func Verify(data interface{}, reportType string) (string, error) {
 	var verifiedData interface{}
 
 	switch reportType {
+	case "Earth":
+		verifiedData, err = VerifyEarth(data)
 	case "Emissions":
 		verifiedData, err = VerifyEmissions(data)
 	case "Pledges":

@@ -127,18 +127,16 @@ type ChildAdaptationData struct {
 /* EARTH DATA STRUCTS */
 /**********************/
 
+type Earth struct {
+	GHG struct {
 
-type GHG struct {
-	
+	}
+	Ocean struct {
+
+	}
+	LandUse struct {
+
+	}
 }
 
-
-type Ocean struct {
-
-}
-
-
-type LandUse struct {
-
-}
 
