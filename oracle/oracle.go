@@ -4,9 +4,10 @@ import (
 	"log"
 )
 
-// Helper functions check if the methodology used is valid. Functions should
-// also clean the data and return it in the correct format, as determined by
+// Functions clean the data and return it in the correct format, as determined by
 // the structs defined in datastructs.go
+// To verify, oracle will check if the methodology used is valid and if the
+// values make sense.
 
 func VerifyEmissions(data interface{}) (Emissions, error) {
 	var verifiedData Emissions

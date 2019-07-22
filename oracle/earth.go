@@ -13,13 +13,13 @@ func VerifyEarth(data interface{}) (Earth, error) {
 }
 
 func VerifyGHG() {
+	
+}
+
+func VerifyTemp() {
 
 }
 
-func VerifyLandUse() {
-
-}
-
-func VerifyOcean() {
+func VerifySeaLevels() {
 
 }

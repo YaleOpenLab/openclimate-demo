@@ -56,7 +56,7 @@ type Emissions struct {
 	ByChild []ChildEmissionsData
 }
 
-type ChildEmissionsData struct {
+type EmissionsChild struct {
 	ChildID      int
 	ChildName    string
 	ScopeICO2e   float64
@@ -93,7 +93,7 @@ type Mitigation struct {
 	ByChild []ChildMitigationData
 }
 
-type ChildMitigationData struct {
+type MitigationChild struct {
 	ChildID      int
 	ChildName    string
 	CarbonOffset float64
@@ -116,7 +116,7 @@ type ChildMitigationData struct {
 type Adaptation struct {
 }
 
-type ChildAdaptationData struct {
+type AdaptationChild struct {
 }
 
 /**********************/
@@ -124,14 +124,14 @@ type ChildAdaptationData struct {
 /**********************/
 
 type Earth struct {
-	GHG struct {
 
-	}
-	Ocean struct {
+	Source string
+	
+	AtmosCO2 float64
+	GlobalTemp float64
+	ArcticIceMin float64
+	IceSheets float64
+	SeaLevelRise float64
 
-	}
-	LandUse struct {
-
-	}
 }
 

@@ -21,13 +21,15 @@ import (
 
 type User struct {
 	Index    int
-	Username string
 
-	EntityType string // choices are: individual, company, city, region, or country
-	EntityID   int    // index of the entity the user is associated with
+	Username 	string
+	Email       string
+	Pwhash      string
 
-	Email          string
-	Pwhash         string
+	EntityType 	string 	// choices are: individual, company, city, region, country, oversight
+	EntityID	int   	// index of the entity the user is associated with
+	Admin 		bool 	// is the user an admin for its entity?
+
 	EthereumWallet EthWallet
 	//CosmosWallet   CosmWallet
 
@@ -120,6 +122,10 @@ func NewUser(username string, pwhash string, email string, entityType string) (U
 		user.EntityType = "city"
 	case "country":
 		user.EntityType = "country"
+	case "region":
+		user.EntityType = "region"
+	case "oversight":
+		user.EntityType = "oversight"
 	default:
 		return user, errors.New("entity type not defined")
 	}
