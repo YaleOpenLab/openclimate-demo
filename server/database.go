@@ -364,7 +364,7 @@ func getCity() {
 
 		name := r.URL.Query()["city_name"][0]
 		region := r.URL.Query()["city_region"][0]
-		city, err := database.RetrieveCityByName(name, region) //************ STOP ***********
+		city, err := database.RetrieveCityByName(name, region)
 		if err != nil {
 			log.Println("Error while retrieving all cities, quitting")
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
