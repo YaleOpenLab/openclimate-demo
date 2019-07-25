@@ -2,7 +2,6 @@ package database
 
 import (
 	"github.com/pkg/errors"
-
 	"github.com/Varunram/essentials/utils"
 )
 
@@ -45,14 +44,23 @@ func PopulateRegionsTest() error {
 	return nil
 }
 
+func PopulateTestUsers() error {
+	pwhash := utils.SHA3hash("a")
+	_, err := NewUser("testuser", pwhash, "user@test.com", "country", "USA", "")
+	if err != nil {
+		return errors.Wrap(err, "failed to create test user in country: USA")
+	}
+	return nil
+}
+
 func PopulateAdminUsers() error {
 	pwhash := utils.SHA3hash("p")
 
-	_, err := NewUser("amanda", pwhash, "amanda@test.com", "individual")
+	_, err := NewUser("amanda", pwhash, "amanda@test.com", "individual", "", "")
 	if err != nil {
 		return errors.Wrap(err, "failed to populate user amanda")
 	}
-	_, err = NewUser("brian", pwhash, "brian@test.com", "individual")
+	_, err = NewUser("brian", pwhash, "brian@test.com", "individual", "", "")
 	if err != nil {
 		return errors.Wrap(err, "failed to populate user brian")
 	}

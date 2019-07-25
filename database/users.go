@@ -26,27 +26,14 @@ type User struct {
 	Email    string
 	Pwhash   string
 
-	EntityType string // choices are: individual, company, city, region, country, oversight
+	EntityType string // choices are: individual, company, city, state, region, country, oversight
 	EntityID   int    // index of the entity the user is associated with
+	Verified   bool   // if the user is a verified member of the entity they purport to be a part of
 	Admin      bool   // is the user an admin for its entity?
 
 	EthereumWallet EthWallet
 	//CosmosWallet   CosmWallet
 
-	// //	For companies: children = assets
-	// //	For regions: children = companies (divided by region)
-	// //	For countries: children = regions
-	// //	For earth: children = countries
-	Children []string
-
-	// // Data that is reported (through self-reporting, databases, IoT, etc.)
-	// // as opposed to data that is aggregated from its parts/children. Data
-	// // is stored on IPFS, so Reports holds the IPFS hashes.
-	// Reports				[]RepData
-
-	// AggEmissions 		AggEmiData
-	// AggMitigation		AggMitData
-	// AggAdaptation 		AggAdptData
 }
 
 // EthWallet contains the structures needed for an ethereum wallet
@@ -95,7 +82,7 @@ func (a *User) GenEthKeys(seedpwd string) error {
 }
 
 // NewUser creates a new user
-func NewUser(username string, pwhash string, email string, entityType string) (User, error) {
+func NewUser(username string, pwhash string, email string, entityType string, entityName string, entityParent string) (User, error) {
 	var user User
 
 	if len(pwhash) != 128 {
@@ -113,26 +100,50 @@ func NewUser(username string, pwhash string, email string, entityType string) (U
 		user.Index = len(allUsers) + 1
 	}
 
-	switch entityType {
-	case "individual":
-		user.EntityType = "individual"
-	case "company":
-		user.EntityType = "company"
-	case "city":
-		user.EntityType = "city"
-	case "country":
-		user.EntityType = "country"
-	case "region":
-		user.EntityType = "region"
-	case "oversight":
-		user.EntityType = "oversight"
-	default:
-		return user, errors.New("entity type not defined")
-	}
-
 	user.Username = username
 	user.Pwhash = pwhash
 	user.Email = email
+
+	
+	if entityType == "" {
+		return user, errors.New("Entity type not specified, quitting")
+	}
+
+	user.EntityType = entityType
+
+	var entityIDX int
+	switch entityType {
+	case "company":
+		var entity Company
+		entity, err = RetrieveCompanyByName(entityName, entityParent)
+		entityIDX = entity.Index
+	case "city":
+		var entity City
+		entity, err = RetrieveCityByName(entityName, entityParent)
+		entityIDX = entity.Index
+	case "state":
+		var entity State
+		entity, err = RetrieveStateByName(entityName, entityParent)
+		entityIDX = entity.Index
+	case "region":
+		var entity Region
+		entity, err = RetrieveRegionByName(entityName, entityParent)
+		entityIDX = entity.Index
+	case "country":
+		var entity Country
+		entity, err = RetrieveCountryByName(entityName)
+		entityIDX = entity.Index
+	case "oversight":
+		var entity Oversight
+		entity, err = RetrieveOsOrgByName(entityName)
+		entityIDX = entity.Index
+	}
+
+	if err != nil {
+		return user, errors.New("Could not find your associated entity based on the given name and parent entity.")
+	}
+
+	user.EntityID = entityIDX
 
 	return user, user.Save()
 }
@@ -142,11 +153,11 @@ func (a *User) Save() error {
 	return edb.Save(globals.DbPath, UserBucket, a, a.Index)
 }
 
-// Adds a new child to the User object
-func (user *User) AddChild(child string) error {
-	user.Children = append(user.Children, child)
-	return user.Save()
-}
+// // Adds a new child to the User object
+// func (user *User) AddChild(child string) error {
+// 	user.Children = append(user.Children, child)
+// 	return user.Save()
+// }
 
 // RetrieveAllUsers gets a list of all User in the database
 func RetrieveAllUsers() ([]User, error) {

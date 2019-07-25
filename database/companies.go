@@ -29,6 +29,10 @@ type Company struct {
 	CompanySize int
 	HQ          string
 
+	MultiNational 	[]string // an array of all the countries a company is in; if not an MNC, leave empty
+	ForProfit 		bool
+	Industry 		bool
+
 	//	For companies: children = assets
 	Children []string
 

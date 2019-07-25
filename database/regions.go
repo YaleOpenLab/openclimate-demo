@@ -9,9 +9,8 @@ import (
 	globals "github.com/YaleOpenLab/openclimate/globals"
 )
 
-// Our definition of "City" includes states,
-// regions, provinces, prefectures, etc. The
-// following struct defines the relevant fields.
+// Our definition of "Region" includes regions, areas, etc. 
+// The following struct defines the relevant fields.
 type Region struct {
 
 	// Identifying info

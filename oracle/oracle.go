@@ -2,7 +2,7 @@ package oracle
 
 import (
 	"log"
-	"reflect"
+	// "reflect"
 )
 
 // Functions clean the data and return it in the correct format, as determined by
@@ -15,16 +15,16 @@ func VerifyEmissions(data interface{}) (Emissions, error) {
 	return verifiedData, nil
 }
 
-func VerifyPledge(data interface{}) (Pledges, error) {
-	var actorPledges Pledges
+// func VerifyPledge(data interface{}) (Pledges, error) {
+// 	var actorPledges Pledges
 
-	log.Println(reflect.TypeOf(data))
+// 	log.Println(reflect.TypeOf(data))
 
-	// actorPledges.UserID = data["UserID"]
-	// actorPledges.EntityType = data["EntityType"]
+// 	// actorPledges.UserID = data["UserID"]
+// 	// actorPledges.EntityType = data["EntityType"]
 
-	return actorPledges, nil
-}
+// 	return actorPledges, nil
+// }
 
 func VerifyMitigation(data interface{}) (Mitigation, error) {
 	var verifiedData Mitigation
@@ -48,9 +48,9 @@ func Verify(data interface{}, reportType string) (string, error) {
 		verifiedData, err = VerifyEarth(data)
 	case "Emissions":
 		verifiedData, err = VerifyEmissions(data)
-	case "Pledges":
-		log.Println("hit")
-		verifiedData, err = VerifyPledge(data)
+	// case "Pledges":
+	// 	log.Println("hit")
+	// 	verifiedData, err = VerifyPledge(data)
 	case "Mitigation":
 		verifiedData, err = VerifyMitigation(data)
 	case "Adaptation":

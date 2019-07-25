@@ -1,5 +1,4 @@
 package server
-
 import (
 	"github.com/pkg/errors"
 	"log"
@@ -18,7 +17,7 @@ func setupDBHandlers() {
 	retrieveAllUsers()
 	deleteUser()
 	updateUser()
-	newChild()
+	// newChild()
 
 	getIpfsHash()
 
@@ -65,7 +64,7 @@ func newUser() {
 		email := r.URL.Query()["email"][0]
 		entityType := r.URL.Query()["entity_type"][0]
 
-		user, err := database.NewUser(username, pwhash, email, entityType)
+		user, err := database.NewUser(username, pwhash, email, entityType, "", "")
 		if err != nil {
 			log.Println("couldn't create new user", err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -76,37 +75,37 @@ func newUser() {
 	})
 }
 
-func newChild() {
-	http.HandleFunc("/user/add/child", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
-		if err != nil {
-			return
-		}
+// func newChild() {
+// 	http.HandleFunc("/user/add/child", func(w http.ResponseWriter, r *http.Request) {
+// 		err := erpc.CheckGet(w, r)
+// 		if err != nil {
+// 			return
+// 		}
 
-		if r.URL.Query()["child"] == nil {
-			log.Println("required param child missing")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			return
-		}
+// 		if r.URL.Query()["child"] == nil {
+// 			log.Println("required param child missing")
+// 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+// 			return
+// 		}
 
-		username := r.URL.Query()["username"][0]
-		child := r.URL.Query()["child"][0]
+// 		username := r.URL.Query()["username"][0]
+// 		child := r.URL.Query()["child"][0]
 
-		user, err := database.RetrieveUserByUsername(username)
-		if err != nil {
-			log.Println("failed to retrieve user, quitting")
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		}
+// 		user, err := database.RetrieveUserByUsername(username)
+// 		if err != nil {
+// 			log.Println("failed to retrieve user, quitting")
+// 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+// 		}
 
-		err = user.AddChild(child)
-		if err != nil {
-			log.Println("failed to add child, quitting")
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		}
+// 		err = user.AddChild(child)
+// 		if err != nil {
+// 			log.Println("failed to add child, quitting")
+// 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+// 		}
 
-		erpc.MarshalSend(w, user)
-	})
-}
+// 		erpc.MarshalSend(w, user)
+// 	})
+// }
 
 func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error) {
 	var user database.User
@@ -127,6 +126,29 @@ func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error)
 	user, err = database.ValidateUser(username, pwhash)
 	if err != nil {
 		log.Println("could not retrieve user from the database, quitting")
+		erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		return user, errors.New("user not found in database, quitting")
+	}
+	return user, nil
+}
+
+func CheckPostAuth(w http.ResponseWriter, r *http.Request) (database.User, error) {
+	var user database.User
+	err := erpc.CheckPost(w, r)
+	if err != nil {
+		return user, errors.Wrap(err, "could not checkpostauth")
+	}
+
+	if r.URL.Query()["username"] == nil || r.URL.Query()["pwhash"] == nil {
+		erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		return user, errors.New("missing params in call")
+	}
+
+	username := r.URL.Query()["username"][0]
+	pwhash := r.URL.Query()["pwhash"][0]
+
+	user, err = database.ValidateUser(username, pwhash)
+	if err != nil {
 		erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		return user, errors.New("user not found in database, quitting")
 	}

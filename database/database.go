@@ -13,8 +13,10 @@ import (
 var UserBucket = []byte("Users")
 var CompanyBucket = []byte("Companies")
 var RegionBucket = []byte("Regions")
+var StateBucket = []byte("States")
 var CityBucket = []byte("Cities")
 var CountryBucket = []byte("Countries")
+var OversightBucket = []byte("Oversight")
 var AssetBucket = []byte("Assets")
 var RequestBucket = []byte("Requests")
 
