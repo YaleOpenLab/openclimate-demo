@@ -63,8 +63,10 @@ func newUser() {
 		pwhash := r.URL.Query()["pwhash"][0]
 		email := r.URL.Query()["email"][0]
 		entityType := r.URL.Query()["entity_type"][0]
+		entityName := r.URL.Query()["entity_name"][0]
+		entityParent := r.URL.Query()["entity_parent"][0]
 
-		user, err := database.NewUser(username, pwhash, email, entityType, "", "")
+		user, err := database.NewUser(username, pwhash, email, entityType, entityName, entityParent)
 		if err != nil {
 			log.Println("couldn't create new user", err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -152,8 +154,29 @@ func CheckPostAuth(w http.ResponseWriter, r *http.Request) (database.User, error
 		erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		return user, errors.New("user not found in database, quitting")
 	}
+
+	if user.Verified == false {
+		erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		return user, errors.New("user is not verified for this entity, quitting")
+	}
+
 	return user, nil
 }
+
+func CheckPostAdmin(w http.ResponseWriter, r *http.Request) (database.User, error) {
+
+	user, err := CheckPostAuth(w, r)
+	if err != nil {
+		return user, errors.Wrap(err, "CheckPostAdmin failed while calling CheckPostAuth")
+	}
+
+	if !user.Admin {
+		return user, errors.New("User is not an admin.")
+	}
+
+	return user, nil
+}
+
 
 func retrieveUser() {
 	http.HandleFunc("/user/retrieve", func(w http.ResponseWriter, r *http.Request) {

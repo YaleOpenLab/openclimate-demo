@@ -27,6 +27,8 @@ type Country struct {
 	// For countries: children = regions
 	Children []string
 
+	Pledges []Pledge
+
 	// Data that is reported (through self-reporting, databases, IoT, etc.)
 	// as opposed to data that is aggregated from its parts/children. Data
 	// is stored on IPFS, so Reports holds the IPFS hashes.

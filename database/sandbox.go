@@ -9,6 +9,7 @@ func Populate() {
 	PopulateUSStates()
 	PopulateCountries()
 	PopulateRegionsTest()
+	PopulateTestUsers()
 	PopulateAdminUsers()
 }
 
@@ -46,10 +47,12 @@ func PopulateRegionsTest() error {
 
 func PopulateTestUsers() error {
 	pwhash := utils.SHA3hash("a")
-	_, err := NewUser("testuser", pwhash, "user@test.com", "country", "USA", "")
+	user, err := NewUser("testuser", pwhash, "user@test.com", "country", "USA", "")
 	if err != nil {
 		return errors.Wrap(err, "failed to create test user in country: USA")
 	}
+	user.Verified = true
+	user.Save()
 	return nil
 }
 

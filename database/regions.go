@@ -29,6 +29,8 @@ type Region struct {
 	HQ          string
 	// EntityType		string
 
+	Pledges []Pledge
+
 	//	For regions: children = companies (divided by region)
 	Children []string
 

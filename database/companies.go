@@ -33,6 +33,8 @@ type Company struct {
 	ForProfit 		bool
 	Industry 		bool
 
+	Pledges []Pledge
+
 	//	For companies: children = assets
 	Children []string
 

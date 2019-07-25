@@ -22,34 +22,62 @@ func AddPledge() {
 	http.HandleFunc("/user/pledges/add", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckPostAuth(w, r)
 		if err != nil {
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			log.Println(err)
+			// erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
 		}
 
-		var entity interface{}
+		bytes, err := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		var pledge db.Pledge
+		err = json.Unmarshal(bytes, &pledge)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
 
 		switch user.EntityType {
 		case "company":
+			var entity db.Company
 			entity, err = db.RetrieveCompany(user.EntityID)
+			entity.Pledges = append(entity.Pledges, pledge)
 		case "city":
+			var entity db.City
 			entity, err = db.RetrieveCity(user.EntityID)
+			entity.Pledges = append(entity.Pledges, pledge)
 		case "state":
+			var entity db.State
 			entity, err = db.RetrieveState(user.EntityID)
+			entity.Pledges = append(entity.Pledges, pledge)
 		case "region":
+			var entity db.Region
 			entity, err = db.RetrieveRegion(user.EntityID)
+			entity.Pledges = append(entity.Pledges, pledge)
 		case "country":
+			var entity db.Country
 			entity, err = db.RetrieveCountry(user.EntityID)
+			entity.Pledges = append(entity.Pledges, pledge)
 		default:
 			log.Println("Entity type of user is not valid.")
 			erpc.ResponseHandler(w, erpc.StatusUnauthorized)
+			return
 		}
 		if err != nil {
+			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
 		}
 
-		erpc.MarshalSend(w, entity)
+		erpc.MarshalSend(w, pledge)
 	})
 }
-
 
 
 func SelfReportData() {
