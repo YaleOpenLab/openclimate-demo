@@ -178,7 +178,6 @@ func CheckPostAdmin(w http.ResponseWriter, r *http.Request) (database.User, erro
 	return user, nil
 }
 
-
 func retrieveUser() {
 	http.HandleFunc("/user/retrieve", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)

@@ -48,13 +48,6 @@ type Company struct {
 	Adaptation map[string]string
 }
 
-type RepData struct {
-	// pledge, emissions, mitigation, adaption, etc.
-	ReportType string
-	Year       int
-	IpfsHash   string
-}
-
 // Function that creates a new company object given its name
 // and country and saves the object in the countries bucket.
 func NewCompany(name string, country string) (Company, error) {

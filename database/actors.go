@@ -11,7 +11,6 @@ type RepData struct {
 /* PLEDGE DATA STRUCTS */
 /***********************/
 
-
 type Pledge struct {
 	// * emissions reductions
 	// * mitigation actions (energy efficiency, renewables, etc.)

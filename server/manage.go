@@ -12,7 +12,6 @@ import (
 	"github.com/YaleOpenLab/openclimate/database"
 )
 
-
 // URL parameter: candidate ID
 func VerifyUser() {
 	http.HandleFunc("/user/admin/verify", func(w http.ResponseWriter, r *http.Request) {
@@ -26,7 +25,7 @@ func VerifyUser() {
 			return
 		}
 
-		if r.URL.Query()["candidate"] ==  nil {
+		if r.URL.Query()["candidate"] == nil {
 			log.Println("Candidate for verification not specified")
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
