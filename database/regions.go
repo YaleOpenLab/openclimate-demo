@@ -9,7 +9,7 @@ import (
 	globals "github.com/YaleOpenLab/openclimate/globals"
 )
 
-// Our definition of "Region" includes regions, areas, etc. 
+// Our definition of "Region" includes regions, areas, etc.
 // The following struct defines the relevant fields.
 type Region struct {
 

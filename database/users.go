@@ -104,7 +104,6 @@ func NewUser(username string, pwhash string, email string, entityType string, en
 	user.Pwhash = pwhash
 	user.Email = email
 
-	
 	if entityType == "" {
 		return user, errors.New("Entity type not specified, quitting")
 	}

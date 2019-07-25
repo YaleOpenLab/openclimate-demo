@@ -79,7 +79,6 @@ func AddPledge() {
 	})
 }
 
-
 func SelfReportData() {
 	http.HandleFunc("/user/self-report", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)

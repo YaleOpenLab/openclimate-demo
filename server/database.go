@@ -1,4 +1,5 @@
 package server
+
 import (
 	"github.com/pkg/errors"
 	"log"

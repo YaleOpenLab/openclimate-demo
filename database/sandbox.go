@@ -1,8 +1,8 @@
 package database
 
 import (
-	"github.com/pkg/errors"
 	"github.com/Varunram/essentials/utils"
+	"github.com/pkg/errors"
 )
 
 func Populate() {

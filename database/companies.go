@@ -29,9 +29,9 @@ type Company struct {
 	CompanySize int
 	HQ          string
 
-	MultiNational 	[]string // an array of all the countries a company is in; if not an MNC, leave empty
-	ForProfit 		bool
-	Industry 		bool
+	MultiNational []string // an array of all the countries a company is in; if not an MNC, leave empty
+	ForProfit     bool
+	Industry      bool
 
 	Pledges []Pledge
 
@@ -46,6 +46,13 @@ type Company struct {
 	Emissions  map[string]string // accept whatever emissions the frontend passes
 	Mitigation map[string]string
 	Adaptation map[string]string
+}
+
+type RepData struct {
+	// pledge, emissions, mitigation, adaption, etc.
+	ReportType string
+	Year       int
+	IpfsHash   string
 }
 
 // Function that creates a new company object given its name

@@ -9,9 +9,8 @@ import (
 )
 
 type Oversight struct {
-
 	Index int
-	Name string
+	Name  string
 
 	UserIDs []int
 
@@ -25,8 +24,8 @@ type Oversight struct {
 	// - "Oracle System"
 	OrgType string
 
-	Scope string // where does the actor operate?
-	Weight int   // their weight, based on the organization's reputation
+	Scope  string // where does the actor operate?
+	Weight int    // their weight, based on the organization's reputation
 
 }
 
@@ -48,11 +47,9 @@ func NewOsOrg(name string) (Oversight, error) {
 	return osOrg, osOrg.Save()
 }
 
-
 func (a *Oversight) Save() error {
 	return edb.Save(globals.DbPath, OversightBucket, a, a.Index)
 }
-
 
 func RetrieveOsOrg(key int) (Oversight, error) {
 	var osOrg Oversight
@@ -63,7 +60,6 @@ func RetrieveOsOrg(key int) (Oversight, error) {
 	err = json.Unmarshal(bytes, &osOrg)
 	return osOrg, err
 }
-
 
 func RetrieveOsOrgByName(name string) (Oversight, error) {
 	var osOrg Oversight
@@ -80,7 +76,6 @@ func RetrieveOsOrgByName(name string) (Oversight, error) {
 
 	return osOrg, errors.New("osOrg not found, quitting")
 }
-
 
 func RetrieveAllOsOrgs() ([]Oversight, error) {
 	var osOrgs []Oversight
@@ -100,7 +95,3 @@ func RetrieveAllOsOrgs() ([]Oversight, error) {
 
 	return osOrgs, nil
 }
-
-
-
-
