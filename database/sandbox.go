@@ -3,6 +3,7 @@ package database
 import (
 	"github.com/Varunram/essentials/utils"
 	"github.com/pkg/errors"
+	// "log"
 )
 
 func Populate() {
@@ -11,6 +12,7 @@ func Populate() {
 	PopulateRegionsTest()
 	PopulateTestUsers()
 	PopulateAdminUsers()
+	// TestGetActor()
 }
 
 // Test function populating the regions bucket with the US states
@@ -55,6 +57,19 @@ func PopulateTestUsers() error {
 	user.Save()
 	return nil
 }
+
+// func TestGetActor() {
+// 	log.Println("HIT")
+// 	user, err := RetrieveUser(1)
+// 	if err != nil {
+// 		log.Println("didn't get first user")
+// 	}
+// 	entity, err := user.GetUserActor()
+// 	if err != nil {
+// 		log.Println("GetUserActor() failed")
+// 	}
+// 	log.Println(entity)
+// }
 
 func PopulateAdminUsers() error {
 	pwhash := utils.SHA3hash("p")

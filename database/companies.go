@@ -35,8 +35,11 @@ type Company struct {
 
 	Pledges []Pledge
 
-	//	For companies: children = assets
-	Children []string
+	// The entity IDs of all the company's physical assets
+	Children []int
+
+	// IDs of all the company's financial/regulatory assets (e.g. RECs, climate bonds, etc.)
+	Assets []int
 
 	// Data that is reported (through self-reporting, databases, IoT, etc.)
 	// as opposed to data that is aggregated from its parts/children. Data

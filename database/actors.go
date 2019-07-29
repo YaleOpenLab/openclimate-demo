@@ -1,5 +1,9 @@
 package database
 
+// type Actor interface {
+	
+// }
+
 type RepData struct {
 	// pledge, emissions, mitigation, adaption, etc.
 	ReportType string

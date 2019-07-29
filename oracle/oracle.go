@@ -38,7 +38,7 @@ func VerifyAdaptation(data interface{}) (Adaptation, error) {
 
 // Calls the relevant verify helper-function to process the data,
 // then commits the data to IPFS and returns the hash
-func Verify(data interface{}, reportType string) (string, error) {
+func Verify(reportType string, entity interface{}, data interface{}) (string, error) {
 	var ipfsHash string
 	var err error
 

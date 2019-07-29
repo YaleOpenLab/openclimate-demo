@@ -268,6 +268,35 @@ func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {
 	return signedTx.Hash().Hex(), nil
 }
 
+func (user *User) GetUserActor() (interface{}, error) {
+
+	var entity interface{}
+	var err error
+
+	switch user.EntityType {
+	case "company":
+		entity, err = RetrieveCompany(user.EntityID)
+	case "city":
+		entity, err = RetrieveCity(user.EntityID)
+	case "state":
+		entity, err = RetrieveState(user.EntityID)
+	case "region":
+		entity, err = RetrieveRegion(user.EntityID)
+	case "country":
+		entity, err = RetrieveCountry(user.EntityID)
+	case "oversight":
+		entity, err = RetrieveOsOrg(user.EntityID)
+	default:
+		return entity, errors.New("User's entity type is not valid.")
+	}
+
+	if err != nil {
+		return entity, errors.Wrap(err, "User's linked actor was not found")
+	}
+
+	return entity, nil
+}
+
 /*
 func (a *User) GenCosmosKeys() error {
 	// Select the encryption and storage for your cryptostore

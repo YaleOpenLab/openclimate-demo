@@ -81,10 +81,16 @@ func AddPledge() {
 
 func SelfReportData() {
 	http.HandleFunc("/user/self-report", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckPost(w, r)
+		user, err := CheckPostAuth(w, r)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
+		}
+
+		entity, err := user.GetUserActor()
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 		}
 
 		if r.URL.Query()["report_type"] == nil {
@@ -110,7 +116,7 @@ func SelfReportData() {
 			return
 		}
 
-		ipfsHash, err := oracle.Verify(data, reportType)
+		ipfsHash, err := oracle.Verify(reportType, entity, data)
 		erpc.MarshalSend(w, ipfsHash)
 	})
 }
