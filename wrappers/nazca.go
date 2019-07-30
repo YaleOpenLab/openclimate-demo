@@ -3,6 +3,7 @@ package wrappers
 import (
 	"encoding/json"
 	erpc "github.com/Varunram/essentials/rpc"
+	"github.com/YaleOpenLab/openclimate/server"
 	"github.com/Varunram/essentials/utils"
 	// "io/ioutil"
 	"log"
@@ -31,7 +32,7 @@ type NazcaResponse struct {
 
 func queryNazca() {
 	http.HandleFunc("/nazca/data", func(w http.ResponseWriter, r *http.Request) {
-		_, err := CheckGetAuth(w, r)
+		_, err := server.CheckGetAuth(w, r)
 		if err != nil {
 			return
 		}
@@ -68,7 +69,7 @@ func queryNazca() {
 
 func queryNazcaCountry() {
 	http.HandleFunc("/nazcacountry/data", func(w http.ResponseWriter, r *http.Request) {
-		_, err := CheckGetAuth(w, r)
+		_, err := server.CheckGetAuth(w, r)
 		if err != nil {
 			return
 		}

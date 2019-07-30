@@ -7,15 +7,18 @@ import (
 	// "github.com/Varunram/essentials/utils"
 	"net/http"
 	// "log"
+	"time"
+	"github.com/YaleOpenLab/openclimate/globals"
+	"io/ioutil"
 )
 
-func queryNoaaGlobalSummary() (interface{}, error) {
-	base_url := "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
-	data_set := "datasetid=gov.noaa.ncdc:C00947"
-	startdate := "startdate=2009-01-01"
-	enddate := "enddate=2019-01-01"
+func queryNoaaGlobalSummary(startdate string, enddate string) (interface{}, error) {
+	baseUrl := "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
+	dataset := "datasetid=gov.noaa.ncdc:C00947"
+	startdate = "startdate=" + startdate
+	enddate = "enddate=" + enddate
 
-	url := base_url + "?" + data_set + "&" + startdate + "&" + enddate
+	url := baseUrl + "?" + dataset + "&" + startdate + "&" + enddate
 
 	var data interface{}
 	body, err := erpc.GetRequest(url)
@@ -25,6 +28,9 @@ func queryNoaaGlobalSummary() (interface{}, error) {
 	json.Unmarshal(body, &data)
 	return data, nil
 }
+
+// func queryNoaaMonth
+
 
 func GetRequest(url string) ([]byte, error) {
 	var dummy []byte
@@ -36,7 +42,7 @@ func GetRequest(url string) ([]byte, error) {
 		return dummy, errors.Wrap(err, "did not create new GET request")
 	}
 	req.Header.Add("Origin", "localhost")
-	req.Header.Add("token", main.noaaToken)
+	req.Header.Add("token", globals.NoaaToken)
 	res, err := client.Do(req)
 	if err != nil {
 		return dummy, errors.Wrap(err, "did not make request")
