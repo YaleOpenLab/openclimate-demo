@@ -3,18 +3,28 @@ package wrappers
 import (
 	"encoding/json"
 	erpc "github.com/Varunram/essentials/rpc"
+	"github.com/pkg/errors"
 	// "github.com/Varunram/essentials/utils"
 	"net/http"
 	// "log"
 )
 
-// func queryNoaa() (map[string]string, error) {
-// 	url := "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/"
+func queryNoaaGlobalSummary() (interface{}, error) {
+	base_url := "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
+	data_set := "datasetid=gov.noaa.ncdc:C00947"
+	startdate := "startdate=2009-01-01"
+	enddate := "enddate=2019-01-01"
 
-// 	resp, err := erpc.GetRequest(url)
+	url := base_url + "?" + data_set + "&" + startdate + "&" + enddate
 
-
-// }
+	var data interface{}
+	body, err := erpc.GetRequest(url)
+	if err != nil {
+		return data, errors.Wrap(err, "NOAA query failed")
+	}
+	json.Unmarshal(body, &data)
+	return data, nil
+}
 
 func GetRequest(url string) ([]byte, error) {
 	var dummy []byte
