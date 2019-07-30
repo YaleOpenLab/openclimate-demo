@@ -19,8 +19,6 @@ func dataHandler() {
 	getUSCounties()
 	getParisAgreement()
 	getOceanData()
-	queryNazca()
-	queryNazcaCountry()
 	getCountryId()
 	getCarbonData()
 	getCountriesEmissionsData()

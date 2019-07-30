@@ -1,4 +1,4 @@
-package server
+package wrappers
 
 import (
 	"encoding/json"

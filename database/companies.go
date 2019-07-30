@@ -33,6 +33,8 @@ type Company struct {
 	ForProfit     bool
 	Industry      bool
 
+	MRV 		string // the company's chosen MRV reporting methodology
+
 	Pledges []Pledge
 
 	// The entity IDs of all the company's physical assets
