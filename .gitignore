@@ -5,4 +5,4 @@ load-data/load-data
 .DS_Store
 blockchain/wallet
 __pycache__
-secret.go
+globals/secret.go

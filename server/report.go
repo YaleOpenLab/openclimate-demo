@@ -75,6 +75,8 @@ func AddPledge() {
 			return
 		}
 
+		// Convert pledge into smart contract condition
+
 		erpc.MarshalSend(w, pledge)
 	})
 }
@@ -117,6 +119,9 @@ func SelfReportData() {
 		}
 
 		ipfsHash, err := oracle.Verify(reportType, entity, data)
+
+		// commit to blockchain
+
 		erpc.MarshalSend(w, ipfsHash)
 	})
 }

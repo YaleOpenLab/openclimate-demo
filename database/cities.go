@@ -105,6 +105,10 @@ func RetrieveCityByName(name string, region string) (City, error) {
 	return city, errors.New("city not found")
 }
 
+func Hello() {
+	
+}
+
 // Retrieves all countries from the countries bucket.
 func RetrieveAllCities() ([]City, error) {
 	var cities []City
