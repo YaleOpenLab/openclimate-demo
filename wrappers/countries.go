@@ -9,7 +9,25 @@ import (
 	"log"
 	"net/http"
 	"time"
+	"github.com/pkg/errors"
 )
+
+func WorldBankMonthlyTempByCountry(iso3 string, startdate string, enddate string) (interface{}, error) {
+	baseURL := "http://climatedataapi.worldbank.org/climateweb/rest/v1/country/"
+	url := baseURL + "tas/" + "mavg/" + startdate + "/" + enddate + "/" + iso3
+
+	var data interface{}
+	body, err := erpc.GetRequest(url)
+	if err != nil {
+		return data, errors.Wrap(err, "NOAA query failed")
+	}
+	err = json.Unmarshal(body, &data)
+	if err != nil {
+		return data, errors.Wrap(err, "NOAA query failed")
+	}
+	return data, nil
+}
+
 
 /**************************/
 /* NAZCA DATA API HANDLER */

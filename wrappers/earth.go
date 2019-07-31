@@ -12,27 +12,8 @@ import (
 	"io/ioutil"
 )
 
-// func NoaaAnnualGlobalSummary(startdate string, enddate string) (interface{}, error) {
-// 	baseUrl := "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
-// 	dataset := "datasetid=gov.noaa.ncdc:C00947"
-// 	startdate = "startdate=" + startdate
-// 	enddate = "enddate=" + enddate
 
-// 	url := baseUrl + "?" + dataset + "&" + startdate + "&" + enddate
-
-// 	var data interface{}
-// 	body, err := GetRequest(url)
-// 	if err != nil {
-// 		return data, errors.Wrap(err, "NOAA query failed")
-// 	}
-// 	json.Unmarshal(body, &data)
-// 	return data, nil
-// }
-
-// func QueryCopernicus
-
-
-func QuerryNoaaSummary(datasetid string, startdate string, enddate string) (interface{}, error) {
+func QueryNoaaSummary(datasetid string, startdate string, enddate string) (interface{}, error) {
 	baseUrl := "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
 	dataset := "datasetid=" + datasetid
 	startdate = "startdate=" + startdate
