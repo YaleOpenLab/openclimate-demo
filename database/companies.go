@@ -42,7 +42,7 @@ type Company struct {
 	Children []int
 
 	// IDs of all the company's financial/regulatory assets (e.g. RECs, climate bonds, etc.)
-	Assets []int
+	Credits []int
 
 	// Data that is reported (through self-reporting, databases, IoT, etc.)
 	// as opposed to data that is aggregated from its parts/children. Data

@@ -26,7 +26,7 @@ type Country struct {
 
 	// For countries: children = regions
 	Children []string
-
+	Credits []int
 	Pledges []Pledge
 
 	// Data that is reported (through self-reporting, databases, IoT, etc.)
