@@ -1,7 +1,9 @@
 package database
 
 type Actor interface {
+	SetID(id int)
 	AddPledge(pledge Pledge)
+
 }
 
 type RepData struct {

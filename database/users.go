@@ -81,8 +81,7 @@ func (a *User) GenEthKeys(seedpwd string) error {
 		return errors.Wrap(err, "addresses don't match, quitting!")
 	}
 
-	_, err = a.Save()
-	return err
+	return a.Save()
 }
 
 // NewUser creates a new user
@@ -142,31 +141,33 @@ func NewUser(username string, pwhash string, email string, entityType string, en
 		entity, err = RetrieveOsOrgByName(entityName)
 		entityID = entity.Index
 	}
-
 	if err != nil {
-		return user, errors.New("NewUser() failed.")
+		return user, errors.Wrap(err, "NewUser() failed.")
 	}
 
 	// Store the ID of the entity in the user's EntityID field
 	user.EntityID = entityID
-	user.Index, err = user.Save()
+
+	// Save/insert user into the database and get user's ID
 	if err != nil {
-		return user, err
+		return user, errors.Wrap(err, "NewUser() failed.")
 	}
 
-	return user, nil
+	return user, user.Save()
 }
 
 // Save inserts a passed User object into the database
-func (u *User) Save() (int, error) {
+func (u *User) Save() error {
 	return Save(globals.DbPath, UserBucket, u)
 }
 
-// // Adds a new child to the User object
-// func (user *User) AddChild(child string) error {
-// 	user.Children = append(user.Children, child)
-// 	return user.Save()
-// }
+func (u *User) SetID(id int) {
+	u.Index = id
+}
+
+func (u *User) AddPledge(pledge Pledge) {
+	return
+}
 
 // RetrieveAllUsers gets a list of all User in the database
 func RetrieveAllUsers() ([]User, error) {

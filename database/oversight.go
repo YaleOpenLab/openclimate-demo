@@ -2,7 +2,7 @@ package database
 
 import (
 	"encoding/json"
-	xlm "github.com/Varunram/essentials/crypto/xlm"
+	// xlm "github.com/Varunram/essentials/crypto/xlm"
 	edb "github.com/Varunram/essentials/database"
 	globals "github.com/YaleOpenLab/openclimate/globals"
 	"github.com/pkg/errors"
@@ -97,22 +97,22 @@ func RetrieveAllOsOrgs() ([]Oversight, error) {
 	return osOrgs, nil
 }
 
-func CommitToStellar(ipfsHash string, seed string, pubkey string) (string, string, error) {
+// func CommitToStellar(ipfsHash string, seed string, pubkey string) (string, string, error) {
 
-	memo := "IPFSHASH: " + ipfsHash // add padding to the ipfs hash length
+// 	memo := "IPFSHASH: " + ipfsHash // add padding to the ipfs hash length
 
-	firstHalf := memo[:28]
-	secondHalf := memo[28:]
+// 	firstHalf := memo[:28]
+// 	secondHalf := memo[28:]
 
-	_, tx1, err := xlm.SendXLM(pubkey, "1", seed, firstHalf)
-	if err != nil {
-		return "", "", err
-	}
-	_, tx2, err := xlm.SendXLM(pubkey, "1", seed, secondHalf)
-	if err != nil {
-		return "", "", err
-	}
+// 	_, tx1, err := xlm.SendXLM(pubkey, "1", seed, firstHalf)
+// 	if err != nil {
+// 		return "", "", err
+// 	}
+// 	_, tx2, err := xlm.SendXLM(pubkey, "1", seed, secondHalf)
+// 	if err != nil {
+// 		return "", "", err
+// 	}
 
-	log.Printf("tx hash: %s, tx2 hash: %s", tx1, tx2)
-	return tx1, tx2, nil
-}
+// 	log.Printf("tx hash: %s, tx2 hash: %s", tx1, tx2)
+// 	return tx1, tx2, nil
+// }

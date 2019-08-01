@@ -131,6 +131,10 @@ func RetrieveAllCompanies() ([]Company, error) {
 	return companies, nil
 }
 
+func (c *Company) SetID(id int) {
+	c.Index = id
+}
+
 func (c *Company) AddPledge(pledge Pledge) {
 	c.Pledges = append(c.Pledges, pledge)
 }
