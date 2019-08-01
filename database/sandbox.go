@@ -3,7 +3,7 @@ package database
 import (
 	"github.com/Varunram/essentials/utils"
 	"github.com/pkg/errors"
-	// "log"
+	"log"
 )
 
 func Populate() {
@@ -48,6 +48,7 @@ func PopulateRegionsTest() error {
 }
 
 func PopulateTestUsers() error {
+	log.Println("hit3")
 	pwhash := utils.SHA3hash("a")
 	user, err := NewUser("testuser", pwhash, "user@test.com", "country", "USA", "")
 	if err != nil {
@@ -73,6 +74,8 @@ func PopulateTestUsers() error {
 
 func PopulateAdminUsers() error {
 	pwhash := utils.SHA3hash("p")
+
+	log.Println("hit1")
 
 	_, err := NewUser("amanda", pwhash, "amanda@test.com", "individual", "", "")
 	if err != nil {

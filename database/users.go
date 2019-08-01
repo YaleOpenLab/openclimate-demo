@@ -89,6 +89,8 @@ func NewUser(username string, pwhash string, email string, entityType string, en
 	var user User
 	var err error
 
+	log.Println("hit2")
+
 	if len(pwhash) != 128 {
 		return user, errors.New("pwhash not of length 128, quitting")
 	}
@@ -158,6 +160,7 @@ func NewUser(username string, pwhash string, email string, entityType string, en
 
 // Save inserts a passed User object into the database
 func (u *User) Save() error {
+	log.Println("INSIDE SAVE()")
 	return Save(globals.DbPath, UserBucket, u)
 }
 
@@ -169,25 +172,26 @@ func (u *User) AddPledge(pledge Pledge) {
 	return
 }
 
-// RetrieveAllUsers gets a list of all User in the database
-func RetrieveAllUsers() ([]User, error) {
-	var users []User
-	keys, err := edb.RetrieveAllKeys(globals.DbPath, UserBucket)
-	if err != nil {
-		log.Println(err)
-		return users, errors.Wrap(err, "could not retrieve all user keys")
-	}
-	for _, val := range keys {
-		var x User
-		err = json.Unmarshal(val, &x)
-		if err != nil {
-			break
-		}
-		users = append(users, x)
-	}
 
-	return users, nil
-}
+// // RetrieveAllUsers gets a list of all User in the database
+// func RetrieveAllUsers() ([]User, error) {
+// 	var users []User
+// 	keys, err := edb.RetrieveAllKeys(globals.DbPath, UserBucket)
+// 	if err != nil {
+// 		log.Println(err)
+// 		return users, errors.Wrap(err, "could not retrieve all user keys")
+// 	}
+// 	for _, val := range keys {
+// 		var x User
+// 		err = json.Unmarshal(val, &x)
+// 		if err != nil {
+// 			break
+// 		}
+// 		users = append(users, x)
+// 	}
+
+// 	return users, nil
+// }
 
 // RetrieveUser retrieves a particular User indexed by key from the database
 func RetrieveUser(key int) (User, error) {
