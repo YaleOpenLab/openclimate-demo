@@ -14,7 +14,7 @@ type Asset struct {
 	Company 	string
 	Location 	string
 
-	Type 	string
+	Type 		string
 	Reports   []RepData
 }
 

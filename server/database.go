@@ -243,7 +243,7 @@ func updateUser() {
 			return
 		}
 
-		err = user.Save()
+		_, err = user.Save()
 		if err != nil {
 			log.Println("error while savingt user to database")
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)

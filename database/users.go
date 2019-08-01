@@ -81,27 +81,29 @@ func (a *User) GenEthKeys(seedpwd string) error {
 		return errors.Wrap(err, "addresses don't match, quitting!")
 	}
 
-	return a.Save()
+	_, err = a.Save()
+	return err
 }
 
 // NewUser creates a new user
 func NewUser(username string, pwhash string, email string, entityType string, entityName string, entityParent string) (User, error) {
 	var user User
+	var err error
 
 	if len(pwhash) != 128 {
 		return user, errors.New("pwhash not of length 128, quitting")
 	}
 
-	allUsers, err := RetrieveAllUsers()
-	if err != nil {
-		return user, errors.Wrap(err, "Error while retrieving all users from database")
-	}
+	// allUsers, err := RetrieveAllUsers()
+	// if err != nil {
+	// 	return user, errors.Wrap(err, "Error while retrieving all users from database")
+	// }
 
-	if len(allUsers) == 0 {
-		user.Index = 1
-	} else {
-		user.Index = len(allUsers) + 1
-	}
+	// if len(allUsers) == 0 {
+	// 	user.Index = 1
+	// } else {
+	// 	user.Index = len(allUsers) + 1
+	// }
 
 	user.Username = username
 	user.Pwhash = pwhash
@@ -113,46 +115,51 @@ func NewUser(username string, pwhash string, email string, entityType string, en
 
 	user.EntityType = entityType
 
-	var entityIDX int
+	var entityID int
 	switch entityType {
 	case "company":
 		var entity Company
 		entity, err = RetrieveCompanyByName(entityName, entityParent)
-		entityIDX = entity.Index
+		entityID = entity.Index
 	case "city":
 		var entity City
 		entity, err = RetrieveCityByName(entityName, entityParent)
-		entityIDX = entity.Index
+		entityID = entity.Index
 	case "state":
 		var entity State
 		entity, err = RetrieveStateByName(entityName, entityParent)
-		entityIDX = entity.Index
+		entityID = entity.Index
 	case "region":
 		var entity Region
 		entity, err = RetrieveRegionByName(entityName, entityParent)
-		entityIDX = entity.Index
+		entityID = entity.Index
 	case "country":
 		var entity Country
 		entity, err = RetrieveCountryByName(entityName)
-		entityIDX = entity.Index
+		entityID = entity.Index
 	case "oversight":
 		var entity Oversight
 		entity, err = RetrieveOsOrgByName(entityName)
-		entityIDX = entity.Index
+		entityID = entity.Index
 	}
 
 	if err != nil {
-		return user, errors.New("Could not find your associated entity based on the given name and parent entity.")
+		return user, errors.New("NewUser() failed.")
 	}
 
-	user.EntityID = entityIDX
+	// Store the ID of the entity in the user's EntityID field
+	user.EntityID = entityID
+	user.Index, err = user.Save()
+	if err != nil {
+		return user, err
+	}
 
-	return user, user.Save()
+	return user, nil
 }
 
 // Save inserts a passed User object into the database
-func (a *User) Save() error {
-	return edb.Save(globals.DbPath, UserBucket, a, a.Index)
+func (u *User) Save() (int, error) {
+	return Save(globals.DbPath, UserBucket, u)
 }
 
 // // Adds a new child to the User object

@@ -135,7 +135,7 @@ func (c *Company) AddPledge(pledge Pledge) {
 	c.Pledges = append(c.Pledges, pledge)
 }
 
-func (c *Company) AdoptMethodology(methodology string) {
+func (c *Company) UpdateMethodology(methodology string) {
 	c.MRV = methodology
 }
 
@@ -156,6 +156,7 @@ func (c * Company) UpdateAsset(key int, info Asset) error {
 	asset.Name = info.Name
 	asset.Location = info.Location
 	asset.Type = info.Type
+	asset.Save()
 	return nil
 }
 
