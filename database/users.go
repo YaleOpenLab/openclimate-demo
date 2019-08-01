@@ -22,9 +22,12 @@ import (
 type User struct {
 	Index int
 
-	Username string
-	Email    string
-	Pwhash   string
+	FirstName	string
+	LastName 	string
+	Username 	string
+	Email    	string
+	Pwhash   	string
+	EIN 		string
 
 	EntityType string // choices are: individual, company, city, state, region, country, oversight
 	EntityID   int    // index of the entity the user is associated with

@@ -43,27 +43,29 @@ func AddPledge() {
 			return
 		}
 
+		var actor db.Actor
+
 		switch user.EntityType {
 		case "company":
-			var entity db.Company
-			entity, err = db.RetrieveCompany(user.EntityID)
-			entity.Pledges = append(entity.Pledges, pledge)
+			var company db.Company
+			company, err = db.RetrieveCompany(user.EntityID)
+			actor = &company
 		case "city":
-			var entity db.City
-			entity, err = db.RetrieveCity(user.EntityID)
-			entity.Pledges = append(entity.Pledges, pledge)
+			var city db.City
+			city, err = db.RetrieveCity(user.EntityID)
+			actor = &city
 		case "state":
-			var entity db.State
-			entity, err = db.RetrieveState(user.EntityID)
-			entity.Pledges = append(entity.Pledges, pledge)
+			var state db.State
+			state, err = db.RetrieveState(user.EntityID)
+			actor = &state
 		case "region":
-			var entity db.Region
-			entity, err = db.RetrieveRegion(user.EntityID)
-			entity.Pledges = append(entity.Pledges, pledge)
+			var region db.Region
+			region, err = db.RetrieveRegion(user.EntityID)
+			actor = &region
 		case "country":
-			var entity db.Country
-			entity, err = db.RetrieveCountry(user.EntityID)
-			entity.Pledges = append(entity.Pledges, pledge)
+			var country db.Country
+			country, err = db.RetrieveCountry(user.EntityID)
+			actor = &country
 		default:
 			log.Println("Entity type of user is not valid.")
 			erpc.ResponseHandler(w, erpc.StatusUnauthorized)
@@ -75,8 +77,8 @@ func AddPledge() {
 			return
 		}
 
+		actor.AddPledge(pledge)
 		// Convert pledge into smart contract condition
-
 		erpc.MarshalSend(w, pledge)
 	})
 }

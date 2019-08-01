@@ -1,8 +1,8 @@
 package database
 
-// type Actor interface {
-	
-// }
+type Actor interface {
+	AddPledge(pledge Pledge)
+}
 
 type RepData struct {
 	// pledge, emissions, mitigation, adaption, etc.

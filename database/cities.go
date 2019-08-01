@@ -128,3 +128,7 @@ func RetrieveAllCities() ([]City, error) {
 
 	return cities, nil
 }
+
+func (c *City) AddPledge(pledge Pledge) {
+	c.Pledges = append(c.Pledges, pledge)
+}

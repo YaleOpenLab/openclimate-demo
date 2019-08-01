@@ -122,3 +122,7 @@ func RetrieveAllStates() ([]State, error) {
 
 	return states, nil
 }
+
+func (s *State) AddPledge(pledge Pledge) {
+	s.Pledges = append(s.Pledges, pledge)
+}

@@ -16,6 +16,7 @@ type Company struct {
 	Index   int
 	Name    string
 	Country string
+	Address string
 
 	UserIDs []int
 
@@ -75,9 +76,10 @@ func NewCompany(name string, country string) (Company, error) {
 }
 
 // Saves company object in companies bucket. Called by NewCompany
-func (a *Company) Save() error {
-	return edb.Save(globals.DbPath, CompanyBucket, a, a.Index)
+func (c *Company) Save() error {
+	return edb.Save(globals.DbPath, CompanyBucket, c, c.Index)
 }
+
 
 // Given a key of type int, retrieves the corresponding company object
 // from the database companies bucket.
@@ -128,3 +130,32 @@ func RetrieveAllCompanies() ([]Company, error) {
 
 	return companies, nil
 }
+
+func (c *Company) AddPledge(pledge Pledge) {
+	c.Pledges = append(c.Pledges, pledge)
+}
+
+func (c *Company) AdoptMethodology(methodology string) {
+	c.MRV = methodology
+}
+
+func (c *Company) AddAsset(info Asset) error {
+	asset, err := NewAsset(info.Name, c.Name)
+	if err != nil {
+		return errors.Wrap(err, "AddAsset() failed.")
+	}
+	c.Children = append(c.Children, asset.Index)
+	return nil
+}
+	
+func (c * Company) UpdateAsset(key int, info Asset) error {
+	asset, err := RetrieveAsset(key)
+	if err != nil {
+		return errors.Wrap(err, "UpdateAsset() failed (likely because asset doesn't exist)")
+	}
+	asset.Name = info.Name
+	asset.Location = info.Location
+	asset.Type = info.Type
+	return nil
+}
+
