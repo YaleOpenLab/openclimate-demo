@@ -127,6 +127,10 @@ func (s *State) SetID(id int) {
 	s.Index = id
 }
 
+func (s *State) GetID() int {
+	return s.Index
+}
+
 func (s *State) AddPledge(pledge Pledge) {
 	s.Pledges = append(s.Pledges, pledge)
 }

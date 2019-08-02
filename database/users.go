@@ -22,19 +22,19 @@ import (
 type User struct {
 	Index int
 
-	FirstName	string
-	LastName 	string
-	Username 	string
-	Email    	string
-	Pwhash   	string
-	EIN 		string
+	FirstName			string
+	LastName 			string
+	Username 			string
+	Email    			string
+	Pwhash 		  		string
+	EIN 				string
 
-	EntityType string // choices are: individual, company, city, state, region, country, oversight
-	EntityID   int    // index of the entity the user is associated with
-	Verified   bool   // if the user is a verified member of the entity they purport to be a part of
-	Admin      bool   // is the user an admin for its entity?
+	EntityType 			string // choices are: individual, company, city, state, region, country, oversight
+	EntityID   			int    // index of the entity the user is associated with
+	Verified   			bool   // if the user is a verified member of the entity they purport to be a part of
+	Admin      			bool   // is the user an admin for its entity?
 
-	EthereumWallet EthWallet
+	EthereumWallet 		EthWallet
 	//CosmosWallet   CosmWallet
 
 }
@@ -160,12 +160,16 @@ func NewUser(username string, pwhash string, email string, entityType string, en
 
 // Save inserts a passed User object into the database
 func (u *User) Save() error {
-	log.Println("INSIDE SAVE()")
+	// log.Println("INSIDE SAVE()")
 	return Save(globals.DbPath, UserBucket, u)
 }
 
 func (u *User) SetID(id int) {
 	u.Index = id
+}
+
+func (u *User) GetID() int {
+	return u.Index
 }
 
 func (u *User) AddPledge(pledge Pledge) {
@@ -204,6 +208,7 @@ func RetrieveUser(key int) (User, error) {
 	return user, err
 }
 
+
 func RetrieveUserByUsername(username string) (User, error) {
 	var user User
 	allUsers, err := RetrieveAllUsers()
@@ -236,6 +241,7 @@ func ValidateUser(username string, pwhash string) (User, error) {
 
 	return user, errors.New("user not found")
 }
+
 
 func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {
 	client, err := ethclient.Dial("https://ropsten.infura.io")
@@ -282,6 +288,7 @@ func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {
 	log.Printf("tx sent: %s", signedTx.Hash().Hex())
 	return signedTx.Hash().Hex(), nil
 }
+
 
 func (user *User) GetUserActor() (interface{}, error) {
 

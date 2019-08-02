@@ -121,6 +121,10 @@ func (c *Country) SetID(id int) {
 	c.Index = id
 }
 
+func (c *Country) GetID() int {
+	return c.Index
+}
+
 func (c *Country) AddPledge(pledge Pledge) {
 	c.Pledges = append(c.Pledges, pledge)
 }

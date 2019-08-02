@@ -126,6 +126,10 @@ func (r *Region) SetID(id int) {
 	r.Index = id
 }
 
+func (r *Region) GetID() int {
+	return r.Index
+}
+
 func (r *Region) AddPledge(pledge Pledge) {
 	r.Pledges = append(r.Pledges, pledge)
 }

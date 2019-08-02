@@ -133,14 +133,31 @@ func RetrieveAllCompanies() ([]Company, error) {
 
 func (c *Company) SetID(id int) {
 	c.Index = id
+	c.Save()
+}
+
+func (c *Company) GetID() int {
+	return c.Index
 }
 
 func (c *Company) AddPledge(pledge Pledge) {
 	c.Pledges = append(c.Pledges, pledge)
+	c.Save()
+}
+
+func (c *Company) DeletePledge(pledge Pledge) {
+	var empty Pledge
+	for i, v := range c.Pledges {
+		if v == pledge {
+			c.Pledges[i] = empty
+		}
+	}
+	c.Save()
 }
 
 func (c *Company) UpdateMethodology(methodology string) {
 	c.MRV = methodology
+	c.Save()
 }
 
 func (c *Company) AddAsset(info Asset) error {
@@ -148,7 +165,9 @@ func (c *Company) AddAsset(info Asset) error {
 	if err != nil {
 		return errors.Wrap(err, "AddAsset() failed.")
 	}
+	asset.Save()
 	c.Children = append(c.Children, asset.Index)
+	c.Save()
 	return nil
 }
 	
@@ -161,6 +180,7 @@ func (c * Company) UpdateAsset(key int, info Asset) error {
 	asset.Location = info.Location
 	asset.Type = info.Type
 	asset.Save()
+
 	return nil
 }
 
