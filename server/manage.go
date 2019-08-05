@@ -14,6 +14,12 @@ import (
 	db "github.com/YaleOpenLab/openclimate/database"
 )
 
+func setupManageHandlers() {
+	VerifyUser()
+	AddAsset()
+	UpdateAsset()
+}
+
 
 /*
 	Function allows admins of a particular entity to "verify" other users who claim to be

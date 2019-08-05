@@ -13,11 +13,12 @@ import (
 	"github.com/YaleOpenLab/openclimate/oracle"
 )
 
-
 func setupReportHandlers() {
-	SelfReportData()
+	SelfReport()
 	ConnectDatabase()
 	AddPledge()
+	UpdatePledge()
+	CommitPledge()
 }
 
 func AddPledge() {
@@ -186,7 +187,7 @@ func CommitPledge() {
 }
 
 
-func SelfReportData() {
+func SelfReport() {
 	http.HandleFunc("/user/self-report", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckPostAuth(w, r)
 		if err != nil {

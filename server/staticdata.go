@@ -14,7 +14,7 @@ import (
 	// "time"
 )
 
-func dataHandler() {
+func setupDataHandlers() {
 	getUSStates()
 	getUSCounties()
 	getParisAgreement()

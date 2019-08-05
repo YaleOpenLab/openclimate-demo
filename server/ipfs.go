@@ -8,9 +8,15 @@ import (
 
 	// "github.com/Varunram/essentials/ipfs"
 	erpc "github.com/Varunram/essentials/rpc"
+	"github.com/Varunram/essentials/ipfs"
 	"github.com/YaleOpenLab/openclimate/blockchain"
 
 )
+
+func setupIpfsHandlers() {
+	RetrieveFromIpfs()
+	getIpfsHash()
+}
 
 /* 
 	Request & retrieve data for a specific actor that has been committed to IPFS.
@@ -58,5 +64,37 @@ func RetrieveFromIpfs() {
 		}
 
 		erpc.MarshalSend(w, data)
+	})
+}
+
+
+// getIpfsHash gets the ipfs hash of the passed string
+func getIpfsHash() {
+	http.HandleFunc("/ipfs/hash", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			return
+		}
+
+		if r.URL.Query()["string"] == nil {
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		hashString := r.URL.Query()["string"][0]
+		hash, err := ipfs.IpfsAddString(hashString)
+		if err != nil {
+			log.Println("did not add string to ipfs", err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		hashCheck, err := ipfs.IpfsGetString(hash)
+		if err != nil || hashCheck != hashString {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, hash)
 	})
 }

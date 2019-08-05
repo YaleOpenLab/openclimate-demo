@@ -15,8 +15,12 @@ func StartServer(port string, insecure bool) {
 	erpc.SetupBasicHandlers()
 	setupDBHandlers()
 	setupReportHandlers()
+	setupActorsHandlers()
+	setupIpfsHandlers()
+	setupManageHandlers()
 	setupSwytchApis()
-	dataHandler()
+	setupDataHandlers()
+
 	log.Println("Starting RPC Server on Port: ", port)
 	if insecure {
 		log.Fatal(http.ListenAndServe(":"+port, nil))
