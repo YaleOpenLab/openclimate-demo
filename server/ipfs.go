@@ -6,7 +6,9 @@ import (
 	"strconv"
 	"net/http"
 
+	// "github.com/Varunram/essentials/ipfs"
 	erpc "github.com/Varunram/essentials/rpc"
+	"github.com/YaleOpenLab/openclimate/blockchain"
 
 )
 
@@ -18,9 +20,8 @@ import (
 	and then makes that data available on the openclimate API.
 	
 	URL parameters:
-	- "actor_type":
-	- "actor_id":
-
+	- "actor_type": either city, country, region, state, company, etc.
+	- "actor_id": the ID assigned to the actor in the database.
 */
 func RetrieveFromIpfs() {
 	http.HandleFunc("/ipfs/request", func(w http.ResponseWriter, r *http.Request) {
@@ -36,6 +37,26 @@ func RetrieveFromIpfs() {
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
 		}
+
+		/* 
+			blockchain.GetFromIpfs() is not a real function yet. The function
+			will receive the actor type and the actor id, then search our smart
+			contract for all the IPFS hashes that are associated with that actor
+			type and actor id. The function will then retrieve the corresponding
+			data from IPFS using those hash content addresses and give it to us here.
+
+			For more information, see blockchain/retrieve.go
+		*/
+
+		data, err := blockchain.GetFromIpfs(actorType, actorID)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, data)
 	})
 }
