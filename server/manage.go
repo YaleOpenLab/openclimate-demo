@@ -12,13 +12,6 @@ import (
 	"github.com/YaleOpenLab/openclimate/database"
 )
 
-// func LinkActor() {
-// 	http.HandleFunc("/user/link-actor", func(w http.ResponseWriter, r *http.Request) {
-
-
-// 	})
-// }
-
 
 // URL parameter: candidate ID
 func VerifyUser() {

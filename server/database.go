@@ -18,7 +18,6 @@ func setupDBHandlers() {
 	retrieveAllUsers()
 	deleteUser()
 	updateUser()
-	// newChild()
 
 	getIpfsHash()
 

@@ -13,6 +13,7 @@ import (
 	"github.com/YaleOpenLab/openclimate/oracle"
 )
 
+
 func setupReportHandlers() {
 	SelfReportData()
 	ConnectDatabase()
@@ -136,10 +137,52 @@ func AddPledge() {
 	})
 }
 
+
+func CommitPledge() {
+	http.HandleFunc("user/pledges/commit", func (w http.ResponseWriter, r *http.Request) {
+		_, err := CheckGetAuth(w, r)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		if r.URL.Query()["pledge_ID"] == nil {
+			log.Println("pledge ID not passed, quitting")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		pledgeID, err := strconv.Atoi(r.URL.Query()["pledge_ID"][0])
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
+
+		pledge, err := db.RetrievePledge(pledgeID)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		ipfsHash, err := oracle.IpfsCommitData(pledge)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, ipfsHash)
+	})
+}
+
+
 func SelfReportData() {
 	http.HandleFunc("/user/self-report", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckPostAuth(w, r)
 		if err != nil {
+			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
@@ -148,6 +191,7 @@ func SelfReportData() {
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
 		}
 
 		if r.URL.Query()["report_type"] == nil {
