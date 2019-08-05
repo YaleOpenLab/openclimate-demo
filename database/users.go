@@ -53,58 +53,22 @@ type CosmWallet struct {
 }
 */
 
-func (a *User) GenEthKeys(seedpwd string) error {
-	ecdsaPrivkey, err := crypto.GenerateKey()
-	if err != nil {
-		return errors.Wrap(err, "could not generate an ethereum keypair, quitting!")
-	}
 
-	privateKeyBytes := crypto.FromECDSA(ecdsaPrivkey)
-
-	ek, err := aes.Encrypt([]byte(hexutil.Encode(privateKeyBytes)[2:]), seedpwd)
-	if err != nil {
-		return errors.Wrap(err, "error while encrypting seed")
-	}
-
-	a.EthereumWallet.EncryptedPrivateKey = string(ek)
-	a.EthereumWallet.Address = crypto.PubkeyToAddress(ecdsaPrivkey.PublicKey).Hex()
-
-	publicKeyECDSA, ok := ecdsaPrivkey.Public().(*ecdsa.PublicKey)
-	if !ok {
-		return errors.Wrap(err, "error casting public key to ECDSA")
-	}
-
-	publicKeyBytes := crypto.FromECDSAPub(publicKeyECDSA)
-	a.EthereumWallet.PublicKey = hexutil.Encode(publicKeyBytes)[4:] // an ethereum address is 65 bytes long and hte first byte is 0x04 for DER encoding, so we omit that
-
-	if crypto.PubkeyToAddress(*publicKeyECDSA).Hex() != a.EthereumWallet.Address {
-		return errors.Wrap(err, "addresses don't match, quitting!")
-	}
-
-	return a.Save()
+// Save inserts a passed User object into the database
+func (u *User) Save() error {
+	// log.Println("INSIDE SAVE()")
+	return Save(globals.DbPath, UserBucket, u)
 }
+
 
 // NewUser creates a new user
 func NewUser(username string, pwhash string, email string, entityType string, entityName string, entityParent string) (User, error) {
 	var user User
 	var err error
 
-	log.Println("hit2")
-
 	if len(pwhash) != 128 {
 		return user, errors.New("pwhash not of length 128, quitting")
 	}
-
-	// allUsers, err := RetrieveAllUsers()
-	// if err != nil {
-	// 	return user, errors.Wrap(err, "Error while retrieving all users from database")
-	// }
-
-	// if len(allUsers) == 0 {
-	// 	user.Index = 1
-	// } else {
-	// 	user.Index = len(allUsers) + 1
-	// }
 
 	user.Username = username
 	user.Pwhash = pwhash
@@ -116,64 +80,40 @@ func NewUser(username string, pwhash string, email string, entityType string, en
 
 	user.EntityType = entityType
 
-	var entityID int
 	switch entityType {
 	case "company":
 		var entity Company
 		entity, err = RetrieveCompanyByName(entityName, entityParent)
-		entityID = entity.Index
+		user.EntityID = entity.Index
 	case "city":
 		var entity City
 		entity, err = RetrieveCityByName(entityName, entityParent)
-		entityID = entity.Index
+		user.EntityID = entity.Index
 	case "state":
 		var entity State
 		entity, err = RetrieveStateByName(entityName, entityParent)
-		entityID = entity.Index
+		user.EntityID = entity.Index
 	case "region":
 		var entity Region
 		entity, err = RetrieveRegionByName(entityName, entityParent)
-		entityID = entity.Index
+		user.EntityID = entity.Index
 	case "country":
 		var entity Country
 		entity, err = RetrieveCountryByName(entityName)
-		entityID = entity.Index
+		user.EntityID = entity.Index
 	case "oversight":
 		var entity Oversight
 		entity, err = RetrieveOsOrgByName(entityName)
-		entityID = entity.Index
-	}
-	if err != nil {
-		return user, errors.Wrap(err, "NewUser() failed.")
+		user.EntityID = entity.Index
+	default:
+		err = errors.New("Actor type not found.")
 	}
 
-	// Store the ID of the entity in the user's EntityID field
-	user.EntityID = entityID
-
-	// Save/insert user into the database and get user's ID
 	if err != nil {
 		return user, errors.Wrap(err, "NewUser() failed.")
 	}
 
 	return user, user.Save()
-}
-
-// Save inserts a passed User object into the database
-func (u *User) Save() error {
-	// log.Println("INSIDE SAVE()")
-	return Save(globals.DbPath, UserBucket, u)
-}
-
-func (u *User) SetID(id int) {
-	u.Index = id
-}
-
-func (u *User) GetID() int {
-	return u.Index
-}
-
-func (u *User) AddPledge(pledge Pledge) {
-	return
 }
 
 
@@ -243,6 +183,52 @@ func ValidateUser(username string, pwhash string) (User, error) {
 }
 
 
+func (u *User) SetID(id int) {
+	u.Index = id
+}
+
+
+func (u *User) GetID() int {
+	return u.Index
+}
+
+
+// Empty function, simply allows User to match "Actor" interface methods
+func (u *User) AddPledge(pledge Pledge) {
+	return
+}
+
+
+func (user *User) GetUserActor() (interface{}, error) {
+
+	var entity interface{}
+	var err error
+
+	switch user.EntityType {
+	case "company":
+		entity, err = RetrieveCompany(user.EntityID)
+	case "city":
+		entity, err = RetrieveCity(user.EntityID)
+	case "state":
+		entity, err = RetrieveState(user.EntityID)
+	case "region":
+		entity, err = RetrieveRegion(user.EntityID)
+	case "country":
+		entity, err = RetrieveCountry(user.EntityID)
+	case "oversight":
+		entity, err = RetrieveOsOrg(user.EntityID)
+	default:
+		return entity, errors.New("User's entity type is not valid.")
+	}
+
+	if err != nil {
+		return entity, errors.Wrap(err, "User's linked actor was not found")
+	}
+
+	return entity, nil
+}
+
+
 func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {
 	client, err := ethclient.Dial("https://ropsten.infura.io")
 	if err != nil {
@@ -290,34 +276,37 @@ func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {
 }
 
 
-func (user *User) GetUserActor() (interface{}, error) {
-
-	var entity interface{}
-	var err error
-
-	switch user.EntityType {
-	case "company":
-		entity, err = RetrieveCompany(user.EntityID)
-	case "city":
-		entity, err = RetrieveCity(user.EntityID)
-	case "state":
-		entity, err = RetrieveState(user.EntityID)
-	case "region":
-		entity, err = RetrieveRegion(user.EntityID)
-	case "country":
-		entity, err = RetrieveCountry(user.EntityID)
-	case "oversight":
-		entity, err = RetrieveOsOrg(user.EntityID)
-	default:
-		return entity, errors.New("User's entity type is not valid.")
-	}
-
+func (a *User) GenEthKeys(seedpwd string) error {
+	ecdsaPrivkey, err := crypto.GenerateKey()
 	if err != nil {
-		return entity, errors.Wrap(err, "User's linked actor was not found")
+		return errors.Wrap(err, "could not generate an ethereum keypair, quitting!")
 	}
 
-	return entity, nil
+	privateKeyBytes := crypto.FromECDSA(ecdsaPrivkey)
+
+	ek, err := aes.Encrypt([]byte(hexutil.Encode(privateKeyBytes)[2:]), seedpwd)
+	if err != nil {
+		return errors.Wrap(err, "error while encrypting seed")
+	}
+
+	a.EthereumWallet.EncryptedPrivateKey = string(ek)
+	a.EthereumWallet.Address = crypto.PubkeyToAddress(ecdsaPrivkey.PublicKey).Hex()
+
+	publicKeyECDSA, ok := ecdsaPrivkey.Public().(*ecdsa.PublicKey)
+	if !ok {
+		return errors.Wrap(err, "error casting public key to ECDSA")
+	}
+
+	publicKeyBytes := crypto.FromECDSAPub(publicKeyECDSA)
+	a.EthereumWallet.PublicKey = hexutil.Encode(publicKeyBytes)[4:] // an ethereum address is 65 bytes long and hte first byte is 0x04 for DER encoding, so we omit that
+
+	if crypto.PubkeyToAddress(*publicKeyECDSA).Hex() != a.EthereumWallet.Address {
+		return errors.Wrap(err, "addresses don't match, quitting!")
+	}
+
+	return a.Save()
 }
+
 
 /*
 func (a *User) GenCosmosKeys() error {

@@ -19,6 +19,7 @@ var CountryBucket = []byte("Countries")
 var OversightBucket = []byte("Oversight")
 var AssetBucket = []byte("Assets")
 var RequestBucket = []byte("Requests")
+var PledgeBucket = []byte("Pledges")
 
 // CreateHomeDir creates a home directory
 func CreateHomeDir() error {

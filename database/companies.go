@@ -54,6 +54,13 @@ type Company struct {
 	Adaptation map[string]string
 }
 
+
+// Saves company object in companies bucket. Called by NewCompany
+func (c *Company) Save() error {
+	return edb.Save(globals.DbPath, CompanyBucket, c, c.Index)
+}
+
+
 // Function that creates a new company object given its name
 // and country and saves the object in the countries bucket.
 func NewCompany(name string, country string) (Company, error) {
@@ -75,11 +82,6 @@ func NewCompany(name string, country string) (Company, error) {
 	return company, company.Save()
 }
 
-// Saves company object in companies bucket. Called by NewCompany
-func (c *Company) Save() error {
-	return edb.Save(globals.DbPath, CompanyBucket, c, c.Index)
-}
-
 
 // Given a key of type int, retrieves the corresponding company object
 // from the database companies bucket.
@@ -92,6 +94,7 @@ func RetrieveCompany(key int) (Company, error) {
 	err = json.Unmarshal(companyBytes, &company)
 	return company, err
 }
+
 
 // Given a name and country, retrieves the corresponding company object
 // from the database companies bucket.
@@ -110,6 +113,7 @@ func RetrieveCompanyByName(name string, country string) (Company, error) {
 
 	return company, errors.New("company not found, quitting")
 }
+
 
 // RetrieveAllCompanies gets a list of all companies in the database
 func RetrieveAllCompanies() ([]Company, error) {
@@ -131,19 +135,28 @@ func RetrieveAllCompanies() ([]Company, error) {
 	return companies, nil
 }
 
+
 func (c *Company) SetID(id int) {
 	c.Index = id
 	c.Save()
 }
 
+
 func (c *Company) GetID() int {
 	return c.Index
 }
+
 
 func (c *Company) AddPledge(pledge Pledge) {
 	c.Pledges = append(c.Pledges, pledge)
 	c.Save()
 }
+
+
+func (c *Company) UpdatePledge(pledge Pledge) {
+
+}
+
 
 func (c *Company) DeletePledge(pledge Pledge) {
 	var empty Pledge
@@ -155,32 +168,20 @@ func (c *Company) DeletePledge(pledge Pledge) {
 	c.Save()
 }
 
+
 func (c *Company) UpdateMethodology(methodology string) {
 	c.MRV = methodology
 	c.Save()
 }
 
-func (c *Company) AddAsset(info Asset) error {
-	asset, err := NewAsset(info.Name, c.Name)
-	if err != nil {
-		return errors.Wrap(err, "AddAsset() failed.")
-	}
-	asset.Save()
-	c.Children = append(c.Children, asset.Index)
-	c.Save()
-	return nil
-}
-	
-func (c * Company) UpdateAsset(key int, info Asset) error {
-	asset, err := RetrieveAsset(key)
-	if err != nil {
-		return errors.Wrap(err, "UpdateAsset() failed (likely because asset doesn't exist)")
-	}
-	asset.Name = info.Name
-	asset.Location = info.Location
-	asset.Type = info.Type
-	asset.Save()
 
-	return nil
-}
-
+// func (c *Company) AddAsset(info Asset) error {
+// 	asset, err := NewAsset(info.Name, c.Name)
+// 	if err != nil {
+// 		return errors.Wrap(err, "AddAsset() failed.")
+// 	}
+// 	asset.Save()
+// 	c.Children = append(c.Children, asset.Index)
+// 	c.Save()
+// 	return nil
+// }

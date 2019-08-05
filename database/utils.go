@@ -11,6 +11,7 @@ import (
 	"log"
 )
 
+
 func RetrieveAllUsers() ([]User, error) {
 
 	var arr []User
@@ -42,7 +43,7 @@ func RetrieveAllUsers() ([]User, error) {
 }
 
 
-func Save(dir string, bucketName []byte, x Actor) error {
+func Save(dir string, bucketName []byte, x BucketItem) error {
 	db, err := edb.OpenDB(dir)
 	if err != nil {
 		return errors.Wrap(err, "could not open database")
@@ -74,6 +75,7 @@ func Save(dir string, bucketName []byte, x Actor) error {
 	})
 	return err
 }
+
 
 func itob(v int) []byte {
     b := make([]byte, 8)

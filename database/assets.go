@@ -18,6 +18,11 @@ type Asset struct {
 	Reports   []RepData
 }
 
+// Puts asset object in assets bucket. Called by NewAsset
+func (a *Asset) Save() error {
+	return edb.Save(globals.DbPath, AssetBucket, a, a.Index)
+}
+
 func NewAsset(name string, company string) (Asset, error) {
 	var asset Asset
 
@@ -37,9 +42,17 @@ func NewAsset(name string, company string) (Asset, error) {
 	return asset, asset.Save()
 }
 
-// Saves asset object in assets bucket. Called by NewAsset
-func (a *Asset) Save() error {
-	return edb.Save(globals.DbPath, AssetBucket, a, a.Index)
+func UpdateAsset(key int, info Asset) error {
+	asset, err := RetrieveAsset(key)
+	if err != nil {
+		return errors.Wrap(err, "UpdateAsset() failed (likely because asset doesn't exist)")
+	}
+	asset.Name = info.Name
+	asset.Location = info.Location
+	asset.Type = info.Type
+	asset.Save()
+
+	return nil
 }
 
 // Given a key of type int, retrieves the corresponding asset object
