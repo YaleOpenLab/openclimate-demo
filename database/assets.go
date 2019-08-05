@@ -20,23 +20,15 @@ type Asset struct {
 
 // Puts asset object in assets bucket. Called by NewAsset
 func (a *Asset) Save() error {
-	return edb.Save(globals.DbPath, AssetBucket, a, a.Index)
+	return Save(globals.DbPath, AssetBucket, a)
+}
+
+func (a *Asset) SetID(id int) {
+	a.Index = id
 }
 
 func NewAsset(name string, company string) (Asset, error) {
 	var asset Asset
-
-	assets, err := RetrieveAllAssets()
-	if err != nil {
-		return asset, errors.Wrap(err, "could not retrieve all assets, quitting")
-	}
-
-	if len(assets) == 0 {
-		asset.Index = 1
-	} else {
-		asset.Index = len(assets) + 1
-	}
-
 	asset.Name = name
 	asset.Company = company
 	return asset, asset.Save()

@@ -44,32 +44,29 @@ type Region struct {
 	Adaptation map[string]string
 }
 
+// Saves region object in regions bucket. Called by NewRegion
+func (region *Region) Save() error {
+	return Save(globals.DbPath, RegionBucket, region)
+}
+
+func (r *Region) SetID(id int) {
+	r.Index = id
+}
+
+func (r *Region) GetID() int {
+	return r.Index
+}
+
+
 // Function that creates a new region object given its name and country
 // and saves the object in the regions bucket.
 func NewRegion(name string, country string) (Region, error) {
 	var new Region
-	var err error
-	var lenRegions int
-	// naive implementation of assigning keys to bucket items (simple indexing)
-	regions, err := RetrieveAllRegions()
-	if err != nil {
-		// regions doesn't exist yet
-		lenRegions = 0
-	} else {
-		lenRegions = len(regions)
-	}
-
-	new.Index = lenRegions + 1
 	new.Name = name
 	new.Country = country
-
 	return new, new.Save()
 }
 
-// Saves region object in regions bucket. Called by NewRegion
-func (region *Region) Save() error {
-	return edb.Save(globals.DbPath, RegionBucket, region, region.Index)
-}
 
 // Given a key of type int, retrieves the corresponding region object
 // from the database regions bucket.
@@ -122,13 +119,6 @@ func RetrieveAllRegions() ([]Region, error) {
 	return regions, nil
 }
 
-func (r *Region) SetID(id int) {
-	r.Index = id
-}
-
-func (r *Region) GetID() int {
-	return r.Index
-}
 
 func (r *Region) RetrievePledges() ([]Pledge, error) {
 	var pledges []Pledge

@@ -42,32 +42,28 @@ type City struct {
 	Adaptation map[string]string
 }
 
+
+// Saves city object in cities bucket. Called by NewCity
+func (city *City) Save() error {
+	return Save(globals.DbPath, CityBucket, city)
+}
+
+func (c *City) SetID(id int) {
+	c.Index = id
+}
+
+func (c *City) GetID() int {
+	return c.Index
+}
+
+
 // Function that creates a new city object given its name, region,
 // and country and saves the object in the countries bucket.
 func NewCity(name string, region string, country string) (City, error) {
 	var new City
-	var err error
-	var lenCities int
-	// naive implementation of assigning keys to bucket items (simple indexing)
-	cities, err := RetrieveAllCities()
-	if err != nil {
-		// regions doesn't exist yet
-		lenCities = 0
-	} else {
-		lenCities = len(cities)
-	}
-
-	new.Index = lenCities + 1
 	new.Name = name
 	new.Country = country
-
-	err = new.Save()
-	return new, err
-}
-
-// Saves city object in cities bucket. Called by NewCity
-func (city *City) Save() error {
-	return edb.Save(globals.DbPath, CityBucket, city, city.Index)
+	return new, new.Save()
 }
 
 // Given a key of type int, retrieves the corresponding city object
@@ -125,13 +121,6 @@ func RetrieveAllCities() ([]City, error) {
 	return cities, nil
 }
 
-func (c *City) SetID(id int) {
-	c.Index = id
-}
-
-func (c *City) GetID() int {
-	return c.Index
-}
 
 func (c *City) RetrievePledges() ([]Pledge, error) {
 	var pledges []Pledge
@@ -148,8 +137,6 @@ func (c *City) RetrievePledges() ([]Pledge, error) {
 	}
 	return pledges, nil
 }
-
-
 
 
 

@@ -57,7 +57,16 @@ type Company struct {
 
 // Saves company object in companies bucket. Called by NewCompany
 func (c *Company) Save() error {
-	return edb.Save(globals.DbPath, CompanyBucket, c, c.Index)
+	return Save(globals.DbPath, CompanyBucket, c)
+}
+
+func (c *Company) SetID(id int) {
+	c.Index = id
+	c.Save()
+}
+
+func (c *Company) GetID() int {
+	return c.Index
 }
 
 
@@ -65,18 +74,6 @@ func (c *Company) Save() error {
 // and country and saves the object in the countries bucket.
 func NewCompany(name string, country string) (Company, error) {
 	var company Company
-
-	companies, err := RetrieveAllCompanies()
-	if err != nil {
-		return company, errors.Wrap(err, "could not retrieve all companies, quitting")
-	}
-
-	if len(companies) == 0 {
-		company.Index = 1
-	} else {
-		company.Index = len(companies) + 1
-	}
-
 	company.Name = name
 	company.Country = country
 	return company, company.Save()
@@ -133,17 +130,6 @@ func RetrieveAllCompanies() ([]Company, error) {
 	}
 
 	return companies, nil
-}
-
-
-func (c *Company) SetID(id int) {
-	c.Index = id
-	c.Save()
-}
-
-
-func (c *Company) GetID() int {
-	return c.Index
 }
 
 

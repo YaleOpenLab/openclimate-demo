@@ -30,26 +30,18 @@ type Oversight struct {
 
 }
 
-func NewOsOrg(name string) (Oversight, error) {
-	var osOrg Oversight
-
-	osOrgs, err := RetrieveAllOsOrgs()
-	if err != nil {
-		return osOrg, errors.Wrap(err, "could not retrieve all oversight organizations, quitting")
-	}
-
-	if len(osOrgs) == 0 {
-		osOrg.Index = 1
-	} else {
-		osOrg.Index = len(osOrgs) + 1
-	}
-
-	osOrg.Name = name
-	return osOrg, osOrg.Save()
+func (o *Oversight) Save() error {
+	return Save(globals.DbPath, OversightBucket, o)
 }
 
-func (a *Oversight) Save() error {
-	return edb.Save(globals.DbPath, OversightBucket, a, a.Index)
+func (o *Oversight) SetID(id int) {
+	o.Index = id
+}
+
+func NewOsOrg(name string) (Oversight, error) {
+	var osOrg Oversight
+	osOrg.Name = name
+	return osOrg, osOrg.Save()
 }
 
 func RetrieveOsOrg(key int) (Oversight, error) {

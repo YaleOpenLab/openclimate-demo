@@ -45,31 +45,27 @@ type State struct {
 	Adaptation map[string]string
 }
 
+// Saves state object in states bucket. Called by NewState
+func (state *State) Save() error {
+	return Save(globals.DbPath, StateBucket, state)
+}
+
+func (s *State) SetID(id int) {
+	s.Index = id
+}
+
+func (s *State) GetID() int {
+	return s.Index
+}
+
+
 // Function that creates a new state object given its name and country
 // and saves the object in the states bucket.
 func NewState(name string, country string) (State, error) {
 	var new State
-	var err error
-	var lenStates int
-	// naive implementation of assigning keys to bucket items (simple indexing)
-	states, err := RetrieveAllStates()
-	if err != nil {
-		// states doesn't exist yet
-		lenStates = 0
-	} else {
-		lenStates = len(states)
-	}
-
-	new.Index = lenStates + 1
 	new.Name = name
 	new.Country = country
-
 	return new, new.Save()
-}
-
-// Saves state object in states bucket. Called by NewState
-func (state *State) Save() error {
-	return edb.Save(globals.DbPath, StateBucket, state, state.Index)
 }
 
 // Given a key of type int, retrieves the corresponding state object
@@ -123,13 +119,6 @@ func RetrieveAllStates() ([]State, error) {
 	return states, nil
 }
 
-func (s *State) SetID(id int) {
-	s.Index = id
-}
-
-func (s *State) GetID() int {
-	return s.Index
-}
 
 func (s *State) RetrievePledges() ([]Pledge, error) {
 	var pledges []Pledge

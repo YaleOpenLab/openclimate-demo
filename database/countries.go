@@ -39,31 +39,25 @@ type Country struct {
 	Adaptation map[string]string
 }
 
+// Saves country object in countries bucket. Called by NewCountry
+func (country *Country) Save() error {
+	return Save(globals.DbPath, CountryBucket, country)
+}
+
+func (c *Country) SetID(id int) {
+	c.Index = id
+}
+
+func (c *Country) GetID() int {
+	return c.Index
+}
+
 // Function that creates a new country object given its name and saves
 // the object in the countries bucket.
 func NewCountry(name string) (Country, error) {
-
 	var new Country
-	var err error
-	var lenRegions int
-	// naive implementation of assigning keys to bucket items (simple indexing)
-	countries, err := RetrieveAllCountries()
-	if err != nil {
-		// regions doesn't exist yet
-		lenRegions = 0
-	} else {
-		lenRegions = len(countries)
-	}
-
-	new.Index = lenRegions + 1
 	new.Name = name
-
 	return new, new.Save()
-}
-
-// Saves country object in countries bucket. Called by NewCountry
-func (country *Country) Save() error {
-	return edb.Save(globals.DbPath, CountryBucket, country, country.Index)
 }
 
 // Given a key of type int, retrieves the corresponding country object
@@ -115,14 +109,6 @@ func RetrieveAllCountries() ([]Country, error) {
 	}
 
 	return countries, nil
-}
-
-func (c *Country) SetID(id int) {
-	c.Index = id
-}
-
-func (c *Country) GetID() int {
-	return c.Index
 }
 
 func (c *Country) RetrievePledges() ([]Pledge, error) {

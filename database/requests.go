@@ -19,23 +19,16 @@ type ConnectRequest struct {
 	Links       []string // links with more info
 }
 
-func NewRequest(request ConnectRequest) error {
-	allRequests, err := RetrieveAllRequests()
-	if err != nil {
-		return errors.Wrap(err, "could not retrieve all requests, quitting")
-	}
-
-	if len(allRequests) == 0 {
-		request.Index = 1
-	} else {
-		request.Index = len(allRequests) + 1
-	}
-
-	return request.Save()
+func (cr *ConnectRequest) Save() error {
+	return Save(globals.DbPath, RequestBucket, cr)
 }
 
-func (a *ConnectRequest) Save() error {
-	return edb.Save(globals.DbPath, RequestBucket, a, a.Index)
+func (cr *ConnectRequest) SetID(id int) {
+	cr.Index = id
+}
+
+func NewRequest(request ConnectRequest) error {
+	return request.Save()
 }
 
 func RetrieveAllRequests() ([]ConnectRequest, error) {
