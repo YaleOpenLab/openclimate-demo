@@ -62,11 +62,15 @@ func (c *Company) Save() error {
 
 func (c *Company) SetID(id int) {
 	c.Index = id
-	c.Save()
 }
 
 func (c *Company) GetID() int {
 	return c.Index
+}
+
+func (c *Company) UpdateMRV(MRV string) {
+	c.MRV = MRV
+	c.Save()
 }
 
 
@@ -147,12 +151,6 @@ func (c *Company) RetrievePledges() ([]Pledge, error) {
 		}
 	}
 	return pledges, nil
-}
-
-
-func (c *Company) UpdateMethodology(methodology string) {
-	c.MRV = methodology
-	c.Save()
 }
 
 

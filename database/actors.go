@@ -4,7 +4,6 @@ type Actor interface {
 	GetID() int
 	RetrievePledges() ([]Pledge, error)
 	// AddPledge(pledge Pledge)
-
 }
 
 

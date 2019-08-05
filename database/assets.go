@@ -10,12 +10,11 @@ import (
 
 type Asset struct {
 	Index   	int
+	CompanyID 	int
 	Name    	string
-	Company 	string
 	Location 	string
-
 	Type 		string
-	Reports   []RepData
+	// Reports   []RepData
 }
 
 // Puts asset object in assets bucket. Called by NewAsset
@@ -27,10 +26,12 @@ func (a *Asset) SetID(id int) {
 	a.Index = id
 }
 
-func NewAsset(name string, company string) (Asset, error) {
+func NewAsset(name string, companyID int, location string, type_ string) (Asset, error) {
 	var asset Asset
 	asset.Name = name
-	asset.Company = company
+	asset.CompanyID = companyID
+	asset.Location = location
+	asset.Type = type_
 	return asset, asset.Save()
 }
 
@@ -42,9 +43,8 @@ func UpdateAsset(key int, info Asset) error {
 	asset.Name = info.Name
 	asset.Location = info.Location
 	asset.Type = info.Type
-	asset.Save()
 
-	return nil
+	return asset.Save()
 }
 
 // Given a key of type int, retrieves the corresponding asset object
@@ -61,7 +61,7 @@ func RetrieveAsset(key int) (Asset, error) {
 
 // Given a name and company, retrieves the corresponding asset object
 // from the database assets bucket.
-func RetrieveAssetByName(name string, company string) (Asset, error) {
+func RetrieveAssetByName(name string, companyID int) (Asset, error) {
 	var asset Asset
 	allAssets, err := RetrieveAllAssets()
 	if err != nil {
@@ -69,7 +69,7 @@ func RetrieveAssetByName(name string, company string) (Asset, error) {
 	}
 
 	for _, asset := range allAssets {
-		if asset.Name == name && asset.Company == company {
+		if asset.Name == name && asset.CompanyID == companyID {
 			return asset, nil
 		}
 	}

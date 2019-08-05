@@ -96,44 +96,6 @@ func AddPledge() {
 
 		// TODO: Convert pledge into smart contract condition
 		erpc.MarshalSend(w, new)
-
-		// EDIT: No longer necessary due to new pledge bucket.
-		// // Retrieve the actor item corresponding to the user who made the
-		// // request, and put that item into the "actor" var so that we can
-		// // add pledges to the database.
-
-		// var actor db.Actor
-		// switch user.EntityType {
-		// case "company":
-		// 	var company db.Company
-		// 	company, err = db.RetrieveCompany(user.EntityID)
-		// 	actor = &company
-		// case "city":
-		// 	var city db.City
-		// 	city, err = db.RetrieveCity(user.EntityID)
-		// 	actor = &city
-		// case "state":
-		// 	var state db.State
-		// 	state, err = db.RetrieveState(user.EntityID)
-		// 	actor = &state
-		// case "region":
-		// 	var region db.Region
-		// 	region, err = db.RetrieveRegion(user.EntityID)
-		// 	actor = &region
-		// case "country":
-		// 	var country db.Country
-		// 	country, err = db.RetrieveCountry(user.EntityID)
-		// 	actor = &country
-		// default:
-		// 	log.Println("Entity type of user is not valid.")
-		// 	erpc.ResponseHandler(w, erpc.StatusUnauthorized)
-		// 	return
-		// }
-		// if err != nil {
-		// 	log.Println(err)
-		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 	return
-		// }
 	})
 }
 
