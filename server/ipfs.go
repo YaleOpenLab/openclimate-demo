@@ -3,14 +3,12 @@ package server
 import (
 
 	"log"
+	"strconv"
 	"net/http"
 
 	erpc "github.com/Varunram/essentials/rpc"
 
 )
-
-
-
 
 /* 
 	Request & retrieve data for a specific actor that has been committed to IPFS.
@@ -33,6 +31,11 @@ func RetrieveFromIpfs() {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 		}
 
-
+		actorType := r.URL.Query()["actor_type"][0]
+		actorID, err := strconv.Atoi(r.URL.Query()["actor_id"][0])
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
 	})
 }

@@ -55,6 +55,21 @@ func NewPledge(pledgeType string, baseYear int, targetYear int, goal float64, re
 	return p, p.Save()
 }
 
+func UpdatePledge(key int, updated Pledge) error {
+	pledge, err := RetrievePledge(key)
+	if err != nil {
+		return errors.Wrap(err, "UpdatePledge() failed (likely because pledge doesn't exist)")
+	}
+
+	// ActorID and PledgeType are not updated because
+	// these attributes should not change.
+
+	pledge.BaseYear = updated.BaseYear
+	pledge.TargetYear = updated.TargetYear
+	pledge.Goal = updated.Goal
+	pledge.Regulatory = updated.Regulatory
+	return pledge.Save()
+}
 
 func RetrievePledge(key int) (Pledge, error) {
 	var pledge Pledge
@@ -65,22 +80,6 @@ func RetrievePledge(key int) (Pledge, error) {
 	err = json.Unmarshal(pledgeBytes, &pledge)
 	return pledge, err
 }
-
-
-// func UpdatePledge(pledgeID int, pledgeType string, baseYear int, targetYear int, goal float64, regulatory bool, actorID int) (Pledge, error) {
-
-// 	p := RetrievePledge(pledgeID)
-// 	if pledgeType != "" {
-
-// 	}
-// }
-
-
-
-
-
-
-
 
 
 

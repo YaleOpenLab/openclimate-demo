@@ -139,6 +139,7 @@ func UpdateAsset() {
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
 		}
 
 		bytes, err := ioutil.ReadAll(r.Body)

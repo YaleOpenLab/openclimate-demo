@@ -99,6 +99,52 @@ func AddPledge() {
 	})
 }
 
+func UpdatePledge() {
+	http.HandleFunc("/user/pledges/update", func(w http.ResponseWriter, r *http.Request) {
+
+		user, err := CheckPostAdmin(w, r)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		pledgeID, err := strconv.Atoi(r.URL.Query()["pledge_id"][0])
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		bytes, err := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		var pledge db.Pledge
+		err = json.Unmarshal(bytes, &pledge)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		pledge.ID = pledgeID
+		pledge.ActorID = user.EntityID
+
+		err = db.UpdatePledge(pledgeID, pledge)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
+
+		erpc.MarshalSend(w, pledge)
+	})
+}
+
 
 func CommitPledge() {
 	http.HandleFunc("user/pledges/commit", func (w http.ResponseWriter, r *http.Request) {
