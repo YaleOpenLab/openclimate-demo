@@ -147,25 +147,20 @@ func (c *Company) GetID() int {
 }
 
 
-func (c *Company) AddPledge(pledge Pledge) {
-	c.Pledges = append(c.Pledges, pledge)
-	c.Save()
-}
+func (c *Company) RetrievePledges() ([]Pledge, error) {
+	var pledges []Pledge
 
+	allPledges, err := RetrieveAllPledges()
+	if err != nil {
+		return pledges, err
+	}
 
-func (c *Company) UpdatePledge(pledge Pledge) {
-
-}
-
-
-func (c *Company) DeletePledge(pledge Pledge) {
-	var empty Pledge
-	for i, v := range c.Pledges {
-		if v == pledge {
-			c.Pledges[i] = empty
+	for _, val := range allPledges {
+		if val.ActorID == c.GetID() {
+			pledges = append(pledges, val)
 		}
 	}
-	c.Save()
+	return pledges, nil
 }
 
 

@@ -5,6 +5,7 @@ import (
 	"io/ioutil"
 	"log"
 	"net/http"
+	"strconv"
 	// "github.com/pkg/errors"
 
 	erpc "github.com/Varunram/essentials/rpc"
@@ -23,10 +24,12 @@ func AddPledge() {
 		user, err := CheckPostAuth(w, r)
 		if err != nil {
 			log.Println(err)
-			// erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
+		// Read the data in the body of the response into bytes,
+		// which will be parsed into a map[string]string.
 		bytes, err := ioutil.ReadAll(r.Body)
 		defer r.Body.Close()
 		if err != nil {
@@ -35,7 +38,10 @@ func AddPledge() {
 			return
 		}
 
-		var pledge db.Pledge
+		// Unmarshal the json bytes into the map[string]string data type
+		// to be parsed for the arguments to create a new Pledge item and
+		// inserted into the pledge bucket.
+		var pledge map[string]string
 		err = json.Unmarshal(bytes, &pledge)
 		if err != nil {
 			log.Println(err)
@@ -43,43 +49,90 @@ func AddPledge() {
 			return
 		}
 
-		var actor db.Actor
+		// Convert string data into the correct data type to be passed
+		// to the NewPledge() function, in order to create the new pledge.
 
-		switch user.EntityType {
-		case "company":
-			var company db.Company
-			company, err = db.RetrieveCompany(user.EntityID)
-			actor = &company
-		case "city":
-			var city db.City
-			city, err = db.RetrieveCity(user.EntityID)
-			actor = &city
-		case "state":
-			var state db.State
-			state, err = db.RetrieveState(user.EntityID)
-			actor = &state
-		case "region":
-			var region db.Region
-			region, err = db.RetrieveRegion(user.EntityID)
-			actor = &region
-		case "country":
-			var country db.Country
-			country, err = db.RetrieveCountry(user.EntityID)
-			actor = &country
-		default:
-			log.Println("Entity type of user is not valid.")
-			erpc.ResponseHandler(w, erpc.StatusUnauthorized)
-			return
-		}
+		actorID := user.EntityID
+
+		pledgeType := pledge["pledge_type"]
+
+		baseYear, err := strconv.Atoi(pledge["base_year"])
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
-		actor.AddPledge(pledge)
-		// Convert pledge into smart contract condition
-		erpc.MarshalSend(w, pledge)
+		targetYear, err := strconv.Atoi(pledge["target_year"])
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		goal, err := strconv.ParseFloat(pledge["goal"], 64)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		regulatory, err := strconv.ParseBool(pledge["regulatory"])
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		// Call NewPledge() with all the arguments, which have been typecasted
+		// into the proper types required by the NewPledge function.
+		new, err := db.NewPledge(pledgeType, baseYear, targetYear, goal, regulatory, actorID)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		// TODO: Convert pledge into smart contract condition
+		erpc.MarshalSend(w, new)
+
+		// EDIT: No longer necessary due to new pledge bucket.
+		// // Retrieve the actor item corresponding to the user who made the
+		// // request, and put that item into the "actor" var so that we can
+		// // add pledges to the database.
+
+		// var actor db.Actor
+		// switch user.EntityType {
+		// case "company":
+		// 	var company db.Company
+		// 	company, err = db.RetrieveCompany(user.EntityID)
+		// 	actor = &company
+		// case "city":
+		// 	var city db.City
+		// 	city, err = db.RetrieveCity(user.EntityID)
+		// 	actor = &city
+		// case "state":
+		// 	var state db.State
+		// 	state, err = db.RetrieveState(user.EntityID)
+		// 	actor = &state
+		// case "region":
+		// 	var region db.Region
+		// 	region, err = db.RetrieveRegion(user.EntityID)
+		// 	actor = &region
+		// case "country":
+		// 	var country db.Country
+		// 	country, err = db.RetrieveCountry(user.EntityID)
+		// 	actor = &country
+		// default:
+		// 	log.Println("Entity type of user is not valid.")
+		// 	erpc.ResponseHandler(w, erpc.StatusUnauthorized)
+		// 	return
+		// }
+		// if err != nil {
+		// 	log.Println(err)
+		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		// 	return
+		// }
 	})
 }
 

@@ -125,6 +125,18 @@ func (c *Country) GetID() int {
 	return c.Index
 }
 
-func (c *Country) AddPledge(pledge Pledge) {
-	c.Pledges = append(c.Pledges, pledge)
+func (c *Country) RetrievePledges() ([]Pledge, error) {
+	var pledges []Pledge
+
+	allPledges, err := RetrieveAllPledges()
+	if err != nil {
+		return pledges, err
+	}
+
+	for _, val := range allPledges {
+		if val.ActorID == c.GetID() {
+			pledges = append(pledges, val)
+		}
+	}
+	return pledges, nil
 }

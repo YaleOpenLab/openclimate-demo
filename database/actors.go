@@ -3,7 +3,8 @@ package database
 type Actor interface {
 	SetID(id int)
 	GetID() int
-	AddPledge(pledge Pledge)
+	// RetrievePledges() ([]Pledge, error)
+	// AddPledge(pledge Pledge)
 
 }
 

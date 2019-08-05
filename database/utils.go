@@ -43,6 +43,37 @@ func RetrieveAllUsers() ([]User, error) {
 }
 
 
+func RetrieveAllPledges() ([]Pledge, error) {
+
+	var arr []Pledge
+	db, err := edb.OpenDB(globals.DbPath)
+	if err != nil {
+		return arr, errors.Wrap(err, "RetrieveAllPledges() failed.")
+	}
+
+	defer db.Close()
+
+	err = db.View(func(tx *bolt.Tx) error {
+		b := tx.Bucket(PledgeBucket)
+		if b == nil {
+			return errors.New("Bucket is missing")
+		}
+
+		c := b.Cursor()
+		for k, v := c.First(); k != nil; k, v = c.Next() {
+			var pledge Pledge
+			err = json.Unmarshal(v, &pledge)
+			if err != nil {
+				return errors.Wrap(err, "RetrieveAllPledges() failed")
+			}
+			arr = append(arr, pledge)
+		}
+		return nil
+	})
+	return arr, nil
+}
+
+
 func Save(dir string, bucketName []byte, x BucketItem) error {
 	db, err := edb.OpenDB(dir)
 	if err != nil {
