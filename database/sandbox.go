@@ -55,8 +55,7 @@ func PopulateTestUsers() error {
 		return errors.Wrap(err, "failed to create test user in country: USA")
 	}
 	user.Verified = true
-	user.Save()
-	return nil
+	return user.Save()
 }
 
 // func TestGetActor() {
@@ -75,7 +74,7 @@ func PopulateTestUsers() error {
 func PopulateAdminUsers() error {
 	pwhash := utils.SHA3hash("p")
 
-	log.Println("hit1")
+	// log.Println("hit1")
 
 	_, err := NewUser("amanda", pwhash, "amanda@test.com", "individual", "", "")
 	if err != nil {

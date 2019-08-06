@@ -4,6 +4,22 @@ import (
 	globals "github.com/YaleOpenLab/openclimate/globals"
 )
 
+type Actor interface {
+	RetrievePledges() ([]Pledge, error)
+	// AddPledge(pledge Pledge)
+}
+
+type BucketItem interface {
+	SetID(id int)
+}
+
+type RepData struct {
+	// pledge, emissions, mitigation, adaption, etc.
+	ReportType string
+	Year       int
+	IpfsHash   string
+}
+
 // Puts asset object in assets bucket. Called by NewAsset
 func (a *Asset) Save() error {
 	return Save(globals.DbPath, AssetBucket, a)
