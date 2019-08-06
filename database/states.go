@@ -105,6 +105,29 @@ func RetrieveAllStates() ([]State, error) {
 	return states, nil
 }
 
+
+// Retrieves and filters state by country.
+func FilterStates(country string) ([]State, error) {
+	var states []State
+	keys, err := edb.RetrieveAllKeys(globals.DbPath, StateBucket)
+	if err != nil {
+		return states, errors.Wrap(err, "error while retrieving all states")
+	}
+
+	for _, val := range keys {
+		var state State
+		err = json.Unmarshal(val, &state)
+		if state.Country == country {
+			if err != nil {
+				return states, errors.Wrap(err, "could not unmarshal json")
+			}
+			states = append(states, state)
+		}
+	}
+	return states, nil
+}
+
+
 func (s *State) RetrievePledges() ([]Pledge, error) {
 	var pledges []Pledge
 

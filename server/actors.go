@@ -90,6 +90,32 @@ func getAllStates() {
 	})
 }
 
+func getStatesByCountry() {
+	http.HandleFunc("/state/filter", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		if r.URL.Query()["country"] == nil {
+			log.Println("Country not passed, quitting")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		states, err := database.FilterStates(r.URL.Query()["country"][0])
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, states)
+	})
+}
+
 func getState() {
 	http.HandleFunc("/state", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
