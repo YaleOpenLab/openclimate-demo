@@ -3,71 +3,47 @@ package database
 import (
 	"encoding/json"
 	edb "github.com/Varunram/essentials/database"
+	utils "github.com/Varunram/essentials/utils"
 	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/pkg/errors"
 	// "github.com/Varunram/essentials/utils"
 	"encoding/binary"
 	"github.com/boltdb/bolt"
-	"log"
+	// "log"
 )
 
 func RetrieveAllUsers() ([]User, error) {
-
 	var arr []User
-	db, err := edb.OpenDB(globals.DbPath)
+	x, err := edb.RetrieveAllKeys(globals.DbPath, UserBucket)
 	if err != nil {
-		return arr, errors.Wrap(err, "RetrieveAllKeys() failed.")
+		return arr, errors.Wrap(err, "error while retrieving all users")
+	}
+	for _, value := range x {
+		var temp User
+		err := json.Unmarshal(value, &temp)
+		if err != nil {
+			return arr, errors.New("error while unmarshalling json, quitting")
+		}
+		arr = append(arr, temp)
 	}
 
-	defer db.Close()
-
-	err = db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket(UserBucket)
-		if b == nil {
-			return errors.New("Bucket is missing")
-		}
-
-		c := b.Cursor()
-		for k, v := c.First(); k != nil; k, v = c.Next() {
-			var actor User
-			err = json.Unmarshal(v, &actor)
-			if err != nil {
-				return errors.Wrap(err, "RetrieveAllActors() failed")
-			}
-			arr = append(arr, actor)
-		}
-		return nil
-	})
 	return arr, nil
 }
 
 func RetrieveAllPledges() ([]Pledge, error) {
-
 	var arr []Pledge
-	db, err := edb.OpenDB(globals.DbPath)
+	x, err := edb.RetrieveAllKeys(globals.DbPath, PledgeBucket)
 	if err != nil {
-		return arr, errors.Wrap(err, "RetrieveAllPledges() failed.")
+		return arr, errors.Wrap(err, "error while retrieving all users")
 	}
-
-	defer db.Close()
-
-	err = db.View(func(tx *bolt.Tx) error {
-		b := tx.Bucket(PledgeBucket)
-		if b == nil {
-			return errors.New("Bucket is missing")
+	for _, value := range x {
+		var temp Pledge
+		err := json.Unmarshal(value, &temp)
+		if err != nil {
+			return arr, errors.New("error while unmarshalling json, quitting")
 		}
-
-		c := b.Cursor()
-		for k, v := c.First(); k != nil; k, v = c.Next() {
-			var pledge Pledge
-			err = json.Unmarshal(v, &pledge)
-			if err != nil {
-				return errors.Wrap(err, "RetrieveAllPledges() failed")
-			}
-			arr = append(arr, pledge)
-		}
-		return nil
-	})
+		arr = append(arr, temp)
+	}
 	return arr, nil
 }
 
@@ -84,13 +60,10 @@ func Save(dir string, bucketName []byte, x BucketItem) error {
 			return errors.New("Bucket missing")
 		}
 
-		// Generate ID for the user.
+		// Generate and set ID for the user.
 		// This returns an error only if the Tx is closed or not writeable.
 		// That can't happen in an Update() call so I ignore the error check.
 		id, _ := b.NextSequence()
-		log.Println(id)
-
-		// Set the id of the user
 		x.SetID(int(id))
 
 		encoded, err := json.Marshal(x)
@@ -99,13 +72,11 @@ func Save(dir string, bucketName []byte, x BucketItem) error {
 		}
 
 		// Put bytes to bucket
-		return b.Put(itob(int(id)), encoded)
+		idBytes, err := utils.ToByte(id)
+		if err != nil {
+			return err
+		}
+		return b.Put(idBytes, encoded)
 	})
 	return err
-}
-
-func itob(v int) []byte {
-	b := make([]byte, 8)
-	binary.BigEndian.PutUint64(b, uint64(v))
-	return b
 }
