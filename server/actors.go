@@ -17,6 +17,7 @@ func setupActorsHandlers() {
 	getRegion()
 	getAllStates()
 	getState()
+	getStatesByCountry()
 	getAllCities()
 	getCity()
 	getAllCountries()
