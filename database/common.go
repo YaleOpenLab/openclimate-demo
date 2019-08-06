@@ -11,6 +11,7 @@ type Actor interface {
 
 type BucketItem interface {
 	SetID(id int)
+	GetID() int
 }
 
 type RepData struct {
