@@ -15,6 +15,8 @@ func setupActorsHandlers() {
 	getCompany()
 	getAllRegions()
 	getRegion()
+	getAllStates()
+	getState()
 	getAllCities()
 	getCity()
 	getAllCountries()
@@ -64,6 +66,52 @@ func getRegion() {
 		}
 
 		erpc.MarshalSend(w, region)
+	})
+}
+
+/******************/
+/* STATE HANDLERS */
+/******************/
+
+func getAllStates() {
+	http.HandleFunc("/state/all", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			return
+		}
+
+		states, err := database.RetrieveAllStates()
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, states)
+	})
+}
+
+func getState() {
+	http.HandleFunc("/state", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			return
+		}
+
+		if r.URL.Query()["state_name"] == nil || r.URL.Query()["state_country"] == nil {
+			log.Println("State_name or state_country not passed, quitting")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		}
+
+		name := r.URL.Query()["state_name"][0]
+		country := r.URL.Query()["state_country"][0]
+		state, err := database.RetrieveStateByName(name, country) //************ STOP ***********
+		if err != nil {
+			log.Println("Error while retrieving state, quitting")
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, state)
 	})
 }
 
