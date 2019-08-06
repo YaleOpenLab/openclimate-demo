@@ -44,19 +44,6 @@ type Region struct {
 	Adaptation map[string]string
 }
 
-// Saves region object in regions bucket. Called by NewRegion
-func (region *Region) Save() error {
-	return Save(globals.DbPath, RegionBucket, region)
-}
-
-func (r *Region) SetID(id int) {
-	r.Index = id
-}
-
-func (r *Region) GetID() int {
-	return r.Index
-}
-
 // Function that creates a new region object given its name and country
 // and saves the object in the regions bucket.
 func NewRegion(name string, country string) (Region, error) {
@@ -126,7 +113,7 @@ func (r *Region) RetrievePledges() ([]Pledge, error) {
 	}
 
 	for _, val := range allPledges {
-		if val.ActorID == r.GetID() {
+		if val.ActorID == r.Index {
 			pledges = append(pledges, val)
 		}
 	}

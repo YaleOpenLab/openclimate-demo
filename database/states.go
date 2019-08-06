@@ -45,19 +45,6 @@ type State struct {
 	Adaptation map[string]string
 }
 
-// Saves state object in states bucket. Called by NewState
-func (state *State) Save() error {
-	return Save(globals.DbPath, StateBucket, state)
-}
-
-func (s *State) SetID(id int) {
-	s.Index = id
-}
-
-func (s *State) GetID() int {
-	return s.Index
-}
-
 // Function that creates a new state object given its name and country
 // and saves the object in the states bucket.
 func NewState(name string, country string) (State, error) {
@@ -127,7 +114,7 @@ func (s *State) RetrievePledges() ([]Pledge, error) {
 	}
 
 	for _, val := range allPledges {
-		if val.ActorID == s.GetID() {
+		if val.ActorID == s.Index {
 			pledges = append(pledges, val)
 		}
 	}

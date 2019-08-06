@@ -17,15 +17,6 @@ type Asset struct {
 	// Reports   []RepData
 }
 
-// Puts asset object in assets bucket. Called by NewAsset
-func (a *Asset) Save() error {
-	return Save(globals.DbPath, AssetBucket, a)
-}
-
-func (a *Asset) SetID(id int) {
-	a.Index = id
-}
-
 func NewAsset(name string, companyID int, location string, type_ string) (Asset, error) {
 	var asset Asset
 	asset.Name = name

@@ -19,14 +19,6 @@ type ConnectRequest struct {
 	Links       []string // links with more info
 }
 
-func (cr *ConnectRequest) Save() error {
-	return Save(globals.DbPath, RequestBucket, cr)
-}
-
-func (cr *ConnectRequest) SetID(id int) {
-	cr.Index = id
-}
-
 func NewRequest(request ConnectRequest) error {
 	return request.Save()
 }

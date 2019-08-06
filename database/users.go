@@ -53,12 +53,6 @@ type CosmWallet struct {
 }
 */
 
-// Save inserts a passed User object into the database
-func (u *User) Save() error {
-	// log.Println("INSIDE SAVE()")
-	return Save(globals.DbPath, UserBucket, u)
-}
-
 // NewUser creates a new user
 func NewUser(username string, pwhash string, email string, entityType string, entityName string, entityParent string) (User, error) {
 	var user User
@@ -176,14 +170,6 @@ func ValidateUser(username string, pwhash string) (User, error) {
 	}
 
 	return user, errors.New("user not found")
-}
-
-func (u *User) SetID(id int) {
-	u.Index = id
-}
-
-func (u *User) GetID() int {
-	return u.Index
 }
 
 // Empty function, simply allows User to match "Actor" interface methods

@@ -39,19 +39,6 @@ type Country struct {
 	Adaptation map[string]string
 }
 
-// Saves country object in countries bucket. Called by NewCountry
-func (country *Country) Save() error {
-	return Save(globals.DbPath, CountryBucket, country)
-}
-
-func (c *Country) SetID(id int) {
-	c.Index = id
-}
-
-func (c *Country) GetID() int {
-	return c.Index
-}
-
 // Function that creates a new country object given its name and saves
 // the object in the countries bucket.
 func NewCountry(name string) (Country, error) {
@@ -120,7 +107,7 @@ func (c *Country) RetrievePledges() ([]Pledge, error) {
 	}
 
 	for _, val := range allPledges {
-		if val.ActorID == c.GetID() {
+		if val.ActorID == c.Index {
 			pledges = append(pledges, val)
 		}
 	}

@@ -54,19 +54,6 @@ type Company struct {
 	Adaptation map[string]string
 }
 
-// Saves company object in companies bucket. Called by NewCompany
-func (c *Company) Save() error {
-	return Save(globals.DbPath, CompanyBucket, c)
-}
-
-func (c *Company) SetID(id int) {
-	c.Index = id
-}
-
-func (c *Company) GetID() int {
-	return c.Index
-}
-
 func (c *Company) UpdateMRV(MRV string) {
 	c.MRV = MRV
 	c.Save()
@@ -140,7 +127,7 @@ func (c *Company) RetrievePledges() ([]Pledge, error) {
 	}
 
 	for _, val := range allPledges {
-		if val.ActorID == c.GetID() {
+		if val.ActorID == c.Index {
 			pledges = append(pledges, val)
 		}
 	}

@@ -30,14 +30,6 @@ type Oversight struct {
 
 }
 
-func (o *Oversight) Save() error {
-	return Save(globals.DbPath, OversightBucket, o)
-}
-
-func (o *Oversight) SetID(id int) {
-	o.Index = id
-}
-
 func NewOsOrg(name string) (Oversight, error) {
 	var osOrg Oversight
 	osOrg.Name = name

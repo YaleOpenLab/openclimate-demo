@@ -31,14 +31,6 @@ type Pledge struct {
 	Regulatory bool
 }
 
-func (p *Pledge) Save() error {
-	return Save(globals.DbPath, PledgeBucket, p)
-}
-
-func (p *Pledge) SetID(id int) {
-	p.ID = id
-}
-
 func NewPledge(pledgeType string, baseYear int, targetYear int, goal float64, regulatory bool, actorID int) (Pledge, error) {
 
 	var p Pledge
