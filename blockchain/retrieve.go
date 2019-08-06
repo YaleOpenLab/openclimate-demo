@@ -1,12 +1,11 @@
 package blockchain
 
-
 /*
 
-	GetFromIpfs() is not a real function yet. The function will receive the 
-	actor type and the actor id, then search our smart contract for all the 
-	IPFS hashes that are associated with that actor type and actor id. The 
-	function will then retrieve the corresponding data from IPFS using those 
+	GetFromIpfs() is not a real function yet. The function will receive the
+	actor type and the actor id, then search our smart contract for all the
+	IPFS hashes that are associated with that actor type and actor id. The
+	function will then retrieve the corresponding data from IPFS using those
 	hash content addresses and return it to us here.
 
 	arguments:

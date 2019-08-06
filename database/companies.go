@@ -34,7 +34,7 @@ type Company struct {
 	ForProfit     bool
 	Industry      bool
 
-	MRV 		string // the company's chosen MRV reporting methodology
+	MRV string // the company's chosen MRV reporting methodology
 
 	Pledges []Pledge
 
@@ -54,7 +54,6 @@ type Company struct {
 	Adaptation map[string]string
 }
 
-
 // Saves company object in companies bucket. Called by NewCompany
 func (c *Company) Save() error {
 	return Save(globals.DbPath, CompanyBucket, c)
@@ -73,7 +72,6 @@ func (c *Company) UpdateMRV(MRV string) {
 	c.Save()
 }
 
-
 // Function that creates a new company object given its name
 // and country and saves the object in the countries bucket.
 func NewCompany(name string, country string) (Company, error) {
@@ -82,7 +80,6 @@ func NewCompany(name string, country string) (Company, error) {
 	company.Country = country
 	return company, company.Save()
 }
-
 
 // Given a key of type int, retrieves the corresponding company object
 // from the database companies bucket.
@@ -95,7 +92,6 @@ func RetrieveCompany(key int) (Company, error) {
 	err = json.Unmarshal(companyBytes, &company)
 	return company, err
 }
-
 
 // Given a name and country, retrieves the corresponding company object
 // from the database companies bucket.
@@ -114,7 +110,6 @@ func RetrieveCompanyByName(name string, country string) (Company, error) {
 
 	return company, errors.New("company not found, quitting")
 }
-
 
 // RetrieveAllCompanies gets a list of all companies in the database
 func RetrieveAllCompanies() ([]Company, error) {
@@ -136,7 +131,6 @@ func RetrieveAllCompanies() ([]Company, error) {
 	return companies, nil
 }
 
-
 func (c *Company) RetrievePledges() ([]Pledge, error) {
 	var pledges []Pledge
 
@@ -152,7 +146,6 @@ func (c *Company) RetrievePledges() ([]Pledge, error) {
 	}
 	return pledges, nil
 }
-
 
 // func (c *Company) AddAsset(info Asset) error {
 // 	asset, err := NewAsset(info.Name, c.Name)

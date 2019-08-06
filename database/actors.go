@@ -6,11 +6,9 @@ type Actor interface {
 	// AddPledge(pledge Pledge)
 }
 
-
 type BucketItem interface {
 	SetID(id int)
 }
-
 
 type RepData struct {
 	// pledge, emissions, mitigation, adaption, etc.

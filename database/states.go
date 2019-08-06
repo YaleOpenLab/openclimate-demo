@@ -58,7 +58,6 @@ func (s *State) GetID() int {
 	return s.Index
 }
 
-
 // Function that creates a new state object given its name and country
 // and saves the object in the states bucket.
 func NewState(name string, country string) (State, error) {
@@ -118,7 +117,6 @@ func RetrieveAllStates() ([]State, error) {
 
 	return states, nil
 }
-
 
 func (s *State) RetrievePledges() ([]Pledge, error) {
 	var pledges []Pledge

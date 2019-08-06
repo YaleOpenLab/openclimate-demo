@@ -9,11 +9,11 @@ import (
 )
 
 type Asset struct {
-	Index   	int
-	CompanyID 	int
-	Name    	string
-	Location 	string
-	Type 		string
+	Index     int
+	CompanyID int
+	Name      string
+	Location  string
+	Type      string
 	// Reports   []RepData
 }
 

@@ -146,9 +146,8 @@ func UpdatePledge() {
 	})
 }
 
-
 func CommitPledge() {
-	http.HandleFunc("user/pledges/commit", func (w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("user/pledges/commit", func(w http.ResponseWriter, r *http.Request) {
 		_, err := CheckGetAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -185,7 +184,6 @@ func CommitPledge() {
 		erpc.MarshalSend(w, ipfsHash)
 	})
 }
-
 
 func SelfReport() {
 	http.HandleFunc("/user/self-report", func(w http.ResponseWriter, r *http.Request) {

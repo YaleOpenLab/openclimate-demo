@@ -240,7 +240,6 @@ func updateUser() {
 	})
 }
 
-
 /*********************/
 /* ETHEREUM HANDLERS */
 /*********************/
@@ -278,7 +277,6 @@ func sendEth() {
 		erpc.ResponseHandler(w, erpc.StatusOK)
 	})
 }
-
 
 // func getAllRequests() {
 // 	http.HandleFunc("/requests/all", func(w http.ResponseWriter, r *http.Request) {

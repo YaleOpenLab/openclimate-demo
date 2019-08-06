@@ -57,7 +57,6 @@ func (r *Region) GetID() int {
 	return r.Index
 }
 
-
 // Function that creates a new region object given its name and country
 // and saves the object in the regions bucket.
 func NewRegion(name string, country string) (Region, error) {
@@ -66,7 +65,6 @@ func NewRegion(name string, country string) (Region, error) {
 	new.Country = country
 	return new, new.Save()
 }
-
 
 // Given a key of type int, retrieves the corresponding region object
 // from the database regions bucket.
@@ -118,7 +116,6 @@ func RetrieveAllRegions() ([]Region, error) {
 
 	return regions, nil
 }
-
 
 func (r *Region) RetrievePledges() ([]Pledge, error) {
 	var pledges []Pledge

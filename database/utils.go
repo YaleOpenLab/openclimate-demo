@@ -2,15 +2,14 @@ package database
 
 import (
 	"encoding/json"
-	"github.com/pkg/errors"
-	"github.com/YaleOpenLab/openclimate/globals"
 	edb "github.com/Varunram/essentials/database"
+	"github.com/YaleOpenLab/openclimate/globals"
+	"github.com/pkg/errors"
 	// "github.com/Varunram/essentials/utils"
-	"github.com/boltdb/bolt"
 	"encoding/binary"
+	"github.com/boltdb/bolt"
 	"log"
 )
-
 
 func RetrieveAllUsers() ([]User, error) {
 
@@ -42,7 +41,6 @@ func RetrieveAllUsers() ([]User, error) {
 	return arr, nil
 }
 
-
 func RetrieveAllPledges() ([]Pledge, error) {
 
 	var arr []Pledge
@@ -73,14 +71,13 @@ func RetrieveAllPledges() ([]Pledge, error) {
 	return arr, nil
 }
 
-
 func Save(dir string, bucketName []byte, x BucketItem) error {
 	db, err := edb.OpenDB(dir)
 	if err != nil {
 		return errors.Wrap(err, "could not open database")
 	}
 	defer db.Close()
-	
+
 	err = db.Update(func(tx *bolt.Tx) error {
 		b := tx.Bucket(bucketName)
 		if b == nil {
@@ -88,8 +85,8 @@ func Save(dir string, bucketName []byte, x BucketItem) error {
 		}
 
 		// Generate ID for the user.
-        // This returns an error only if the Tx is closed or not writeable.
-        // That can't happen in an Update() call so I ignore the error check.
+		// This returns an error only if the Tx is closed or not writeable.
+		// That can't happen in an Update() call so I ignore the error check.
 		id, _ := b.NextSequence()
 		log.Println(id)
 
@@ -107,9 +104,8 @@ func Save(dir string, bucketName []byte, x BucketItem) error {
 	return err
 }
 
-
 func itob(v int) []byte {
-    b := make([]byte, 8)
-    binary.BigEndian.PutUint64(b, uint64(v))
-    return b
+	b := make([]byte, 8)
+	binary.BigEndian.PutUint64(b, uint64(v))
+	return b
 }

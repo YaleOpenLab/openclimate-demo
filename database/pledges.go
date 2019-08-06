@@ -9,29 +9,27 @@ import (
 )
 
 type Pledge struct {
+	ID      int
+	ActorID int
 
-	ID 			int
-	ActorID 	int
-
-	/* 
+	/*
 		Pledges can be:
 		emissions reductions,
 		mitigation actions (energy efficiency, renewables, etc.),
-		or adaptation actions 
+		or adaptation actions
 	*/
-	PledgeType	string
+	PledgeType string
 
-	BaseYear  	int
+	BaseYear int
 
-	TargetYear 	int
+	TargetYear int
 
-	Goal 		float64
+	Goal float64
 
 	// is this goal determined by a regulator, or voluntarily
 	// adopted by the climate actor?
-	Regulatory	bool
+	Regulatory bool
 }
-
 
 func (p *Pledge) Save() error {
 	return Save(globals.DbPath, PledgeBucket, p)
@@ -40,7 +38,6 @@ func (p *Pledge) Save() error {
 func (p *Pledge) SetID(id int) {
 	p.ID = id
 }
-
 
 func NewPledge(pledgeType string, baseYear int, targetYear int, goal float64, regulatory bool, actorID int) (Pledge, error) {
 
@@ -80,6 +77,3 @@ func RetrievePledge(key int) (Pledge, error) {
 	err = json.Unmarshal(pledgeBytes, &pledge)
 	return pledge, err
 }
-
-
-

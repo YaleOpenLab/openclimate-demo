@@ -4,10 +4,10 @@ import (
 	// "github.com/pkg/errors"
 	"log"
 	// "math/big"
+	"encoding/json"
+	"io/ioutil"
 	"net/http"
 	"strconv"
-	"io/ioutil"
-	"encoding/json"
 
 	// ipfs "github.com/Varunram/essentials/ipfs"
 	erpc "github.com/Varunram/essentials/rpc"
@@ -20,12 +20,11 @@ func setupManageHandlers() {
 	UpdateAsset()
 }
 
-
 /*
 	Function allows admins of a particular entity to "verify" other users who claim to be
 	part of the same entity.
 
-	URL parameters: 
+	URL parameters:
 	- "candidate_id": the ID of the user who is being considered for verification
 */
 func VerifyUser() {
@@ -120,7 +119,6 @@ func AddAsset() {
 	})
 }
 
-
 /*
 	URL parameters:
 	- Asset ID
@@ -176,5 +174,3 @@ func UpdateAsset() {
 		erpc.MarshalSend(w, asset)
 	})
 }
-
-

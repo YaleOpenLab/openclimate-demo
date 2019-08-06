@@ -42,7 +42,6 @@ type City struct {
 	Adaptation map[string]string
 }
 
-
 // Saves city object in cities bucket. Called by NewCity
 func (city *City) Save() error {
 	return Save(globals.DbPath, CityBucket, city)
@@ -55,7 +54,6 @@ func (c *City) SetID(id int) {
 func (c *City) GetID() int {
 	return c.Index
 }
-
 
 // Function that creates a new city object given its name, region,
 // and country and saves the object in the countries bucket.
@@ -121,7 +119,6 @@ func RetrieveAllCities() ([]City, error) {
 	return cities, nil
 }
 
-
 func (c *City) RetrievePledges() ([]Pledge, error) {
 	var pledges []Pledge
 
@@ -137,11 +134,3 @@ func (c *City) RetrievePledges() ([]Pledge, error) {
 	}
 	return pledges, nil
 }
-
-
-
-
-
-
-
-

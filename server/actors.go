@@ -21,7 +21,6 @@ func setupActorsHandlers() {
 	getCountry()
 }
 
-
 /*******************/
 /* REGION HANDLERS */
 /*******************/
