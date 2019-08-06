@@ -111,7 +111,7 @@ func FilterStates(country string) ([]State, error) {
 	var states []State
 	keys, err := edb.RetrieveAllKeys(globals.DbPath, StateBucket)
 	if err != nil {
-		return states, errors.Wrap(err, "error while retrieving all states")
+		return states, errors.Wrap(err, "error while retrieving filtered states")
 	}
 
 	for _, val := range keys {

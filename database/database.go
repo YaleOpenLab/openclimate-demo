@@ -43,7 +43,11 @@ func CreateHomeDir() error {
 			RegionBucket,
 			CityBucket,
 			CountryBucket,
-			RequestBucket)
+			RequestBucket, 
+			StateBucket, 
+			OversightBucket, 
+			AssetBucket, 
+			PledgeBucket)
 		if err != nil {
 			return errors.Wrap(err, "could not create database")
 		}
@@ -66,7 +70,17 @@ func FlushDB() error {
 
 // OpenDB opens the db
 func OpenDB() (*bolt.DB, error) {
-	return edb.CreateDB(globals.DbPath, UserBucket, CompanyBucket, RegionBucket, CityBucket, CountryBucket)
+	return edb.CreateDB(globals.DbPath, 
+		UserBucket, 
+		CompanyBucket, 
+		RegionBucket, 
+		CityBucket, 
+		CountryBucket, 
+		StateBucket, 
+		OversightBucket, 
+		AssetBucket, 
+		RequestBucket, 
+		PledgeBucket)
 }
 
 // DeleteKeyFromBucket deletes a given key from the bucket bucketName but doesn
