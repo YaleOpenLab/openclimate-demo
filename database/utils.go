@@ -7,7 +7,6 @@ import (
 	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/pkg/errors"
 	// "github.com/Varunram/essentials/utils"
-	"encoding/binary"
 	"github.com/boltdb/bolt"
 	// "log"
 )
