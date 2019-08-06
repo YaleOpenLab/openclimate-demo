@@ -11,6 +11,7 @@ type Actor interface {
 
 type BucketItem interface {
 	SetID(id int)
+	GetID() int
 }
 
 type RepData struct {
@@ -21,88 +22,128 @@ type RepData struct {
 }
 
 // Puts asset object in assets bucket. Called by NewAsset
-func (a *Asset) Save() error {
-	return Save(globals.DbPath, AssetBucket, a)
+func (x *Asset) Save() error {
+	return Save(globals.DbPath, AssetBucket, x)
 }
 
 // Saves city object in cities bucket. Called by NewCity
-func (city *City) Save() error {
-	return Save(globals.DbPath, CityBucket, city)
+func (x *City) Save() error {
+	return Save(globals.DbPath, CityBucket, x)
 }
 
 // Saves country object in countries bucket. Called by NewCountry
-func (country *Country) Save() error {
-	return Save(globals.DbPath, CountryBucket, country)
+func (x *Country) Save() error {
+	return Save(globals.DbPath, CountryBucket, x)
 }
 
-func (o *Oversight) Save() error {
-	return Save(globals.DbPath, OversightBucket, o)
+func (x *Oversight) Save() error {
+	return Save(globals.DbPath, OversightBucket, x)
 }
 
-func (p *Pledge) Save() error {
-	return Save(globals.DbPath, PledgeBucket, p)
+func (x *Pledge) Save() error {
+	return Save(globals.DbPath, PledgeBucket, x)
 }
 
 // Saves region object in regions bucket. Called by NewRegion
-func (region *Region) Save() error {
-	return Save(globals.DbPath, RegionBucket, region)
+func (x *Region) Save() error {
+	return Save(globals.DbPath, RegionBucket, x)
 }
 
-func (cr *ConnectRequest) Save() error {
-	return Save(globals.DbPath, RequestBucket, cr)
+func (x *ConnectRequest) Save() error {
+	return Save(globals.DbPath, RequestBucket, x)
 }
 
 // Saves state object in states bucket. Called by NewState
-func (state *State) Save() error {
-	return Save(globals.DbPath, StateBucket, state)
+func (x *State) Save() error {
+	return Save(globals.DbPath, StateBucket, x)
 }
 
 // Save inserts a passed User object into the database
-func (u *User) Save() error {
-	return Save(globals.DbPath, UserBucket, u)
+func (x *User) Save() error {
+	return Save(globals.DbPath, UserBucket, x)
 }
 
 // Saves company object in companies bucket. Called by NewCompany
-func (c *Company) Save() error {
-	return Save(globals.DbPath, CompanyBucket, c)
+func (x *Company) Save() error {
+	return Save(globals.DbPath, CompanyBucket, x)
 }
 
-func (c *Company) SetID(id int) {
-	c.Index = id
+func (x *Company) SetID(id int) {
+	x.Index = id
 }
 
-func (a *Asset) SetID(id int) {
-	a.Index = id
+func (x *Asset) SetID(id int) {
+	x.Index = id
 }
 
-func (c *City) SetID(id int) {
-	c.Index = id
+func (x *City) SetID(id int) {
+	x.Index = id
 }
 
-func (c *Country) SetID(id int) {
-	c.Index = id
+func (x *Country) SetID(id int) {
+	x.Index = id
 }
 
-func (o *Oversight) SetID(id int) {
-	o.Index = id
+func (x *Oversight) SetID(id int) {
+	x.Index = id
 }
 
-func (p *Pledge) SetID(id int) {
-	p.ID = id
+func (x *Pledge) SetID(id int) {
+	x.ID = id
 }
 
-func (r *Region) SetID(id int) {
-	r.Index = id
+func (x *Region) SetID(id int) {
+	x.Index = id
 }
 
-func (cr *ConnectRequest) SetID(id int) {
-	cr.Index = id
+func (x *ConnectRequest) SetID(id int) {
+	x.Index = id
 }
 
-func (s *State) SetID(id int) {
-	s.Index = id
+func (x *State) SetID(id int) {
+	x.Index = id
 }
 
-func (u *User) SetID(id int) {
-	u.Index = id
+func (x *User) SetID(id int) {
+	x.Index = id
+}
+
+func (x *Company) GetID() int {
+	return x.Index
+}
+
+func (x *Asset) GetID() int {
+	return x.Index
+}
+
+func (x *City) GetID() int {
+	return x.Index
+}
+
+func (x *Country) GetID() int {
+	return x.Index
+}
+
+func (x *Oversight) GetID() int {
+	return x.Index
+}
+
+func (x *Pledge) GetID() int {
+	return x.ID
+}
+
+func (x *Region) GetID() int {
+	return x.Index
+}
+
+func (x *ConnectRequest) GetID() int {
+	return x.Index
+}
+
+func (x *State) GetID() int {
+	return x.Index
+}
+
+func (x *User) GetID() int {
+	return x.Index
 }
