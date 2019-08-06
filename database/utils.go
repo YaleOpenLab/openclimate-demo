@@ -62,8 +62,16 @@ func Save(dir string, bucketName []byte, x BucketItem) error {
 		// Generate and set ID for the user.
 		// This returns an error only if the Tx is closed or not writeable.
 		// That can't happen in an Update() call so I ignore the error check.
-		id, _ := b.NextSequence()
-		x.SetID(int(id))
+		keyBytes, err := utils.ToByte(x.GetID())
+		if err != nil {
+			return err
+		}
+
+		elemExists := b.Get(keyBytes) // try to fetch the element from the db
+		if elemExists != nil { // if the element does not exist, assign a new index and create it
+			id, _ := b.NextSequence()
+			x.SetID(int(id))
+		}
 
 		encoded, err := json.Marshal(x)
 		if err != nil {
@@ -71,11 +79,11 @@ func Save(dir string, bucketName []byte, x BucketItem) error {
 		}
 
 		// Put bytes to bucket
-		idBytes, err := utils.ToByte(id)
+		keyBytes, err = utils.ToByte(x.GetID())
 		if err != nil {
 			return err
 		}
-		return b.Put(idBytes, encoded)
+		return b.Put(keyBytes, encoded)
 	})
 	return err
 }
