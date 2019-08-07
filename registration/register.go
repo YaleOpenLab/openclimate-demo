@@ -1,23 +1,16 @@
 package main
 
 import (
-<<<<<<< HEAD
-	"../database"
-	"log"
-	"strings"
-=======
   "fmt"
   "log"
   "strings"
   "bufio"
   "os"
   queue "github.com/jupp0r/go-priority-queue"
->>>>>>> Created repl for finding user name
 )
 
 // Compute Levenshtein Edit Distance (LED) between w1 and w2
 func LED(w1 string, w2 string) int {
-<<<<<<< HEAD
 	w1 = strings.TrimSpace(w1)
 	w2 = strings.TrimSpace(w2)
 	if w1 == w2 {
@@ -80,7 +73,6 @@ func main() {
 	}
 	log.Println(LED("aba", "bb"))
 	log.Println(user)
-=======
   w1 = strings.TrimSpace(w1)
   w2 = strings.TrimSpace(w2)
   if w1 == w2 {
@@ -172,5 +164,4 @@ func main() {
       break
     }
   }
->>>>>>> Created repl for finding user name
 }
