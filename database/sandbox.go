@@ -64,6 +64,7 @@ func PopulateAvangridCompany() {
 	if err != nil {
 		log.Println(err)
 	}
+
 	err = avangrid.AddStates(7, 25, 36)
 	if err != nil {
 		log.Println(err)

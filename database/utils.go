@@ -68,7 +68,7 @@ func Save(dir string, bucketName []byte, x BucketItem) error {
 		}
 
 		elemExists := b.Get(keyBytes) // try to fetch the element from the db
-		if elemExists != nil { // if the element does not exist, assign a new index and create it
+		if elemExists == nil { // if the element does not exist, assign a new index and create it
 			id, _ := b.NextSequence()
 			x.SetID(int(id))
 		}
