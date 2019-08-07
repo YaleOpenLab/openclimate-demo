@@ -60,12 +60,28 @@ func PopulateTestUsers() error {
 }
 
 func PopulateAvangridCompany() {
+	
 	avangrid, err := NewCompany("Avangrid", "USA")
 	if err != nil {
 		log.Println(err)
 	}
 
-	err = avangrid.AddStates(7, 25, 36)
+	ct, err := RetrieveStateByName("Connecticut", "USA")
+	if err != nil {
+		log.Println(err)
+	}
+
+	ny, err := RetrieveStateByName("New York", "USA")
+	if err != nil {
+		log.Println(err)
+	}
+
+	ma, err := RetrieveStateByName("Massachusetts", "USA")
+	if err != nil {
+		log.Println(err)
+	}
+
+	err = avangrid.AddStates(ct.Index, ny.Index, ma.Index)
 	if err != nil {
 		log.Println(err)
 	}

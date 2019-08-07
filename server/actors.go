@@ -13,6 +13,8 @@ import (
 func setupActorsHandlers() {
 	getAllCompanies()
 	getCompany()
+	getCompanyStates()
+	
 	getAllRegions()
 	getRegion()
 	getAllStates()
