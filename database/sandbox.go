@@ -12,6 +12,7 @@ func Populate() {
 	PopulateRegionsTest()
 	PopulateTestUsers()
 	PopulateAdminUsers()
+	PopulateAvangridCompany()
 	// TestGetActor()
 }
 
@@ -57,6 +58,28 @@ func PopulateTestUsers() error {
 	user.Verified = true
 	return user.Save()
 }
+
+func PopulateAvangridCompany() {
+	avangrid, err := NewCompany("Avangrid", "USA")
+	if err != nil {
+		log.Println(err)
+	}
+	err = avangrid.AddStates(7, 25, 36)
+	if err != nil {
+		log.Println(err)
+	}
+
+	// states, err := avangrid.GetStates()
+	// if err != nil {
+	// 	log.Println(err)
+	// }
+	// for _, s := range states {
+	// 	log.Println(s)
+	// }
+
+}
+
+
 
 // func TestGetActor() {
 // 	log.Println("HIT")

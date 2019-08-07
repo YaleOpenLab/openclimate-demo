@@ -12,6 +12,7 @@ type Actor interface {
 type BucketItem interface {
 	SetID(id int)
 	GetID() int
+	Save() error
 }
 
 type RepData struct {
@@ -67,6 +68,14 @@ func (x *User) Save() error {
 func (x *Company) Save() error {
 	return Save(globals.DbPath, CompanyBucket, x)
 }
+
+/* 
+	SetID() is a common method between all structs that qualify as
+	bucket items that allow them to implement the BucketItem interface.
+	SetID() is a simple setter method that allows the updating of the
+	bucket item's ID. The function's only use should be in the Save()
+	function; otherwise, the ID should not be modified.
+*/ 
 
 func (x *Company) SetID(id int) {
 	x.Index = id

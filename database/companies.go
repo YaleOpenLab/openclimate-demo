@@ -38,26 +38,52 @@ type Company struct {
 
 	Pledges []Pledge
 
+	Countries []int
+
+	States []int
+
 	// The entity IDs of all the company's physical assets
-	Children []int
+	Assets []int
 
 	// IDs of all the company's financial/regulatory assets (e.g. RECs, climate bonds, etc.)
 	Credits []int
 
-	// Data that is reported (through self-reporting, databases, IoT, etc.)
-	// as opposed to data that is aggregated from its parts/children. Data
-	// is stored on IPFS, so Reports holds the IPFS hashes.
-	Reports []RepData
+	// // Data that is reported (through self-reporting, databases, IoT, etc.)
+	// // as opposed to data that is aggregated from its parts/children. Data
+	// // is stored on IPFS, so Reports holds the IPFS hashes.
+	// Reports []RepData
 
-	Emissions  map[string]string // accept whatever emissions the frontend passes
-	Mitigation map[string]string
-	Adaptation map[string]string
+	// Emissions  map[string]string // accept whatever emissions the frontend passes
+	// Mitigation map[string]string
+	// Adaptation map[string]string
 }
 
 func (c *Company) UpdateMRV(MRV string) {
 	c.MRV = MRV
 	c.Save()
 }
+
+func (c *Company) GetStates() ([]State, error) {
+	var states []State
+	for _, id := range c.States {
+		s, err := RetrieveState(id)
+		if err != nil {
+			return states, errors.Wrap(err, "The Company method GetStates() failed.")
+		}
+		states = append(states, s)
+	}
+	return states, nil
+}
+
+func (c *Company) AddStates(stateIDs ...int) error {
+	c.States = append(c.States, stateIDs...)
+	return c.Save()
+}
+
+func (c *Company) AddCountries(countryIDs ...int) error {
+	c.States = append(c.Countries, countryIDs...)
+	return c.Save()
+}	
 
 // Function that creates a new company object given its name
 // and country and saves the object in the countries bucket.
