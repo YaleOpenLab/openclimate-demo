@@ -38,9 +38,11 @@ type Company struct {
 
 	Pledges []Pledge
 
-	Countries []int
-
 	States []int
+
+	Regions []int
+
+	Countries []int
 
 	// The entity IDs of all the company's physical assets
 	Assets []int
@@ -63,6 +65,11 @@ func (c *Company) UpdateMRV(MRV string) {
 	c.Save()
 }
 
+func (c *Company) AddStates(stateIDs ...int) error {
+	c.States = append(c.States, stateIDs...)
+	return c.Save()
+}
+
 func (c *Company) GetStates() ([]State, error) {
 	var states []State
 	for _, id := range c.States {
@@ -75,15 +82,39 @@ func (c *Company) GetStates() ([]State, error) {
 	return states, nil
 }
 
-func (c *Company) AddStates(stateIDs ...int) error {
-	c.States = append(c.States, stateIDs...)
+func (c *Company) AddRegion(regionIDs ...int) error {
+	c.Regions = append(c.Regions, regionIDs...)
 	return c.Save()
 }
 
+func (c *Company) GetRegions() ([]Region, error) {
+	var regions []Region
+	for _, id := range c.Regions {
+		r, err := RetrieveRegion(id)
+		if err != nil {
+			return regions, errors.Wrap(err, "The Company method GetRegions() failed.")
+		}
+		regions = append(regions, r)
+	}
+	return regions, nil
+}
+
 func (c *Company) AddCountries(countryIDs ...int) error {
-	c.States = append(c.Countries, countryIDs...)
+	c.Countries = append(c.Countries, countryIDs...)
 	return c.Save()
-}	
+}
+
+func (c *Company) GetCountries() ([]Country, error) {
+	var countries []Country
+	for _, id := range c.Countries {
+		c, err := RetrieveCountry(id)
+		if err != nil {
+			return countries, errors.Wrap(err, "The Company method GetCountries() failed.")
+		}
+		countries = append(countries, c)
+	}
+	return countries, nil
+}
 
 // Function that creates a new company object given its name
 // and country and saves the object in the countries bucket.

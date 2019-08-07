@@ -1,4 +1,4 @@
-package oracle
+package ipfs
 
 import ()
 
@@ -22,31 +22,36 @@ type Emissions struct {
 	UserID     int
 	EntityType string
 	Year       int
+
+	DateReported string
+
+	TotalScope1CO2e int
+	TotalScope2CO2e int
+	TotalScope3CO2e int
+
 	// Emissions data (by asset)
 	// Country children: regions
 	// Region children: companies & cities
 	// Company children: assets
-	ByChild []EmissionsChild
-}
+	ByChild []struct {
+		ChildID int
+		ChildName string
+		Scope1CO2e float64
+		Scope2CO2e float64
+		Scope3CO2e float64
 
-type EmissionsChild struct {
-	ChildID      int
-	ChildName    string
-	ScopeICO2e   float64
-	ScopeIICO2e  float64
-	ScopeIIICO2e float64
+		// Where is the report and its data from?
+		// (options: internally conducted report, consulting group, etc.)
+		Source string
 
-	// Where is the report and its data from?
-	// (options: internally conducted report, consulting group, etc.)
-	Source string
+		// what methodology was used in the reporting and
+		// verification of the emissions data?
+		Methodology string
 
-	// what methodology was used in the reporting and
-	// verification of the emissions data?
-	Methodology string
-
-	// // "verified" represents if the data is sufficiently reviewed
-	// // and confirmed/corroborated (from oracle, third-party auditor, etc)
-	// Verified string
+		// // "verified" represents if the data is sufficiently reviewed
+		// // and confirmed/corroborated (from oracle, third-party auditor, etc)
+		// Verified string
+	}
 }
 
 /***************************/
@@ -111,13 +116,13 @@ type AdaptationChild struct {
 
 type Earth struct {
 	AtmosCO2   float64
-	TropOzone  float64 // tropospheric ozone concentration
-	StratOzone float64 // stratospheric ozone concentration
+	// TropOzone  float64 // tropospheric ozone concentration
+	// StratOzone float64 // stratospheric ozone concentration
 
 	GlobalTemp   float64
-	ArcticIceMin float64
-	IceSheets    float64
+	// ArcticIceMin float64
+	// IceSheets    float64
 	SeaLevelRise float64
 
-	LandUse float64
+	// LandUse float64
 }

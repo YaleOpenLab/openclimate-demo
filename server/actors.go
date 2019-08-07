@@ -14,6 +14,7 @@ func setupActorsHandlers() {
 	getAllCompanies()
 	getCompany()
 	getCompanyStates()
+	getCompanyCountries()
 	
 	getAllRegions()
 	getRegion()
@@ -275,6 +276,45 @@ func getCompanyStates() {
 		}
 
 		erpc.MarshalSend(w, states)
+	})
+}
+
+func getCompanyCountries() {
+	http.HandleFunc("/company/countries", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		if r.URL.Query()["company_name"] == nil || r.URL.Query()["company_country"] == nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		// Given its name and country, retrieve the company from the database
+
+		name := r.URL.Query()["company_name"][0]
+		country := r.URL.Query()["company_country"][0]
+		company, err := database.RetrieveCompanyByName(name, country)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		// Get the information of the states that the company is in
+
+		countries, err := company.GetCountries()
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, countries)
 	})
 }
 

@@ -64,27 +64,46 @@ func PopulateAvangridCompany() {
 	avangrid, err := NewCompany("Avangrid", "USA")
 	if err != nil {
 		log.Println(err)
+		return
 	}
 
 	ct, err := RetrieveStateByName("Connecticut", "USA")
 	if err != nil {
 		log.Println(err)
+		return
 	}
 
 	ny, err := RetrieveStateByName("New York", "USA")
 	if err != nil {
 		log.Println(err)
+		return
 	}
 
 	ma, err := RetrieveStateByName("Massachusetts", "USA")
 	if err != nil {
 		log.Println(err)
+		return
 	}
 
 	err = avangrid.AddStates(ct.Index, ny.Index, ma.Index)
 	if err != nil {
 		log.Println(err)
+		return
 	}
+
+	us, err := RetrieveCountryByName("USA")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	err = avangrid.AddCountries(us.Index)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	
 
 	// states, err := avangrid.GetStates()
 	// if err != nil {

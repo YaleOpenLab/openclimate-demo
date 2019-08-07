@@ -2,6 +2,7 @@ package oracle
 
 import (
 	"log"
+	"github.com/YaleOpenLab/openclimate/ipfs"
 	// "reflect"
 )
 
@@ -10,8 +11,8 @@ import (
 // To verify, oracle will check if the methodology used is valid and if the
 // values make sense.
 
-func VerifyEmissions(data interface{}) (Emissions, error) {
-	var verifiedData Emissions
+func VerifyEmissions(data interface{}) (ipfs.Emissions, error) {
+	var verifiedData ipfs.Emissions
 	return verifiedData, nil
 }
 
@@ -26,13 +27,13 @@ func VerifyEmissions(data interface{}) (Emissions, error) {
 // 	return actorPledges, nil
 // }
 
-func VerifyMitigation(data interface{}) (Mitigation, error) {
-	var verifiedData Mitigation
+func VerifyMitigation(data interface{}) (ipfs.Mitigation, error) {
+	var verifiedData ipfs.Mitigation
 	return verifiedData, nil
 }
 
-func VerifyAdaptation(data interface{}) (Adaptation, error) {
-	var verifiedData Adaptation
+func VerifyAdaptation(data interface{}) (ipfs.Adaptation, error) {
+	var verifiedData ipfs.Adaptation
 	return verifiedData, nil
 }
 

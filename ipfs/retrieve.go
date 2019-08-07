@@ -1,4 +1,5 @@
-package blockchain
+package ipfs
+
 
 /*
 
@@ -13,12 +14,10 @@ package blockchain
 	- "actorID": the ID assigned to the actor in the database
 
 	return type:
-	A map that maps the type of the reported climate data to a struct
-	of the data itself. For example, "emissions" would map to the actor's
-	actual reported emissions data, formatted as a struct (to be defined).
+	A map that maps the date the data was reported to the data itself.
 */
 
-func GetFromIpfs(actorType string, actorID int) (map[string]interface{}, error) {
+func GetFromIpfs(reportType string, actorType string, actorID int) (map[string]interface{}, error) {
 	var empty map[string]interface{}
 	return empty, nil
 }

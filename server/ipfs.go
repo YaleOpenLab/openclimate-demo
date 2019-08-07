@@ -6,9 +6,9 @@ import (
 	"strconv"
 
 	// "github.com/Varunram/essentials/ipfs"
-	"github.com/Varunram/essentials/ipfs"
+	eipfs "github.com/Varunram/essentials/ipfs"
 	erpc "github.com/Varunram/essentials/rpc"
-	"github.com/YaleOpenLab/openclimate/blockchain"
+	"github.com/YaleOpenLab/openclimate/ipfs"
 )
 
 func setupIpfsHandlers() {
@@ -24,6 +24,8 @@ func setupIpfsHandlers() {
 	and then makes that data available on the openclimate API.
 
 	URL parameters:
+	- "report_type": the type of climate action data that was reported. can be either 
+		emissions, mitigation, or adaptation.
 	- "actor_type": either city, country, region, state, company, etc.
 	- "actor_id": the ID assigned to the actor in the database.
 */
@@ -36,6 +38,7 @@ func RetrieveFromIpfs() {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 		}
 
+		reportType := r.URL.Query()["report_type"][0]
 		actorType := r.URL.Query()["actor_type"][0]
 		actorID, err := strconv.Atoi(r.URL.Query()["actor_id"][0])
 		if err != nil {
@@ -53,8 +56,7 @@ func RetrieveFromIpfs() {
 
 			For more information, see blockchain/retrieve.go
 		*/
-
-		data, err := blockchain.GetFromIpfs(actorType, actorID)
+		data, err := ipfs.GetFromIpfs(reportType, actorType, actorID)
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -79,14 +81,14 @@ func getIpfsHash() {
 		}
 
 		hashString := r.URL.Query()["string"][0]
-		hash, err := ipfs.IpfsAddString(hashString)
+		hash, err := eipfs.IpfsAddString(hashString)
 		if err != nil {
 			log.Println("did not add string to ipfs", err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
-		hashCheck, err := ipfs.IpfsGetString(hash)
+		hashCheck, err := eipfs.IpfsGetString(hash)
 		if err != nil || hashCheck != hashString {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return

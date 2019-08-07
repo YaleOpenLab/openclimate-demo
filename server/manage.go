@@ -102,9 +102,7 @@ func AddAsset() {
 		}
 
 		name := asset["name"]
-
 		companyID := user.EntityID
-
 		location := asset["location"]
 		assetType := asset["type"]
 
