@@ -68,36 +68,34 @@ type Mitigation struct {
 	// Country children: regions
 	// Region children: companies & cities
 	// Company children: assets
-	ByChild []MitigationChild
-}
+	ByChild []struct {
+		ChildID      int
+		ChildName    string
+		CarbonOffset float64
+		EnergySaved  float64
+		EnergyGen    float64
 
-type MitigationChild struct {
-	ChildID      int
-	ChildName    string
-	CarbonOffset float64
-	EnergySaved  float64
-	EnergyGen    float64
+		// Options:
+		// - Renewable energy
+		// - Energy efficiency
+		// - Agriculture, Forestry & Other
+		// - Carbon sequestrations
+		Type string
 
-	// Options:
-	// - Renewable energy
-	// - Energy efficiency
-	// - Agriculture, Forestry & Other
-	// - Carbon sequestrations
-	Type string
+		// Options:
+		// - Reduction of GHG sources
+		// - Enhancement of GHG sinks
+		// - Both
+		Category string
 
-	// Options:
-	// - Reduction of GHG sources
-	// - Enhancement of GHG sinks
-	// - Both
-	Category string
+		// Where is the report and its data from?
+		// (options: internally conducted report, consulting group, etc.)
+		Source string
 
-	// Where is the report and its data from?
-	// (options: internally conducted report, consulting group, etc.)
-	Source string
-
-	// what methodology was used in the reporting and
-	// verification of the mitigation data?
-	Methodology string
+		// what methodology was used in the reporting and
+		// verification of the mitigation data?
+		Methodology string
+	}
 }
 
 /***************************/

@@ -12,6 +12,8 @@ import (
 	"time"
 )
 
+
+
 func QueryNoaaSummary(datasetid string, startdate string, enddate string) (interface{}, error) {
 	baseUrl := "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
 	dataset := "datasetid=" + datasetid
