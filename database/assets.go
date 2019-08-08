@@ -13,15 +13,17 @@ type Asset struct {
 	CompanyID int
 	Name      string
 	Location  string
+	State 	  string
 	Type      string
 	// Reports   []RepData
 }
 
-func NewAsset(name string, companyID int, location string, type_ string) (Asset, error) {
+func NewAsset(name string, companyID int, location string, state string, type_ string) (Asset, error) {
 	var asset Asset
 	asset.Name = name
 	asset.CompanyID = companyID
 	asset.Location = location
+	asset.State = state
 	asset.Type = type_
 	return asset, asset.Save()
 }
@@ -33,6 +35,7 @@ func UpdateAsset(key int, info Asset) error {
 	}
 	asset.Name = info.Name
 	asset.Location = info.Location
+	asset.State = info.State
 	asset.Type = info.Type
 
 	return asset.Save()

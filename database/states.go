@@ -3,6 +3,7 @@ package database
 import (
 	"encoding/json"
 	"github.com/pkg/errors"
+	"sort"
 	//"log"
 
 	edb "github.com/Varunram/essentials/database"
@@ -124,6 +125,8 @@ func FilterStates(country string) ([]State, error) {
 			states = append(states, state)
 		}
 	}
+
+	sort.Slice(states, func(i, j int) bool { return states[i].Name < states[j].Name})
 	return states, nil
 }
 

@@ -65,6 +65,25 @@ func (c *Company) UpdateMRV(MRV string) {
 	c.Save()
 }
 
+func (c *Company) AddAssets(assetIDs ...int) error {
+	c.Assets = append(c.Assets, assetIDs...)
+	return c.Save()
+}
+
+func (c *Company) GetAssetsByState(state string) ([]Asset, error) {
+	var assets []Asset
+	for _, id := range c.Assets {
+		a, err := RetrieveAsset(id)
+		if err != nil {
+			return assets, errors.Wrap(err, "The Company method GetAssetsByState() failed.")
+		}
+		if a.State == state {
+			assets = append(assets, a)
+		}
+	}
+	return assets, nil
+}
+
 func (c *Company) AddStates(stateIDs ...int) error {
 	c.States = append(c.States, stateIDs...)
 	return c.Save()

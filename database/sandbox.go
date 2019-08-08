@@ -49,7 +49,6 @@ func PopulateRegionsTest() error {
 }
 
 func PopulateTestUsers() error {
-	log.Println("hit3")
 	pwhash := utils.SHA3hash("a")
 	user, err := NewUser("testuser", pwhash, "user@test.com", "country", "USA", "")
 	if err != nil {
@@ -103,15 +102,30 @@ func PopulateAvangridCompany() {
 		return
 	}
 
-	
+	bfc, err := NewAsset("Bridgeport Fuel Cell", avangrid.GetID(), "Bridgeport", "Connecticut", "fuel cell")
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
-	// states, err := avangrid.GetStates()
-	// if err != nil {
-	// 	log.Println(err)
-	// }
-	// for _, s := range states {
-	// 	log.Println(s)
-	// }
+	nhs, err := NewAsset("New Haven Solar", avangrid.GetID(), "New Haven", "Connecticut", "solar")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	err = avangrid.AddAssets(bfc.Index, nhs.Index)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	assets, err := avangrid.GetAssetsByState("Connecticut")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	log.Println(assets)
 
 }
 

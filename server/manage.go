@@ -104,9 +104,10 @@ func AddAsset() {
 		name := asset["name"]
 		companyID := user.EntityID
 		location := asset["location"]
+		state := asset["state"]
 		assetType := asset["type"]
 
-		new, err := db.NewAsset(name, companyID, location, assetType)
+		new, err := db.NewAsset(name, companyID, location, state, assetType)
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)

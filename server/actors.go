@@ -11,6 +11,9 @@ import (
 )
 
 func setupActorsHandlers() {
+
+	getAssetsByState()
+
 	getAllCompanies()
 	getCompany()
 	getCompanyStates()
@@ -26,6 +29,22 @@ func setupActorsHandlers() {
 	getAllCountries()
 	getCountry()
 }
+
+func getAssetsByState() {
+	http.HandleFunc("/assets/filter", func(w http.ResponseWriter, r *http.Request) {
+		user, err := CheckGetAuth(w, r)
+		if err != nil {
+			return
+		}
+
+		log.Println(user)
+
+
+	})
+}
+
+
+
 
 /*******************/
 /* REGION HANDLERS */
