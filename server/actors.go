@@ -12,7 +12,7 @@ import (
 
 func setupActorsHandlers() {
 
-	getAssetsByState()
+	getCompanyAssetsByState()
 
 	getAllCompanies()
 	getCompany()
@@ -30,16 +30,49 @@ func setupActorsHandlers() {
 	getCountry()
 }
 
-func getAssetsByState() {
-	http.HandleFunc("/assets/filter", func(w http.ResponseWriter, r *http.Request) {
+func getCompanyAssetsByState() {
+	http.HandleFunc("/company/assets/filter", func(w http.ResponseWriter, r *http.Request) {
+
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
-		log.Println(user)
+		if user.EntityType != "company" {
+			log.Println("User entity type is not a company.")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
 
+		company, err := database.RetrieveCompany(user.EntityID)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
 
+		if r.URL.Query()["states"] == nil {
+			log.Println("States not passed.")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		states := r.URL.Query()["states"]
+
+		assetsByState := make(map[string][]database.Asset)
+		for _, state := range states {
+			a, err := company.GetAssetsByState(state)
+			if err != nil {
+				log.Println(err)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+			assetsByState[state] = a
+		}
+
+		erpc.MarshalSend(w, assetsByState)
 	})
 }
 

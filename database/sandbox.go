@@ -7,12 +7,14 @@ import (
 )
 
 func Populate() {
-	PopulateUSStates()
 	PopulateCountries()
-	PopulateRegionsTest()
-	PopulateTestUsers()
-	PopulateAdminUsers()
+	PopulateUSStates()
 	PopulateAvangridCompany()
+	PopulateAdminUsers()
+	PopulateTestUsers()
+	
+	PopulateRegionsTest()
+	
 	// TestGetActor()
 }
 
@@ -26,6 +28,38 @@ func PopulateUSStates() error {
 		}
 	}
 	return nil
+}
+
+func PopulateAdminUsers() error {
+	pwhash := utils.SHA3hash("p")
+
+	_, err := NewUser("amanda", pwhash, "amanda@test.com", "company", "Avangrid", "USA")
+	if err != nil {
+		log.Println(err, "failed to populate user amanda")
+	}
+
+	_, err = NewUser("brian", pwhash, "brian@test.com", "company", "Avangrid", "USA")
+	if err != nil {
+		return errors.Wrap(err, "failed to populate user brian")
+	}
+
+	// users, err := RetrieveAllUsers()
+	// if err != nil {
+	// 	log.Println(err)
+	// }
+	// log.Println(users)
+
+	return nil
+}
+
+func PopulateTestUsers() error {
+	pwhash := utils.SHA3hash("a")
+	user, err := NewUser("testuser", pwhash, "user@test.com", "country", "USA", "")
+	if err != nil {
+		return errors.Wrap(err, "failed to create test user in country: USA")
+	}
+	user.Verified = true
+	return user.Save()
 }
 
 func PopulateRegionsTest() error {
@@ -46,16 +80,6 @@ func PopulateRegionsTest() error {
 		return errors.Wrap(err, "Failed populate regions test")
 	}
 	return nil
-}
-
-func PopulateTestUsers() error {
-	pwhash := utils.SHA3hash("a")
-	user, err := NewUser("testuser", pwhash, "user@test.com", "country", "USA", "")
-	if err != nil {
-		return errors.Wrap(err, "failed to create test user in country: USA")
-	}
-	user.Verified = true
-	return user.Save()
 }
 
 func PopulateAvangridCompany() {
@@ -127,38 +151,6 @@ func PopulateAvangridCompany() {
 	}
 	log.Println(assets)
 
-}
-
-
-
-// func TestGetActor() {
-// 	log.Println("HIT")
-// 	user, err := RetrieveUser(1)
-// 	if err != nil {
-// 		log.Println("didn't get first user")
-// 	}
-// 	entity, err := user.GetUserActor()
-// 	if err != nil {
-// 		log.Println("GetUserActor() failed")
-// 	}
-// 	log.Println(entity)
-// }
-
-func PopulateAdminUsers() error {
-	pwhash := utils.SHA3hash("p")
-
-	// log.Println("hit1")
-
-	_, err := NewUser("amanda", pwhash, "amanda@test.com", "individual", "", "")
-	if err != nil {
-		return errors.Wrap(err, "failed to populate user amanda")
-	}
-	_, err = NewUser("brian", pwhash, "brian@test.com", "individual", "", "")
-	if err != nil {
-		return errors.Wrap(err, "failed to populate user brian")
-	}
-
-	return nil
 }
 
 // Test function populating the countries bucket with dummy values
