@@ -89,67 +89,62 @@ func PopulateAvangridCompany() {
 		log.Println(err)
 		return
 	}
-
 	ct, err := RetrieveStateByName("Connecticut", "USA")
 	if err != nil {
 		log.Println(err)
 		return
 	}
-
 	ny, err := RetrieveStateByName("New York", "USA")
 	if err != nil {
 		log.Println(err)
 		return
 	}
-
 	ma, err := RetrieveStateByName("Massachusetts", "USA")
 	if err != nil {
 		log.Println(err)
 		return
 	}
-
 	err = avangrid.AddStates(ct.Index, ny.Index, ma.Index)
 	if err != nil {
 		log.Println(err)
 		return
 	}
-
 	us, err := RetrieveCountryByName("USA")
 	if err != nil {
 		log.Println(err)
 		return
 	}
-
 	err = avangrid.AddCountries(us.Index)
 	if err != nil {
 		log.Println(err)
 		return
 	}
-
 	bfc, err := NewAsset("Bridgeport Fuel Cell", avangrid.GetID(), "Bridgeport", "Connecticut", "fuel cell")
 	if err != nil {
 		log.Println(err)
 		return
 	}
-
 	nhs, err := NewAsset("New Haven Solar", avangrid.GetID(), "New Haven", "Connecticut", "solar")
 	if err != nil {
 		log.Println(err)
 		return
 	}
-
-	err = avangrid.AddAssets(bfc.Index, nhs.Index)
+	shs, err := NewAsset("Sleepy Hollow Solar", avangrid.GetID(), "Sleepy Hollow", "New York", "solar")
 	if err != nil {
 		log.Println(err)
 		return
 	}
-
-	assets, err := avangrid.GetAssetsByState("Connecticut")
+	err = avangrid.AddAssets(bfc.Index, nhs.Index, shs.Index)
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	log.Println(assets)
+	// assets, err := avangrid.GetAssetsByState("Connecticut")
+	// if err != nil {
+	// 	log.Println(err)
+	// 	return
+	// }
+	// log.Println(assets)
 
 }
 

@@ -53,26 +53,33 @@ func getCompanyAssetsByState() {
 			return
 		}
 
-		if r.URL.Query()["states"] == nil {
-			log.Println("States not passed.")
+		if r.URL.Query()["state"] == nil {
+			log.Println("State not passed.")
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
-		states := r.URL.Query()["states"]
-
-		assetsByState := make(map[string][]database.Asset)
-		for _, state := range states {
-			a, err := company.GetAssetsByState(state)
-			if err != nil {
-				log.Println(err)
-				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-				return
-			}
-			assetsByState[state] = a
+		state := r.URL.Query()["state"][0]
+		a, err := company.GetAssetsByState(state)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
 		}
+		erpc.MarshalSend(w, a)
 
-		erpc.MarshalSend(w, assetsByState)
+		// assetsByState := make(map[string][]database.Asset)
+		// for _, state := range states {
+		// 	a, err := company.GetAssetsByState(state)
+		// 	if err != nil {
+		// 		log.Println(err)
+		// 		erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		// 		return
+		// 	}
+		// 	assetsByState[state] = a
+		// }
+
+		// erpc.MarshalSend(w, assetsByState)
 	})
 }
 
