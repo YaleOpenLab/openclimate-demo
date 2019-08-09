@@ -145,22 +145,33 @@ func PopulateAvangridAssets() {
 		log.Println(err)
 		return
 	}
-	bfc, err := NewAsset("Bridgeport Fuel Cell", avangrid.GetID(), "Bridgeport", "Connecticut", "fuel cell")
+	bfc, err := NewAsset("Bridgeport 4MW Fuel Cell", avangrid.GetID(), "Bridgeport", "Connecticut", "Gas Fuel Cell")
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	nhs, err := NewAsset("New Haven Solar", avangrid.GetID(), "New Haven", "Connecticut", "solar")
+	nhfc, err := NewAsset("New Haven Fuel Cell", avangrid.GetID(), "New Haven", "Connecticut", "Solar Array")
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	shs, err := NewAsset("Sleepy Hollow Solar", avangrid.GetID(), "Sleepy Hollow", "New York", "solar")
+	bs, err := NewAsset("Bridgeport Solar 2.2MW", avangrid.GetID(), "Bridgeport", "Connecticut", "Solar Array")
 	if err != nil {
 		log.Println(err)
 		return
 	}
-	err = avangrid.AddAssets(bfc.Index, nhs.Index, shs.Index)
+	wh, err := NewAsset("Woodbridge High", avangrid.GetID(), "Woodbridge", "Connecticut", "Gas Fuel Cell")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	gfc, err := NewAsset("Glastonbury Fuel Cell", avangrid.GetID(), "Glastonbury", "Connecticut", "Gas Fuel Cell")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	err = avangrid.AddAssets(bfc.Index, nhfc.Index, bs.Index, wh.Index, gfc.Index)
 	if err != nil {
 		log.Println(err)
 		return

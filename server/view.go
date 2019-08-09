@@ -10,7 +10,7 @@ import (
 func setupView() {
 	viewPledges()
 	viewCompanyNational()
-	viewCompanySubNational()
+	viewCompanySubNationalByNational()
 	viewCompanyAssetsBySubNational()
 }
 
@@ -71,7 +71,7 @@ func viewCompanyNational() {
 }
 
 
-func viewCompanySubNational() {
+func viewCompanySubNationalByNational() {
 	http.HandleFunc("/company/subnational", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
@@ -94,7 +94,24 @@ func viewCompanySubNational() {
 			return
 		}
 
-		erpc.MarshalSend(w, states)
+		countries, err := company.GetCountries()
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		statesByCountry := make(map[string][]db.State)
+
+		for _, country := range countries {
+			for _, state := range states {
+				if country.Name == state.Country {
+					statesByCountry[country.Name] = append(statesByCountry[country.Name], state)
+				}
+			}
+		}
+
+		erpc.MarshalSend(w, statesByCountry)
 	})
 }
 
