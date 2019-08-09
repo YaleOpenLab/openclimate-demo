@@ -177,7 +177,7 @@ func (u *User) AddPledge(pledge Pledge) {
 	return
 }
 
-func (user *User) GetUserActor() (Actor, error) {
+func (user *User) RetrieveUserEntity() (Actor, error) {
 
 	var entity Actor
 	var err error

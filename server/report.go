@@ -35,7 +35,7 @@ func SelfReport() {
 			return
 		}
 
-		entity, err := user.GetUserActor()
+		entity, err := user.RetrieveUserEntity()
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)

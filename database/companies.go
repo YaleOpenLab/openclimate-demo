@@ -65,6 +65,24 @@ func (c *Company) UpdateMRV(MRV string) {
 	c.Save()
 }
 
+func (c *Company) AddPledges(pledgeIDs ...int) error {
+	c.Pledges = append(c.Pledges, pledgeIDs...)
+	return c.Save()
+}
+
+func (c Company) GetPledges() ([]Pledge, error) {
+	var pledges []Pledge
+
+	for _, id := range c.Pledges {
+		p, err := RetrievePledge(id)
+		if err != nil {
+			return pledges, errors.Wrap(err, "The Company method GetPledges() failed.")
+		}
+		pledges = append(pledges, p)
+	}
+	return pledges, nil
+}
+
 func (c *Company) AddAssets(assetIDs ...int) error {
 	c.Assets = append(c.Assets, assetIDs...)
 	return c.Save()
@@ -101,7 +119,7 @@ func (c *Company) GetStates() ([]State, error) {
 	return states, nil
 }
 
-func (c *Company) AddRegion(regionIDs ...int) error {
+func (c *Company) AddRegions(regionIDs ...int) error {
 	c.Regions = append(c.Regions, regionIDs...)
 	return c.Save()
 }
@@ -135,23 +153,6 @@ func (c *Company) GetCountries() ([]Country, error) {
 	return countries, nil
 }
 
-func (c *Company) AddPledges(pledgeIDs ...int) error {
-	c.Pledges = append(c.Pledges, pledgeIDs...)
-	return c.Save()
-}
-
-func (c Company) GetPledges() ([]Pledge, error) {
-	var pledges []Pledge
-
-	for _, id := range c.Pledges {
-		p, err := RetrievePledge(id)
-		if err != nil {
-			return pledges, errors.Wrap(err, "The Company method GetPledges() failed.")
-		}
-		pledges = append(pledges, p)
-	}
-	return pledges, nil
-}
 
 // Function that creates a new company object given its name
 // and country and saves the object in the countries bucket.

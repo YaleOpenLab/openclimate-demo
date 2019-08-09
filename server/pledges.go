@@ -15,39 +15,12 @@ import (
 )
 
 func setupPledgeHandlers() {
-	ViewPledges()
 	AddPledge()
 	UpdatePledge()
 	CommitPledge()
 }
 
-func ViewPledges() {
-	http.HandleFunc("/user/pledges/view", func(w http.ResponseWriter, r *http.Request) {
-		user, err := CheckGetAuth(w, r)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			return
-		}
 
-		actor, err := user.GetUserActor()
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-		log.Println(actor)
-
-		pledges, err := actor.GetPledges()
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-
-		erpc.MarshalSend(w, pledges)
-	})
-}
 
 func AddPledge() {
 	http.HandleFunc("/user/pledges/add", func(w http.ResponseWriter, r *http.Request) {
@@ -125,7 +98,7 @@ func AddPledge() {
 
 		// Get the entity that the user is associated with from the database
 		// so that we can update its Pledges field to include the new pledge.
-		entity, err := user.GetUserActor()
+		entity, err := user.RetrieveUserEntity()
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
