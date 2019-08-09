@@ -12,12 +12,9 @@ import (
 
 func setupActorsHandlers() {
 
-	getCompanyAssetsByState()
 
 	getAllCompanies()
 	getCompany()
-	getCompanyStates()
-	getCompanyCountries()
 	
 	getAllRegions()
 	getRegion()
@@ -29,53 +26,6 @@ func setupActorsHandlers() {
 	getAllCountries()
 	getCountry()
 }
-
-func getCompanyAssetsByState() {
-	http.HandleFunc("/company/assets/filter", func(w http.ResponseWriter, r *http.Request) {
-
-		user, err := CheckGetAuth(w, r)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			return
-		}
-
-		if user.EntityType != "company" {
-			log.Println("User entity type is not a company.")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			return
-		}
-
-		company, err := database.RetrieveCompany(user.EntityID)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-
-		assetsByState := make(map[string][]database.Asset)
-
-		for _, stateID := range company.States {
-			s, err := database.RetrieveState(stateID)
-			if err != nil {
-				log.Println(err)
-				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-				return
-			}
-			assets, err := company.GetAssetsByState(s.Name)
-			if err != nil {
-				log.Println(err)
-				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-				return
-			}
-			assetsByState[s.Name] = assets
-		}
-
-		erpc.MarshalSend(w, assetsByState)
-
-	})
-}
-
 
 
 
@@ -292,44 +242,6 @@ func getCompany() {
 	})
 }
 
-func getCompanyCountries() {
-	http.HandleFunc("/company/countries", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckGet(w, r)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			return
-		}
-
-		if r.URL.Query()["company_name"] == nil || r.URL.Query()["company_country"] == nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			return
-		}
-
-		// Given its name and country, retrieve the company from the database
-
-		name := r.URL.Query()["company_name"][0]
-		country := r.URL.Query()["company_country"][0]
-		company, err := database.RetrieveCompanyByName(name, country)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-
-		// Get the information of the states that the company is in
-
-		countries, err := company.GetCountries()
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-
-		erpc.MarshalSend(w, countries)
-	})
-}
 
 /**********************/
 /* COUNTRIES HANDLERS */

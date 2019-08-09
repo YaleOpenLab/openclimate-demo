@@ -4,15 +4,18 @@ import (
 	"net/http"
 	"log"
 	erpc "github.com/Varunram/essentials/rpc"
-
+	db "github.com/YaleOpenLab/openclimate/database"
 )
 
 func setupView() {
-	ViewPledges()
+	viewPledges()
+	viewCompanyNational()
+	viewCompanySubNational()
+	viewCompanyAssetsBySubNational()
 }
 
 
-func ViewPledges() {
+func viewPledges() {
 	http.HandleFunc("/user/pledges/view", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
@@ -27,7 +30,6 @@ func ViewPledges() {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
-		log.Println(actor)
 
 		pledges, err := actor.GetPledges()
 		if err != nil {
@@ -41,8 +43,8 @@ func ViewPledges() {
 }
 
 
-func getCompanyStates() {
-	http.HandleFunc("/company/states", func(w http.ResponseWriter, r *http.Request) {
+func viewCompanyNational() {
+	http.HandleFunc("/company/national", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -50,36 +52,95 @@ func getCompanyStates() {
 			return
 		}
 
-		log.Println(user)
+		company, err := db.RetrieveCompany(user.EntityID)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
 
-		// user.RetrieveUserEntity()
+		countries, err := company.GetCountries()
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
 
-		// if r.URL.Query()["company_name"] == nil || r.URL.Query()["company_country"] == nil {
-		// 	log.Println(err)
-		// 	erpc.ResponseHandler(w, erpc.StatusBadRequest)
-		// 	return
-		// }
+		erpc.MarshalSend(w, countries)
+	})
+}
 
-		// // Given its name and country, retrieve the company from the database
 
-		// name := r.URL.Query()["company_name"][0]
-		// country := r.URL.Query()["company_country"][0]
-		// company, err := database.RetrieveCompanyByName(name, country)
-		// if err != nil {
-		// 	log.Println(err)
-		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 	return
-		// }
+func viewCompanySubNational() {
+	http.HandleFunc("/company/subnational", func(w http.ResponseWriter, r *http.Request) {
+		user, err := CheckGetAuth(w, r)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
 
-		// Get the information of the states that the company is in
+		company, err := db.RetrieveCompany(user.EntityID)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
 
-		// states, err := company.GetStates()
-		// if err != nil {
-		// 	log.Println(err)
-		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 	return
-		// }
+		states, err := company.GetStates()
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
 
-		// erpc.MarshalSend(w, states)
+		erpc.MarshalSend(w, states)
+	})
+}
+
+
+func viewCompanyAssetsBySubNational() {
+	http.HandleFunc("/company/assets/filter", func(w http.ResponseWriter, r *http.Request) {
+
+		user, err := CheckGetAuth(w, r)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		if user.EntityType != "company" {
+			log.Println("User entity type is not a company.")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		company, err := db.RetrieveCompany(user.EntityID)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		assetsByState := make(map[string][]db.Asset)
+
+		for _, stateID := range company.States {
+			s, err := db.RetrieveState(stateID)
+			if err != nil {
+				log.Println(err)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+			assets, err := company.GetAssetsByState(s.Name)
+			if err != nil {
+				log.Println(err)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+			assetsByState[s.Name] = assets
+		}
+
+		erpc.MarshalSend(w, assetsByState)
+
 	})
 }
