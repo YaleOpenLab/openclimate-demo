@@ -6,8 +6,7 @@ import (
 	// "reflect"
 )
 
-// Functions clean the data and return it in the correct format, as determined by
-// the structs defined in datastructs.go
+// Functions clean the data and return it in the correct format.
 // To verify, oracle will check if the methodology used is valid and if the
 // values make sense.
 
@@ -15,17 +14,6 @@ func VerifyEmissions(data interface{}) (ipfs.Emissions, error) {
 	var verifiedData ipfs.Emissions
 	return verifiedData, nil
 }
-
-// func VerifyPledge(data interface{}) (Pledges, error) {
-// 	var actorPledges Pledges
-
-// 	log.Println(reflect.TypeOf(data))
-
-// 	// actorPledges.UserID = data["UserID"]
-// 	// actorPledges.EntityType = data["EntityType"]
-
-// 	return actorPledges, nil
-// }
 
 func VerifyMitigation(data interface{}) (ipfs.Mitigation, error) {
 	var verifiedData ipfs.Mitigation
@@ -49,9 +37,6 @@ func Verify(reportType string, entity interface{}, data interface{}) (string, er
 		verifiedData, err = VerifyEarth(data)
 	case "Emissions":
 		verifiedData, err = VerifyEmissions(data)
-	// case "Pledges":
-	// 	log.Println("hit")
-	// 	verifiedData, err = VerifyPledge(data)
 	case "Mitigation":
 		verifiedData, err = VerifyMitigation(data)
 	case "Adaptation":
@@ -63,7 +48,12 @@ func Verify(reportType string, entity interface{}, data interface{}) (string, er
 		return ipfsHash, err
 	}
 
-	ipfsHash, err = IpfsCommitData(verifiedData)
+	// Committing to IPFS may not be necessary. We can commit this data
+	// directly on to the blockchain if it is small enough. However, once
+	// companies start to report a lot of data relating to their assets, 
+	// IPFS is needed to minimize the amount of blockchain storage required.
+
+	ipfsHash, err = ipfs.IpfsCommitData(verifiedData)
 	if err != nil {
 		log.Println("Failed to commit data to IPFS")
 		return ipfsHash, err

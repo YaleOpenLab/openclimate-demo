@@ -5,8 +5,8 @@ import (
 )
 
 type Actor interface {
-	RetrievePledges() ([]Pledge, error)
-	// AddPledge(pledge Pledge)
+	GetPledges() ([]Pledge, error)
+	AddPledges(pledgeIDs ...int) error
 }
 
 type BucketItem interface {
@@ -69,7 +69,8 @@ func (x *Company) Save() error {
 	return Save(globals.DbPath, CompanyBucket, x)
 }
 
-/* 
+/* 	BucketItem interface method:
+
 	SetID() is a common method between all structs that qualify as
 	bucket items that allow them to implement the BucketItem interface.
 	SetID() is a simple setter method that allows the updating of the
@@ -116,6 +117,15 @@ func (x *State) SetID(id int) {
 func (x *User) SetID(id int) {
 	x.Index = id
 }
+
+
+/* 	BucketItem interface method:
+
+	A getter method for structs that implement the BucketItem interface. 
+	The method allows you to retrieve the ID of structs that implement the
+	BucketItem interface methods, even if you don't know specifically which
+	struct you are workign with.
+*/
 
 func (x *Company) GetID() int {
 	return x.Index

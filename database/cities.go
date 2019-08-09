@@ -30,7 +30,7 @@ type City struct {
 
 	Children []string
 
-	Pledges []Pledge
+	Pledges []int
 
 	// Data that is reported (through self-reporting, databases, IoT, etc.)
 	// as opposed to data that is aggregated from its parts/children. Data
@@ -106,18 +106,21 @@ func RetrieveAllCities() ([]City, error) {
 	return cities, nil
 }
 
-func (c *City) RetrievePledges() ([]Pledge, error) {
+func (c *City) AddPledges(pledgeIDs ...int) error {
+	c.Pledges = append(c.Pledges, pledgeIDs...)
+	return c.Save()
+}
+
+func (c City) GetPledges() ([]Pledge, error) {
 	var pledges []Pledge
 
-	allPledges, err := RetrieveAllPledges()
-	if err != nil {
-		return pledges, err
-	}
-
-	for _, val := range allPledges {
-		if val.ActorID == c.Index {
-			pledges = append(pledges, val)
+	for _, id := range c.Pledges {
+		p, err := RetrievePledge(id)
+		if err != nil {
+			return pledges, errors.Wrap(err, "The Region method GetPledges() failed.")
 		}
+		pledges = append(pledges, p)
 	}
 	return pledges, nil
 }
+

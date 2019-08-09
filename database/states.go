@@ -31,7 +31,7 @@ type State struct {
 	HQ          string
 	// EntityType		string
 
-	Pledges []Pledge
+	Pledges []int
 
 	//	For states: children = companies (divided by state)
 	Children []string
@@ -130,19 +130,20 @@ func FilterStates(country string) ([]State, error) {
 	return states, nil
 }
 
+func (c *State) AddPledges(pledgeIDs ...int) error {
+	c.Pledges = append(c.Pledges, pledgeIDs...)
+	return c.Save()
+}
 
-func (s *State) RetrievePledges() ([]Pledge, error) {
+func (c State) GetPledges() ([]Pledge, error) {
 	var pledges []Pledge
 
-	allPledges, err := RetrieveAllPledges()
-	if err != nil {
-		return pledges, err
-	}
-
-	for _, val := range allPledges {
-		if val.ActorID == s.Index {
-			pledges = append(pledges, val)
+	for _, id := range c.Pledges {
+		p, err := RetrievePledge(id)
+		if err != nil {
+			return pledges, errors.Wrap(err, "The State method GetPledges() failed.")
 		}
+		pledges = append(pledges, p)
 	}
 	return pledges, nil
 }

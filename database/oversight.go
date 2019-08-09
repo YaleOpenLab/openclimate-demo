@@ -81,6 +81,15 @@ func RetrieveAllOsOrgs() ([]Oversight, error) {
 	return osOrgs, nil
 }
 
+func (os *Oversight) AddPledges(pledgeIDs ...int) error {
+	return nil
+}
+
+func (os Oversight) GetPledges() ([]Pledge, error) {
+	var empty []Pledge
+	return empty, nil
+}
+
 // func CommitToStellar(ipfsHash string, seed string, pubkey string) (string, string, error) {
 
 // 	memo := "IPFSHASH: " + ipfsHash // add padding to the ipfs hash length

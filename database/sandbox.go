@@ -139,6 +139,20 @@ func PopulateAvangridCompany() {
 		log.Println(err)
 		return
 	}
+
+	pledge, err := NewPledge("reduction", 2015, 2050, 0.50, true, avangrid.GetID())
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	err = avangrid.AddPledges(pledge.ID)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+
 	// assets, err := avangrid.GetAssetsByState("Connecticut")
 	// if err != nil {
 	// 	log.Println(err)

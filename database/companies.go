@@ -36,7 +36,7 @@ type Company struct {
 
 	MRV string // the company's chosen MRV reporting methodology
 
-	Pledges []Pledge
+	Pledges []int
 
 	States []int
 
@@ -126,13 +126,31 @@ func (c *Company) AddCountries(countryIDs ...int) error {
 func (c *Company) GetCountries() ([]Country, error) {
 	var countries []Country
 	for _, id := range c.Countries {
-		c, err := RetrieveCountry(id)
+		country, err := RetrieveCountry(id)
 		if err != nil {
 			return countries, errors.Wrap(err, "The Company method GetCountries() failed.")
 		}
-		countries = append(countries, c)
+		countries = append(countries, country)
 	}
 	return countries, nil
+}
+
+func (c *Company) AddPledges(pledgeIDs ...int) error {
+	c.Pledges = append(c.Pledges, pledgeIDs...)
+	return c.Save()
+}
+
+func (c Company) GetPledges() ([]Pledge, error) {
+	var pledges []Pledge
+
+	for _, id := range c.Pledges {
+		p, err := RetrievePledge(id)
+		if err != nil {
+			return pledges, errors.Wrap(err, "The Company method GetPledges() failed.")
+		}
+		pledges = append(pledges, p)
+	}
+	return pledges, nil
 }
 
 // Function that creates a new company object given its name
@@ -193,30 +211,3 @@ func RetrieveAllCompanies() ([]Company, error) {
 
 	return companies, nil
 }
-
-func (c *Company) RetrievePledges() ([]Pledge, error) {
-	var pledges []Pledge
-
-	allPledges, err := RetrieveAllPledges()
-	if err != nil {
-		return pledges, err
-	}
-
-	for _, val := range allPledges {
-		if val.ActorID == c.Index {
-			pledges = append(pledges, val)
-		}
-	}
-	return pledges, nil
-}
-
-// func (c *Company) AddAsset(info Asset) error {
-// 	asset, err := NewAsset(info.Name, c.Name)
-// 	if err != nil {
-// 		return errors.Wrap(err, "AddAsset() failed.")
-// 	}
-// 	asset.Save()
-// 	c.Children = append(c.Children, asset.Index)
-// 	c.Save()
-// 	return nil
-// }

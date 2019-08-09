@@ -32,7 +32,6 @@ type Pledge struct {
 }
 
 func NewPledge(pledgeType string, baseYear int, targetYear int, goal float64, regulatory bool, actorID int) (Pledge, error) {
-
 	var p Pledge
 	p.PledgeType = pledgeType
 	p.BaseYear = baseYear

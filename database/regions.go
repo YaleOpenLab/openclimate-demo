@@ -29,7 +29,7 @@ type Region struct {
 	HQ          string
 	// EntityType		string
 
-	Pledges []Pledge
+	Pledges []int
 
 	//	For regions: children = companies (divided by region)
 	Children []string
@@ -104,18 +104,20 @@ func RetrieveAllRegions() ([]Region, error) {
 	return regions, nil
 }
 
-func (r *Region) RetrievePledges() ([]Pledge, error) {
+func (c *Region) AddPledges(pledgeIDs ...int) error {
+	c.Pledges = append(c.Pledges, pledgeIDs...)
+	return c.Save()
+}
+
+func (c Region) GetPledges() ([]Pledge, error) {
 	var pledges []Pledge
 
-	allPledges, err := RetrieveAllPledges()
-	if err != nil {
-		return pledges, err
-	}
-
-	for _, val := range allPledges {
-		if val.ActorID == r.Index {
-			pledges = append(pledges, val)
+	for _, id := range c.Pledges {
+		p, err := RetrievePledge(id)
+		if err != nil {
+			return pledges, errors.Wrap(err, "The Region method GetPledges() failed.")
 		}
+		pledges = append(pledges, p)
 	}
 	return pledges, nil
 }

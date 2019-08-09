@@ -13,6 +13,7 @@ import (
 
 func setupIpfsHandlers() {
 	RetrieveFromIpfs()
+	RetrieveAllFromIpfs()
 	getIpfsHash()
 }
 
@@ -30,7 +31,7 @@ func setupIpfsHandlers() {
 	- "actor_id": the ID assigned to the actor in the database.
 */
 func RetrieveFromIpfs() {
-	http.HandleFunc("/ipfs/request", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/ipfs/retrieve", func(w http.ResponseWriter, r *http.Request) {
 
 		err := erpc.CheckGet(w, r)
 		if err != nil {
@@ -57,6 +58,48 @@ func RetrieveFromIpfs() {
 			For more information, see blockchain/retrieve.go
 		*/
 		data, err := ipfs.GetFromIpfs(reportType, actorType, actorID)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, data)
+	})
+}
+
+/*
+	Retrieve all data related to a given actor that has been committed to IPFS.
+	This includes both emissions, mitigation, and adaptation data.
+*/
+func RetrieveAllFromIpfs() {
+	http.HandleFunc("/ipfs/request", func(w http.ResponseWriter, r *http.Request) {
+
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
+
+		// reportType := r.URL.Query()["report_type"][0]
+		actorType := r.URL.Query()["actor_type"][0]
+		actorID, err := strconv.Atoi(r.URL.Query()["actor_id"][0])
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		/*
+			blockchain.GetFromIpfs() is not a real function yet. The function
+			will receive the actor type and the actor id, then search our smart
+			contract for all the IPFS hashes that are associated with that actor
+			type and actor id. The function will then retrieve the corresponding
+			data from IPFS using those hash content addresses and give it to us here.
+
+			For more information, see blockchain/retrieve.go
+		*/
+		data, err := ipfs.GetAllFromIpfs(actorType, actorID)
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)

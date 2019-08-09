@@ -177,24 +177,36 @@ func (u *User) AddPledge(pledge Pledge) {
 	return
 }
 
-func (user *User) GetUserActor() (interface{}, error) {
+func (user *User) GetUserActor() (Actor, error) {
 
-	var entity interface{}
+	var entity Actor
 	var err error
 
 	switch user.EntityType {
 	case "company":
-		entity, err = RetrieveCompany(user.EntityID)
+		var x Company
+		x, err = RetrieveCompany(user.EntityID)
+		entity = &x
 	case "city":
-		entity, err = RetrieveCity(user.EntityID)
+		var x City
+		x, err = RetrieveCity(user.EntityID)
+		entity = &x
 	case "state":
-		entity, err = RetrieveState(user.EntityID)
+		var x State
+		x, err = RetrieveState(user.EntityID)
+		entity = &x
 	case "region":
-		entity, err = RetrieveRegion(user.EntityID)
+		var x Region
+		x, err = RetrieveRegion(user.EntityID)
+		entity = &x
 	case "country":
-		entity, err = RetrieveCountry(user.EntityID)
+		var x Country
+		x, err = RetrieveCountry(user.EntityID)
+		entity = &x
 	case "oversight":
-		entity, err = RetrieveOsOrg(user.EntityID)
+		var x Oversight
+		x, err = RetrieveOsOrg(user.EntityID)
+		entity = &x
 	default:
 		return entity, errors.New("User's entity type is not valid.")
 	}

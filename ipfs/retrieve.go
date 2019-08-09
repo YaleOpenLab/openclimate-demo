@@ -21,3 +21,8 @@ func GetFromIpfs(reportType string, actorType string, actorID int) (map[string]i
 	var empty map[string]interface{}
 	return empty, nil
 }
+
+func GetAllFromIpfs(actorType string, actorID int) (map[string]interface{}, error) {
+	var empty map[string]interface{}
+	return empty, nil
+}
