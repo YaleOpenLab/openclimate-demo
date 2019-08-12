@@ -5,18 +5,21 @@ import (
 	"log"
 	erpc "github.com/Varunram/essentials/rpc"
 	db "github.com/YaleOpenLab/openclimate/database"
+	"github.com/YaleOpenLab/openclimate/ipfs"
 )
 
 func setupView() {
 	viewPledges()
+	ViewCompanyEarth()
 	viewCompanyNational()
 	viewCompanySubNationalByNational()
 	viewCompanyAssetsBySubNational()
 }
 
+var viewUrl string = "/view"
 
 func viewPledges() {
-	http.HandleFunc("/user/pledges/view", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(viewUrl + "/pledges", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -42,9 +45,29 @@ func viewPledges() {
 	})
 }
 
+func ViewCompanyEarth() {
+	http.HandleFunc(viewUrl + "/earth", func(w http.ResponseWriter, r *http.Request) {
+
+		_, err := CheckGetAuth(w, r)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		earthData, err := ipfs.GetFromIpfsEarthData()
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, earthData)
+	})
+}
 
 func viewCompanyNational() {
-	http.HandleFunc("/company/national", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(viewUrl + "/national", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -72,7 +95,7 @@ func viewCompanyNational() {
 
 
 func viewCompanySubNationalByNational() {
-	http.HandleFunc("/company/subnational", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(viewUrl + "/subnational", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -115,9 +138,8 @@ func viewCompanySubNationalByNational() {
 	})
 }
 
-
 func viewCompanyAssetsBySubNational() {
-	http.HandleFunc("/company/assets/filter", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(viewUrl + "/assets", func(w http.ResponseWriter, r *http.Request) {
 
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
@@ -158,6 +180,5 @@ func viewCompanyAssetsBySubNational() {
 		}
 
 		erpc.MarshalSend(w, assetsByState)
-
 	})
 }

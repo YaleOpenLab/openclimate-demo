@@ -26,3 +26,8 @@ func GetAllFromIpfs(actorType string, actorID int) (map[string]interface{}, erro
 	var empty map[string]interface{}
 	return empty, nil
 }
+
+func GetFromIpfsEarthData() (map[string]Earth, error) {
+	var empty map[string]Earth
+	return empty, nil
+}

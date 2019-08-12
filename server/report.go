@@ -20,7 +20,6 @@ func setupReportHandlers() {
 }
 
 
-
 /*
 	Handler that allows actors to self-report their climate action data.
 	The data in the body of the POST request must follow the format of
