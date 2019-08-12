@@ -324,7 +324,7 @@ func CommitPledge() {
 		_, err := CheckGetAuth(w, r)
 		if err != nil {
 			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -355,6 +355,30 @@ func CommitPledge() {
 		}
 
 		erpc.MarshalSend(w, ipfsHash)
+	})
+}
+
+func UpdateMRV() {
+	http.HandleFunc("user/mrv", func(w http.ResponseWriter, r *http.Request) {
+		user, err := CheckGetAuth(w, r)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		if r.URL.Query()["MRV"] == nil {
+			log.Println("Updated MRV not passed, quitting")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		mrv := r.URL.Query()["MRV"][0]
+
+		actor, err := user.RetrieveUserEntity()
+		actor.UpdateMRV(mrv)
+
+		erpc.MarshalSend(w, mrv)
 	})
 }
 

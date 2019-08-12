@@ -14,18 +14,19 @@ import (
 	"github.com/YaleOpenLab/openclimate/oracle"
 )
 
-func setupReportHandlers() {
-	SelfReport()
-	ConnectDatabase()
+func setupReport() {
+	report()
+	connectDatabase()
 }
 
 
 /*
 	Handler that allows actors to self-report their climate action data.
 	The data in the body of the POST request must follow the format of
-	either the Emissions, Mitigation, or Adaptation structs.
+	either the Emissions, Mitigation, or Adaptation structs defined in
+	ipfs/data.go.
 */
-func SelfReport() {
+func report() {
 	http.HandleFunc("/user/self-report", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckPostAuth(w, r)
 		if err != nil {
@@ -72,9 +73,20 @@ func SelfReport() {
 	})
 }
 
+type ReportIpcc struct {
+
+}
+
+// Report data using the IPCC methodology.
+func reportIpcc(data interface{}) (ReportIpcc, error) {
+	var empty ReportIpcc
+	return empty, nil
+}
+
+
 // Submit a request to connect with an external database that contains
 // emissions/mitigation/adaptation data that users would like to report.
-func ConnectDatabase() {
+func connectDatabase() {
 	http.HandleFunc("/user/request-database", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
 		if err != nil {
@@ -98,20 +110,5 @@ func ConnectDatabase() {
 
 		db.NewRequest(request) // store request into request bucket, to be reviewed later
 		erpc.MarshalSend(w, request)
-
-		// log.Println("BYTES: ", b)
-
-		// entityType := r.URL.Query()["entity_type"][0]
-		// username := r.URL.Query()["username"][0]
-		// user, err := database.RetrieveUserbyUsername(username)
-		// if err != nil {
-		// 	log.Println("failed to find user")
-		// 	return
-		// }
-
-		// for _, db := range r.URL.Query()["database"] {
-
-		// }
-
 	})
 }

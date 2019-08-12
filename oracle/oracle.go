@@ -1,8 +1,9 @@
 package oracle
 
 import (
-	"log"
+	// "log"
 	"github.com/YaleOpenLab/openclimate/ipfs"
+	"github.com/pkg/errors"
 	// "reflect"
 )
 
@@ -44,8 +45,7 @@ func Verify(reportType string, entity interface{}, data interface{}) (string, er
 	}
 
 	if err != nil {
-		log.Println("failed to verify data")
-		return ipfsHash, err
+		return ipfsHash, errors.Wrap(err, "oracle.Verify() failed")
 	}
 
 	// Committing to IPFS may not be necessary. We can commit this data
@@ -55,8 +55,7 @@ func Verify(reportType string, entity interface{}, data interface{}) (string, er
 
 	ipfsHash, err = ipfs.IpfsCommitData(verifiedData)
 	if err != nil {
-		log.Println("Failed to commit data to IPFS")
-		return ipfsHash, err
+		return ipfsHash, errors.Wrap(err, "oracle.Verify() failed")
 	}
 
 	return ipfsHash, err

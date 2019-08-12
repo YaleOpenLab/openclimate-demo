@@ -31,6 +31,8 @@ type State struct {
 	HQ          string
 	// EntityType		string
 
+	MRV string
+
 	Pledges []int
 
 	//	For states: children = companies (divided by state)

@@ -7,6 +7,7 @@ import (
 type Actor interface {
 	GetPledges() ([]Pledge, error)
 	AddPledges(pledgeIDs ...int) error
+	UpdateMRV(MRV string)
 }
 
 type BucketItem interface {
@@ -165,4 +166,41 @@ func (x *State) GetID() int {
 
 func (x *User) GetID() int {
 	return x.Index
+}
+
+/*	Actor Interface method:
+
+	Allows for the updating of the chosen reporting methodology
+	for any of the climate actor types that implement the
+	Actor interface.
+*/
+
+func (c *Company) UpdateMRV(MRV string) {
+	c.MRV = MRV
+	c.Save()
+}
+
+func (c *City) UpdateMRV(MRV string) {
+	c.MRV = MRV
+	c.Save()
+}
+
+func (c *Country) UpdateMRV(MRV string) {
+	c.MRV = MRV
+	c.Save()
+}
+
+func (c *State) UpdateMRV(MRV string) {
+	c.MRV = MRV
+	c.Save()
+}
+
+func (c *Region) UpdateMRV(MRV string) {
+	c.MRV = MRV
+	c.Save()
+}
+
+func (c *Oversight) UpdateMRV(MRV string) {
+	c.MRV = MRV
+	c.Save()
 }

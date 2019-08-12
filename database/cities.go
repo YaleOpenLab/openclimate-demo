@@ -28,6 +28,8 @@ type City struct {
 	CompanySize int
 	HQ          string
 
+	MRV string
+
 	Children []string
 
 	Pledges []int

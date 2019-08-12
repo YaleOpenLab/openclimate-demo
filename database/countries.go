@@ -24,6 +24,8 @@ type Country struct {
 	CompanySize int
 	HQ          string
 
+	MRV string
+
 	// For countries: children = regions
 	Children []string
 	Credits  []int

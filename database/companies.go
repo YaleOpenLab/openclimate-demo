@@ -38,10 +38,9 @@ type Company struct {
 
 	Pledges []int
 
+	// Nested scopes
 	States []int
-
 	Regions []int
-
 	Countries []int
 
 	// The entity IDs of all the company's physical assets
@@ -58,11 +57,6 @@ type Company struct {
 	// Emissions  map[string]string // accept whatever emissions the frontend passes
 	// Mitigation map[string]string
 	// Adaptation map[string]string
-}
-
-func (c *Company) UpdateMRV(MRV string) {
-	c.MRV = MRV
-	c.Save()
 }
 
 func (c *Company) AddPledges(pledgeIDs ...int) error {

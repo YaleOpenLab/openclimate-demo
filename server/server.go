@@ -11,14 +11,13 @@ import (
 func StartServer(port string, insecure bool) {
 
 	ocdb.Populate()
-	// log.Println("populated db")
 	erpc.SetupBasicHandlers()
 
 	setupView()
 	setupManage()
 	setupUser()
-
-	setupReportHandlers()
+	setupReport()
+	
 	setupActorsHandlers()
 	setupIpfsHandlers()
 	

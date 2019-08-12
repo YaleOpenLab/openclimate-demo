@@ -13,7 +13,6 @@ import ()
 
 */
 
-
 /**************************/
 /* EMISSIONS DATA STRUCTS */
 /**************************/
@@ -30,6 +29,14 @@ type Emissions struct {
 	TotalScope2CO2e int
 	TotalScope3CO2e int
 
+	// Where is the report and its data from?
+	// (options: internally conducted report, consulting group, etc.)
+	Source string
+
+	// what methodology was used in the reporting and
+	// verification of the emissions data?
+	Methodology string
+
 	// Emissions data (by asset)
 	// Country children: regions
 	// Region children: companies & cities
@@ -40,14 +47,6 @@ type Emissions struct {
 		Scope1CO2e float64
 		Scope2CO2e float64
 		Scope3CO2e float64
-
-		// Where is the report and its data from?
-		// (options: internally conducted report, consulting group, etc.)
-		Source string
-
-		// what methodology was used in the reporting and
-		// verification of the emissions data?
-		Methodology string
 
 		// // "verified" represents if the data is sufficiently reviewed
 		// // and confirmed/corroborated (from oracle, third-party auditor, etc)
@@ -64,6 +63,14 @@ type Mitigation struct {
 	UserID     int
 	EntityType string
 	Year       int
+
+	// Where is the report and its data from?
+	// (options: internally conducted report, consulting group, etc.)
+	Source string
+
+	// what methodology was used in the reporting and
+	// verification of the mitigation data?
+	Methodology string
 
 	// Emissions data (by asset)
 	// Country children: regions
@@ -89,13 +96,6 @@ type Mitigation struct {
 		// - Both
 		Category string
 
-		// Where is the report and its data from?
-		// (options: internally conducted report, consulting group, etc.)
-		Source string
-
-		// what methodology was used in the reporting and
-		// verification of the mitigation data?
-		Methodology string
 	}
 }
 

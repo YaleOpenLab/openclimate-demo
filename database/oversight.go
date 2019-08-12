@@ -25,6 +25,8 @@ type Oversight struct {
 	// - "Oracle System"
 	OrgType string
 
+	MRV string
+
 	Scope  string // where does the actor operate?
 	Weight int    // their weight, based on the organization's reputation
 

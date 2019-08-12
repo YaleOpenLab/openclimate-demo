@@ -18,22 +18,6 @@ func VerifyAtmosCO2() {
 
 }
 
-func VerifyTropOzone() {
-
-}
-
-func VerifyStratOzone() {
-
-}
-
-func VerifyArcticIceMin() {
-
-}
-
-func VerifyIceSheets() {
-
-}
-
 func VerifyGlobalTemp() {
 
 }
@@ -45,3 +29,19 @@ func VerifySeaLevelRise() {
 func VerifyLandUse() {
 
 }
+
+// func VerifyTropOzone() {
+
+// }
+
+// func VerifyStratOzone() {
+
+// }
+
+// func VerifyArcticIceMin() {
+
+// }
+
+// func VerifyIceSheets() {
+
+// }
