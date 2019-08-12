@@ -15,10 +15,12 @@ import (
 )
 
 func setupReport() {
-	report()
+
+	// Invoking a goroutine for report() so that the verification 
+	// function can run concurrently and doesn't hold up the server.
+	go report()
 	connectDatabase()
 }
-
 
 /*
 	Handler that allows actors to self-report their climate action data.
@@ -82,7 +84,6 @@ func reportIpcc(data interface{}) (ReportIpcc, error) {
 	var empty ReportIpcc
 	return empty, nil
 }
-
 
 // Submit a request to connect with an external database that contains
 // emissions/mitigation/adaptation data that users would like to report.

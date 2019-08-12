@@ -8,8 +8,8 @@ import (
 )
 
 // Functions clean the data and return it in the correct format.
-// To verify, oracle will check if the methodology used is valid and if the
-// values make sense.
+// To verify, oracle will check if the methodology used is valid and 
+// if the values make sense.
 
 func VerifyEmissions(data interface{}) (ipfs.Emissions, error) {
 	var verifiedData ipfs.Emissions
@@ -27,8 +27,11 @@ func VerifyAdaptation(data interface{}) (ipfs.Adaptation, error) {
 }
 
 // Calls the relevant verify helper-function to process the data,
-// then commits the data to IPFS and returns the hash
+// then commits the verified data to IPFS and then returns the hash.
 func Verify(reportType string, entity interface{}, data interface{}) (string, error) {
+
+	// go func() (string, error) {
+
 	var ipfsHash string
 	var err error
 
@@ -43,7 +46,6 @@ func Verify(reportType string, entity interface{}, data interface{}) (string, er
 	case "Adaptation":
 		verifiedData, err = VerifyAdaptation(data)
 	}
-
 	if err != nil {
 		return ipfsHash, errors.Wrap(err, "oracle.Verify() failed")
 	}
@@ -57,6 +59,6 @@ func Verify(reportType string, entity interface{}, data interface{}) (string, er
 	if err != nil {
 		return ipfsHash, errors.Wrap(err, "oracle.Verify() failed")
 	}
-
+	// }
 	return ipfsHash, err
 }
