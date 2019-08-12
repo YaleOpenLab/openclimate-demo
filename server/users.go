@@ -12,7 +12,7 @@ import (
 )
 
 // Calls all database handlers
-func setupDBHandlers() {
+func setupUser() {
 	newUser()
 	retrieveUser()
 	retrieveAllUsers()

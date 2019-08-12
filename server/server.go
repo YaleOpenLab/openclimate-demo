@@ -15,13 +15,13 @@ func StartServer(port string, insecure bool) {
 	erpc.SetupBasicHandlers()
 
 	setupView()
+	setupManage()
+	setupUser()
 
-	setupDBHandlers()
 	setupReportHandlers()
-	setupPledgeHandlers()
 	setupActorsHandlers()
 	setupIpfsHandlers()
-	setupManageHandlers()
+	
 	setupSwytchApis()
 	setupDataHandlers()
 

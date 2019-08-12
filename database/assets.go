@@ -9,13 +9,14 @@ import (
 )
 
 type Asset struct {
-	Index     int
-	CompanyID int
-	Name      string
-	Location  string
-	State 	  string
-	Type      string
-	// Reports   []RepData
+	Index     	int
+	CompanyID 	int
+	Name      	string
+	Location  	string
+	State 	  	string
+	Type      	string
+	ActionType	string
+	Capacity 	float64
 }
 
 func NewAsset(name string, companyID int, location string, state string, type_ string) (Asset, error) {
