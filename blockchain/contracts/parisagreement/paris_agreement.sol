@@ -24,8 +24,13 @@ contract ParisAgreementHighLevel{
 
     /**
     According to Paris Agreement (PA) each country shall prepare, communicate and maintain successive nationally determined
-    contributions (NDC) that it intends to achieve (GHG emissions). The struct allows to keep track of this for every country.
+    contributions (NDC) that it intends to achieve (GHG emissions). The struct allows to keep track of NDC for every country.
 
+    Katowice Climate define following guidelines for reporting:
+     - national inventory report on anthropogenic emissions by sources and removals by sinks of greenhouse gases; (first biennial report under new MPGs due December 2024)
+        1. 2006 IPCC guidelines
+        2. 100 year gwp CO2e
+        3. seven gases (CO2, CH4, N2O, HFCs, PFCs, SF6 and NF3);
     */
     struct country_NDC {
         string country;
@@ -33,6 +38,10 @@ contract ParisAgreementHighLevel{
         int CO2; // (required) in metric tonnes
         int CH4; // (required) in metric tonnes
         int N2O; // (required) in metric tonnes
+        int HFCs; // in metric tonnes
+        int PFCs; // in metric tonnes
+        int SF6; // in metric tonnes
+        int NF3; // in metric tonnes
         int AltEnergy; // alternative/renewable energy usage in MWh
 
         // Adaptation goals
@@ -76,9 +85,11 @@ contract ParisAgreementHighLevel{
 
 
     /**
-    Util function to emit variable after inserting
+    Util function to emit variable after inserting/updating/deleting
     */
-    event LogNewNDC   (address indexed country_address, uint index, string country_name, int CO2, int CH4, int N2O, int AltEnergy, uint timeDeadline);
+    event LogNewNDC   (address indexed country_address, uint index, string country_name, int CO2, int CH4, int N2O, int HFCs, int PFCs, int SF6, int NF3, int AltEnergy, uint timeTarget);
+    event LogUpdateNDC(address indexed country_address, uint index, string country_name, int CO2, int CH4, int N2O, int HFCs, int PFCs, int SF6, int NF3, int AltEnergy, uint timeTarget);
+    event LogDeleteNDC(address indexed country_address, uint index);
 
     /**
     Util function toto check if the public key of the country in the list
@@ -95,11 +106,15 @@ contract ParisAgreementHighLevel{
     /**
        Function to insert a new NDC from a country address
     */
-    function insertPledge(
+    function insertNDC(
         string memory country,
         int CO2,
         int CH4,
         int N2O,
+        int HFCs,
+        int PFCs,
+        int SF6,
+        int NF3,
         int AltEnergy,
         uint timeTarget)
     public
@@ -110,8 +125,12 @@ contract ParisAgreementHighLevel{
         NDCs[msg.sender].CO2               = CO2;
         NDCs[msg.sender].CH4               = CH4;
         NDCs[msg.sender].N2O               = N2O;
+        NDCs[msg.sender].N2O               = HFCs;
+        NDCs[msg.sender].N2O               = PFCs;
+        NDCs[msg.sender].N2O               = SF6;
+        NDCs[msg.sender].N2O               = NF3;
         NDCs[msg.sender].AltEnergy         = AltEnergy;
-        NDCs[msg.sender].timeTarget      = timeTarget;
+        NDCs[msg.sender].timeTarget        = timeTarget;
         NDCs[msg.sender].index             = countryIndex.push(msg.sender)-1;
         emit LogNewNDC(
             msg.sender,
@@ -120,9 +139,47 @@ contract ParisAgreementHighLevel{
             CO2,
             CH4,
             N2O,
+            HFCs,
+            PFCs,
+            SF6,
+            NF3,
             AltEnergy,
                 timeTarget);
         return countryIndex.length-1;
+    }
+
+    /**
+       Function to update a NDC
+    */
+    function updateNDC(address country_address, uint index, string country_name, int CO2, int CH4, int N2O, int HFCs, int PFCs, int SF6, int NF3, int AltEnergy, uint timeTarget)
+    public
+    returns(bool success)
+    {
+        if(!isCounrty(country_address)) revert();
+        require(NDCs[msg.sender].country == country_name);
+            NDCs[msg.sender].CO2               = CO2;
+            NDCs[msg.sender].CH4               = CH4;
+            NDCs[msg.sender].N2O               = N2O;
+            NDCs[msg.sender].HFCs               = HFCs;
+            NDCs[msg.sender].PFCs               = PFCs;
+            NDCs[msg.sender].SF6               = SF6;
+            NDCs[msg.sender].NF3               = NF3;
+            NDCs[msg.sender].AltEnergy         = AltEnergy;
+            NDCs[msg.sender].timeTarget        = timeTarget;
+
+            emit LogUpdateNDC(
+                country_address,
+                NDCs[msg.sender].index,
+                NDCs[msg.sender].CO2,
+                NDCs[msg.sender].CH4,
+                NDCs[msg.sender].N2O,
+                NDCs[msg.sender].HFCs,
+                NDCs[msg.sender].PFCs,
+                NDCs[msg.sender].SF6,
+                NDCs[msg.sender].NF3,
+                NDCs[msg.sender].AltEnergy,
+                NDCs[msg.sender].timeTarget);
+            return true;
     }
 
     /**
