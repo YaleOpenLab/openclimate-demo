@@ -110,7 +110,7 @@ func RetrieveAllStates() ([]State, error) {
 
 
 // Retrieves and filters state by country.
-func FilterStates(country string) ([]State, error) {
+func FilterStatesByCountry(country string) ([]State, error) {
 	var states []State
 	keys, err := edb.RetrieveAllKeys(globals.DbPath, StateBucket)
 	if err != nil {

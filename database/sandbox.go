@@ -59,17 +59,27 @@ func PopulateRegions() error {
 
 
 // Test function populating the regions bucket with the US states
-func PopulateUSStates() error {
+func PopulateUSStates() {
 	USStates = []string{"Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Federated States of Micronesia", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Marshall Islands", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Northern Mariana Islands", "Ohio", "Oklahoma", "Oregon", "Palau", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Island", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"}
 	for _, state := range USStates {
 		_, err := NewState(state, "USA")
 		if err != nil {
-			return errors.Wrap(err, "could not populate US States")
+			log.Println(errors.Wrap(err, "could not populate US States"))
 		}
 	}
-	return nil
-}
 
+	// Test Connecticut pledges
+	ct, err := RetrieveStateByName("Connecticut", "USA")
+	if err != nil {
+		log.Println(err)
+		return
+	}
+	_, err = NewPledge("Emissions reduction", 2001, 2050, 0.8, true, "state", ct.Index)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+}
 
 func PopulateAvangridCompany() {
 	
@@ -126,7 +136,7 @@ func PopulateAvangridCompany() {
 	}
 
 	// Add Pledges
-	pledge, err := NewPledge("reduction", 2015, 2050, 0.50, true, avangrid.GetID())
+	pledge, err := NewPledge("reduction", 2015, 2050, 0.50, true, "company", avangrid.GetID())
 	if err != nil {
 		log.Println(err)
 		return

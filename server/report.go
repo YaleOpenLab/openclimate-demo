@@ -15,9 +15,6 @@ import (
 )
 
 func setupReport() {
-
-	// Invoking a goroutine for report() so that the verification 
-	// function can run concurrently and doesn't hold up the server.
 	report()
 	connectDatabase()
 }

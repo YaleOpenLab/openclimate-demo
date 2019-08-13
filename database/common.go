@@ -2,7 +2,9 @@ package database
 
 import (
 	globals "github.com/YaleOpenLab/openclimate/globals"
+	"github.com/pkg/errors"
 )
+
 
 type Actor interface {
 	GetPledges() ([]Pledge, error)
@@ -17,11 +19,59 @@ type BucketItem interface {
 }
 
 type RepData struct {
-	// pledge, emissions, mitigation, adaption, etc.
+	// emissions, mitigation, adaption, etc.
 	ReportType string
 	Year       int
 	IpfsHash   string
 }
+
+
+/*
+	Given the type of actor (company, city, state, region, country, etc.) and
+	the ID of the actor, return the entity (all actor types implement the 
+	Actor interface, so the function returns the interface).
+*/
+func RetrieveActor(actorType string, actorID int) (Actor, error) {
+
+	var actor Actor
+	var err error
+
+	switch actorType {
+	case "company":
+		var x Company
+		x, err = RetrieveCompany(actorID)
+		actor = &x
+	case "city":
+		var x City
+		x, err = RetrieveCity(actorID)
+		actor = &x
+	case "state":
+		var x State
+		x, err = RetrieveState(actorID)
+		actor = &x
+	case "region":
+		var x Region
+		x, err = RetrieveRegion(actorID)
+		actor = &x
+	case "country":
+		var x Country
+		x, err = RetrieveCountry(actorID)
+		actor = &x
+	case "oversight":
+		var x Oversight
+		x, err = RetrieveOsOrg(actorID)
+		actor = &x
+	default:
+		return actor, errors.New("User's actor type is not valid.")
+	}
+
+	if err != nil {
+		return actor, errors.Wrap(err, "User's linked actor was not found")
+	}
+
+	return actor, nil
+}
+
 
 // Puts asset object in assets bucket. Called by NewAsset
 func (x *Asset) Save() error {
@@ -70,6 +120,7 @@ func (x *Company) Save() error {
 	return Save(globals.DbPath, CompanyBucket, x)
 }
 
+
 /* 	BucketItem interface method:
 
 	SetID() is a common method between all structs that qualify as
@@ -78,7 +129,6 @@ func (x *Company) Save() error {
 	bucket item's ID. The function's only use should be in the Save()
 	function; otherwise, the ID should not be modified.
 */ 
-
 func (x *Company) SetID(id int) {
 	x.Index = id
 }
@@ -127,7 +177,6 @@ func (x *User) SetID(id int) {
 	BucketItem interface methods, even if you don't know specifically which
 	struct you are workign with.
 */
-
 func (x *Company) GetID() int {
 	return x.Index
 }
@@ -168,13 +217,13 @@ func (x *User) GetID() int {
 	return x.Index
 }
 
+
 /*	Actor Interface method:
 
 	Allows for the updating of the chosen reporting methodology
 	for any of the climate actor types that implement the
 	Actor interface.
 */
-
 func (c *Company) UpdateMRV(MRV string) {
 	c.MRV = MRV
 	c.Save()

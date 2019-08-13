@@ -210,6 +210,7 @@ func AddPledge() {
 		// Convert string data into the correct data type to be passed
 		// to the NewPledge() function, in order to create the new pledge.
 
+		actorType := user.EntityType
 		actorID := user.EntityID
 
 		pledgeType := pledge["pledge_type"]
@@ -244,24 +245,7 @@ func AddPledge() {
 
 		// Call NewPledge() with all the arguments, which have been typecasted
 		// into the proper types required by the NewPledge function.
-		new, err := db.NewPledge(pledgeType, baseYear, targetYear, goal, regulatory, actorID)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-
-		// Get the entity that the user is associated with from the database
-		// so that we can update its Pledges field to include the new pledge.
-		entity, err := user.RetrieveUserEntity()
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-
-		// Add the ID of the new pledge to the entity's Pledges field.
-		err = entity.AddPledges(new.ID)
+		new, err := db.NewPledge(pledgeType, baseYear, targetYear, goal, regulatory, actorType, actorID)
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)

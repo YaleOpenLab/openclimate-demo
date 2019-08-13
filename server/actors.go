@@ -108,7 +108,7 @@ func getStatesByCountry() {
 			return
 		}
 
-		states, err := database.FilterStates(r.URL.Query()["country"][0])
+		states, err := database.FilterStatesByCountry(r.URL.Query()["country"][0])
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)

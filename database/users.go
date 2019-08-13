@@ -179,43 +179,11 @@ func (u *User) AddPledge(pledge Pledge) {
 
 func (user *User) RetrieveUserEntity() (Actor, error) {
 
-	var entity Actor
-	var err error
-
-	switch user.EntityType {
-	case "company":
-		var x Company
-		x, err = RetrieveCompany(user.EntityID)
-		entity = &x
-	case "city":
-		var x City
-		x, err = RetrieveCity(user.EntityID)
-		entity = &x
-	case "state":
-		var x State
-		x, err = RetrieveState(user.EntityID)
-		entity = &x
-	case "region":
-		var x Region
-		x, err = RetrieveRegion(user.EntityID)
-		entity = &x
-	case "country":
-		var x Country
-		x, err = RetrieveCountry(user.EntityID)
-		entity = &x
-	case "oversight":
-		var x Oversight
-		x, err = RetrieveOsOrg(user.EntityID)
-		entity = &x
-	default:
-		return entity, errors.New("User's entity type is not valid.")
-	}
-
+	actor, err := RetrieveActor(user.EntityType, user.EntityID)
 	if err != nil {
-		return entity, errors.Wrap(err, "User's linked actor was not found")
+		return actor, errors.Wrap(err, "RetrieveUserEntity() failed.")
 	}
-
-	return entity, nil
+	return actor, nil
 }
 
 func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {

@@ -9,7 +9,7 @@ import (
 )
 
 func setupView() {
-	viewPledges()
+	viewCompanyPledges()
 	ViewCompanyEarth()
 	viewCompanyNational()
 	viewCompanySubNationalByNational()
@@ -18,7 +18,7 @@ func setupView() {
 
 var viewUrl string = "/view"
 
-func viewPledges() {
+func viewCompanyPledges() {
 	http.HandleFunc(viewUrl + "/pledges", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
@@ -89,10 +89,23 @@ func viewCompanyNational() {
 			return
 		}
 
-		erpc.MarshalSend(w, countries)
+		countryPledges := make(map[string][]db.Pledge)
+		for _, country := range countries {
+			p, err := country.GetPledges()
+			if err != nil {
+				log.Println(err)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			}
+			countryPledges[country.Name] = p
+		}
+
+		final := make(map[string]interface{})
+		final["countries"] = countries
+		final["country_pledges"] = countryPledges
+
+		erpc.MarshalSend(w, final)
 	})
 }
-
 
 func viewCompanySubNationalByNational() {
 	http.HandleFunc(viewUrl + "/subnational", func(w http.ResponseWriter, r *http.Request) {
@@ -134,7 +147,21 @@ func viewCompanySubNationalByNational() {
 			}
 		}
 
-		erpc.MarshalSend(w, statesByCountry)
+		statePledges := make(map[string][]db.Pledge)
+		for _, state := range states {
+			p, err := state.GetPledges()
+			if err != nil {
+				log.Println(err)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			}
+			statePledges[state.Name] = p
+		}
+
+		final := make(map[string]interface{})
+		final["states_by_country"] = statesByCountry
+		final["state_pledges"] = statePledges
+
+		erpc.MarshalSend(w, final)
 	})
 }
 
@@ -182,3 +209,4 @@ func viewCompanyAssetsBySubNational() {
 		erpc.MarshalSend(w, assetsByState)
 	})
 }
+

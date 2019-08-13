@@ -10,6 +10,7 @@ import (
 
 type Pledge struct {
 	ID      int
+	ActorType string
 	ActorID int
 
 	/*
@@ -31,14 +32,25 @@ type Pledge struct {
 	Regulatory bool
 }
 
-func NewPledge(pledgeType string, baseYear int, targetYear int, goal float64, regulatory bool, actorID int) (Pledge, error) {
+func NewPledge(pledgeType string, baseYear int, targetYear int, goal float64, regulatory bool, actorType string, actorID int) (Pledge, error) {
 	var p Pledge
 	p.PledgeType = pledgeType
 	p.BaseYear = baseYear
 	p.TargetYear = targetYear
 	p.Goal = goal
 	p.Regulatory = regulatory
+	p.ActorType = actorType
 	p.ActorID = actorID
+
+	actor, err := RetrieveActor(actorType, actorID)
+	if err != nil {
+		return p, errors.Wrap(err, "NewPledge() failed.")
+	}
+
+	err = actor.AddPledges(actorID)
+	if err != nil {
+		return p, errors.Wrap(err, "NewPledge() failed.")
+	}
 
 	return p, p.Save()
 }
