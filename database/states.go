@@ -143,7 +143,7 @@ func (c State) GetPledges() ([]Pledge, error) {
 	for _, id := range c.Pledges {
 		p, err := RetrievePledge(id)
 		if err != nil {
-			return pledges, errors.Wrap(err, "The State method GetPledges() failed.")
+			return pledges, errors.Wrap(err, "The State method GetPledges() failed")
 		}
 		pledges = append(pledges, p)
 	}

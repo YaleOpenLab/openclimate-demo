@@ -42,17 +42,22 @@ func NewPledge(pledgeType string, baseYear int, targetYear int, goal float64, re
 	p.ActorType = actorType
 	p.ActorID = actorID
 
+	err := p.Save()
+	if err != nil {
+		return p, errors.Wrap(err, "NewPledge() failed")
+	}
+
 	actor, err := RetrieveActor(actorType, actorID)
 	if err != nil {
-		return p, errors.Wrap(err, "NewPledge() failed.")
+		return p, errors.Wrap(err, "NewPledge() failed")
 	}
 
-	err = actor.AddPledges(actorID)
+	err = actor.AddPledges(p.ID)
 	if err != nil {
-		return p, errors.Wrap(err, "NewPledge() failed.")
+		return p, errors.Wrap(err, "NewPledge() failed")
 	}
 
-	return p, p.Save()
+	return p, nil
 }
 
 func UpdatePledge(key int, updated Pledge) error {

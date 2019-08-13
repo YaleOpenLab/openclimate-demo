@@ -74,6 +74,7 @@ func PopulateUSStates() {
 		log.Println(err)
 		return
 	}
+
 	_, err = NewPledge("Emissions reduction", 2001, 2050, 0.8, true, "state", ct.Index)
 	if err != nil {
 		log.Println(err)
