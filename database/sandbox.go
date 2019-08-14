@@ -158,6 +158,15 @@ func PopulateAvangridAssets() {
 		log.Println(err)
 		return
 	}
+
+	err = bfc.ReportAssetData(2018, 206, 19164)
+	if err != nil {
+		log.Println(err)
+		return
+	}
+
+	log.Println(bfc)
+
 	nhfc, err := NewAsset("New Haven Fuel Cell", avangrid.GetID(), "New Haven", "Connecticut", "Solar Array")
 	if err != nil {
 		log.Println(err)

@@ -10,12 +10,12 @@ import (
 
 func GetAndCommitDaily() {
 
-	noaaData, err := GetNoaaDailyCO2()
+	dailyNoaaData, err := GetNoaaDailyCO2()
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "GetAndCommitDaily() failed"))
 	}
 
-	err = Verify("Earth", "Earth", 1, noaaData)
+	err = Verify("Earth", "Earth", 1, dailyNoaaData)
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "GetAndCommitDaily() failed"))
 	}

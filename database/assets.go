@@ -17,6 +17,14 @@ type Asset struct {
 	Type       string
 	ActionType string
 	Capacity   float64
+
+	Reports []ReportsByYear
+}
+
+type ReportsByYear struct {
+	Year 		int
+	GWh 		int
+	MitigationOutcomes int
 }
 
 func NewAsset(name string, companyID int, location string, state string, type_ string) (Asset, error) {
@@ -41,6 +49,19 @@ func UpdateAsset(key int, info Asset) error {
 
 	return asset.Save()
 }
+
+
+func (a *Asset) ReportAssetData(year int, gwh int, mitOut int) error {
+	var data ReportsByYear
+
+	data.Year = year
+	data.GWh = gwh
+	data.MitigationOutcomes = mitOut
+
+	a.Reports = append(a.Reports, data)
+	return a.Save()
+}
+
 
 // Given a key of type int, retrieves the corresponding asset object
 // from the database assets bucket.

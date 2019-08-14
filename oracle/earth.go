@@ -38,30 +38,6 @@ func VerifyGlobalTemp() {
 
 }
 
-func VerifySeaLevelRise() {
-
-}
-
-func VerifyLandUse() {
-
-}
-
-// func VerifyTropOzone() {
-
-// }
-
-// func VerifyStratOzone() {
-
-// }
-
-// func VerifyArcticIceMin() {
-
-// }
-
-// func VerifyIceSheets() {
-
-// }
-
 
 func GetNoaaDailyCO2() ([]float64, error) {
 	globalTrendPath := "products/trends/co2/co2_trend_gl.txt"
@@ -72,8 +48,8 @@ func GetNoaaDailyCO2() ([]float64, error) {
 	if err != nil {
 		return globalData, err
 	}
+	
 	globalData, err = ParseNoaaCO2(fs[0], 5)
-
 	return globalData, nil
 }
 
@@ -116,8 +92,8 @@ func GetNoaaAnnualCO2() ([]float64, error) {
 	if err != nil {
 		return maunaLoaData, err
 	}
+
 	maunaLoaData, err = ParseNoaaCO2(fs[0], 3)
-	
 	return maunaLoaData, nil
 }
 
