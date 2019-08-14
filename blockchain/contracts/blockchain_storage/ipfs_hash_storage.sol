@@ -5,7 +5,7 @@ pragma solidity 0.5.3;
  After oracle verification and commit to the IPFS we need to save Root Merkle Trie hashes on chain to verify the data.
 */
 
-contract IPFSMerklelRootCrud {
+contract IPFSMerklelRoot {
 
     // General struct to save Merkle Trie Root on chain.
     struct Root {
@@ -27,7 +27,7 @@ contract IPFSMerklelRootCrud {
     returns(bool isIndeed)
     {
         if(dataIndex.length == 0) return false;
-        return (dataIndex[Root[timeStamp].index] == timeStamp);
+        return (dataIndex[Roots[timeStamp].index] == timeStamp);
     }
 
     // insert new Root with the timeStamp
@@ -41,9 +41,9 @@ contract IPFSMerklelRootCrud {
         Roots[timeStamp].rootHash         = rootHash;
         Roots[timeStamp].index             = dataIndex.push(timeStamp)-1;
         emit LogNewRoot(
-                timeStamp,
-                Roots[timeStamp].index,
-                rootHash);
+            timeStamp,
+            Roots[timeStamp].index,
+            rootHash);
         return dataIndex.length-1;
     }
     // get Root by a timeStamp
@@ -52,7 +52,7 @@ contract IPFSMerklelRootCrud {
     view
     returns(bytes32 rootHash, uint index)
     {
-        if(!isDataId(dataID)) revert();
+        if(!checkTimeStamp(timeStamp)) revert();
         return(
         Roots[timeStamp].rootHash,
         Roots[timeStamp].index);
