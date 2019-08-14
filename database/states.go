@@ -108,7 +108,6 @@ func RetrieveAllStates() ([]State, error) {
 	return states, nil
 }
 
-
 // Retrieves and filters state by country.
 func FilterStatesByCountry(country string) ([]State, error) {
 	var states []State
@@ -128,7 +127,7 @@ func FilterStatesByCountry(country string) ([]State, error) {
 		}
 	}
 
-	sort.Slice(states, func(i, j int) bool { return states[i].Name < states[j].Name})
+	sort.Slice(states, func(i, j int) bool { return states[i].Name < states[j].Name })
 	return states, nil
 }
 

@@ -42,8 +42,8 @@ type Emissions struct {
 	// Region children: companies & cities
 	// Company children: assets
 	ByChild []struct {
-		ChildID int
-		ChildName string
+		ChildID    int
+		ChildName  string
 		Scope1CO2e float64
 		Scope2CO2e float64
 		Scope3CO2e float64
@@ -95,7 +95,6 @@ type Mitigation struct {
 		// - Enhancement of GHG sinks
 		// - Both
 		Category string
-
 	}
 }
 
@@ -114,11 +113,11 @@ type AdaptationChild struct {
 /**********************/
 
 type Earth struct {
-	AtmosCO2   float64
+	AtmosCO2 float64
 	// TropOzone  float64 // tropospheric ozone concentration
 	// StratOzone float64 // stratospheric ozone concentration
 
-	GlobalTemp   float64
+	GlobalTemp float64
 	// ArcticIceMin float64
 	// IceSheets    float64
 	SeaLevelRise float64

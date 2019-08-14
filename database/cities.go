@@ -125,4 +125,3 @@ func (c City) GetPledges() ([]Pledge, error) {
 	}
 	return pledges, nil
 }
-

@@ -60,7 +60,6 @@ func VerifyLandUse() {
 
 // }
 
-
 func RetrNoaaGlobalTrendDailyCO2() (int, error) {
 
 	// log.Println("hit")
@@ -74,7 +73,7 @@ func RetrNoaaGlobalTrendDailyCO2() (int, error) {
 	if err != nil {
 		return 0, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
 	}
-	
+
 	resp, err := c.Retr("products/trends/co2/co2_trend_gl.txt")
 	if err != nil {
 		return 0, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
@@ -95,11 +94,10 @@ func RetrNoaaGlobalTrendDailyCO2() (int, error) {
 
 	if err := c.Quit(); err != nil {
 		return 0, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
-	}	
+	}
 
 	return 0, nil
 }
-
 
 func QueryNoaaSummary(datasetid string, startdate string, enddate string) (interface{}, error) {
 	baseUrl := "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
@@ -117,7 +115,6 @@ func QueryNoaaSummary(datasetid string, startdate string, enddate string) (inter
 	json.Unmarshal(body, &data)
 	return data, nil
 }
-
 
 func GetRequest(url string) ([]byte, error) {
 	var dummy []byte

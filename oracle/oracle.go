@@ -8,7 +8,7 @@ import (
 )
 
 // Functions clean the data and return it in the correct format.
-// To verify, oracle will check if the methodology used is valid and 
+// To verify, oracle will check if the methodology used is valid and
 // if the values make sense.
 
 func VerifyEmissions(data interface{}) (ipfs.Emissions, error) {
@@ -33,7 +33,7 @@ func Verify(reportType string, entity interface{}, data interface{}) (string, er
 	var ipfsHash string
 	var err error
 
-	// Invoking a goroutine for report() so that the verification 
+	// Invoking a goroutine for report() so that the verification
 	// function can run concurrently and doesn't hold up the server.
 	go func() {
 
@@ -54,7 +54,7 @@ func Verify(reportType string, entity interface{}, data interface{}) (string, er
 
 		// Committing to IPFS may not be necessary. We can commit this data
 		// directly on to the blockchain if it is small enough. However, once
-		// companies start to report a lot of data relating to their assets, 
+		// companies start to report a lot of data relating to their assets,
 		// IPFS is needed to minimize the amount of blockchain storage required.
 
 		ipfsHash, err = ipfs.IpfsCommitData(verifiedData)

@@ -5,7 +5,6 @@ import (
 	"github.com/pkg/errors"
 )
 
-
 type Actor interface {
 	GetPledges() ([]Pledge, error)
 	AddPledges(pledgeIDs ...int) error
@@ -25,10 +24,9 @@ type RepData struct {
 	IpfsHash   string
 }
 
-
 /*
 	Given the type of actor (company, city, state, region, country, etc.) and
-	the ID of the actor, return the entity (all actor types implement the 
+	the ID of the actor, return the entity (all actor types implement the
 	Actor interface, so the function returns the interface).
 */
 func RetrieveActor(actorType string, actorID int) (Actor, error) {
@@ -71,7 +69,6 @@ func RetrieveActor(actorType string, actorID int) (Actor, error) {
 
 	return actor, nil
 }
-
 
 // Puts asset object in assets bucket. Called by NewAsset
 func (x *Asset) Save() error {
@@ -120,15 +117,14 @@ func (x *Company) Save() error {
 	return Save(globals.DbPath, CompanyBucket, x)
 }
 
-
 /* 	BucketItem interface method:
 
-	SetID() is a common method between all structs that qualify as
-	bucket items that allow them to implement the BucketItem interface.
-	SetID() is a simple setter method that allows the updating of the
-	bucket item's ID. The function's only use should be in the Save()
-	function; otherwise, the ID should not be modified.
-*/ 
+SetID() is a common method between all structs that qualify as
+bucket items that allow them to implement the BucketItem interface.
+SetID() is a simple setter method that allows the updating of the
+bucket item's ID. The function's only use should be in the Save()
+function; otherwise, the ID should not be modified.
+*/
 func (x *Company) SetID(id int) {
 	x.Index = id
 }
@@ -169,13 +165,12 @@ func (x *User) SetID(id int) {
 	x.Index = id
 }
 
-
 /* 	BucketItem interface method:
 
-	A getter method for structs that implement the BucketItem interface. 
-	The method allows you to retrieve the ID of structs that implement the
-	BucketItem interface methods, even if you don't know specifically which
-	struct you are workign with.
+A getter method for structs that implement the BucketItem interface.
+The method allows you to retrieve the ID of structs that implement the
+BucketItem interface methods, even if you don't know specifically which
+struct you are workign with.
 */
 func (x *Company) GetID() int {
 	return x.Index
@@ -216,7 +211,6 @@ func (x *State) GetID() int {
 func (x *User) GetID() int {
 	return x.Index
 }
-
 
 /*	Actor Interface method:
 
