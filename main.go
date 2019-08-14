@@ -14,10 +14,13 @@ import (
 
 func main() {
 	// Interact with the blockchain and check token balance
-	_, err := oracle.RetrNoaaGlobalTrendDailyCO2()
+	data, err := oracle.GetNoaaDailyCO2()
 	if err != nil {
 		log.Fatal(err)
 	}
+	log.Println(data)
+
+
 	blockchain.CheckTokenBalance()
 	database.FlushDB()
 	database.CreateHomeDir()
