@@ -14,7 +14,7 @@ import (
 
 func main() {
 	// Interact with the blockchain and check token balance
-	data, err := oracle.GetNoaaDailyCO2()
+	data, err := oracle.GetNoaaMonthlyCO2()
 	if err != nil {
 		log.Fatal(err)
 	}
