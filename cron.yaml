@@ -1,0 +1,4 @@
+cron:
+- description: "daily NOAA global trend CO2"
+  url: /tasks/noaa
+  schedule: every 24 hours

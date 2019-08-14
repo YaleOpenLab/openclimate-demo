@@ -34,12 +34,12 @@ func report() {
 			return
 		}
 
-		entity, err := user.RetrieveUserEntity()
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
+		// entity, err := user.RetrieveUserEntity()
+		// if err != nil {
+		// 	log.Println(err)
+		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		// 	return
+		// }
 
 		if r.URL.Query()["report_type"] == nil {
 			log.Println("report type not passed, quitting")
@@ -64,11 +64,14 @@ func report() {
 			return
 		}
 
-		ipfsHash, err := oracle.Verify(reportType, entity, data)
-
+		err = oracle.Verify(reportType, user.EntityType, user.EntityID, data)
+		if err != nil {
+			log.Fatal(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
 		// commit to blockchain
 
-		erpc.MarshalSend(w, ipfsHash)
+		// erpc.MarshalSend(w, ipfsHash)
 	})
 }
 

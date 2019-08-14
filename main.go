@@ -6,7 +6,7 @@ import (
 
 	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/database"
-	"github.com/YaleOpenLab/openclimate/oracle"
+	// "github.com/YaleOpenLab/openclimate/oracle"
 	"github.com/YaleOpenLab/openclimate/server"
 	//"github.com/Varunram/essentials/ipfs"
 	//"github.com/YaleOpenLab/openclimate/notif"
@@ -14,11 +14,11 @@ import (
 
 func main() {
 	// Interact with the blockchain and check token balance
-	data, err := oracle.GetNoaaMonthlyCO2()
-	if err != nil {
-		log.Fatal(err)
-	}
-	log.Println(data)
+	// data, err := oracle.GetNoaaMonthlyCO2()
+	// if err != nil {
+	// 	log.Fatal(err)
+	// }
+	// log.Println(data)
 
 
 	blockchain.CheckTokenBalance()

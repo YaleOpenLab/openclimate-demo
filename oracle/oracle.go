@@ -3,6 +3,7 @@ package oracle
 import (
 	// "log"
 	"github.com/YaleOpenLab/openclimate/ipfs"
+	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/pkg/errors"
 	// "reflect"
 )
@@ -28,7 +29,7 @@ func VerifyAdaptation(data interface{}) (ipfs.Adaptation, error) {
 
 // Calls the relevant verify helper-function to process the data,
 // then commits the verified data to IPFS and then returns the hash.
-func Verify(reportType string, entity interface{}, data interface{}) (string, error) {
+func Verify(reportType string, entityType string, entityID int, data interface{}) error {
 
 	var ipfsHash string
 	var err error
@@ -38,6 +39,7 @@ func Verify(reportType string, entity interface{}, data interface{}) (string, er
 	go func() {
 
 		var verifiedData interface{}
+		
 		switch reportType {
 		case "Earth":
 			verifiedData, err = VerifyEarth(data)
@@ -62,9 +64,14 @@ func Verify(reportType string, entity interface{}, data interface{}) (string, er
 			err = errors.Wrap(err, "oracle.Verify() failed")
 		}
 	}()
-
 	if err != nil {
-		return ipfsHash, err
+		return errors.Wrap(err, "oracle.Verify() failed")
 	}
-	return ipfsHash, nil
+
+	err = blockchain.CommitToChain(ipfsHash)
+	if err != nil {
+		return errors.Wrap(err, "oracle.Verify() failed")
+	}
+
+	return nil
 }

@@ -9,6 +9,7 @@ type Actor interface {
 	GetPledges() ([]Pledge, error)
 	AddPledges(pledgeIDs ...int) error
 	UpdateMRV(MRV string)
+	GetID() int
 }
 
 type BucketItem interface {
