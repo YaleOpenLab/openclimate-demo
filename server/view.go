@@ -1,11 +1,11 @@
 package server
 
 import (
-	"net/http"
-	"log"
 	erpc "github.com/Varunram/essentials/rpc"
 	db "github.com/YaleOpenLab/openclimate/database"
 	"github.com/YaleOpenLab/openclimate/ipfs"
+	"log"
+	"net/http"
 )
 
 func setupView() {
@@ -19,7 +19,7 @@ func setupView() {
 var viewUrl string = "/view"
 
 func viewCompanyPledges() {
-	http.HandleFunc(viewUrl + "/pledges", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(viewUrl+"/pledges", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -46,7 +46,7 @@ func viewCompanyPledges() {
 }
 
 func ViewCompanyEarth() {
-	http.HandleFunc(viewUrl + "/earth", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(viewUrl+"/earth", func(w http.ResponseWriter, r *http.Request) {
 
 		_, err := CheckGetAuth(w, r)
 		if err != nil {
@@ -67,7 +67,7 @@ func ViewCompanyEarth() {
 }
 
 func viewCompanyNational() {
-	http.HandleFunc(viewUrl + "/national", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(viewUrl+"/national", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -108,7 +108,7 @@ func viewCompanyNational() {
 }
 
 func viewCompanySubNationalByNational() {
-	http.HandleFunc(viewUrl + "/subnational", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(viewUrl+"/subnational", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -166,7 +166,7 @@ func viewCompanySubNationalByNational() {
 }
 
 func viewCompanyAssetsBySubNational() {
-	http.HandleFunc(viewUrl + "/assets", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc(viewUrl+"/assets", func(w http.ResponseWriter, r *http.Request) {
 
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
@@ -209,4 +209,3 @@ func viewCompanyAssetsBySubNational() {
 		erpc.MarshalSend(w, assetsByState)
 	})
 }
-

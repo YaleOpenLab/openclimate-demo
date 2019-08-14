@@ -14,10 +14,9 @@ func Populate() {
 	PopulateAvangridAssets()
 	PopulateAdminUsers()
 	PopulateTestUsers()
-	
+
 	// TestGetActor()
 }
-
 
 // Test function populating the countries bucket with dummy values
 // to test the rpc endpoint for countries
@@ -31,7 +30,6 @@ func PopulateCountries() error {
 	}
 	return nil
 }
-
 
 func PopulateRegions() error {
 	_, err := NewRegion("New England", "USA")
@@ -56,7 +54,6 @@ func PopulateRegions() error {
 	}
 	return nil
 }
-
 
 // Test function populating the regions bucket with the US states
 func PopulateUSStates() {
@@ -83,7 +80,7 @@ func PopulateUSStates() {
 }
 
 func PopulateAvangridCompany() {
-	
+
 	avangrid, err := NewCompany("Avangrid", "USA")
 	if err != nil {
 		log.Println(err)
@@ -189,7 +186,6 @@ func PopulateAvangridAssets() {
 	}
 }
 
-
 func PopulateAdminUsers() error {
 	pwhash := utils.SHA3hash("p")
 
@@ -211,7 +207,6 @@ func PopulateAdminUsers() error {
 
 	return nil
 }
-
 
 func PopulateTestUsers() error {
 	pwhash := utils.SHA3hash("a")

@@ -365,4 +365,3 @@ func UpdateMRV() {
 		erpc.MarshalSend(w, mrv)
 	})
 }
-

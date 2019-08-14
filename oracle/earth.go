@@ -147,7 +147,6 @@ func RetrieveNoaaDailyCO2(filepaths ...string) ([]string, error) {
 	return bufs, nil
 }
 
-
 func QueryNoaaSummary(datasetid string, startdate string, enddate string) (interface{}, error) {
 	baseUrl := "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
 	dataset := "datasetid=" + datasetid
@@ -164,7 +163,6 @@ func QueryNoaaSummary(datasetid string, startdate string, enddate string) (inter
 	json.Unmarshal(body, &data)
 	return data, nil
 }
-
 
 func GetRequest(url string) ([]byte, error) {
 	var dummy []byte

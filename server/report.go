@@ -73,7 +73,6 @@ func report() {
 }
 
 type ReportIpcc struct {
-
 }
 
 // Report data using the IPCC methodology.

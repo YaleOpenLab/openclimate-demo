@@ -24,8 +24,6 @@ func setupActorsHandlers() {
 	getCountry()
 }
 
-
-
 /*******************/
 /* REGION HANDLERS */
 /*******************/
@@ -238,7 +236,6 @@ func getCompany() {
 		erpc.MarshalSend(w, company)
 	})
 }
-
 
 /**********************/
 /* COUNTRIES HANDLERS */

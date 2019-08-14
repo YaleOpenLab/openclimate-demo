@@ -9,9 +9,9 @@ import (
 )
 
 type Pledge struct {
-	ID      int
+	ID        int
 	ActorType string
-	ActorID int
+	ActorID   int
 
 	/*
 		Pledges can be:

@@ -6,8 +6,8 @@ import (
 
 	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/database"
-	"github.com/YaleOpenLab/openclimate/server"
 	"github.com/YaleOpenLab/openclimate/oracle"
+	"github.com/YaleOpenLab/openclimate/server"
 	//"github.com/Varunram/essentials/ipfs"
 	//"github.com/YaleOpenLab/openclimate/notif"
 )

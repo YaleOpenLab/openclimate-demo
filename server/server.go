@@ -17,13 +17,12 @@ func StartServer(port string, insecure bool) {
 	setupManage()
 	setupUser()
 	setupReport()
-	
+
 	setupActorsHandlers()
 	setupIpfsHandlers()
-	
+
 	setupSwytchApis()
 	setupDataHandlers()
-
 
 	log.Println("Starting RPC Server on Port: ", port)
 	if insecure {
@@ -32,4 +31,3 @@ func StartServer(port string, insecure bool) {
 		log.Fatal(http.ListenAndServeTLS(":"+port, "server.crt", "server.key", nil))
 	}
 }
-

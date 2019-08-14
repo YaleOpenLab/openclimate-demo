@@ -39,8 +39,8 @@ type Company struct {
 	Pledges []int
 
 	// Nested scopes
-	States []int
-	Regions []int
+	States    []int
+	Regions   []int
 	Countries []int
 
 	// The entity IDs of all the company's physical assets
@@ -146,7 +146,6 @@ func (c *Company) GetCountries() ([]Country, error) {
 	}
 	return countries, nil
 }
-
 
 // Function that creates a new company object given its name
 // and country and saves the object in the countries bucket.

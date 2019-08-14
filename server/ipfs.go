@@ -25,7 +25,7 @@ func setupIpfsHandlers() {
 	and then makes that data available on the openclimate API.
 
 	URL parameters:
-	- "report_type": the type of climate action data that was reported. can be either 
+	- "report_type": the type of climate action data that was reported. can be either
 		emissions, mitigation, or adaptation.
 	- "actor_type": either city, country, region, state, company, etc.
 	- "actor_id": the ID assigned to the actor in the database.

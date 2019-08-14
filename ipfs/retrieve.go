@@ -1,6 +1,5 @@
 package ipfs
 
-
 /*
 
 	GetFromIpfs() is not a real function yet. The function will receive the
