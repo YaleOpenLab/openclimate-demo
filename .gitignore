@@ -6,3 +6,4 @@ load-data/load-data
 blockchain/wallet
 __pycache__
 globals/secret.go
+proofs
