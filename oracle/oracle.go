@@ -13,8 +13,15 @@ import (
 // if the values make sense.
 
 func VerifyAtmosCO2(data interface{}) (interface{}, error) {
-	var empty interface{}
-	return empty, nil
+	dataConverted := data.([]GlobalCO2)
+
+	dataSlice := make([]interface{}, len(dataConverted))
+	for _, d := range dataConverted {
+		dataSlice = append(dataSlice, d.Cycle)
+	}
+
+	dVal := dataValue(dataSlice)
+	return dVal, nil
 }
 
 func VerifyGlobalTemp() {

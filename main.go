@@ -14,14 +14,7 @@ import (
 
 func main() {
 
-	// oracle.Schedule()
-
-	test, err := oracle.GetNoaaDailyCO2()
-	if err != nil {
-		log.Fatal(err)
-	}
-
-	log.Println(test)
+	oracle.Schedule()
 
 	blockchain.CheckTokenBalance()
 	database.FlushDB()

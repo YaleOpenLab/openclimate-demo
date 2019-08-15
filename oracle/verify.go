@@ -60,7 +60,7 @@ func interface_to_float64(dat []interface{}) []float64 {
 }
 
 // Given a set of numbers, score the quality of the data from 0 to 5
-func data_score(dat []interface{}, params ...UserDefinedIntegrity) float64 {
+func dataScore(dat []interface{}, params ...UserDefinedIntegrity) float64 {
 	d := interface_to_float64(dat)
 	avg := average(d)
 	stdev := stdev(d)
@@ -83,7 +83,7 @@ func data_score(dat []interface{}, params ...UserDefinedIntegrity) float64 {
 }
 
 // Given a set of data, determine the most accurate data value
-func data_value(dat []interface{}) float64 {
+func dataValue(dat []interface{}) float64 {
 	d := interface_to_float64(dat)
 	// Take average of values within 1 standard deviation of the mean
 	avg := average(d)

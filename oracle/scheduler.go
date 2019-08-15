@@ -15,7 +15,7 @@ func GetAndCommitDaily() {
 		log.Fatal(errors.Wrap(err, "GetAndCommitDaily() failed"))
 	}
 
-	err = Verify("AtmosCO2", "Earth", 1, dailyNoaaData)
+	_, err = VerifyAtmosCO2(dailyNoaaData)
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "GetAndCommitDaily() failed"))
 	}
@@ -28,7 +28,7 @@ func GetAndCommitMonthly() {
 		log.Fatal(errors.Wrap(err, "GetAndCommitMonthly() failed"))
 	}
 
-	err = Verify("AtmosCO2", "Earth", 1, monthlyNoaaData)
+	_, err = VerifyAtmosCO2(monthlyNoaaData)
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "GetAndCommitMonthly() failed"))
 	}
