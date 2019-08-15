@@ -165,7 +165,13 @@ func PopulateAvangridAssets() {
 		return
 	}
 
-	log.Println(bfc)
+	updateA := bfc
+	updateA.ActionType = []string{"Emissions", "Mitigation"}
+	err = UpdateAsset(bfc.Index, updateA)
+	if err != nil {
+		log.Println(err)
+		return
+	}
 
 	nhfc, err := NewAsset("New Haven Fuel Cell", avangrid.GetID(), "New Haven", "Connecticut", "Solar Array")
 	if err != nil {
