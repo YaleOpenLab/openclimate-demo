@@ -51,7 +51,7 @@ contract ParisAgreementHighLevel{
 
 
         // Finance
-        int Mobilization; // (required) in billions USD
+        int Mobilization; // (required) in billions USD.
         int ContribGreenFund; // (required) Contribution to Green Climate Fund in mibillionsllions USD
         int BilateralLoan; //  Bilateral loan to developing country Party billions USD
 
