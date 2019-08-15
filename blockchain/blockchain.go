@@ -31,6 +31,7 @@ type RootStorage struct {
 	root *blockchain.IpfsRoot
 }
 
+
 func NewRoot(address common.Address, client *ethclient.Client, data  interface{}) (*RootStorage, error) {
 	parsed, err := abi.JSON(strings.NewReader(blockchain.IpfsRootABI))
 	if err != nil {
@@ -47,7 +48,8 @@ func NewRoot(address common.Address, client *ethclient.Client, data  interface{}
 	}, nil
 }
 
-func (root *RootStorage) commitRoot(keystore keystore.KeyStore, passphrase string) *types.Transaction{
+
+func (root *RootStorage) commitRoot(keystore keystore.KeyStore, passphrase string) *types.Transaction {
 	input, err := root.abi.Pack("insertRoot", root.timeStamp, root.rootHash)
 	if err != nil {
 		return nil
@@ -57,7 +59,6 @@ func (root *RootStorage) commitRoot(keystore keystore.KeyStore, passphrase strin
 	signedTx, err := keystore.SignTxWithPassphrase(accounts[0], passphrase, rawTx, big.NewInt(42))
 	return signedTx
 }
-
 
 
 func CommitToChain(data interface{}) error {

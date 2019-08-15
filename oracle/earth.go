@@ -14,6 +14,7 @@ import (
 )
 
 const (
+	// NOAA FTP addresses
 	noaaFtpAddress = "aftp.cmdl.noaa.gov:21"
 	globalTrendPath = "products/trends/co2/co2_trend_gl.txt"
 	barrowPath = "data/trace_gases/co2/flask/surface/co2_brw_surface-flask_1_ccgg_month.txt"
@@ -21,8 +22,8 @@ const (
 	southPolePath = "data/trace_gases/co2/flask/surface/co2_spo_surface-flask_1_ccgg_month.txt"
 	amSamoaPath = "data/trace_gases/co2/flask/surface/co2_smo_surface-flask_1_ccgg_month.txt"
 
+	// NOAA HTTP URLs
 	noaaBaseUrl = "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
-
 )
 
 
