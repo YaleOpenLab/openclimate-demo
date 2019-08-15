@@ -56,7 +56,7 @@ func report() {
 			return
 		}
 
-		var data interface{}
+		var data map[string][]float64
 		err = json.Unmarshal(bytes, &data)
 		if err != nil {
 			log.Println(err)

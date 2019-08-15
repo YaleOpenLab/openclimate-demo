@@ -12,6 +12,15 @@ import (
 // To verify, oracle will check if the methodology used is valid and
 // if the values make sense.
 
+func VerifyAtmosCO2(data map[string][]float64) (interface{}, error) {
+	var empty interface{}
+	return empty, nil
+}
+
+func VerifyGlobalTemp() {
+
+}
+
 func VerifyEmissions(data interface{}) (ipfs.Emissions, error) {
 	var verifiedData ipfs.Emissions
 	return verifiedData, nil
@@ -29,7 +38,7 @@ func VerifyAdaptation(data interface{}) (ipfs.Adaptation, error) {
 
 // Calls the relevant verify helper-function to process the data,
 // then commits the verified data to IPFS and then returns the hash.
-func Verify(reportType string, entityType string, entityID int, data interface{}) error {
+func Verify(reportType string, entityType string, entityID int, data map[string][]float64) error {
 
 	var ipfsHash string
 	var err error
@@ -41,8 +50,8 @@ func Verify(reportType string, entityType string, entityID int, data interface{}
 		var verifiedData interface{}
 		
 		switch reportType {
-		case "Earth":
-			verifiedData, err = VerifyEarth(data)
+		case "AtmosCO2":
+			verifiedData, err = VerifyAtmosCO2(data)
 		case "Emissions":
 			verifiedData, err = VerifyEmissions(data)
 		case "Mitigation":

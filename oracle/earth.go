@@ -2,63 +2,47 @@ package oracle
 
 import (
 	"encoding/json"
-	// erpc "github.com/Varunram/essentials/rpc"
 	"github.com/pkg/errors"
-	// "github.com/Varunram/essentials/utils"
 	"net/http"
 	// "log"
 	"github.com/YaleOpenLab/openclimate/globals"
-	"github.com/YaleOpenLab/openclimate/ipfs"
-
 	"github.com/jlaffaye/ftp"
-
-	// "log"
-
 	"strconv"
 	"strings"
 	"io/ioutil"
 	"time"
 )
 
-/*
-	Holds all the functionality that verifies data concerning the
-	state of the earth.
-*/
+const (
+	noaaFtpAddress = "aftp.cmdl.noaa.gov:21"
+	globalTrendPath = "products/trends/co2/co2_trend_gl.txt"
+	barrowPath = "data/trace_gases/co2/flask/surface/co2_brw_surface-flask_1_ccgg_month.txt"
+	maunaLoaPath = "data/trace_gases/co2/flask/surface/co2_mlo_surface-flask_1_ccgg_month.txt"
+	southPolePath = "data/trace_gases/co2/flask/surface/co2_spo_surface-flask_1_ccgg_month.txt"
+	amSamoaPath = "data/trace_gases/co2/flask/surface/co2_smo_surface-flask_1_ccgg_month.txt"
 
-func VerifyEarth(data interface{}) (ipfs.Earth, error) {
-	var verifiedData ipfs.Earth
-	return verifiedData, nil
-}
+	noaaBaseUrl = "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
 
-func VerifyAtmosCO2() {
-
-}
-
-func VerifyGlobalTemp() {
-
-}
+)
 
 
-func GetNoaaDailyCO2() ([]float64, error) {
-	globalTrendPath := "products/trends/co2/co2_trend_gl.txt"
+func GetNoaaDailyCO2() (map[string][]float64, error) {
 
-	var globalData []float64
+	data := make(map[string][]float64)
 
 	fs, err := RetrieveNoaaCO2(globalTrendPath)
 	if err != nil {
-		return globalData, err
+		return data, err
 	}
 	
-	globalData, err = ParseNoaaCO2(fs[0], 5)
-	return globalData, nil
+	globalLatest, err := ParseNoaaCO2(fs[0], 5)
+	data["global_trend_daily"] = globalLatest
+
+	return data, nil
 }
 
 
 func GetNoaaMonthlyCO2() (map[string][]float64, error) {
-	barrowPath := "data/trace_gases/co2/flask/surface/co2_brw_surface-flask_1_ccgg_month.txt"
-	maunaLoaPath := "data/trace_gases/co2/flask/surface/co2_mlo_surface-flask_1_ccgg_month.txt"
-	southPolePath := "data/trace_gases/co2/flask/surface/co2_spo_surface-flask_1_ccgg_month.txt"
-	amSamoaPath := "data/trace_gases/co2/flask/surface/co2_smo_surface-flask_1_ccgg_month.txt"
 
 	data := make(map[string][]float64)
 
@@ -117,7 +101,7 @@ func ParseNoaaCO2(filestring string, length int) ([]float64, error) {
 func RetrieveNoaaCO2(filepaths ...string) ([]string, error) {
 	var bufs []string
 
-	c, err := ftp.Dial("aftp.cmdl.noaa.gov:21", ftp.DialWithTimeout(5*time.Second))
+	c, err := ftp.Dial(noaaFtpAddress, ftp.DialWithTimeout(5*time.Second))
 	if err != nil {
 		return bufs, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
 	}
@@ -154,7 +138,8 @@ func RetrieveNoaaCO2(filepaths ...string) ([]string, error) {
 }
 
 func QueryNoaaSummary(datasetid string, startdate string, enddate string) (interface{}, error) {
-	baseUrl := "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
+
+	baseUrl := noaaBaseUrl
 	dataset := "datasetid=" + datasetid
 	startdate = "startdate=" + startdate
 	enddate = "enddate=" + enddate
@@ -163,7 +148,7 @@ func QueryNoaaSummary(datasetid string, startdate string, enddate string) (inter
 
 	var data interface{}
 
-	body, err := GetRequest(url)
+	body, err := getRequest(url)
 	if err != nil {
 		return data, errors.Wrap(err, "NOAA query failed")
 	}
@@ -172,15 +157,18 @@ func QueryNoaaSummary(datasetid string, startdate string, enddate string) (inter
 	return data, nil
 }
 
-func GetRequest(url string) ([]byte, error) {
+func getRequest(url string) ([]byte, error) {
+
 	var dummy []byte
 	client := &http.Client{
 		Timeout: 5 * time.Second,
 	}
+
 	req, err := http.NewRequest("GET", url, nil)
 	if err != nil {
 		return dummy, errors.Wrap(err, "did not create new GET request")
 	}
+
 	req.Header.Add("Origin", "localhost")
 	req.Header.Add("token", globals.NoaaToken)
 
