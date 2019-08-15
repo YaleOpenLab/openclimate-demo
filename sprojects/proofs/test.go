@@ -154,9 +154,16 @@ func main() {
 
 	oneHx, oneHy := Curve.ScalarMult(Hx, Hy, []byte{1})
 
+	var a []byte
+	a = []byte{1}
+
+	aHx, aHy := Curve.ScalarMult(Hx, Hy, a)
+
+	Cx, Cy := Curve.Add(Px, Py, aHx, aHy)                                           // P + a*H = commitment message
 	C1x, C1y := Curve.Add(Px, Py, new(big.Int).Neg(oneHx), new(big.Int).Neg(oneHy)) // C1 = x*G - 1*H
 
-	m := []byte("message")
+	var m []byte
+	m := append(m, Cx, Cy, C1x, C1y)
 	E := []byte{2} // the second node in the ring
 
 	eE := Sha256(Kx.Bytes(), Ky.Bytes(), m, E)
