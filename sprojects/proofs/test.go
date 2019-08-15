@@ -158,13 +158,15 @@ func main() {
 	a = []byte{1}
 
 	aHx, aHy := Curve.ScalarMult(Hx, Hy, a)
-	Cx, Cy := Curve.Add(Px, Py, aHx, aHy) // P + a*H = commitment message
 
+	Cx, Cy := Curve.Add(Px, Py, aHx, aHy)                                           // P + a*H = commitment message
 	C1x, C1y := Curve.Add(Px, Py, new(big.Int).Neg(oneHx), new(big.Int).Neg(oneHy)) // C1 = x*G - 1*H
 
+	var m []byte
+	m := append(m, Cx, Cy, C1x, C1y)
 	E := []byte{2} // the second node in the ring
 
-	eE := Sha256(Kx.Bytes(), Ky.Bytes(), C1x.Bytes(), C1y.Bytes(), E) // commit to the pubkey C1
+	eE := Sha256(Kx.Bytes(), Ky.Bytes(), m, E)
 	se, err := NewPrivateKey()
 	if err != nil {
 		log.Fatal(err)
@@ -176,7 +178,7 @@ func main() {
 	KEx, KEy := Curve.Add(seGx, seGy, eEPEx, eEPEy) // C1's ring sig
 
 	D := []byte{1}
-	eD := Sha256(KEx.Bytes(), KEy.Bytes(), Cx.Bytes(), Cy.Bytes(), D) // commit to the pubkey C
+	eD := Sha256(KEx.Bytes(), KEy.Bytes(), m, D)
 	eDInt := new(big.Int).SetBytes(eD)
 	sd := new(big.Int).Add(new(big.Int).Mul(eDInt, x), k)
 
