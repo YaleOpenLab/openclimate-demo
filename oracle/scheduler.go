@@ -34,7 +34,7 @@ func GetAndCommitMonthly() {
 	}
 }
 
-func ScheduleNoaaCO2() {
+func Schedule() {
 
 	c := cron.New()
 	c.AddFunc("@daily", GetAndCommitDaily)

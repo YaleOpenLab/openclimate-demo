@@ -1,11 +1,11 @@
 package oracle
 
 import (
-	"encoding/json"
+	// "encoding/json"
 	"github.com/pkg/errors"
-	"net/http"
+	// "net/http"
 	// "log"
-	"github.com/YaleOpenLab/openclimate/globals"
+	// "github.com/YaleOpenLab/openclimate/globals"
 	"github.com/jlaffaye/ftp"
 	"strconv"
 	"strings"
@@ -137,46 +137,46 @@ func RetrieveNoaaCO2(filepaths ...string) ([]string, error) {
 	return bufs, nil
 }
 
-func QueryNoaaSummary(datasetid string, startdate string, enddate string) (interface{}, error) {
+// func QueryNoaaSummary(datasetid string, startdate string, enddate string) (interface{}, error) {
 
-	baseUrl := noaaBaseUrl
-	dataset := "datasetid=" + datasetid
-	startdate = "startdate=" + startdate
-	enddate = "enddate=" + enddate
+// 	baseUrl := noaaBaseUrl
+// 	dataset := "datasetid=" + datasetid
+// 	startdate = "startdate=" + startdate
+// 	enddate = "enddate=" + enddate
 
-	url := baseUrl + "?" + dataset + "&" + startdate + "&" + enddate
+// 	url := baseUrl + "?" + dataset + "&" + startdate + "&" + enddate
 
-	var data interface{}
+// 	var data interface{}
 
-	body, err := getRequest(url)
-	if err != nil {
-		return data, errors.Wrap(err, "NOAA query failed")
-	}
+// 	body, err := getRequest(url)
+// 	if err != nil {
+// 		return data, errors.Wrap(err, "NOAA query failed")
+// 	}
 
-	json.Unmarshal(body, &data)
-	return data, nil
-}
+// 	json.Unmarshal(body, &data)
+// 	return data, nil
+// }
 
-func getRequest(url string) ([]byte, error) {
+// func getRequest(url string) ([]byte, error) {
 
-	var dummy []byte
-	client := &http.Client{
-		Timeout: 5 * time.Second,
-	}
+// 	var dummy []byte
+// 	client := &http.Client{
+// 		Timeout: 5 * time.Second,
+// 	}
 
-	req, err := http.NewRequest("GET", url, nil)
-	if err != nil {
-		return dummy, errors.Wrap(err, "did not create new GET request")
-	}
+// 	req, err := http.NewRequest("GET", url, nil)
+// 	if err != nil {
+// 		return dummy, errors.Wrap(err, "did not create new GET request")
+// 	}
 
-	req.Header.Add("Origin", "localhost")
-	req.Header.Add("token", globals.NoaaToken)
+// 	req.Header.Add("Origin", "localhost")
+// 	req.Header.Add("token", globals.NoaaToken)
 
-	res, err := client.Do(req)
-	if err != nil {
-		return dummy, errors.Wrap(err, "did not make request")
-	}
+// 	res, err := client.Do(req)
+// 	if err != nil {
+// 		return dummy, errors.Wrap(err, "did not make request")
+// 	}
 
-	defer res.Body.Close()
-	return ioutil.ReadAll(res.Body)
-}
+// 	defer res.Body.Close()
+// 	return ioutil.ReadAll(res.Body)
+// }
