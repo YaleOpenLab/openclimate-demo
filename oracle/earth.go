@@ -26,65 +26,94 @@ const (
 	noaaBaseUrl = "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
 )
 
+// The GlobalCO2 struct defines the data and meta-data that will be attached
+// To the atmospheric CO2 measurements observed at various sites and stored
+// on the NOAA ESRL FTP server.
+type GlobalCO2 struct {
+	Source 		string
+	Location	string
+	Frequency 	string // annually, monthly, daily, etc.
+	Year 		int
+	Month 		int
+	Day 		int
+	Cycle		float64
+	Trend 		float64
+}
 
-func GetNoaaDailyCO2() (map[string][]float64, error) {
+// GetNoaaDailyCO2() retrieves data from the file that stores all atmospheric
+// CO2 global estimates on the NOAA ESRL FTP server. The function is called
+// by the scheduler daily (see oracle/scheduler.go), and the data from this
+// function is sent to the oracle for processing & verification.
+func GetNoaaDailyCO2() ([]GlobalCO2, error) {
 
-	data := make(map[string][]float64)
+	var dataArr []GlobalCO2
 
-	fs, err := RetrieveNoaaCO2(globalTrendPath)
+	filestrings, err := RetrieveNoaaCO2(globalTrendPath)
 	if err != nil {
-		return data, err
+		return dataArr, err
+	}
+
+	for _, fs := range filestrings {
+
+		raw, err := ParseNoaaCO2(fs.FileStr, 5)
+		if err != nil {
+			return dataArr, errors.Wrap(err, "GetNoaaMonthlyCO2() failed")
+		}
+
+		var data GlobalCO2
+		data.Source = "NOAA"
+		data.Location = fs.Name
+		data.Frequency = "Daily"
+		data.Year = int(raw[0])
+		data.Month = int(raw[1])
+		data.Day = int(raw[2])
+		data.Cycle = raw[3]
+		data.Trend = raw[4]
+
+		dataArr = append(dataArr, data)
 	}
 	
-	globalLatest, err := ParseNoaaCO2(fs[0], 5)
-	data["global_trend_daily"] = globalLatest
-
-	return data, nil
+	return dataArr, nil
 }
 
+// GetNoaaDailyCO2() retrieves data from the files that store atmospheric
+// CO2 measurements observed from various sites on the NOAA ESRL FTP server. 
+// The function is called by the scheduler monthly (see oracle/scheduler.go), 
+// and the data from this function is sent to the oracle for processing & 
+// verification.
+func GetNoaaMonthlyCO2() ([]GlobalCO2, error) {
 
-func GetNoaaMonthlyCO2() (map[string][]float64, error) {
+	var dataArr []GlobalCO2
 
-	data := make(map[string][]float64)
-
-	fs, err := RetrieveNoaaCO2(barrowPath, maunaLoaPath, southPolePath, amSamoaPath)
+	filestrings, err := RetrieveNoaaCO2(barrowPath, maunaLoaPath, southPolePath, amSamoaPath)
 	if err != nil {
-		return data, err
+		return dataArr, errors.Wrap(err, "GetNoaaMonthlyCO2() failed")
 	}
 
-	barrowLatest, err := ParseNoaaCO2(fs[0], 3)
-	data["barrow_monthly"] = barrowLatest
+	for _, fs := range filestrings {
 
-	maunaLoaLatest, err := ParseNoaaCO2(fs[1], 3)
-	data["mauna_loa_monthly"] = maunaLoaLatest
+		raw, err := ParseNoaaCO2(fs.FileStr, 3)
+		if err != nil {
+			return dataArr, errors.Wrap(err, "GetNoaaMonthlyCO2() failed")
+		}
 
-	southPoleLatest, err := ParseNoaaCO2(fs[2], 3)
-	data["south_pole_monthly"] = southPoleLatest
+		var data GlobalCO2
+		data.Source = "NOAA"
+		data.Location = fs.Name
+		data.Frequency = "Monthly"
+		data.Year = int(raw[0])
+		data.Month = int(raw[1])
+		// data.Day is left blank
+		data.Cycle = raw[2]
+		// data.Trend is left blank
 
-	amSamoaLatest, err := ParseNoaaCO2(fs[3], 3)
-	data["am_samoa_monthly"] = amSamoaLatest
-
-	return data, nil
-}
-
-
-func GetNoaaAnnualCO2() ([]float64, error) {
-	maunaLoaPath := "products/trends/co2/co2_annmean_mlo.txt"
-
-	var maunaLoaData []float64
-
-	fs, err := RetrieveNoaaCO2(maunaLoaPath)
-	if err != nil {
-		return maunaLoaData, err
+		dataArr = append(dataArr, data)
 	}
 
-	maunaLoaData, err = ParseNoaaCO2(fs[0], 3)
-	return maunaLoaData, nil
+	return dataArr, nil
 }
-
 
 func ParseNoaaCO2(filestring string, length int) ([]float64, error) {
-
 	var err error
 
 	substr := strings.Fields(filestring)
@@ -98,44 +127,54 @@ func ParseNoaaCO2(filestring string, length int) ([]float64, error) {
 	return temp, nil
 }
 
+type FileString struct {
+	Name			string
+	FileStr 	 	string
+}
 
-func RetrieveNoaaCO2(filepaths ...string) ([]string, error) {
-	var bufs []string
+func RetrieveNoaaCO2(filepaths ...string) ([]FileString, error) {
+	var fstrings []FileString
 
 	c, err := ftp.Dial(noaaFtpAddress, ftp.DialWithTimeout(5*time.Second))
 	if err != nil {
-		return bufs, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
+		return fstrings, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
 	}
 
 	err = c.Login("anonymous", "anonymous")
 	if err != nil {
-		return bufs, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
+		return fstrings, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
 	}
 	
 	for _, fp := range filepaths {
 		resp, err := c.Retr(fp)
 		if err != nil {
-			return bufs, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
+			return fstrings, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
 		}
 
 		buf, err := ioutil.ReadAll(resp)
 		if err != nil {
-			return bufs, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
+			return fstrings, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
 		}
 
-		bufs = append(bufs, string(buf))
+		var fs FileString
+		fpslice := strings.Split(fp, "/")
+		filename := fpslice[len(fpslice)-1]
+		fs.Name = strings.Split(filename, ".")[0]
+		fs.FileStr = string(buf)
+		
+		fstrings = append(fstrings, fs)
 
 		err = resp.Close()
 		if err != nil {
-			return bufs, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
+			return fstrings, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
 		}
 	}
 
 	if err := c.Quit(); err != nil {
-		return bufs, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
+		return fstrings, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
 	}
 
-	return bufs, nil
+	return fstrings, nil
 }
 
 // func QueryNoaaSummary(datasetid string, startdate string, enddate string) (interface{}, error) {

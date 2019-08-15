@@ -43,15 +43,11 @@ func UpdateAsset(key int, info Asset) error {
 		return errors.Wrap(err, "UpdateAsset() failed (likely because asset doesn't exist)")
 	}
 
-	log.Println("hello", asset)
-
 	asset.Name = info.Name
 	asset.Location = info.Location
 	asset.State = info.State
 	asset.Type = info.Type
 	asset.ActionType = info.ActionType
-
-	log.Println("hello2", asset)
 
 	return asset.Save()
 }
