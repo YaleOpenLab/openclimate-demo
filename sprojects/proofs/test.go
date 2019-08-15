@@ -91,7 +91,7 @@ func genCommitment() {
 	log.Println("commitment: ", commitmentx, commitmenty)
 }
 
-func main() {
+func signCommitment() {
 	x, err := NewPrivateKey() // lets assume this to be the same as x
 	if err != nil {
 		log.Fatal(err)
@@ -102,15 +102,15 @@ func main() {
 	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
 	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // Point(SHA256(G))
 
-	var a []byte
-	a = []byte{1}
+	// var a []byte
+	// a = []byte{1}
 
-	aHx, aHy := Curve.ScalarMult(Hx, Hy, a)
+	// aHx, aHy := Curve.ScalarMult(Hx, Hy, a)
+	// Cx, Cy := Curve.Add(Px, Py, aHx, aHy)
 
-	Cx, Cy := Curve.Add(Px, Py, aHx, aHy)
 	oneHx, oneHy := Curve.ScalarMult(Hx, Hy, []byte{1})
 
-	Cprx, Cpry := Curve.Add(Cx, Cy, new(big.Int).Neg(oneHx), new(big.Int).Neg(oneHy))
+	Cprx, Cpry := Curve.Add(Px, Py, new(big.Int).Neg(oneHx), new(big.Int).Neg(oneHy))
 
 	CprHash := Sha256(Cprx.Bytes(), Cpry.Bytes())
 	CprHashHex := hex.EncodeToString(CprHash)
@@ -133,4 +133,48 @@ func main() {
 	}
 
 	log.Println("SIG: ", sig.Result)
+}
+
+func main() {
+	x, err := NewPrivateKey() // lets assume this to be the same as x
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	k, err := NewPrivateKey() // lets assume this to be the same as x
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	Px, Py := PubkeyPointsFromPrivkey(x) // P = x*G
+	Kx, Ky := PubkeyPointsFromPrivkey(x) // K = x*G
+
+	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
+	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // Point(SHA256(G))
+
+	oneHx, oneHy := Curve.ScalarMult(Hx, Hy, []byte{1})
+
+	C1x, C1y := Curve.Add(Px, Py, new(big.Int).Neg(oneHx), new(big.Int).Neg(oneHy)) // C1 = x*G - 1*H
+
+	m := []byte("message")
+	E := []byte{2} // the second node in the ring
+
+	eE := Sha256(Kx.Bytes(), Ky.Bytes(), m, E)
+	se, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	seGx, seGy := Curve.ScalarBaseMult(se.Bytes())
+	eEPEx, eEPEy := Curve.ScalarMult(C1x, C1y, eE)
+
+	KEx, KEy := Curve.Add(seGx, seGy, eEPEx, eEPEy) // C1's ring sig
+
+	D := []byte{1}
+	eD := Sha256(KEx.Bytes(), KEy.Bytes(), m, D)
+	eDInt := new(big.Int).SetBytes(eD)
+	sd := new(big.Int).Add(new(big.Int).Mul(eDInt, x), k)
+
+	log.Println("P: ", Px, Py, "C1: ", C1x, C1y)
+	log.Println("eE: ", new(big.Int).SetBytes(eE), "se: ", se, "ed: ", eDInt, "sd: ", sd)
 }
