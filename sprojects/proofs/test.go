@@ -3,12 +3,16 @@ package main
 import (
 	"crypto/rand"
 	"crypto/sha256"
+	"encoding/hex"
+	"encoding/json"
 	"github.com/pkg/errors"
 	"io"
 	"log"
 	"math/big"
 
 	// btcutils "github.com/bithyve/research/utils"
+	bech32 "github.com/bithyve/research/bech32"
+	bitcoinrpc "github.com/bithyve/research/rpc"
 	"github.com/btcsuite/btcd/btcec"
 )
 
@@ -76,7 +80,7 @@ func genCommitment() {
 	}
 
 	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
-	Hx, Hy := Curve.ScalarBaseMult(shaBytes) // Point(SHA256(G))
+	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // Point(SHA256(G))
 
 	var a []byte
 	a = []byte{1}
@@ -85,4 +89,48 @@ func genCommitment() {
 
 	commitmentx, commitmenty := Curve.Add(P1x, P1y, aHx, aHy)
 	log.Println("commitment: ", commitmentx, commitmenty)
+}
+
+func main() {
+	x, err := NewPrivateKey() // lets assume this to be the same as x
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	Px, Py := PubkeyPointsFromPrivkey(x) // P = x*G
+
+	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
+	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // Point(SHA256(G))
+
+	var a []byte
+	a = []byte{1}
+
+	aHx, aHy := Curve.ScalarMult(Hx, Hy, a)
+
+	Cx, Cy := Curve.Add(Px, Py, aHx, aHy)
+	oneHx, oneHy := Curve.ScalarMult(Hx, Hy, []byte{1})
+
+	Cprx, Cpry := Curve.Add(Cx, Cy, new(big.Int).Neg(oneHx), new(big.Int).Neg(oneHy))
+
+	CprHash := Sha256(Cprx.Bytes(), Cpry.Bytes())
+	CprHashHex := hex.EncodeToString(CprHash)
+
+	privkey, err := bech32.PrivKeyToWIF("testnet", true, x.Bytes())
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	bitcoinrpc.SetBitcoindURL("http://localhost:18443/", "user", "password")
+	sigBytes, err := bitcoinrpc.SignMessageWithPrivkey(privkey, CprHashHex)
+	if err != nil {
+		log.Println(err)
+	}
+
+	var sig bitcoinrpc.SignMessageWithPrivkeyReturn
+	err = json.Unmarshal(sigBytes, &sig)
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	log.Println("SIG: ", sig.Result)
 }
