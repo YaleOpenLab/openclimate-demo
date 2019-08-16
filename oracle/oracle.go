@@ -1,13 +1,15 @@
 package oracle
 
 import (
-	// "log"
 	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/ipfs"
 	"github.com/pkg/errors"
-	// "reflect"
 )
 
+// Struct defining the data scheme of all reported climate action data
+// when it is stored on Ethereum. Contains all metadata necessary to
+// locate the correct data and statistic and ensure that it is attached
+// to the correct climate actor.
 type BlockChainDataStruct struct {
 	EntityType string
 	EntityID int
@@ -16,10 +18,10 @@ type BlockChainDataStruct struct {
 	IpfsHash string
 }
 
-// Functions clean the data and return it in the correct format.
-// To verify, oracle will check if the methodology used is valid and
-// if the values make sense.
 
+// Reads data in the form of an array of GlobalCO2 structs (a struct
+// that, along with the atmospheric CO2 data measurements themselves,
+// also holds metadeta) and computes the "true value".
 func VerifyAtmosCO2(data []GlobalCO2) ([]GlobalCO2, float64, error) {
 
 	dataSlice := make([]interface{}, len(data))
@@ -31,28 +33,21 @@ func VerifyAtmosCO2(data []GlobalCO2) ([]GlobalCO2, float64, error) {
 	return data, dVal, nil
 }
 
+
+// *** TODO: find global temperature data ***
+// Reads data in the form of an array of GlobalCO2 structs (a struct
+// that, along with the atmospheric CO2 data measurements themselves,
+// also holds metadeta) and computes the "true value".
 func VerifyGlobalTemp(data []GlobalTemp) ([]GlobalTemp, float64, error) {
 	var temp float64
 	return data, temp, nil
 }
 
-// func VerifyEmissions(data interface{}) (ipfs.Emissions, error) {
-// 	var verifiedData ipfs.Emissions
-// 	return verifiedData, nil
-// }
 
-// func VerifyMitigation(data interface{}) (ipfs.Mitigation, error) {
-// 	var verifiedData ipfs.Mitigation
-// 	return verifiedData, nil
-// }
-
-// func VerifyAdaptation(data interface{}) (ipfs.Adaptation, error) {
-// 	var verifiedData ipfs.Adaptation
-// 	return verifiedData, nil
-// }
-
-// Calls the relevant verify helper-function to process the data,
-// then commits the verified data to IPFS and then returns the hash.
+// VerifyAndCommit receives data and depending on what kind of data it is,
+// sends it to a helper function to verify the data and compute the "true value".
+// Next, it commits the verified data itself to IPFS, receives the IPFS hash,
+// then commits the hash and the computed statistic to Ethereum.
 func VerifyAndCommit(reportType string, entityType string, entityID int, data interface{}) error {
 
 	var verifiedData interface{}
@@ -67,15 +62,6 @@ func VerifyAndCommit(reportType string, entityType string, entityID int, data in
 	case "Global Temperature":
 		verifiedData, dataVal, err = VerifyGlobalTemp(data.([]GlobalTemp))
 
-	// case "Emissions":
-	// 	verifiedData, err = VerifyEmissions(data)
-
-	// case "Mitigation":
-	// 	verifiedData, err = VerifyMitigation(data)
-
-	// case "Adaptation":
-	// 	verifiedData, err = VerifyAdaptation(data)
-
 	default:
 		return errors.New("Verification of this report type is not supported.")
 	}
@@ -83,7 +69,7 @@ func VerifyAndCommit(reportType string, entityType string, entityID int, data in
 	// Committing to IPFS may not be necessary. We can commit this data
 	// directly on to the blockchain if it is small enough. However, once
 	// companies start to report a lot of data relating to their assets,
-	// IPFS is needed to minimize the amount of blockchain storage required.
+	// IPFS is needed to minimize blockchain storage overhead required.
 	// Here, we commit to IPFS and store the hash on the blockchain to
 	// demonstrate the concept.
 
@@ -91,6 +77,10 @@ func VerifyAndCommit(reportType string, entityType string, entityID int, data in
 	if err != nil {
 		return errors.Wrap(err, "oracle.VerifyAndCommit() failed")
 	}
+
+	// Marshal the data into the BlockChainDataStruct to ensure we have all
+	// the metadata we need to locate the correct IPFS hash and statistic
+	// (for display on the front-end).
 
 	var bcds BlockChainDataStruct
 	bcds.EntityType = entityType

@@ -26,6 +26,8 @@ const (
 	noaaBaseUrl = "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
 )
 
+// The GlobalTemp struct defines the data and meta-data that will be attached
+// to global temp measurements (TBD where the temperature data will come from).
 type GlobalTemp struct {
 	Source    string
 	Location  string
@@ -65,7 +67,6 @@ func GetNoaaDailyCO2() (interface{}, error) {
 	}
 
 	for _, fs := range filestrings {
-
 		raw, err := ParseNoaaCO2(fs.FileStr, 5)
 		if err != nil {
 			return dataArr, errors.Wrap(err, "GetNoaaMonthlyCO2() failed")
@@ -102,7 +103,6 @@ func GetNoaaMonthlyCO2() (interface{}, error) {
 	}
 
 	for _, fs := range filestrings {
-
 		raw, err := ParseNoaaCO2(fs.FileStr, 3)
 		if err != nil {
 			return dataArr, errors.Wrap(err, "GetNoaaMonthlyCO2() failed")
@@ -124,6 +124,10 @@ func GetNoaaMonthlyCO2() (interface{}, error) {
 	return dataArr, nil
 }
 
+// Parses the filestrings for the most recently observed data. This
+// function is specifically for the daily and monthly NOAA atmospheric
+// CO2 data. Returns an array of float64s containing the date in addition
+// to the observed data.
 func ParseNoaaCO2(filestring string, length int) ([]float64, error) {
 	var err error
 
@@ -138,11 +142,16 @@ func ParseNoaaCO2(filestring string, length int) ([]float64, error) {
 	return temp, nil
 }
 
+// Struct attaches a name to the filestring.
 type FileString struct {
 	Name    string
 	FileStr string
 }
 
+// Dials a connection to the NOAA ESRL FTP server, retrieves all
+// files necessary, determines the name of the data given the file path,
+// then returns the stream of data as string along with the parsed name
+// in a FileString struct.
 func RetrieveNoaaCO2(filepaths ...string) ([]FileString, error) {
 	var fstrings []FileString
 
