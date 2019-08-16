@@ -70,6 +70,10 @@ and pick the blinding factors such that `C1+C2+C3+C4+C5 = C`
 
 In the context of the problems described earlier, we need to construct something such that we know only the sum of their emissions (if needed). We should construct an appropriate ring signature scheme and the oracle can provide these proofs while still not revealing the commitment amounts to the verifier.
 
+## Implementation
+
+The `sprojects` folder contains the implementation of the proofs idea. In the example, we assume two parties Brian and Dom are participating in a ring signature scheme and want Dom wants to sign against a public key he owns. We use an [AOS signature](https://www.iacr.org/archive/asiacrypt2002/25010414/25010414.ps) to construct the above scheme since there are only two individual parties. If there are two groups of parties (assume US and Canada in NA, Argentina and Brazil in SA) that want to sign and we want a signature that can only be verified if US or Canada and Argentina or Brazil signed, Borromean signatures offer better space saving.
+
 ## References (not complete, will add once final)
 1. https://blockstream.com/bitcoin17-final41.pdf
 2. https://elementsproject.org/features/confidential-transactions/investigation

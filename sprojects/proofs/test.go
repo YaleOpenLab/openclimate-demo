@@ -135,7 +135,7 @@ func signCommitment() {
 	log.Println("SIG: ", sig.Result)
 }
 
-func Create21RignSig() (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.Int, []byte) {
+func Create21AOSSig() (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.Int, []byte) {
 	// Lets assume two parties - Brian and Dom.
 	// Lets assume Brian and Dom's pubkeys are Pb and Pd. Lets assume their private keys
 	// are b and d.
@@ -211,7 +211,7 @@ func Create21RignSig() (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.I
 }
 
 func main() {
-	eb, sb, sd, Pbx, Pby, Pdx, Pdy, m := Create21RignSig()
+	eb, sb, sd, Pbx, Pby, Pdx, Pdy, m := Create21AOSSig()
 
 	BrianNodeNumber := []byte{2} // assume brian has node number 2
 	DomNodeNumber := []byte{1}
