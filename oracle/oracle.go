@@ -22,7 +22,7 @@ type BlockChainDataStruct struct {
 // Reads data in the form of an array of GlobalCO2 structs (a struct
 // that, along with the atmospheric CO2 data measurements themselves,
 // also holds metadeta) and computes the "true value".
-func VerifyAtmosCO2(data []GlobalCO2) ([]GlobalCO2, float64, error) {
+func verifyAtmosCO2(data []GlobalCO2) ([]GlobalCO2, float64, error) {
 
 	dataSlice := make([]interface{}, len(data))
 	for _, d := range data {
@@ -38,7 +38,7 @@ func VerifyAtmosCO2(data []GlobalCO2) ([]GlobalCO2, float64, error) {
 // Reads data in the form of an array of GlobalCO2 structs (a struct
 // that, along with the atmospheric CO2 data measurements themselves,
 // also holds metadeta) and computes the "true value".
-func VerifyGlobalTemp(data []GlobalTemp) ([]GlobalTemp, float64, error) {
+func verifyGlobalTemp(data []GlobalTemp) ([]GlobalTemp, float64, error) {
 	var temp float64
 	return data, temp, nil
 }
@@ -57,10 +57,10 @@ func VerifyAndCommit(reportType string, entityType string, entityID int, data in
 	switch reportType {
 
 	case "Atmospheric CO2":
-		verifiedData, dataVal, err = VerifyAtmosCO2(data.([]GlobalCO2))
+		verifiedData, dataVal, err = verifyAtmosCO2(data.([]GlobalCO2))
 
 	case "Global Temperature":
-		verifiedData, dataVal, err = VerifyGlobalTemp(data.([]GlobalTemp))
+		verifiedData, dataVal, err = verifyGlobalTemp(data.([]GlobalTemp))
 
 	default:
 		return errors.New("Verification of this report type is not supported.")

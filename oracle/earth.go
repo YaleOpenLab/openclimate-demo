@@ -57,17 +57,17 @@ type GlobalCO2 struct {
 // CO2 global estimates on the NOAA ESRL FTP server. The function is called
 // by the scheduler daily (see oracle/scheduler.go), and the data from this
 // function is sent to the oracle for processing & verification.
-func GetNoaaDailyCO2() (interface{}, error) {
+func getNoaaDailyCO2() (interface{}, error) {
 
 	var dataArr []GlobalCO2
 
-	filestrings, err := RetrieveNoaaCO2(globalTrendPath)
+	filestrings, err := retrieveNoaaCO2(globalTrendPath)
 	if err != nil {
 		return dataArr, err
 	}
 
 	for _, fs := range filestrings {
-		raw, err := ParseNoaaCO2(fs.FileStr, 5)
+		raw, err := parseNoaaCO2(fs.FileStr, 5)
 		if err != nil {
 			return dataArr, errors.Wrap(err, "GetNoaaMonthlyCO2() failed")
 		}
@@ -93,17 +93,17 @@ func GetNoaaDailyCO2() (interface{}, error) {
 // The function is called by the scheduler monthly (see oracle/scheduler.go),
 // and the data from this function is sent to the oracle for processing &
 // verification.
-func GetNoaaMonthlyCO2() (interface{}, error) {
+func getNoaaMonthlyCO2() (interface{}, error) {
 
 	var dataArr []GlobalCO2
 
-	filestrings, err := RetrieveNoaaCO2(barrowPath, maunaLoaPath, southPolePath, amSamoaPath)
+	filestrings, err := retrieveNoaaCO2(barrowPath, maunaLoaPath, southPolePath, amSamoaPath)
 	if err != nil {
 		return dataArr, errors.Wrap(err, "GetNoaaMonthlyCO2() failed")
 	}
 
 	for _, fs := range filestrings {
-		raw, err := ParseNoaaCO2(fs.FileStr, 3)
+		raw, err := parseNoaaCO2(fs.FileStr, 3)
 		if err != nil {
 			return dataArr, errors.Wrap(err, "GetNoaaMonthlyCO2() failed")
 		}
@@ -128,7 +128,7 @@ func GetNoaaMonthlyCO2() (interface{}, error) {
 // function is specifically for the daily and monthly NOAA atmospheric
 // CO2 data. Returns an array of float64s containing the date in addition
 // to the observed data.
-func ParseNoaaCO2(filestring string, length int) ([]float64, error) {
+func parseNoaaCO2(filestring string, length int) ([]float64, error) {
 	var err error
 
 	substr := strings.Fields(filestring)
@@ -152,7 +152,7 @@ type FileString struct {
 // files necessary, determines the name of the data given the file path,
 // then returns the stream of data as string along with the parsed name
 // in a FileString struct.
-func RetrieveNoaaCO2(filepaths ...string) ([]FileString, error) {
+func retrieveNoaaCO2(filepaths ...string) ([]FileString, error) {
 	var fstrings []FileString
 
 	c, err := ftp.Dial(noaaFtpAddress, ftp.DialWithTimeout(5*time.Second))

@@ -28,7 +28,7 @@ type getExternalData func() (interface{}, error)
 // sends the data to the oracle for verification and storage on to the
 // Ethereum blockchain. Returns a func() so that it can be passed as a 
 // parameter to c.AddFunc().
-func GetVerifyCommit(reportType string, entityType string, entityID int, get getExternalData) func() {
+func getVerifyCommit(reportType string, entityType string, entityID int, get getExternalData) func() {
 	return func() {
 		data, err := get()
 		if err != nil {
@@ -53,8 +53,8 @@ func GetVerifyCommit(reportType string, entityType string, entityID int, get get
 func Schedule() {
 	
 	c := cron.New()
-	c.AddFunc("@daily", GetVerifyCommit(earthCO2, earthEntityType, earthEntityID, GetNoaaDailyCO2))
-	c.AddFunc("@monthly", GetVerifyCommit(earthCO2, earthEntityType, earthEntityID, GetNoaaMonthlyCO2))
+	c.AddFunc("@daily", getVerifyCommit(earthCO2, earthEntityType, earthEntityID, getNoaaDailyCO2))
+	c.AddFunc("@monthly", getVerifyCommit(earthCO2, earthEntityType, earthEntityID, getNoaaMonthlyCO2))
 
 	c.Start()
 }
