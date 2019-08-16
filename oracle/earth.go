@@ -7,20 +7,20 @@ import (
 	// "log"
 	// "github.com/YaleOpenLab/openclimate/globals"
 	"github.com/jlaffaye/ftp"
+	"io/ioutil"
 	"strconv"
 	"strings"
-	"io/ioutil"
 	"time"
 )
 
 const (
 	// NOAA FTP addresses
-	noaaFtpAddress = "aftp.cmdl.noaa.gov:21"
+	noaaFtpAddress  = "aftp.cmdl.noaa.gov:21"
 	globalTrendPath = "products/trends/co2/co2_trend_gl.txt"
-	barrowPath = "data/trace_gases/co2/flask/surface/co2_brw_surface-flask_1_ccgg_month.txt"
-	maunaLoaPath = "data/trace_gases/co2/flask/surface/co2_mlo_surface-flask_1_ccgg_month.txt"
-	southPolePath = "data/trace_gases/co2/flask/surface/co2_spo_surface-flask_1_ccgg_month.txt"
-	amSamoaPath = "data/trace_gases/co2/flask/surface/co2_smo_surface-flask_1_ccgg_month.txt"
+	barrowPath      = "data/trace_gases/co2/flask/surface/co2_brw_surface-flask_1_ccgg_month.txt"
+	maunaLoaPath    = "data/trace_gases/co2/flask/surface/co2_mlo_surface-flask_1_ccgg_month.txt"
+	southPolePath   = "data/trace_gases/co2/flask/surface/co2_spo_surface-flask_1_ccgg_month.txt"
+	amSamoaPath     = "data/trace_gases/co2/flask/surface/co2_smo_surface-flask_1_ccgg_month.txt"
 
 	// NOAA HTTP URLs
 	noaaBaseUrl = "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
@@ -30,14 +30,14 @@ const (
 // To the atmospheric CO2 measurements observed at various sites and stored
 // on the NOAA ESRL FTP server.
 type GlobalCO2 struct {
-	Source 		string
-	Location	string
-	Frequency 	string // annually, monthly, daily, etc.
-	Year 		int
-	Month 		int
-	Day 		int
-	Cycle		float64
-	Trend 		float64
+	Source    string
+	Location  string
+	Frequency string // annually, monthly, daily, etc.
+	Year      int
+	Month     int
+	Day       int
+	Cycle     float64
+	Trend     float64
 }
 
 // GetNoaaDailyCO2() retrieves data from the file that stores all atmospheric
@@ -72,14 +72,14 @@ func GetNoaaDailyCO2() ([]GlobalCO2, error) {
 
 		dataArr = append(dataArr, data)
 	}
-	
+
 	return dataArr, nil
 }
 
 // GetNoaaDailyCO2() retrieves data from the files that store atmospheric
-// CO2 measurements observed from various sites on the NOAA ESRL FTP server. 
-// The function is called by the scheduler monthly (see oracle/scheduler.go), 
-// and the data from this function is sent to the oracle for processing & 
+// CO2 measurements observed from various sites on the NOAA ESRL FTP server.
+// The function is called by the scheduler monthly (see oracle/scheduler.go),
+// and the data from this function is sent to the oracle for processing &
 // verification.
 func GetNoaaMonthlyCO2() ([]GlobalCO2, error) {
 
@@ -128,8 +128,8 @@ func ParseNoaaCO2(filestring string, length int) ([]float64, error) {
 }
 
 type FileString struct {
-	Name			string
-	FileStr 	 	string
+	Name    string
+	FileStr string
 }
 
 func RetrieveNoaaCO2(filepaths ...string) ([]FileString, error) {
@@ -144,7 +144,7 @@ func RetrieveNoaaCO2(filepaths ...string) ([]FileString, error) {
 	if err != nil {
 		return fstrings, errors.Wrap(err, "getNoaaGlobalDailyTrend() failed")
 	}
-	
+
 	for _, fp := range filepaths {
 		resp, err := c.Retr(fp)
 		if err != nil {
@@ -161,7 +161,7 @@ func RetrieveNoaaCO2(filepaths ...string) ([]FileString, error) {
 		filename := fpslice[len(fpslice)-1]
 		fs.Name = strings.Split(filename, ".")[0]
 		fs.FileStr = string(buf)
-		
+
 		fstrings = append(fstrings, fs)
 
 		err = resp.Close()

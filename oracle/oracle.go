@@ -2,8 +2,8 @@ package oracle
 
 import (
 	// "log"
-	"github.com/YaleOpenLab/openclimate/ipfs"
 	"github.com/YaleOpenLab/openclimate/blockchain"
+	"github.com/YaleOpenLab/openclimate/ipfs"
 	"github.com/pkg/errors"
 	// "reflect"
 )
@@ -55,7 +55,7 @@ func Verify(reportType string, entityType string, entityID int, data interface{}
 	go func() {
 
 		var verifiedData interface{}
-		
+
 		switch reportType {
 		case "AtmosCO2":
 			verifiedData, err = VerifyAtmosCO2(data)

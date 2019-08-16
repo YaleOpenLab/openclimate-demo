@@ -1,20 +1,20 @@
 package blockchain
 
 import (
-	"github.com/ethereum/go-ethereum/accounts/keystore"
-	"log"
 	"bufio"
-	"os"
-	"fmt"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/ethereum/go-ethereum/common"
-	"github.com/YaleOpenLab/openclimate/blockchain/contracts/blockchain_storage"
-	"strings"
-	"github.com/ethereum/go-ethereum/ethclient"
-	"github.com/ethereum/go-ethereum/core/types"
-	"github.com/ethereum/go-ethereum/accounts/abi/bind"
-	"math/big"
 	"context"
+	"fmt"
+	"github.com/YaleOpenLab/openclimate/blockchain/contracts/blockchain_storage"
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/accounts/abi/bind"
+	"github.com/ethereum/go-ethereum/accounts/keystore"
+	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/core/types"
+	"github.com/ethereum/go-ethereum/ethclient"
+	"log"
+	"math/big"
+	"os"
+	"strings"
 )
 
 const (
@@ -22,17 +22,16 @@ const (
 )
 
 type RootStorage struct {
-	abi     abi.ABI
-	address common.Address
-	opts *bind.TransactOpts
+	abi       abi.ABI
+	address   common.Address
+	opts      *bind.TransactOpts
 	timeStamp uint32
-	rootHash []byte
+	rootHash  []byte
 
 	root *blockchain.IpfsRoot
 }
 
-
-func NewRoot(address common.Address, client *ethclient.Client, data  interface{}) (*RootStorage, error) {
+func NewRoot(address common.Address, client *ethclient.Client, data interface{}) (*RootStorage, error) {
 	parsed, err := abi.JSON(strings.NewReader(blockchain.IpfsRootABI))
 	if err != nil {
 		return nil, err
@@ -44,10 +43,9 @@ func NewRoot(address common.Address, client *ethclient.Client, data  interface{}
 	return &RootStorage{
 		abi:     parsed,
 		address: address,
-		root: Root,
+		root:    Root,
 	}, nil
 }
-
 
 func (root *RootStorage) commitRoot(keystore keystore.KeyStore, passphrase string) *types.Transaction {
 	input, err := root.abi.Pack("insertRoot", root.timeStamp, root.rootHash)
@@ -59,7 +57,6 @@ func (root *RootStorage) commitRoot(keystore keystore.KeyStore, passphrase strin
 	signedTx, err := keystore.SignTxWithPassphrase(accounts[0], passphrase, rawTx, big.NewInt(42))
 	return signedTx
 }
-
 
 func CommitToChain(data interface{}) error {
 	// Connect to the chain
