@@ -9,14 +9,14 @@ import (
 	// "github.com/pkg/errors"
 
 	erpc "github.com/Varunram/essentials/rpc"
-	db "github.com/YaleOpenLab/openclimate/database"
+	// db "github.com/YaleOpenLab/openclimate/database"
 	// "github.com/YaleOpenLab/openclimate/ipfs"
 	"github.com/YaleOpenLab/openclimate/oracle"
 )
 
 func setupReport() {
-	report()
-	connectDatabase()
+	reportDirect()
+	// connectDatabase()
 }
 
 /*
@@ -25,8 +25,8 @@ func setupReport() {
 	either the Emissions, Mitigation, or Adaptation structs defined in
 	ipfs/data.go.
 */
-func report() {
-	http.HandleFunc("/user/self-report", func(w http.ResponseWriter, r *http.Request) {
+func reportDirect() {
+	http.HandleFunc("/report/direct", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckPostAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -82,33 +82,4 @@ type ReportIpcc struct {
 func reportIpcc(data interface{}) (ReportIpcc, error) {
 	var empty ReportIpcc
 	return empty, nil
-}
-
-// Submit a request to connect with an external database that contains
-// emissions/mitigation/adaptation data that users would like to report.
-func connectDatabase() {
-	http.HandleFunc("/user/request-database", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckPost(w, r)
-		if err != nil {
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-
-		b, err := ioutil.ReadAll(r.Body)
-		defer r.Body.Close()
-		if err != nil {
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-
-		var request db.ConnectRequest
-		err = json.Unmarshal(b, &request)
-		if err != nil {
-			log.Println("Error: failed to unmarshal bytes into Request struct")
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		}
-
-		db.NewRequest(request) // store request into request bucket, to be reviewed later
-		erpc.MarshalSend(w, request)
-	})
 }

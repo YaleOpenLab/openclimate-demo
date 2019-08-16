@@ -72,7 +72,7 @@ func PopulateUSStates() {
 		return
 	}
 
-	_, err = NewPledge("Emissions reduction", 2001, 2050, 0.8, true, "state", ct.Index)
+	_, err = NewPledge("Emissions reduction", 2001, 2050, 80, true, "state", ct.Index)
 	if err != nil {
 		log.Println(err)
 		return
@@ -134,7 +134,7 @@ func PopulateAvangridCompany() {
 	}
 
 	// Add Pledges
-	pledge, err := NewPledge("reduction", 2015, 2050, 0.50, true, "company", avangrid.GetID())
+	pledge, err := NewPledge("reduction", 2015, 2050, 50, true, "company", avangrid.GetID())
 	if err != nil {
 		log.Println(err)
 		return
@@ -209,10 +209,12 @@ func PopulateAdminUsers() error {
 		log.Println(err, "failed to populate user amanda")
 	}
 
-	_, err = NewUser("brian", pwhash, "brian@test.com", "company", "Avangrid", "USA")
+	b, err := NewUser("brian", pwhash, "brian@test.com", "company", "Avangrid", "USA")
 	if err != nil {
 		return errors.Wrap(err, "failed to populate user brian")
 	}
+	b.Verified = true
+	b.Save()
 
 	// users, err := RetrieveAllUsers()
 	// if err != nil {

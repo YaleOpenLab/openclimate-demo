@@ -101,7 +101,7 @@ func viewCompanyNational() {
 
 		final := make(map[string]interface{})
 		final["countries"] = countries
-		final["country_pledges"] = countryPledges
+		final["pledges"] = countryPledges
 
 		erpc.MarshalSend(w, final)
 	})
@@ -159,7 +159,7 @@ func viewCompanySubNationalByNational() {
 
 		final := make(map[string]interface{})
 		final["states_by_country"] = statesByCountry
-		final["state_pledges"] = statePledges
+		final["pledges"] = statePledges
 
 		erpc.MarshalSend(w, final)
 	})

@@ -21,9 +21,9 @@ type Pledge struct {
 	*/
 	PledgeType string
 
-	BaseYear int
+	BaseYear float64
 
-	TargetYear int
+	TargetYear float64
 
 	Goal float64
 
@@ -32,7 +32,7 @@ type Pledge struct {
 	Regulatory bool
 }
 
-func NewPledge(pledgeType string, baseYear int, targetYear int, goal float64, regulatory bool, actorType string, actorID int) (Pledge, error) {
+func NewPledge(pledgeType string, baseYear float64, targetYear float64, goal float64, regulatory bool, actorType string, actorID int) (Pledge, error) {
 	var p Pledge
 	p.PledgeType = pledgeType
 	p.BaseYear = baseYear

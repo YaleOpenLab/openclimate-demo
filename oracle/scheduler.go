@@ -6,6 +6,8 @@ import (
 	"log"
 	"github.com/pkg/errors"
 
+	"github.com/YaleOpenLab/openclimate/blockchain"
+
 )
 
 func GetAndCommitDaily() {
@@ -15,7 +17,12 @@ func GetAndCommitDaily() {
 		log.Fatal(errors.Wrap(err, "GetAndCommitDaily() failed"))
 	}
 
-	_, err = VerifyAtmosCO2(dailyNoaaData)
+	val, err = VerifyAtmosCO2(dailyNoaaData)
+	if err != nil {
+		log.Fatal(errors.Wrap(err, "GetAndCommitDaily() failed"))
+	}
+
+	err = blockchain.CommitToChain(val)
 	if err != nil {
 		log.Fatal(errors.Wrap(err, "GetAndCommitDaily() failed"))
 	}

@@ -21,6 +21,9 @@ func setupManage() {
 	AddPledge()
 	UpdatePledge()
 	CommitPledge()
+	UpdateMRV()
+	integrateBulk()
+	integrateRequest()
 }
 
 /*
@@ -31,7 +34,7 @@ func setupManage() {
 	- "candidate_id": the ID of the user who is being considered for verification
 */
 func VerifyUser() {
-	http.HandleFunc("/user/admin/verify", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/manage/admin/verify", func(w http.ResponseWriter, r *http.Request) {
 
 		var candidate db.User
 
@@ -79,7 +82,7 @@ func VerifyUser() {
 
 */
 func AddAsset() {
-	http.HandleFunc("/user/assets/add", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/manage/assets/add", func(w http.ResponseWriter, r *http.Request) {
 
 		user, err := CheckPostAdmin(w, r)
 		if err != nil {
@@ -132,7 +135,7 @@ func AddAsset() {
 	- type
 */
 func UpdateAsset() {
-	http.HandleFunc("/user/assets/update", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/manage/assets/update", func(w http.ResponseWriter, r *http.Request) {
 
 		user, err := CheckPostAdmin(w, r)
 		if err != nil {
@@ -178,7 +181,7 @@ func UpdateAsset() {
 }
 
 func AddPledge() {
-	http.HandleFunc("/user/pledges/add", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/manage/pledges/add", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckPostAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -199,7 +202,7 @@ func AddPledge() {
 		// Unmarshal the json bytes into the map[string]string data type
 		// to be parsed for the arguments to create a new Pledge item and
 		// inserted into the pledge bucket.
-		var pledge map[string]string
+		var pledge map[string]interface{}
 		err = json.Unmarshal(bytes, &pledge)
 		if err != nil {
 			log.Println(err)
@@ -213,35 +216,11 @@ func AddPledge() {
 		actorType := user.EntityType
 		actorID := user.EntityID
 
-		pledgeType := pledge["pledge_type"]
-
-		baseYear, err := strconv.Atoi(pledge["base_year"])
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-
-		targetYear, err := strconv.Atoi(pledge["target_year"])
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-
-		goal, err := strconv.ParseFloat(pledge["goal"], 64)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
-
-		regulatory, err := strconv.ParseBool(pledge["regulatory"])
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
+		pledgeType := pledge["pledge_type"].(string)
+		baseYear := pledge["base_year"].(float64)
+		targetYear := pledge["target_year"].(float64)
+		goal := pledge["goal"].(float64)
+		regulatory := pledge["regulatory"].(bool)
 
 		// Call NewPledge() with all the arguments, which have been typecasted
 		// into the proper types required by the NewPledge function.
@@ -258,7 +237,7 @@ func AddPledge() {
 }
 
 func UpdatePledge() {
-	http.HandleFunc("/user/pledges/update", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/manage/pledges/update", func(w http.ResponseWriter, r *http.Request) {
 
 		user, err := CheckPostAdmin(w, r)
 		if err != nil {
@@ -304,7 +283,7 @@ func UpdatePledge() {
 }
 
 func CommitPledge() {
-	http.HandleFunc("user/pledges/commit", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("manage/pledges/commit", func(w http.ResponseWriter, r *http.Request) {
 		_, err := CheckGetAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -343,7 +322,7 @@ func CommitPledge() {
 }
 
 func UpdateMRV() {
-	http.HandleFunc("user/mrv", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/manage/mrv/update", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
 			log.Println(err)
@@ -363,5 +342,38 @@ func UpdateMRV() {
 		actor.UpdateMRV(mrv)
 
 		erpc.MarshalSend(w, mrv)
+	})
+}
+
+func integrateBulk() {
+	
+}
+
+// Submit a request to connect with an external database that contains
+// emissions/mitigation/adaptation data that users would like to report.
+func integrateRequest() {
+	http.HandleFunc("/manage/integrate/request", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckPost(w, r)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		b, err := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		var request db.ConnectRequest
+		err = json.Unmarshal(b, &request)
+		if err != nil {
+			log.Println("Error: failed to unmarshal bytes into Request struct")
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
+
+		db.NewRequest(request) // store request into request bucket, to be reviewed later
+		erpc.MarshalSend(w, request)
 	})
 }
