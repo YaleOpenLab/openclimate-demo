@@ -5,50 +5,37 @@ import (
 	"github.com/robfig/cron"
 	"log"
 
-	"github.com/YaleOpenLab/openclimate/blockchain"
+	// "github.com/YaleOpenLab/openclimate/blockchain"
 )
 
-func GetAndCommitDaily() {
+const (
+	// Earth data parameters
+	earthCO2 = "Atmospheric CO2"
+	earthTemp = "Global Temperature"
+	earthEntityID = 1
+	earthEntityType = "Earth"
+)
 
-	dailyNoaaData, err := GetNoaaDailyCO2()
-	if err != nil {
-		log.Fatal(errors.Wrap(err, "GetAndCommitDaily() failed"))
-	}
+func GetVerifyCommit(reportType string, entityType string, entityID int, get func() (interface{}, error)) func() {
+	return func() {
+		data, err := get()
+		if err != nil {
+			log.Fatal(errors.Wrap(err, "GetVerifyCommit() failed"))
+		}
 
-	val, err := VerifyAtmosCO2(dailyNoaaData)
-	if err != nil {
-		log.Fatal(errors.Wrap(err, "GetAndCommitDaily() failed"))
-	}
-
-	err = blockchain.CommitToChain(val)
-	if err != nil {
-		log.Fatal(errors.Wrap(err, "GetAndCommitDaily() failed"))
-	}
-}
-
-func GetAndCommitMonthly() {
-
-	monthlyNoaaData, err := GetNoaaMonthlyCO2()
-	if err != nil {
-		log.Fatal(errors.Wrap(err, "GetAndCommitMonthly() failed"))
-	}
-
-	val, err := VerifyAtmosCO2(monthlyNoaaData)
-	if err != nil {
-		log.Fatal(errors.Wrap(err, "GetAndCommitMonthly() failed"))
-	}
-
-	err = blockchain.CommitToChain(val)
-	if err != nil {
-		log.Fatal(errors.Wrap(err, "GetAndCommitMonthly() failed"))
+		err = VerifyAndCommit(reportType, entityType, entityID, data)
+		if err != nil {
+			log.Fatal(errors.Wrap(err, "GetVerifyCommit() failed"))
+		}
 	}
 }
 
 func Schedule() {
-
-	c := cron.New()
-	c.AddFunc("@daily", GetAndCommitDaily)
-	c.AddFunc("@monthly", GetAndCommitMonthly)
 	
+	c := cron.New()
+
+	c.AddFunc("@daily", GetVerifyCommit(earthCO2, earthEntityType, earthEntityID, GetNoaaDailyCO2))
+	c.AddFunc("@monthly", GetVerifyCommit(earthCO2, earthEntityType, earthEntityID, GetNoaaMonthlyCO2))
+
 	c.Start()
 }

@@ -26,6 +26,17 @@ const (
 	noaaBaseUrl = "https://www.ncdc.noaa.gov/cdo-web/webservices/v2/data"
 )
 
+type GlobalTemp struct {
+	Source    string
+	Location  string
+	Frequency string // annually, monthly, daily, etc.
+	Year      int
+	Month     int
+	Day       int
+	Cycle     float64
+	Trend     float64
+}
+
 // The GlobalCO2 struct defines the data and meta-data that will be attached
 // To the atmospheric CO2 measurements observed at various sites and stored
 // on the NOAA ESRL FTP server.
@@ -44,7 +55,7 @@ type GlobalCO2 struct {
 // CO2 global estimates on the NOAA ESRL FTP server. The function is called
 // by the scheduler daily (see oracle/scheduler.go), and the data from this
 // function is sent to the oracle for processing & verification.
-func GetNoaaDailyCO2() ([]GlobalCO2, error) {
+func GetNoaaDailyCO2() (interface{}, error) {
 
 	var dataArr []GlobalCO2
 
@@ -81,7 +92,7 @@ func GetNoaaDailyCO2() ([]GlobalCO2, error) {
 // The function is called by the scheduler monthly (see oracle/scheduler.go),
 // and the data from this function is sent to the oracle for processing &
 // verification.
-func GetNoaaMonthlyCO2() ([]GlobalCO2, error) {
+func GetNoaaMonthlyCO2() (interface{}, error) {
 
 	var dataArr []GlobalCO2
 
