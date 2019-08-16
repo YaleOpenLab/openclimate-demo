@@ -210,7 +210,7 @@ func Create21AOSSig() (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.In
 	return new(big.Int).SetBytes(eb), sb, sd, Pbx, Pby, Pdx, Pdy, m
 }
 
-func main() {
+func Verify21AOSSig() {
 	eb, sb, sd, Pbx, Pby, Pdx, Pdy, m := Create21AOSSig()
 
 	BrianNodeNumber := []byte{2} // assume brian has node number 2
@@ -238,5 +238,92 @@ func main() {
 		log.Fatal("Signatures don't match")
 	} else {
 		log.Println("Ring singatures validated")
+	}
+}
+
+func main() {
+	var vks [][]byte
+	var privkeys [][]byte
+
+	a, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	Ax, Ay := PubkeyPointsFromPrivkey(a)
+	A := append(Ax, Ay...)
+
+	b, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	Bx, By := PubkeyPointsFromPrivkey(b)
+	B := append(Bx, By...)
+
+	c, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	Cx, Cy := PubkeyPointsFromPrivkey(c)
+	C := append(Cx, Cy...)
+
+	d, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	Dx, Dy := PubkeyPointsFromPrivkey(d)
+	D := append(Dx, Dy...)
+
+	e, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	Ex, Ey := PubkeyPointsFromPrivkey(e)
+	E := append(Ex, Ey...)
+
+	f, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	Fx, Fy := PubkeyPointsFromPrivkey(f)
+	F := append(Fx, Fy...)
+
+	var e [][]byte // array of hash values
+	var s []big.Int // array of signatures
+
+	M := Sha256([]byte("cool"))
+	jstar := []int{1,2,3,4,5,6}
+
+	for i := 0 ; i < 2 ; i ++ {
+		k, err := NewPrivateKey()
+		if err != nil {
+			log.Fatal(err)
+		}
+
+		kGx, kGy := PubkeyPointsFromPrivkey(k.Bytes())
+
+		jstarplus1 := jstar[i] + 1
+		e[i][jstarplus1] = Sha256(M, kGx.Bytes(), kGy.Bytes(), i, jstar[i])
+
+		for j := jstarplus1 ; j < 2 ; j ++ {
+			s[i][j] = NewPrivateKey()
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			sijGx, sijGy := PubkeyPointsFromPrivkey(s[i][j])
+
+			eijPijx, eijPijy := Curve.ScalarBaseMult(P[i][j][0:32], P[i][j][33:64], e[i][j])
+
+			negy := new(big.Int).Neg(eijPijy)
+			subx, suby := Curve.Add(sijGx, sijGy, eijPijx, new(big.Int).Mod(negy, Curve.P)) // sij*G − eij * Pij
+
+			e[i][j+1] = Sha256(M, subx.Bytes(), suby.Bytes(), i, j)
+		}
 	}
 }
