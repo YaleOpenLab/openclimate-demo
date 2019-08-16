@@ -22,8 +22,8 @@ type Asset struct {
 }
 
 type ReportsByYear struct {
-	Year 		int
-	GWh 		int
+	Year               int
+	GWh                int
 	MitigationOutcomes int
 }
 
@@ -52,7 +52,6 @@ func UpdateAsset(key int, info Asset) error {
 	return asset.Save()
 }
 
-
 func (a *Asset) ReportAssetData(year int, gwh int, mitOut int) error {
 	var data ReportsByYear
 
@@ -63,7 +62,6 @@ func (a *Asset) ReportAssetData(year int, gwh int, mitOut int) error {
 	a.Reports = append(a.Reports, data)
 	return a.Save()
 }
-
 
 // Given a key of type int, retrieves the corresponding asset object
 // from the database assets bucket.

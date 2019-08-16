@@ -1,11 +1,9 @@
 package oracle
 
 import (
-
+	"github.com/pkg/errors"
 	"github.com/robfig/cron"
 	"log"
-	"github.com/pkg/errors"
-
 )
 
 func GetAndCommitDaily() {
