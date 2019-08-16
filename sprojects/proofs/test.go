@@ -12,6 +12,7 @@ import (
 	"math/big"
 
 	// btcutils "github.com/bithyve/research/utils"
+	utils "github.com/Varunram/essentials/utils"
 	bech32 "github.com/bithyve/research/bech32"
 	bitcoinrpc "github.com/bithyve/research/rpc"
 	"github.com/btcsuite/btcd/btcec"
@@ -242,17 +243,17 @@ func Verify21AOSSig() {
 	}
 }
 
-func getkG(e, Px, Py []byte) ([]byte, []byte, []byte) {
+func getkG(e, Px, Py []byte) ([]byte, []byte) {
 	s, err := NewPrivateKey()
 	if err != nil {
 		log.Fatal(err)
 	}
 
 	sGx, sGy := Curve.ScalarBaseMult(s.Bytes())
-	ePx, ePy := Curve.ScalarMult(Px, Py, e)
+	ePx, ePy := Curve.ScalarMult(new(big.Int).SetBytes(Px), new(big.Int).SetBytes(Py), e)
 
 	xX, xY := Curve.Add(sGx, sGy, ePx, ePy)
-	return append(xX.Bytes(), xY.Bytes()...), s
+	return append(xX.Bytes(), xY.Bytes()...), s.Bytes()
 }
 
 /*
@@ -273,8 +274,8 @@ func main() {
 	pubkeys := make(map[int]map[int][]byte)
 	privkeys := make(map[int][]byte)
 
-	pubkeys[0] := make(map[int][]byte, 3)
-	pubkeys[1] := make(map[int][]byte, 3)
+	pubkeys[0] = make(map[int][]byte, 3)
+	pubkeys[1] = make(map[int][]byte, 3)
 
 	for i := 0; i < 3; i++ {
 		x, err := NewPrivateKey()
@@ -282,7 +283,7 @@ func main() {
 			log.Fatal(err)
 		}
 
-		privkeys[i] = x
+		privkeys[i] = x.Bytes()
 
 		tempx, tempy := PubkeyPointsFromPrivkey(x)
 		pubkeys[0][i] = append(tempx.Bytes(), tempy.Bytes()...)
@@ -294,7 +295,7 @@ func main() {
 			log.Fatal(err)
 		}
 
-		privkeys[3+i] = x
+		privkeys[3+i] = x.Bytes()
 
 		tempx, tempy := PubkeyPointsFromPrivkey(x)
 		pubkeys[1][i] = append(tempx.Bytes(), tempy.Bytes()...)
@@ -318,53 +319,90 @@ func main() {
 		if err != nil {
 			log.Fatal(err)
 		}
-		k[i] = append(k[i], ktemp.Bytes())
+		k[i] = append(k[i], ktemp.Bytes()...)
 	}
 
 	toBeHashed := []byte("")
 
 	for i, loop := range pubkeys {
-		e[i] = make(map[int][]byte, len(pubkeys[loop]))
-		s[i] = make(map[int][]byte, len(pubkeys[loop]))
+		iByte, err := utils.ToByte(i)
+		if err != nil {
+			log.Fatal(err)
+		}
+		e[i] = make(map[int][]byte, len(loop))
+		s[i] = make(map[int][]byte, len(loop))
 
-		kGx, kGy := PubkeyPointsFromPrivkey(k[i])
-		kG := append(kGx.Bytes(), kGy.Bytes())
+		kGx, kGy := PubkeyPointsFromPrivkey(new(big.Int).SetBytes(k[i]))
+		kG := append(kGx.Bytes(), kGy.Bytes()...)
 
-		startIndex[i] = math.Mod(float64(signingIndices[i]+1), float64(len(pubkeys[loop])))
+		startIndex[i] = int(math.Mod(float64(signingIndices[i]+1), float64(len(loop))))
 
 		if startIndex[i] == 0 {
-			toBeHashed := append(toBeHashed, kG)
+			toBeHashed = append(toBeHashed, kG...)
 			continue
 		}
 
-		e[i][startIndex[i]] = Sha256(M, kG, i, startIndex[i])
+		startIndexByte, err := utils.ToByte(startIndex[i])
+		if err != nil {
+			log.Fatal(err)
+		}
 
-		for x := startIndex[i]; x < len(pubkeys[loop]); x++ {
+		e[i][startIndex[i]] = Sha256(M, kG, iByte, startIndexByte)
+
+		for x := startIndex[i]; x < len(loop); x++ {
 			var y []byte
-			y, s[i][x-1] = getkG(e[i][x-1], pubkeys[i][x-1])
-			e[i][x] = Sha256(M, y, i, x)
+			xByte, err := utils.ToByte(x)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			y, s[i][x-1] = getkG(e[i][x-1], pubkeys[i][x-1][0:31], pubkeys[i][x-1][32:63])
+			e[i][x] = Sha256(M, y, iByte, xByte)
 		}
 
 		var kGend []byte
-		kGend, s[i][len(pubkeys[i])-1] = getkG(e[i][len(pubkeys[i])-1], pubkeys[i][len(pubkeys[i])-1])
-		toBeHashed := append(toBeHashed, kGend)
+		kGend, s[i][len(pubkeys[i])-1] = getkG(e[i][len(pubkeys[i])-1], pubkeys[i][len(pubkeys[i])-1][0:31], pubkeys[i][len(pubkeys[i])-1][32:63])
+		toBeHashed = append(toBeHashed, kGend...)
 	}
 
-	toBeHashed = append(toBeHashed, M)
+	toBeHashed = append(toBeHashed, M...)
 	e0 := Sha256(toBeHashed)
 
 	for i, _ := range pubkeys {
-		e[i][0] = Sha256(M, e0, i, 0)
+		iByte, err := utils.ToByte(i)
+		if err != nil {
+			log.Fatal(err)
+		}
+		zeroByteArray := []byte{0}
+		e[i][0] = Sha256(M, e0, iByte, zeroByteArray)
 	}
 
-	for i, loop := range pubkeys {
+	for i, _ := range pubkeys {
+		iByte, err := utils.ToByte(i)
+		if err != nil {
+			log.Fatal(err)
+		}
 		for x := 1; x < signingIndices[i]+1; x++ {
 			var y []byte
-			y, s[i][x-1] = getkG(e[i][x-1], vks[i][x-1])
-			e[i][x] = Sha256(M, y, i, x)
-			s[i][signing_indices[i]] = k[i] - privkeys[i]*e[i][signingIndices[i]]
+			xByte, err := utils.ToByte(x)
+			if err != nil {
+				log.Fatal(err)
+			}
+
+			y, s[i][x-1] = getkG(e[i][x-1], pubkeys[i][x-1][0:31], pubkeys[i][x-1][32:63])
+			e[i][x] = Sha256(M, y, iByte, xByte)
+
+			kiNum := new(big.Int).SetBytes(k[i])
+			privkeyNum := new(big.Int).SetBytes(privkeys[i])
+			esigI := new(big.Int).SetBytes(e[i][signingIndices[i]])
+
+			pknminusesigI := new(big.Int).Add(privkeyNum, new(big.Int).Neg(esigI))
+			// aboveModP := new(big.Int).Mod(minusedPby, Curve.P)
+			subNum := new(big.Int).Add(kiNum, pknminusesigI)
+			subNumMod := new(big.Int).Mod(subNum, Curve.P)
+			s[i][signingIndices[i]] = subNumMod.Bytes()
 		}
 	}
 
-	log.Println(e0, s)
+	log.Println("e0: ", e0, "sig: ", s, len(s))
 }
