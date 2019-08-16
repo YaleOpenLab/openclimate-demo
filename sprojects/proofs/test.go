@@ -182,7 +182,6 @@ func Create21RignSig() (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.I
 	}
 
 	Kdx, Kdy := Curve.ScalarBaseMult(kd.Bytes()) // K = kd*G
-	log.Println("KD: ", Kdx, Kdy)
 
 	BrianNodeNumber := []byte{2} // assume brian has node number 2
 
@@ -196,14 +195,17 @@ func Create21RignSig() (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.I
 	sbGx, sbGy := Curve.ScalarBaseMult(sb.Bytes()) // sb*G
 	ebPbx, ebPby := Curve.ScalarMult(Pbx, Pby, eb) // eb * Pb
 
-	Kbx, Kby := Curve.Add(sbGx, sbGy, new(big.Int).Neg(ebPbx), new(big.Int).Neg(ebPby)) // Kb = sb*G - eb*Pb
+	minusedPby := new(big.Int).Neg(ebPby)
+	Kbx, Kby := Curve.Add(sbGx, sbGy, ebPbx, new(big.Int).Mod(minusedPby, Curve.P)) // Kb = sb*G - eb*Pb
 
 	DomNodeNumber := []byte{1}
 
 	ed := Sha256(Kbx.Bytes(), Kby.Bytes(), m, DomNodeNumber) // ed = H(Kb || m || D)
-	log.Println("ed: ", ed)
+	// log.Println("ed: ", ed)
 
 	edd := new(big.Int).Mul(new(big.Int).SetBytes(ed), d) // ed * d
+
+	sd := new(big.Int).Add(edd, kd) // ed*d + kd
 
 	return new(big.Int).SetBytes(eb), sb, sd, Pbx, Pby, Pdx, Pdy, m
 }
@@ -217,21 +219,24 @@ func main() {
 	sbGx, sbGy := Curve.ScalarBaseMult(sb.Bytes())         // sb*G
 	ebPbx, ebPby := Curve.ScalarMult(Pbx, Pby, eb.Bytes()) // eb*Pb
 
-	Kbx, Kby := Curve.Add(sbGx, sbGy, new(big.Int).Neg(ebPbx), new(big.Int).Neg(ebPby))
+	minusedPby := new(big.Int).Neg(ebPby)
+	Kbx, Kby := Curve.Add(sbGx, sbGy, ebPbx, new(big.Int).Mod(minusedPby, Curve.P))
 
 	ed := Sha256(Kbx.Bytes(), Kby.Bytes(), m, DomNodeNumber)
-	log.Println("ed: ", ed)
+	// log.Println("ed: ", ed)
 
 	sdGx, sdGy := Curve.ScalarBaseMult(sd.Bytes())
-	log.Println("sdG: ", sdGx, sdGy)
 	edPdx, edPdy := Curve.ScalarMult(Pdx, Pdy, ed)
-	log.Println("edPd: ", edPdx, edPdy)
 
-	Kdx, Kdy := Curve.Add(sdGx, sdGy, new(big.Int).Neg(edPdx), new(big.Int).Neg(edPdy))
-	// log.Println("KD: ", Kdx, Kdy)
+	minusedPdy := new(big.Int).Neg(edPdy)
+	Kdx, Kdy := Curve.Add(sdGx, sdGy, edPdx, new(big.Int).Mod(minusedPdy, Curve.P))
 
 	ebCheck := Sha256(Kdx.Bytes(), Kdy.Bytes(), m, BrianNodeNumber)
+	ebCheckInt := new(big.Int).SetBytes(ebCheck)
 
-	log.Println("ebCheck: ", ebCheck)
-	log.Println("eb: ", eb.Bytes())
+	if ebCheckInt.Cmp(eb) != 0 {
+		log.Fatal("Signatures don't match")
+	} else {
+		log.Println("Ring singatures validated")
+	}
 }
