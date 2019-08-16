@@ -6,6 +6,7 @@ import (
 	"log"
 )
 
+// Commits data to IPFS and returns IPFS hash
 func IpfsCommitData(data interface{}) (string, error) {
 	dataBytes, err := json.Marshal(data)
 	if err != nil {

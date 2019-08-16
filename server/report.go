@@ -16,7 +16,6 @@ import (
 
 func setupReport() {
 	reportDirect()
-	// connectDatabase()
 }
 
 /*
@@ -34,13 +33,6 @@ func reportDirect() {
 			return
 		}
 
-		// entity, err := user.RetrieveUserEntity()
-		// if err != nil {
-		// 	log.Println(err)
-		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 	return
-		// }
-
 		if r.URL.Query()["report_type"] == nil {
 			log.Println("report type not passed, quitting")
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
@@ -56,7 +48,7 @@ func reportDirect() {
 			return
 		}
 
-		var data map[string][]float64
+		var data interface{}
 		err = json.Unmarshal(bytes, &data)
 		if err != nil {
 			log.Println(err)
@@ -64,7 +56,7 @@ func reportDirect() {
 			return
 		}
 
-		err = oracle.Verify(reportType, user.EntityType, user.EntityID, data)
+		err = oracle.VerifyAndCommit(reportType, user.EntityType, user.EntityID, data)
 		if err != nil {
 			log.Fatal(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
