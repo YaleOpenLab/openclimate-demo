@@ -135,53 +135,103 @@ func signCommitment() {
 	log.Println("SIG: ", sig.Result)
 }
 
-func main() {
-	x, err := NewPrivateKey() // lets assume this to be the same as x
+func Create21RignSig() (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.Int, []byte) {
+	// Lets assume two parties - Brian and Dom.
+	// Lets assume Brian and Dom's pubkeys are Pb and Pd. Lets assume their private keys
+	// are b and d.
+	// Then lets assume Dom wants to create a ring signature over C1 and C2 where
+	// C1 = xG + 1H and C2 = xG where x is the blinding factor
+
+	b, err := NewPrivateKey()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	k, err := NewPrivateKey() // lets assume this to be the same as x
+	d, err := NewPrivateKey()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	Px, Py := PubkeyPointsFromPrivkey(x) // P = x*G
-	Kx, Ky := PubkeyPointsFromPrivkey(x) // K = x*G
+	Pbx, Pby := PubkeyPointsFromPrivkey(b)
+	Pdx, Pdy := PubkeyPointsFromPrivkey(d)
+
+	x, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	xGx, xGy := Curve.ScalarBaseMult(x.Bytes()) // xG
 
 	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
-	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // Point(SHA256(G))
+	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // H = Point(SHA256(G))
 
-	oneHx, oneHy := Curve.ScalarMult(Hx, Hy, []byte{1})
+	one := []byte{1}
+	oneHx, oneHy := Curve.ScalarMult(Hx, Hy, one) // 1*H
 
-	var a []byte
-	a = []byte{1}
-
-	aHx, aHy := Curve.ScalarMult(Hx, Hy, a)
-
-	Cx, Cy := Curve.Add(Px, Py, aHx, aHy)                                           // P + a*H = commitment message
-	C1x, C1y := Curve.Add(Px, Py, new(big.Int).Neg(oneHx), new(big.Int).Neg(oneHy)) // C1 = x*G - 1*H
+	C1x, C1y := Curve.Add(xGx, xGy, oneHx, oneHy) // xG + 1H
+	C2x, C2y := Curve.ScalarBaseMult(x.Bytes())   // xG
 
 	var m []byte
-	m := append(m, Cx, Cy, C1x, C1y)
-	E := []byte{2} // the second node in the ring
+	C1 := append(C1x.Bytes(), C1y.Bytes()...)
+	C2 := append(C2x.Bytes(), C2y.Bytes()...)
+	m = append(m, append(C1, C2...)...)
 
-	eE := Sha256(Kx.Bytes(), Ky.Bytes(), m, E)
-	se, err := NewPrivateKey()
+	kd, err := NewPrivateKey() // random nonce for ring sig
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	seGx, seGy := Curve.ScalarBaseMult(se.Bytes())
-	eEPEx, eEPEy := Curve.ScalarMult(C1x, C1y, eE)
+	Kdx, Kdy := Curve.ScalarBaseMult(kd.Bytes()) // K = kd*G
+	log.Println("KD: ", Kdx, Kdy)
 
-	KEx, KEy := Curve.Add(seGx, seGy, eEPEx, eEPEy) // C1's ring sig
+	BrianNodeNumber := []byte{2} // assume brian has node number 2
 
-	D := []byte{1}
-	eD := Sha256(KEx.Bytes(), KEy.Bytes(), m, D)
-	eDInt := new(big.Int).SetBytes(eD)
-	sd := new(big.Int).Add(new(big.Int).Mul(eDInt, x), k)
+	eb := Sha256(Kdx.Bytes(), Kdy.Bytes(), m, BrianNodeNumber)
 
-	log.Println("P: ", Px, Py, "C1: ", C1x, C1y)
-	log.Println("eE: ", new(big.Int).SetBytes(eE), "se: ", se, "ed: ", eDInt, "sd: ", sd)
+	sb, err := NewPrivateKey() // choose a signature sb at random fro brian
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	sbGx, sbGy := Curve.ScalarBaseMult(sb.Bytes()) // sb*G
+	ebPbx, ebPby := Curve.ScalarMult(Pbx, Pby, eb) // eb * Pb
+
+	Kbx, Kby := Curve.Add(sbGx, sbGy, new(big.Int).Neg(ebPbx), new(big.Int).Neg(ebPby)) // Kb = sb*G - eb*Pb
+
+	DomNodeNumber := []byte{1}
+
+	ed := Sha256(Kbx.Bytes(), Kby.Bytes(), m, DomNodeNumber) // ed = H(Kb || m || D)
+	log.Println("ed: ", ed)
+
+	edd := new(big.Int).Mul(new(big.Int).SetBytes(ed), d) // ed * d
+
+	return new(big.Int).SetBytes(eb), sb, sd, Pbx, Pby, Pdx, Pdy, m
+}
+
+func main() {
+	eb, sb, sd, Pbx, Pby, Pdx, Pdy, m := Create21RignSig()
+
+	BrianNodeNumber := []byte{2} // assume brian has node number 2
+	DomNodeNumber := []byte{1}
+
+	sbGx, sbGy := Curve.ScalarBaseMult(sb.Bytes())         // sb*G
+	ebPbx, ebPby := Curve.ScalarMult(Pbx, Pby, eb.Bytes()) // eb*Pb
+
+	Kbx, Kby := Curve.Add(sbGx, sbGy, new(big.Int).Neg(ebPbx), new(big.Int).Neg(ebPby))
+
+	ed := Sha256(Kbx.Bytes(), Kby.Bytes(), m, DomNodeNumber)
+	log.Println("ed: ", ed)
+
+	sdGx, sdGy := Curve.ScalarBaseMult(sd.Bytes())
+	log.Println("sdG: ", sdGx, sdGy)
+	edPdx, edPdy := Curve.ScalarMult(Pdx, Pdy, ed)
+	log.Println("edPd: ", edPdx, edPdy)
+
+	Kdx, Kdy := Curve.Add(sdGx, sdGy, new(big.Int).Neg(edPdx), new(big.Int).Neg(edPdy))
+	// log.Println("KD: ", Kdx, Kdy)
+
+	ebCheck := Sha256(Kdx.Bytes(), Kdy.Bytes(), m, BrianNodeNumber)
+
+	log.Println("ebCheck: ", ebCheck)
+	log.Println("eb: ", eb.Bytes())
 }
