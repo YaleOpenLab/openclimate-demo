@@ -8,7 +8,6 @@ import (
 	"github.com/pkg/errors"
 	"io"
 	"log"
-	"math"
 	"math/big"
 
 	// btcutils "github.com/bithyve/research/utils"
@@ -139,7 +138,7 @@ func signCommitment() {
 
 func Create21AOSSig() (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.Int, []byte) {
 	// Lets assume two parties - Brian and Dom.
-	// Lets assume Brian and Dom's pubkeys are Pb and Pd. Lets assume their private keys
+	// Lets assume Brian and Dom's P are Pb and Pd. Lets assume their private keys
 	// are b and d.
 	// Then lets assume Dom wants to create a ring signature over C1 and C2 where
 	// C1 = xG + 1H and C2 = xG where x is the blinding factor
@@ -243,7 +242,7 @@ func Verify21AOSSig() {
 	}
 }
 
-func getkG(e, Px, Py []byte) ([]byte, []byte) {
+func SubtractOnCurve(e, PxByte, PyByte []byte) ([]byte, []byte) {
 	s, err := NewPrivateKey()
 	if err != nil {
 		log.Fatal(err)
@@ -251,67 +250,58 @@ func getkG(e, Px, Py []byte) ([]byte, []byte) {
 
 	sGx, sGy := Curve.ScalarBaseMult(s.Bytes())
 
-	ePx, ePy := Curve.ScalarMult(new(big.Int).SetBytes(Px), new(big.Int).SetBytes(Py), e)
+	Px, Py := new(big.Int).SetBytes(PxByte), new(big.Int).SetBytes(PyByte)
+
+	ePx, ePy := Curve.ScalarMult(Px, Py, e)
+
 	minusedPy := new(big.Int).Neg(ePy)
 
 	xX, xY := Curve.Add(sGx, sGy, ePx, new(big.Int).Mod(minusedPy, Curve.P))
 	return append(xX.Bytes(), xY.Bytes()...), s.Bytes()
 }
 
-func getkGs(e, Px, Py, s []byte) ([]byte, []byte) {
+func SubtractOnCurveS(e []byte, Px *big.Int, Py *big.Int, s []byte) []byte {
 	sGx, sGy := Curve.ScalarBaseMult(s)
-	ePx, ePy := Curve.ScalarMult(new(big.Int).SetBytes(Px), new(big.Int).SetBytes(Py), e)
 
-	xX, xY := Curve.Add(sGx, sGy, ePx, ePy)
-	return append(xX.Bytes(), xY.Bytes()...), s
+	ePx, ePy := Curve.ScalarMult(Px, Py, e)
+
+	minusedPy := new(big.Int).Neg(ePy)
+	xX, xY := Curve.Add(sGx, sGy, ePx, new(big.Int).Mod(minusedPy, Curve.P))
+	return append(xX.Bytes(), xY.Bytes()...)
 }
 
-/*
-def get_kG(e, P, s=None):
-    '''Use EC operation: kG = sG +eP.
-    If s (signature) is not provided, it is generated
-    randomly and returned.
-    e - hash value, 32 bytes binary
-    P - verification pubkey
-    s - 32 bytes binary'''
-    if not s:
-	s = os.urandom(32)
-    sG = btc.fast_multiply(btc.G,btc.decode(s,256))
-    eP = btc.fast_multiply(P,btc.decode(e,256))
-    return (btc.fast_add(sG, eP), s)
-*/
 func main() {
-	pubkeys := make(map[int]map[int][]byte)
-	privkeys := make(map[int][]byte)
+	P := make(map[int]map[int][]byte)
+	x := make(map[int][]byte)
 
-	pubkeys[0] = make(map[int][]byte, 3)
-	pubkeys[1] = make(map[int][]byte, 3)
+	P[0] = make(map[int][]byte, 3)
+	P[1] = make(map[int][]byte, 3)
 
 	for i := 0; i < 3; i++ {
-		x, err := NewPrivateKey()
+		key, err := NewPrivateKey()
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		privkeys[i] = x.Bytes()
+		x[i] = key.Bytes()
 
-		tempx, tempy := PubkeyPointsFromPrivkey(x)
-		pubkeys[0][i] = append(tempx.Bytes(), tempy.Bytes()...)
+		tempx, tempy := PubkeyPointsFromPrivkey(key)
+		P[0][i] = append(tempx.Bytes(), tempy.Bytes()...)
 	}
 
 	for i := 0; i < 3; i++ {
-		x, err := NewPrivateKey()
+		key, err := NewPrivateKey()
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		privkeys[3+i] = x.Bytes()
+		x[3+i] = key.Bytes()
 
-		tempx, tempy := PubkeyPointsFromPrivkey(x)
-		pubkeys[1][i] = append(tempx.Bytes(), tempy.Bytes()...)
+		tempx, tempy := PubkeyPointsFromPrivkey(key)
+		P[1][i] = append(tempx.Bytes(), tempy.Bytes()...)
 	}
 
-	signingIndices := []int{1, 2, 3, 4, 5, 6} // replace this with a single element and test
+	jistar := []int{1, 2, 3, 4, 5, 6} // indices of signer in each ring
 
 	M := Sha256([]byte("cool"))
 
@@ -327,9 +317,8 @@ func main() {
 		k[i] = append(k[i], ktemp.Bytes()...)
 	}
 
-	toBeHashed := []byte("")
-
-	for i, loop := range pubkeys {
+	// start signing
+	for i, loop := range P {
 		iByte, err := utils.ToByte(i)
 		if err != nil {
 			log.Fatal(err)
@@ -338,99 +327,86 @@ func main() {
 		e[i] = make(map[int][]byte, len(loop))
 		s[i] = make(map[int][]byte, len(loop))
 
-		kGx, kGy := PubkeyPointsFromPrivkey(new(big.Int).SetBytes(k[i]))
-		kG := append(kGx.Bytes(), kGy.Bytes()...)
+		kiGx, kiGy := PubkeyPointsFromPrivkey(new(big.Int).SetBytes(k[i]))
+		kiG := append(kiGx.Bytes(), kiGy.Bytes()...)
 
-		jstar := int(math.Mod(float64(signingIndices[i]+1), float64(len(loop)))) // signingIndices % len(loop)
-
-		if jstar == 0 {
-			toBeHashed = append(toBeHashed, kG...)
-			continue
-		}
-
-		jstarByte, err := utils.ToByte(jstar)
+		jstari := jistar[i]
+		jstariByte, err := utils.ToByte(jstari)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		e[i][jstar+1] = Sha256(M, kG, iByte, jstarByte)
+		e[i][jstari+1] = Sha256(M, kiG, iByte, jstariByte)
 
-		for j := jstar; j < len(loop); j++ {
+		mi := len(loop)
+		for j := jstari + 1; j < mi-1; j++ {
 			jByte, err := utils.ToByte(j)
 			if err != nil {
 				log.Fatal(err)
 			}
 
 			var temp []byte
-			temp, s[i][j] = getkG(e[i][j], pubkeys[i][j][0:31], pubkeys[i][j][32:63])
+			temp, s[i][j] = SubtractOnCurve(e[i][j], P[i][j][0:31], P[i][j][32:63])
 			e[i][j+1] = Sha256(M, temp, iByte, jByte)
 		}
 	}
 
-	for i := 0; i <= len(pubkeys)-1; i++ {
+	toBeHashed := []byte("")
+	for i := 0; i <= len(P)-1; i++ {
 		var temp []byte
 		miMinusOne := 2 // len(loop) - 1
-		temp, s[i][miMinusOne] = getkG(e[i][miMinusOne], pubkeys[i][miMinusOne][0:31], pubkeys[i][miMinusOne][32:63])
+		temp, s[i][miMinusOne] = SubtractOnCurve(e[i][miMinusOne], P[i][miMinusOne][0:31], P[i][miMinusOne][32:63])
 		toBeHashed = append(toBeHashed, temp...)
 	}
 
 	e0 := Sha256(toBeHashed)
 
-	for i, _ := range pubkeys {
+	for i := 0; i <= 1; i++ {
 		iByte, err := utils.ToByte(i)
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		e[i][0] = Sha256(M, e0, iByte, []byte{0})
+		e[i][0] = e0
 
-		for j := 0; j < signingIndices[i]; j++ {
+		for j := 0; j < jistar[i]; j++ {
 			var temp []byte
 			jByte, err := utils.ToByte(j)
 			if err != nil {
 				log.Fatal(err)
 			}
 
-			temp, s[i][j] = getkG(e[i][j], pubkeys[i][j][0:31], pubkeys[i][j][32:63])
+			temp, s[i][j] = SubtractOnCurve(e[i][j], P[i][j][0:31], P[i][j][32:63])
 			e[i][j+1] = Sha256(M, temp, iByte, jByte)
 
 			ki := new(big.Int).SetBytes(k[i])
-			xi := new(big.Int).SetBytes(privkeys[i])
-			eijstari := new(big.Int).SetBytes(e[i][signingIndices[i]])
+			xi := new(big.Int).SetBytes(x[i])
+			eijstari := new(big.Int).SetBytes(e[i][jistar[i]])
 
 			xieijstari := new(big.Int).Mul(xi, eijstari)
 
-			s[i][signingIndices[i]] = new(big.Int).Add(ki, xieijstari).Bytes()
+			s[i][jistar[i]] = new(big.Int).Add(ki, xieijstari).Bytes()
 		}
 	}
 
 	r := make(map[int]map[int][]byte)
-	for i := 0 ; i <= 1 ; i ++ {
+	for i := 0; i <= 1; i++ {
 		iByte, err := utils.ToByte(i)
 		if err != nil {
 			log.Fatal(err)
 		}
 		r[i] = make(map[int][]byte)
 
-		for j := 0 ; j <= 2 ; j ++ {
-			Pijx, Pijy := new(big.Int).SetBytes(pubkeys[i][j][0:31]), new(big.Int).SetBytes(pubkeys[i][j][32:63])
+		for j := 0; j <= 2; j++ {
+			Pijx, Pijy := new(big.Int).SetBytes(P[i][j][0:31]), new(big.Int).SetBytes(P[i][j][32:63])
 
-			jplusoneByte, err := utils.ToByte(j+1)
+			jplusoneByte, err := utils.ToByte(j + 1)
 			if err != nil {
 				log.Fatal(err)
 			}
 
-			sijGx, sijGy := PubkeyPointsFromPrivkey(new(big.Int).SetBytes(s[i][j]))
+			r[i][j+1] = SubtractOnCurveS(e[i][j], Pijx, Pijy, s[i][j])
 
-			var eijPijx, eijPijy *big.Int
-			if j == 0 {
-				eijPijx, eijPijy = Curve.ScalarMult(Pijx, Pijy, e0)
-			} else {
-				eijPijx, eijPijy = Curve.ScalarMult(Pijx, Pijy, e[i][j])
-			}
-
-			tempx, tempy := Curve.Add(sijGx, sijGy, eijPijx, eijPijy)
-			r[i][j+1] = append(tempx.Bytes(), tempy.Bytes()...)
 			e[i][j+1] = Sha256(M, r[i][j+1], iByte, jplusoneByte)
 		}
 	}
