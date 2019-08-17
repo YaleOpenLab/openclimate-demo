@@ -256,6 +256,14 @@ func getkG(e, Px, Py []byte) ([]byte, []byte) {
 	return append(xX.Bytes(), xY.Bytes()...), s.Bytes()
 }
 
+func getkGs(e, Px, Py, s []byte) ([]byte, []byte) {
+	sGx, sGy := Curve.ScalarBaseMult(s)
+	ePx, ePy := Curve.ScalarMult(new(big.Int).SetBytes(Px), new(big.Int).SetBytes(Py), e)
+
+	xX, xY := Curve.Add(sGx, sGy, ePx, ePy)
+	return append(xX.Bytes(), xY.Bytes()...), s
+}
+
 /*
 def get_kG(e, P, s=None):
     '''Use EC operation: kG = sG +eP.
@@ -405,4 +413,32 @@ func main() {
 	}
 
 	log.Println("e0: ", e0, "sig: ", s, len(s))
+
+	r0s := []byte("")
+	ex := make(map[int]map[int][]byte)
+
+	for i, loop := range pubkeys {
+		iByte, err := utils.ToByte(i)
+		if err != nil {
+			log.Fatal(err)
+		}
+		ex[i] = make(map[int][]byte, len(loop))
+		ex[i][0] = Sha256(M, e0, iByte, []byte{0})
+
+		for j, _ := range loop {
+			r, _ := getkGs(e[i][j], pubkeys[i][j][0:31], pubkeys[i][j][32:63], s[i][j])
+			if j != len(loop)-1 {
+				kplusoneByte, err := utils.ToByte(j + 1)
+				if err != nil {
+					log.Fatal(err)
+				}
+
+				e[i][j+1] = Sha256(M, r, iByte, kplusoneByte)
+			} else {
+				r0s = append(r0s, r...)
+			}
+		}
+	}
+
+	log.Println(e0, Sha256(r0s, M))
 }
