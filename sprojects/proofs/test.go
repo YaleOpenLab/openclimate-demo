@@ -105,7 +105,7 @@ func signCommitment() {
 	log.Println("SIG: ", sig.Result)
 }
 
-func Create21AOSSig() (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.Int, []byte) {
+func Create21AOSSig() (*big.Int, *big.Int, *big.Int, btcutils.Point, btcutils.Point, []byte) {
 	// Lets assume two parties - Brian and Dom.
 	// Lets assume Brian and Dom's P are Pb and Pd. Lets assume their private keys
 	// are b and d.
@@ -122,92 +122,97 @@ func Create21AOSSig() (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.In
 		log.Fatal(err)
 	}
 
-	Pbx, Pby := btcutils.PubkeyPointsFromPrivkey(b)
-	Pdx, Pdy := btcutils.PubkeyPointsFromPrivkey(d)
+	Pb := btcutils.PointFromPrivkey(b)
+	Pd := btcutils.PointFromPrivkey(d)
 
 	x, err := btcutils.NewPrivateKey()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	xGx, xGy := Curve.ScalarBaseMult(x.Bytes()) // xG
+	xG := btcutils.PointFromPrivkey(x)
 
 	shaBytes := btcutils.Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // btcutils.Sha256(G)
-	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                          // H = btcutils.Point(btcutils.Sha256(G))
+
+	var H btcutils.Point
+	H.Set(Curve.ScalarBaseMult(shaBytes)) // H = btcutils.Point(btcutils.Sha256(G))
 
 	one := []byte{1}
-	oneHx, oneHy := Curve.ScalarMult(Hx, Hy, one) // 1*H
+	oneH := btcutils.ScalarMult(H, one)
 
-	C1x, C1y := Curve.Add(xGx, xGy, oneHx, oneHy) // xG + 1H
-	C2x, C2y := Curve.ScalarBaseMult(x.Bytes())   // xG
+	C1 := btcutils.Add(xG, oneH) // xG + 1H
+
+	var C2 btcutils.Point
+	C2.Set(Curve.ScalarBaseMult(x.Bytes())) // xG
 
 	var m []byte
-	C1 := append(C1x.Bytes(), C1y.Bytes()...)
-	C2 := append(C2x.Bytes(), C2y.Bytes()...)
-	m = append(m, append(C1, C2...)...)
+	m = append(m, append(C1.Bytes(), C2.Bytes()...)...)
 
 	kd, err := btcutils.NewPrivateKey() // random nonce for ring sig
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	Kdx, Kdy := Curve.ScalarBaseMult(kd.Bytes()) // K = kd*G
+	var Kd btcutils.Point
+	Kd.Set(Curve.ScalarBaseMult(kd.Bytes())) // K = kd*G
 
 	BrianNodeNumber := []byte{2} // assume brian has node number 2
 
-	eb := btcutils.Sha256(Kdx.Bytes(), Kdy.Bytes(), m, BrianNodeNumber)
+	eb := btcutils.Sha256(Kd.Bytes(), m, BrianNodeNumber)
 
 	sb, err := btcutils.NewPrivateKey() // choose a signature sb at random fro brian
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	sbGx, sbGy := Curve.ScalarBaseMult(sb.Bytes()) // sb*G
-	ebPbx, ebPby := Curve.ScalarMult(Pbx, Pby, eb) // eb * Pb
+	var sbG btcutils.Point
+	sbG.Set(Curve.ScalarBaseMult(sb.Bytes())) // sb*G
 
-	minusedPby := new(big.Int).Neg(ebPby)
-	Kbx, Kby := Curve.Add(sbGx, sbGy, ebPbx, new(big.Int).Mod(minusedPby, Curve.P)) // Kb = sb*G - eb*Pb
+	ebPb := btcutils.ScalarMult(Pb, eb) // eb * Pb
+
+	Kb := btcutils.Sub(sbG, ebPb) // Kb = sb*G - eb*Pb
 
 	DomNodeNumber := []byte{1}
 
-	ed := btcutils.Sha256(Kbx.Bytes(), Kby.Bytes(), m, DomNodeNumber) // ed = H(Kb || m || D)
-	// log.Println("ed: ", ed)
+	ed := btcutils.Sha256(Kb.Bytes(), m, DomNodeNumber) // ed = H(Kb || m || D)
 
 	edd := new(big.Int).Mul(new(big.Int).SetBytes(ed), d) // ed * d
 
 	sd := new(big.Int).Add(edd, kd) // ed*d + kd
 
-	return new(big.Int).SetBytes(eb), sb, sd, Pbx, Pby, Pdx, Pdy, m
+	return new(big.Int).SetBytes(eb), sb, sd, Pb, Pd, m
 }
 
 func Verify21AOSSig() {
-	eb, sb, sd, Pbx, Pby, Pdx, Pdy, m := Create21AOSSig()
+	eb, sb, sd, Pb, Pd, m := Create21AOSSig()
 
 	BrianNodeNumber := []byte{2} // assume brian has node number 2
 	DomNodeNumber := []byte{1}
 
-	sbGx, sbGy := Curve.ScalarBaseMult(sb.Bytes())         // sb*G
-	ebPbx, ebPby := Curve.ScalarMult(Pbx, Pby, eb.Bytes()) // eb*Pb
+	var sbG btcutils.Point
+	sbG.Set(Curve.ScalarBaseMult(sb.Bytes())) // sb*G
 
-	minusedPby := new(big.Int).Neg(ebPby)
-	Kbx, Kby := Curve.Add(sbGx, sbGy, ebPbx, new(big.Int).Mod(minusedPby, Curve.P))
+	ebPb := btcutils.ScalarMult(Pb, eb.Bytes()) // eb*Pb
 
-	ed := btcutils.Sha256(Kbx.Bytes(), Kby.Bytes(), m, DomNodeNumber)
+	Kb := btcutils.Sub(sbG, ebPb) // Kb = sb*G - eb*Pb
+
+	ed := btcutils.Sha256(Kb.Bytes(), m, DomNodeNumber)
 	// log.Println("ed: ", ed)
 
-	sdGx, sdGy := Curve.ScalarBaseMult(sd.Bytes())
-	edPdx, edPdy := Curve.ScalarMult(Pdx, Pdy, ed)
+	var sdG btcutils.Point
+	sdG.Set(Curve.ScalarBaseMult(sd.Bytes()))
 
-	minusedPdy := new(big.Int).Neg(edPdy)
-	Kdx, Kdy := Curve.Add(sdGx, sdGy, edPdx, new(big.Int).Mod(minusedPdy, Curve.P))
+	edPd := btcutils.ScalarMult(Pd, ed)
 
-	ebCheck := btcutils.Sha256(Kdx.Bytes(), Kdy.Bytes(), m, BrianNodeNumber)
+	Kd := btcutils.Sub(sdG, edPd)
+
+	ebCheck := btcutils.Sha256(Kd.Bytes(), m, BrianNodeNumber)
 	ebCheckInt := new(big.Int).SetBytes(ebCheck)
 
 	if ebCheckInt.Cmp(eb) != 0 {
 		log.Fatal("Signatures don't match")
 	} else {
-		log.Println("Ring singatures validated")
+		log.Println("Ring signatures validated")
 	}
 }
 
