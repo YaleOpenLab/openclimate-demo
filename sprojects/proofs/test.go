@@ -13,6 +13,7 @@ import (
 	// btcutils "github.com/bithyve/research/utils"
 	utils "github.com/Varunram/essentials/utils"
 	bech32 "github.com/bithyve/research/bech32"
+	points "github.com/bithyve/research/points"
 	bitcoinrpc "github.com/bithyve/research/rpc"
 	"github.com/btcsuite/btcd/btcec"
 )
@@ -48,8 +49,8 @@ func PubkeyPointsFromPrivkey(privkey *big.Int) (*big.Int, *big.Int) {
 	return x, y
 }
 
-func PointFromPrivkey(privkey *big.Int) Point {
-	var x Point
+func PointFromPrivkey(privkey *big.Int) points.Point {
+	var x points.Point
 	x.X, x.Y = Curve.ScalarBaseMult(privkey.Bytes())
 	return x
 }
@@ -87,7 +88,7 @@ func genCommitment() {
 	}
 
 	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
-	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // Point(SHA256(G))
+	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // points.Point(SHA256(G))
 
 	var a []byte
 	a = []byte{1}
@@ -107,7 +108,7 @@ func signCommitment() {
 	Px, Py := PubkeyPointsFromPrivkey(x) // P = x*G
 
 	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
-	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // Point(SHA256(G))
+	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // points.Point(SHA256(G))
 
 	// var a []byte
 	// a = []byte{1}
@@ -170,7 +171,7 @@ func Create21AOSSig() (*big.Int, *big.Int, *big.Int, *big.Int, *big.Int, *big.In
 	xGx, xGy := Curve.ScalarBaseMult(x.Bytes()) // xG
 
 	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
-	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // H = Point(SHA256(G))
+	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // H = points.Point(SHA256(G))
 
 	one := []byte{1}
 	oneHx, oneHy := Curve.ScalarMult(Hx, Hy, one) // 1*H
@@ -434,42 +435,6 @@ func testBorroeman() {
 	log.Println(e0prime, e0)
 }
 
-type Point struct {
-	X *big.Int
-	Y *big.Int
-}
-
-func (p *Point) Set(x, y *big.Int) {
-	p.X = x
-	p.Y = y
-}
-
-func (p *Point) AddCoords(x1, y1, x2, y2 *big.Int) {
-	p.X, p.Y = Curve.Add(x1, y1, x2, y2)
-}
-
-func (p *Point) Add(x1, x2 Point) {
-	p.X, p.Y = Curve.Add(x1.X, x2.X, x1.Y, x2.Y)
-}
-
-func (p *Point) ScalarMult(a []byte) {
-	p.X, p.Y = Curve.ScalarMult(p.X, p.Y, a)
-}
-
-func (p *Point) Bytes() []byte {
-	return append(p.X.Bytes(), p.Y.Bytes()...)
-}
-
-type Elgamal struct {
-	X Point // since each one of these is a curve point
-	Y Point // since each one of these is a curve point
-}
-
-func (e *Elgamal) Set(x, y Point) {
-	e.X = x
-	e.Y = y
-}
-
 func testElgamal() {
 	// an elgamal commitment is a small upgrade from Pedersen commitments
 	// xG + rH - Pedersen
@@ -503,24 +468,23 @@ func testElgamal() {
 		log.Fatal(err)
 	}
 
-	xGx, xGy := PubkeyPointsFromPrivkey(x)
+	xG := PointFromPrivkey(x)
 
 	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
-	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // H = Point(SHA256(G))
 
-	rHx, rHy := Curve.ScalarMult(Hx, Hy, r.Bytes())
+	var H points.Point
+	H.Set(Curve.ScalarBaseMult(shaBytes)) // H = points.Point(SHA256(G))
 
-	pedersenx, pederseny := Curve.Add(xGx, xGy, rHx, rHy)
+	var rH points.Point
+	rH.Set(Curve.ScalarMult(H.X, H.Y, r.Bytes()))
 
-	var pedersen Point
-	pedersen.Set(pedersenx, pederseny)
-	log.Println("Pedersen commitment: ", pedersen)
+	var pedersen points.Point
+	pedersen.Add(xG, rH)
 
-	rGx, rGy := PubkeyPointsFromPrivkey(r)
-	var rG Point
-	rG.Set(rGx, rGy)
+	var rG points.Point
+	rG = PointFromPrivkey(r)
 
-	var elgamal Elgamal
+	var elgamal points.Elgamal
 	elgamal.Set(pedersen, rG)
 
 	log.Println("elgamal: ", elgamal)
@@ -541,29 +505,28 @@ func main() {
 
 	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
 
-	var H Point
-	H.Set(Curve.ScalarBaseMult(shaBytes)) // H = Point(SHA256(G))
+	var H points.Point
+	H.Set(Curve.ScalarBaseMult(shaBytes)) // H = points.Point(SHA256(G))
 
-	var rH Point
+	var rH points.Point
 	rH.Set(Curve.ScalarMult(H.X, H.Y, r.Bytes()))
 
-	var pedersen Point
+	var pedersen points.Point
 	pedersen.Add(xG, rH)
 
-	var rG Point
+	var rG points.Point
 	rG = PointFromPrivkey(r)
 
 	// xG+(r+H(xG+rH||rG))H is the switch commitment
 	// let the ugly term be p ie the commitment is xG = pH
-	insideHash := Sha256(pedersen.X.Bytes(), pedersen.Y.Bytes(), rG.Bytes())
-
+	insideHash := Sha256(pedersen.Bytes(), rG.Bytes())
 	insideHashNumber := new(big.Int).SetBytes(insideHash)
-	rPlusIH := new(big.Int).Add(r, insideHashNumber)
+	p := new(big.Int).Add(r, insideHashNumber)
 
-	var pH Point
-	pH.Set(Curve.ScalarMult(H.X, H.Y, rPlusIH.Bytes()))
+	var pH points.Point
+	pH.Set(Curve.ScalarMult(H.X, H.Y, p.Bytes()))
 
-	var switchCmt Point
+	var switchCmt points.Point
 	switchCmt.Add(xG, pH)
 
 	log.Println("switch commitment: ", switchCmt)
