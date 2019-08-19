@@ -272,7 +272,7 @@ func SubtractOnCurveS(e []byte, Px *big.Int, Py *big.Int, s *big.Int) ([]byte, [
 // the math is implemented correctly and a person implementing it should consult with
 // paper authors before making a decision
 
-func main() {
+func testBorroeman() {
 	P := make(map[int]map[int][]*big.Int)
 	x := make(map[int]*big.Int)
 
@@ -426,4 +426,77 @@ func main() {
 
 	e0prime := Sha256(r[0][2], r[1][2], M)
 	log.Println(e0prime, e0)
+}
+
+type Point struct {
+	X *big.Int
+	Y *big.Int
+}
+
+func (p *Point) Mstore(x, y *big.Int) {
+	p.X = x
+	p.Y = y
+}
+
+type Elgamal struct {
+	X Point // since each one of these is a curve point
+	Y Point // since each one of these is a curve point
+}
+
+func (e *Elgamal) Mstore(x, y Point) {
+	e.X = x
+	e.Y = y
+}
+
+func main() {
+	// an elgamal commitment is a small upgrade from Pedersen commitments
+	// xG + rH - Pederson
+	// (xG + rH, rG) - Elgamal
+
+	// there is a small nuanace to how this work. lets assume we have xG + rH in Pedersen
+	// if a person can enumerate over the entire input space, they can find r and as a result
+	// binding is broken (the commitment binds to r but we now have a fake r). If binding
+	// is broken, in some applications like CT, one can print infinite money. So pedersen
+	// commitments have perfect hiding (no one can predict what value exists) but computational
+	// binding (a person with finitely infinite resources can find another r)
+
+	// In Elgamal, we commit to anohter point - rG. We can compute this since we know r (used anyway for Pedersen)
+	// but where's the difference?
+	// Lets assume an attacker finds r like in the above case. since a pederson commitment is xG + rH, they can
+	// commit to another value r' where rH = r'H. In Elgamal, the mapping from r to rG is one-one, so we
+	// get perfect binding (no one can commit to another value even if they have resources to find r). But
+	// an attacker with resources can find r and then compute C - rH to find xG (the hidden commitment value).
+	// Hence, Pedersen offers perfect binding and computational hiding
+
+	x, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	r, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	xGx, xGy := PubkeyPointsFromPrivkey(x)
+
+	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
+	Hx, Hy := Curve.ScalarBaseMult(shaBytes)                                 // H = Point(SHA256(G))
+
+	rHx, rHy := Curve.ScalarMult(Hx, Hy, r.Bytes())
+
+	pedersenx, pederseny := Curve.Add(xGx, xGy, rHx, rHy)
+
+	var pedersen Point
+	pedersen.Mstore(pedersenx, pederseny)
+	log.Println("pederson commitment: ", pedersen)
+
+	rGx, rGy := PubkeyPointsFromPrivkey(r)
+	var rG Point
+	rG.Mstore(rGx, rGy)
+
+	var elgamal Elgamal
+	elgamal.Mstore(pedersen, rG)
+
+	log.Println("elgamal: ", elgamal)
 }
