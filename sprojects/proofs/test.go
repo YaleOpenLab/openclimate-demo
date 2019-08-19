@@ -216,67 +216,60 @@ func Verify21AOSSig() {
 	}
 }
 
-func SubtractOnCurve(e []byte, Px, Py *big.Int) ([]byte, []byte, *big.Int) {
+func SubtractOnCurve(e []byte, P btcutils.Point) (btcutils.Point, *big.Int) {
 	s, err := btcutils.NewPrivateKey()
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	sGx, sGy := Curve.ScalarBaseMult(s.Bytes())
+	var sG btcutils.Point
+	sG.Set(Curve.ScalarBaseMult(s.Bytes()))
 
-	ePx, ePy := Curve.ScalarMult(Px, Py, e)
+	eP := btcutils.ScalarMult(P, e)
 
-	minusedPy := new(big.Int).Neg(ePy)
-
-	xX, xY := Curve.Add(sGx, sGy, ePx, new(big.Int).Mod(minusedPy, Curve.P))
-	return xX.Bytes(), xY.Bytes(), s
+	return btcutils.Sub(sG, eP), s
 }
 
-func SubtractOnCurveS(e []byte, Px *big.Int, Py *big.Int, s *big.Int) ([]byte, []byte) {
-	sGx, sGy := Curve.ScalarBaseMult(s.Bytes())
+func SubtractOnCurveS(e []byte, P btcutils.Point, s *big.Int) btcutils.Point {
+	var sG btcutils.Point
+	sG.Set(Curve.ScalarBaseMult(s.Bytes()))
 
-	ePx, ePy := Curve.ScalarMult(Px, Py, e)
+	eP := btcutils.ScalarMult(P, e)
 
-	minusedPy := new(big.Int).Neg(ePy)
-	xX, xY := Curve.Add(sGx, sGy, ePx, new(big.Int).Mod(minusedPy, Curve.P))
-	return xX.Bytes(), xY.Bytes()
+	return btcutils.Sub(sG, eP)
 }
 
 // ring sigs will not work since there are multiple ambiguities in the paper. Here,
 // the math is implemented correctly and a person implementing it should consult with
 // paper authors before making a decision
 
-func testBorroeman() {
-	P := make(map[int]map[int][]*big.Int)
+func testBorromean() {
+	P := make(map[int]map[int]*btcutils.Point)
 	x := make(map[int]*big.Int)
 
-	P[0] = make(map[int][]*big.Int, 3)
-	P[1] = make(map[int][]*big.Int, 3)
+	P[0] = make(map[int]*btcutils.Point, 3)
+	P[1] = make(map[int]*btcutils.Point, 3)
 
 	for i := 0; i < 3; i++ {
-		P[0][i] = make([]*big.Int, 2)
-
 		key, err := btcutils.NewPrivateKey()
 		if err != nil {
 			log.Fatal(err)
 		}
 
 		x[i] = key
-
-		P[0][i][0], P[0][i][1] = btcutils.PubkeyPointsFromPrivkey(key)
+		P[0][i] = new(btcutils.Point)
+		P[0][i].Set(btcutils.PubkeyPointsFromPrivkey(key))
 	}
 
 	for i := 0; i < 3; i++ {
-		P[1][i] = make([]*big.Int, 2)
-
 		key, err := btcutils.NewPrivateKey()
 		if err != nil {
 			log.Fatal(err)
 		}
 
-		x[3+i] = key
-
-		P[1][i][0], P[1][i][1] = btcutils.PubkeyPointsFromPrivkey(key)
+		x[i] = key
+		P[1][i] = new(btcutils.Point)
+		P[1][i].Set(btcutils.PubkeyPointsFromPrivkey(key))
 	}
 
 	jistar := []int{1, 2, 3, 4, 5, 6} // indices of signer in each ring
@@ -323,20 +316,19 @@ func testBorroeman() {
 				log.Fatal(err)
 			}
 
-			var tempx, tempy []byte
-			tempx, tempy, s[i][j] = SubtractOnCurve(e[i][j], P[i][j][0], P[i][j][1])
-			e[i][j+1] = btcutils.Sha256(M, tempx, tempy, iByte, jByte)
+			var temp btcutils.Point
+			temp, s[i][j] = SubtractOnCurve(e[i][j], *P[i][j])
+			e[i][j+1] = btcutils.Sha256(M, temp.Bytes(), iByte, jByte)
 			log.Println(e[i][j+1])
 		}
 	}
 
 	toBeHashed := []byte("")
 	for i := 0; i <= len(P)-1; i++ {
-		var tempx, tempy []byte
 		miMinusOne := 2
-		tempx, tempy, s[i][miMinusOne] = SubtractOnCurve(e[i][miMinusOne], P[i][miMinusOne][0], P[i][miMinusOne][1])
-		temp := append(tempx, tempy...)
-		toBeHashed = append(toBeHashed, temp...)
+		var temp btcutils.Point
+		temp, s[i][miMinusOne] = SubtractOnCurve(e[i][miMinusOne], *P[i][miMinusOne])
+		toBeHashed = append(toBeHashed, temp.Bytes()...)
 	}
 
 	e0 := btcutils.Sha256(toBeHashed)
@@ -350,15 +342,15 @@ func testBorroeman() {
 		e[i][0] = e0
 
 		for j := 0; j < jistar[i]; j++ {
-			var tempx, tempy []byte
+			var temp btcutils.Point
 			jByte, err := utils.ToByte(j)
 			if err != nil {
 				log.Fatal(err)
 			}
 
-			tempx, tempy, s[i][j] = SubtractOnCurve(e[i][j], P[i][j][0], P[i][j][1])
+			temp, s[i][j] = SubtractOnCurve(e[i][j], *P[i][j])
 
-			e[i][j+1] = btcutils.Sha256(M, tempx, tempy, iByte, jByte)
+			e[i][j+1] = btcutils.Sha256(M, temp.Bytes(), iByte, jByte)
 
 			eijstari := new(big.Int).SetBytes(e[i][jistar[i]])
 
@@ -390,10 +382,10 @@ func testBorroeman() {
 				log.Fatal(err)
 			}
 
-			tempx, tempy := SubtractOnCurveS(ex[i][j], P[i][j][0], P[i][j][1], s[i][j])
+			temp := SubtractOnCurveS(ex[i][j], *P[i][j], s[i][j])
 
-			r[i][j+1] = append(tempx, tempy...)
-			e[i][j+1] = btcutils.Sha256(M, tempx, tempy, iByte, jplusoneByte)
+			r[i][j+1] = temp.Bytes()
+			e[i][j+1] = btcutils.Sha256(M, temp.Bytes(), iByte, jplusoneByte)
 			log.Println(e[i][j+1])
 		}
 	}
