@@ -48,6 +48,12 @@ func PubkeyPointsFromPrivkey(privkey *big.Int) (*big.Int, *big.Int) {
 	return x, y
 }
 
+func PointFromPrivkey(privkey *big.Int) Point {
+	var x Point
+	x.X, x.Y = Curve.ScalarBaseMult(privkey.Bytes())
+	return x
+}
+
 func testAddHomomorphic(P1x, P1y, P2x, P2y, x1, x2 *big.Int) error {
 	Sumx, Sumy := Curve.Add(P1x, P1y, P2x, P2y)
 
@@ -433,9 +439,25 @@ type Point struct {
 	Y *big.Int
 }
 
-func (p *Point) Mstore(x, y *big.Int) {
+func (p *Point) Set(x, y *big.Int) {
 	p.X = x
 	p.Y = y
+}
+
+func (p *Point) AddCoords(x1, y1, x2, y2 *big.Int) {
+	p.X, p.Y = Curve.Add(x1, y1, x2, y2)
+}
+
+func (p *Point) Add(x1, x2 Point) {
+	p.X, p.Y = Curve.Add(x1.X, x2.X, x1.Y, x2.Y)
+}
+
+func (p *Point) ScalarMult(a []byte) {
+	p.X, p.Y = Curve.ScalarMult(p.X, p.Y, a)
+}
+
+func (p *Point) Bytes() []byte {
+	return append(p.X.Bytes(), p.Y.Bytes()...)
 }
 
 type Elgamal struct {
@@ -443,14 +465,14 @@ type Elgamal struct {
 	Y Point // since each one of these is a curve point
 }
 
-func (e *Elgamal) Mstore(x, y Point) {
+func (e *Elgamal) Set(x, y Point) {
 	e.X = x
 	e.Y = y
 }
 
-func main() {
+func testElgamal() {
 	// an elgamal commitment is a small upgrade from Pedersen commitments
-	// xG + rH - Pederson
+	// xG + rH - Pedersen
 	// (xG + rH, rG) - Elgamal
 
 	// there is a small nuanace to how this work. lets assume we have xG + rH in Pedersen
@@ -462,11 +484,14 @@ func main() {
 
 	// In Elgamal, we commit to anohter point - rG. We can compute this since we know r (used anyway for Pedersen)
 	// but where's the difference?
-	// Lets assume an attacker finds r like in the above case. since a pederson commitment is xG + rH, they can
+	// Lets assume an attacker finds r like in the above case. since a Pedersen commitment is xG + rH, they can
 	// commit to another value r' where rH = r'H. In Elgamal, the mapping from r to rG is one-one, so we
 	// get perfect binding (no one can commit to another value even if they have resources to find r). But
 	// an attacker with resources can find r and then compute C - rH to find xG (the hidden commitment value).
 	// Hence, Pedersen offers perfect binding and computational hiding
+
+	// note that we're only implementing the commitment scheme here not the signature scheme. Signature scheme could be
+	// AOS or something similar
 
 	x, err := NewPrivateKey()
 	if err != nil {
@@ -488,15 +513,58 @@ func main() {
 	pedersenx, pederseny := Curve.Add(xGx, xGy, rHx, rHy)
 
 	var pedersen Point
-	pedersen.Mstore(pedersenx, pederseny)
-	log.Println("pederson commitment: ", pedersen)
+	pedersen.Set(pedersenx, pederseny)
+	log.Println("Pedersen commitment: ", pedersen)
 
 	rGx, rGy := PubkeyPointsFromPrivkey(r)
 	var rG Point
-	rG.Mstore(rGx, rGy)
+	rG.Set(rGx, rGy)
 
 	var elgamal Elgamal
-	elgamal.Mstore(pedersen, rG)
+	elgamal.Set(pedersen, rG)
 
 	log.Println("elgamal: ", elgamal)
+}
+
+func main() {
+	x, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	r, err := NewPrivateKey()
+	if err != nil {
+		log.Fatal(err)
+	}
+
+	xG := PointFromPrivkey(x)
+
+	shaBytes := Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // SHA256(G)
+
+	var H Point
+	H.Set(Curve.ScalarBaseMult(shaBytes)) // H = Point(SHA256(G))
+
+	var rH Point
+	rH.Set(Curve.ScalarMult(H.X, H.Y, r.Bytes()))
+
+	var pedersen Point
+	pedersen.Add(xG, rH)
+
+	var rG Point
+	rG = PointFromPrivkey(r)
+
+	// xG+(r+H(xG+rH||rG))H is the switch commitment
+	// let the ugly term be p ie the commitment is xG = pH
+	insideHash := Sha256(pedersen.X.Bytes(), pedersen.Y.Bytes(), rG.Bytes())
+
+	insideHashNumber := new(big.Int).SetBytes(insideHash)
+	rPlusIH := new(big.Int).Add(r, insideHashNumber)
+
+	var pH Point
+	pH.Set(Curve.ScalarMult(H.X, H.Y, rPlusIH.Bytes()))
+
+	var switchCmt Point
+	switchCmt.Add(xG, pH)
+
+	log.Println("switch commitment: ", switchCmt)
 }
