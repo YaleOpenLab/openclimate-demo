@@ -1,22 +1,18 @@
 package main
 
 import (
-	// "encoding/json"
-	"log"
-
+	"github.com/YaleOpenLab/openclimate/oracle"
 	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/database"
-	"github.com/YaleOpenLab/openclimate/oracle"
+	"log"
 	"github.com/YaleOpenLab/openclimate/server"
-	//"github.com/Varunram/essentials/ipfs"
-	//"github.com/YaleOpenLab/openclimate/notif"
+	"math/big"
 )
 
 func main() {
-
 	oracle.Schedule()
-
 	blockchain.CheckTokenBalance()
+	blockchain.CommitToChain(big.NewInt(1565752648), "0x4920636172652061626f757420636c696d617465")
 	database.FlushDB()
 	database.CreateHomeDir()
 	log.Println("flushed and created new db")
