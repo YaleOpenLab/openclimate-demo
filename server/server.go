@@ -23,6 +23,7 @@ func StartServer(port string, insecure bool) {
 
 	setupSwytchApis()
 	setupDataHandlers()
+	frontendFns()
 
 	log.Println("Starting RPC Server on Port: ", port)
 	if insecure {
