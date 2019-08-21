@@ -9,14 +9,14 @@ import (
 	"github.com/ethereum/go-ethereum/accounts/abi/bind"
 	"github.com/ethereum/go-ethereum/accounts/keystore"
 	"github.com/ethereum/go-ethereum/common"
+	"github.com/ethereum/go-ethereum/common/hexutil"
 	"github.com/ethereum/go-ethereum/core/types"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"log"
 	"math/big"
 	"os"
-	"strings"
-	"github.com/ethereum/go-ethereum/common/hexutil"
 	"runtime"
+	"strings"
 )
 
 const (
@@ -44,13 +44,13 @@ func NewRoot(address common.Address, client *ethclient.Client, timeStamp *big.In
 		return nil, err
 	}
 	return &RootStorage{
-		client: client,
-		abi:     parsed,
-		address: address,
+		client:    client,
+		abi:       parsed,
+		address:   address,
 		timeStamp: timeStamp,
-		rootHash: rootHash,
+		rootHash:  rootHash,
 
-		root:    Root,
+		root: Root,
 	}, nil
 }
 
@@ -111,7 +111,7 @@ func CommitToChain(timeStamp *big.Int, rootHash string) error {
 		log.Printf("[error] %s:%d %v", fn, line, err)
 	}
 
-	newTx, err:= newRoot.commitRoot(*wallet, strings.TrimSpace(passphrase))
+	newTx, err := newRoot.commitRoot(*wallet, strings.TrimSpace(passphrase))
 	if err != nil {
 		_, fn, line, _ := runtime.Caller(1)
 		log.Printf("[error] %s:%d %v", fn, line, err)

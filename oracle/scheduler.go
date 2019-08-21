@@ -4,7 +4,6 @@ import (
 	"github.com/pkg/errors"
 	"github.com/robfig/cron"
 	"log"
-
 	// "github.com/YaleOpenLab/openclimate/blockchain"
 )
 
@@ -16,9 +15,9 @@ import (
 
 const (
 	// Earth data parameters
-	earthCO2 = "Atmospheric CO2"
-	earthTemp = "Global Temperature"
-	earthEntityID = 1
+	earthCO2        = "Atmospheric CO2"
+	earthTemp       = "Global Temperature"
+	earthEntityID   = 1
 	earthEntityType = "Earth"
 )
 
@@ -26,7 +25,7 @@ type getExternalData func() (interface{}, error)
 
 // GetVerifyCommit first retrieves data calling the API wrapper, then
 // sends the data to the oracle for verification and storage on to the
-// Ethereum blockchain. Returns a func() so that it can be passed as a 
+// Ethereum blockchain. Returns a func() so that it can be passed as a
 // parameter to c.AddFunc().
 func getVerifyCommit(reportType string, entityType string, entityID int, get getExternalData) func() {
 	return func() {
@@ -51,7 +50,7 @@ func getVerifyCommit(reportType string, entityType string, entityID int, get get
 // must not receive any parameters and must output (interface{}, error); must
 // conform to the getExternalData function type.
 func Schedule() {
-	
+
 	c := cron.New()
 	c.AddFunc("@daily", getVerifyCommit(earthCO2, earthEntityType, earthEntityID, getNoaaDailyCO2))
 	c.AddFunc("@monthly", getVerifyCommit(earthCO2, earthEntityType, earthEntityID, getNoaaMonthlyCO2))

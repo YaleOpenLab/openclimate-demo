@@ -16,12 +16,11 @@ import (
 // to the correct climate actor.
 type BlockChainDataStruct struct {
 	EntityType string
-	EntityID int
+	EntityID   int
 	ReportType string
-	DataVal float64
-	IpfsHash string
+	DataVal    float64
+	IpfsHash   string
 }
-
 
 // Reads data in the form of an array of GlobalCO2 structs (a struct
 // that, along with the atmospheric CO2 data measurements themselves,
@@ -37,7 +36,6 @@ func verifyAtmosCO2(data []GlobalCO2) ([]GlobalCO2, float64, error) {
 	return data, dVal, nil
 }
 
-
 // *** TODO: find global temperature data ***
 // Reads data in the form of an array of GlobalCO2 structs (a struct
 // that, along with the atmospheric CO2 data measurements themselves,
@@ -46,7 +44,6 @@ func verifyGlobalTemp(data []GlobalTemp) ([]GlobalTemp, float64, error) {
 	var temp float64
 	return data, temp, nil
 }
-
 
 // VerifyAndCommit receives data and depending on what kind of data it is,
 // sends it to a helper function to verify the data and compute the "true value".

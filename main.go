@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/YaleOpenLab/openclimate/oracle"
 	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/database"
-	"log"
+	"github.com/YaleOpenLab/openclimate/oracle"
 	"github.com/YaleOpenLab/openclimate/server"
+	"log"
 	"math/big"
 )
 
