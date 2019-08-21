@@ -1,9 +1,13 @@
 package oracle
 
 import (
+	"math/big"
+
 	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/ipfs"
 	"github.com/pkg/errors"
+
+	utils "github.com/Varunram/essentials/utils"
 )
 
 // Struct defining the data scheme of all reported climate action data
@@ -89,7 +93,9 @@ func VerifyAndCommit(reportType string, entityType string, entityID int, data in
 	bcds.DataVal = dataVal
 	bcds.IpfsHash = ipfsHash
 
-	err = blockchain.CommitToChain(bcds)
+	timeStamp := utils.Unix()
+	timeStampBigInt := new(big.Int).SetInt64(timeStamp)
+	err = blockchain.CommitToChain(timeStampBigInt, bcds.IpfsHash)
 	if err != nil {
 		return errors.Wrap(err, "oracle.VerifyAndCommit() failed")
 	}
