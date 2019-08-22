@@ -2,8 +2,13 @@ package blockchain
 
 import (
 	"fmt"
-	web3go "github.com/bcl-chain/web3.go/mobile"
+	"github.com/ethereum/go-ethereum/ethclient"
 	"log"
+	"github.com/ethereum/go-ethereum/common"
+	"context"
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/YaleOpenLab/openclimate/blockchain/contracts/token"
+	"strings"
 )
 
 //  YOCL (GRC20) token is deployed on Kovan testnet. Initial supply is 1000000000.
@@ -16,24 +21,53 @@ const (
 	rpcUrl          = "https://kovan.infura.io/v3/def7370cf49d49d791b9df949986b9a0"
 )
 
+type Token struct {
+	client    *ethclient.Client
+	abi       abi.ABI
+	address   common.Address
+
+	token *blockchain.YToken
+}
+
+func NewToken(address common.Address, client *ethclient.Client) (*Token, error) {
+	parsed, err := abi.JSON(strings.NewReader(blockchain.YTokenABI))
+	if err != nil {
+		return nil, err
+	}
+	token, err := blockchain.NewYToken(address, client)
+	if err != nil {
+		return nil, err
+	}
+	return &Token{
+		client:    client,
+		abi:       parsed,
+		address:   address,
+
+		token: token,
+	}, nil
+}
+
 func CheckTokenBalance() {
 	//New Ethereum Client
-	client, err := web3go.NewEthereumClient(rpcUrl)
+	client, err := ethclient.Dial(rpcUrl)
 	if err != nil {
 		log.Fatal(err)
 	}
 
-	address, _ := web3go.NewAddressFromHex(ownerAddress)
+	address := common.HexToAddress(ownerAddress)
+	if err != nil {
+		log.Fatal(err)
+	}
 	// 3. get ether balance from the latest block
-	balance, err := client.GetBalanceAt(web3go.NewContext(), address, -1)
+	balance, err := client.BalanceAt(context.Background(), address, nil)
 	if err != nil {
 		log.Fatal(err)
 	}
 	fmt.Println(balance)
 
 	//Access the Token
-	contractAddress, _ := web3go.NewAddressFromHex(contractAddress)
-	YToken, err := web3go.NewERC20(contractAddress, client)
+	contractAddress := common.HexToAddress(contractAddress)
+	YToken, err := NewToken(contractAddress, client)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -47,7 +81,8 @@ func CheckTokenBalance() {
 			fmt.Println("False")
 		}
 	*/
-	tokenBalance, err := YToken.BalanceOf(address)
+
+	tokenBalance, err := YToken.token.BalanceOf(nil, address)
 	if err != nil {
 		log.Fatal(err)
 	}
