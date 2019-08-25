@@ -18,12 +18,27 @@ type BucketItem interface {
 	Save() error
 }
 
-type RepData struct {
-	// emissions, mitigation, adaption, etc.
-	ReportType string
-	Year       int
-	IpfsHash   string
+type Location struct {
+	Name string
+	Latitude string
+	Longitude string
+	NationStaeID int
+	RegionalStateID int
 }
+
+type DistributionRecord struct {
+	Title string
+	Weight int
+}
+
+// type RepData struct {
+// 	// emissions, mitigation, adaption, etc.
+// 	ReportType string
+// 	Year       int
+// 	IpfsHash   string
+// }
+
+
 
 /*
 	Given the type of actor (company, city, state, region, country, etc.) and

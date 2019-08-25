@@ -15,6 +15,11 @@ type Company struct {
 	// Identifying info
 	Index   int
 	Name    string
+	Description string
+
+	Locations []Location
+	Accountability []DistributionRecord
+
 	Country string
 	Address string
 
@@ -24,8 +29,8 @@ type Company struct {
 	Area        float64
 	Iso         string
 	Population  int
-	Latitude    float64
-	Longitude   float64
+	// Latitude    float64
+	// Longitude   float64
 	Revenue     float64
 	CompanySize int
 	HQ          string

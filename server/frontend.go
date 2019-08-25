@@ -136,8 +136,12 @@ func getMultiNationalId() {
 		}
 
 		results := make(map[string]interface{})
-		results["multinational"] = multinational
+		results["name"] = multinational.Name
+		results["full_name"] = multinational.Name
+		results["description"] = multinational.Description
 		results["pledges"] = pledges
+		results["accountability"] = multinational.Accountability
+		results["locations"] = multinational.Locations
 
 		erpc.MarshalSend(w, results)
 	})
@@ -145,18 +149,18 @@ func getMultiNationalId() {
 
 func getActorIds() {
 	http.HandleFunc("/actors/", func(w http.ResponseWriter, r *http.Request) {
-		id, err := getId(w, r)
+		strID, err := getId(w, r)
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
-		// id, err := strconv.Atoi(strID)
-		// if err != nil {
-		// 	log.Println(err)
-		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// }
+		id, err := strconv.Atoi(strID)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
 
 		urlParams := strings.Split(r.URL.String(), "/")
 		if len(urlParams) < 4 {
@@ -169,13 +173,29 @@ func getActorIds() {
 
 		switch choice {
 		case "dashboard":
-			w.Write([]byte("dashboard: " + id))
+			company, err := database.RetrieveCompany(id)
+			if err != nil {
+				log.Println(err)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			}
+			pledges, err := company.GetPledges()
+			if err != nil {
+				log.Println(err)
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			}
+			results := make(map[string]interface{})
+			results["full_name"] = company.Name
+			results["description"] = company.Description
+			results["locations"] = company.Locations
+			results["accountability"] = company.Accountability
+			results["pledges"] = pledges
+
 		case "nation-states":
-			w.Write([]byte("nation-states: " + id))
+			w.Write([]byte("nation-states: " + strconv.Itoa(id)))
 		case "review":
-			w.Write([]byte("review: " + id))
+			w.Write([]byte("review: " + strconv.Itoa(id)))
 		case "manage":
-			w.Write([]byte("manage: " + id))
+			w.Write([]byte("manage: " + strconv.Itoa(id)))
 		case "climate-action-asset":
 			if len(urlParams) < 5 {
 				log.Println("insufficient amount of params")
@@ -183,7 +203,7 @@ func getActorIds() {
 				return
 			}
 			id2 := urlParams[4]
-			w.Write([]byte("climate-action-assets ids: " + id + id2))
+			w.Write([]byte("climate-action-assets ids: " + strconv.Itoa(id) + id2))
 		default:
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return

@@ -41,7 +41,7 @@ type State struct {
 	// Data that is reported (through self-reporting, databases, IoT, etc.)
 	// as opposed to data that is aggregated from its parts/children. Data
 	// is stored on IPFS, so Reports holds the IPFS hashes.
-	Reports []RepData
+	// Reports []RepData
 
 	Emissions  map[string]string // accept whatever emissions the frontend passes
 	Mitigation map[string]string
