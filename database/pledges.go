@@ -12,6 +12,7 @@ type Pledge struct {
 	ID        int
 	ActorType string
 	ActorID   int
+	Coop 	  bool
 
 	/*
 		Pledges can be:

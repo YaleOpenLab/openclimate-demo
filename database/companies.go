@@ -5,7 +5,7 @@ import (
 	edb "github.com/Varunram/essentials/database"
 	globals "github.com/YaleOpenLab/openclimate/globals"
 	"github.com/pkg/errors"
-	"log"
+	// "log"
 )
 
 // Our definition of "Company" includes ....
@@ -191,7 +191,6 @@ func RetrieveAllCompanies() ([]Company, error) {
 	var companies []Company
 	keys, err := edb.RetrieveAllKeys(globals.DbPath, CompanyBucket)
 	if err != nil {
-		log.Println(err)
 		return companies, errors.Wrap(err, "could not retrieve all user keys")
 	}
 	for _, val := range keys {
@@ -205,3 +204,23 @@ func RetrieveAllCompanies() ([]Company, error) {
 
 	return companies, nil
 }
+
+
+func RetrieveAllMultiNationals() ([]Company, error) {
+
+	var multinationals []Company
+
+	companies, err := RetrieveAllCompanies()
+	if err != nil {
+		return multinationals, errors.Wrap(err, "RetrieveAllMultiNationals() failed")
+	}
+
+	for _, c := range companies {
+		if c.MultiNational != nil {
+			multinationals = append(multinationals, c)
+		}
+	}
+
+	return multinationals, nil
+}
+

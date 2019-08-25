@@ -13,6 +13,7 @@ type Country struct {
 	// Identifying info
 	Index int
 	Name  string
+	Description string
 
 	// Contextual data
 	Area        float64
