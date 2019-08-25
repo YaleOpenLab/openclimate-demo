@@ -9,6 +9,8 @@ import (
 	"net/http"
 	"strings"
 	"strconv"
+	"encoding/json"
+	"io/ioutil"
 	"github.com/YaleOpenLab/openclimate/database"
 )
 
@@ -219,9 +221,6 @@ func getEarthStatus() {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		}
 
-
-
-
 		w.Write([]byte("earth status"))
 	})
 }
@@ -261,3 +260,40 @@ func postRegister() {
 		w.Write([]byte("post register"))
 	})
 }
+
+func postLogin() {
+	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckPost(w, r)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			log.Fatal(err)
+		}
+
+		bytes, err := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			log.Fatal(err)
+		}
+
+		var credentials map[string]string
+		err = json.Unmarshal(bytes, &credentials)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			log.Fatal(err)
+		}
+
+		username := credentials["username"]
+		pwhash := credentials["pwhash"]
+
+		_, err = database.ValidateUser(username, pwhash)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			log.Fatal(err)
+		}
+
+		accessToken := "placeholder"
+		erpc.MarshalSend(w, accessToken)
+	})
+}
+
