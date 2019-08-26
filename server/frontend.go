@@ -19,7 +19,7 @@ func frontendFns() {
 	getMultiNationals()
 	getNationStateId()
 	getMultiNationalId()
-	getActorIds()
+	getActorId()
 	getEarthStatus()
 	getActors()
 	postFiles()
@@ -161,7 +161,7 @@ type Subnational struct {
 	Assets []database.Asset
 }
 
-func getActorIds() {
+func getActorId() {
 	http.HandleFunc("/actors/", func(w http.ResponseWriter, r *http.Request) {
 		strID, err := getId(w, r)
 		if err != nil {
@@ -208,59 +208,22 @@ func getActorIds() {
 
 		case "nation-states":
 
-			countries, err := company.GetCountries()
+			nationStates, err := getActorIdNationStates(company, w, r)
 			if err != nil {
 				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 				log.Fatal(err)
 			}
-
-			var nationStates []NationState
-
-			for _, country := range countries {
-				var nationState NationState
-				states, err := company.GetStates()
-				if err != nil {
-					erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-					log.Fatal(err)
-				}
-
-				pledges, err := country.GetPledges()
-				if err != nil {
-					erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-					log.Fatal(err)
-				}
-
-				var subnationals []Subnational
-
-				for _, s := range states {
-					var subnational Subnational
-					pledges, err := s.GetPledges()
-					if err != nil {
-						erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-						log.Fatal(err)
-					}
-					assets, err := company.GetAssetsByState(s.Name)
-					if err != nil {
-						erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-						log.Fatal(err)
-					}
-
-					subnational.Name = s.Name
-					subnational.Pledges = pledges
-					subnational.Assets = assets
-					subnationals = append(subnationals, subnational)
-				}
-
-				nationState.Name = country.Name
-				nationState.Pledges = pledges
-				nationState.Subnational = subnationals
-				nationStates = append(nationStates, nationState)
-			}
-
 			erpc.MarshalSend(w, nationStates)
 
-		case "review":
-			w.Write([]byte("review: " + strconv.Itoa(id)))
+		// case "review":
+
+		// 	reviewData, err := getActorIdReview(company, w, r)
+		// 	if err != nil {
+		// 		erpc.ResponseHandler(erpc.StatusInternalServerError)
+		// 		log.Fatal(err)
+		// 	}
+		// 	erpc.MarshalSend(w, reviewData)
+
 		case "manage":
 			w.Write([]byte("manage: " + strconv.Itoa(id)))
 		case "climate-action-asset":
@@ -277,6 +240,59 @@ func getActorIds() {
 		}
 	})
 }
+
+func getActorIdNationStates(company database.Company, w http.ResponseWriter, r *http.Request) ([]NationState, error) {
+	
+	var nationStates []NationState
+
+	countries, err := company.GetCountries()
+	if err != nil {
+		return nationStates, errors.Wrap(err, "getActorIdNationStates() failed")
+	}
+
+	for _, country := range countries {
+		var nationState NationState
+		states, err := company.GetStates()
+		if err != nil {
+			return nationStates, errors.Wrap(err, "getActorIdNationStates() failed")
+		}
+
+		pledges, err := country.GetPledges()
+		if err != nil {
+			return nationStates, errors.Wrap(err, "getActorIdNationStates() failed")
+		}
+
+		var subnationals []Subnational
+
+		for _, s := range states {
+			var subnational Subnational
+			pledges, err := s.GetPledges()
+			if err != nil {
+				return nationStates, errors.Wrap(err, "getActorIdNationStates() failed")
+			}
+			assets, err := company.GetAssetsByState(s.Name)
+			if err != nil {
+				return nationStates, errors.Wrap(err, "getActorIdNationStates() failed")
+			}
+
+			subnational.Name = s.Name
+			subnational.Pledges = pledges
+			subnational.Assets = assets
+			subnationals = append(subnationals, subnational)
+		}
+
+		nationState.Name = country.Name
+		nationState.Pledges = pledges
+		nationState.Subnational = subnationals
+		nationStates = append(nationStates, nationState)
+	}
+
+	return nationStates, nil
+}
+
+// func getActorIdReview(company database.Company, w http.ResponseWriter, r *http.Request) {
+
+// }
 
 func getEarthStatus() {
 	http.HandleFunc("/earth-status", func(w http.ResponseWriter, r *http.Request) {
