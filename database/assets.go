@@ -9,7 +9,9 @@ import (
 )
 
 type Asset struct {
-	Index      int
+	Index int
+	Title string
+	Subtitle string
 	CompanyID  int
 	Name       string
 	Location   string

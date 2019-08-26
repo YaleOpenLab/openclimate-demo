@@ -118,3 +118,18 @@ func (c Country) GetPledges() ([]Pledge, error) {
 	}
 	return pledges, nil
 }
+
+// func (c Country) GetStates() ([]State, error) {
+// 	var states []State
+// 	states, err := RetrieveAllStates()
+// 	if err != nil {
+// 		return states, errors.Wrap(err, "country.GetStates() failed")
+// 	}
+
+// 	for _, state := range states {
+// 		if state.Country == c.Name {
+// 			states := append(states, state)
+// 		}
+// 	}
+// 	return states, nil
+// }

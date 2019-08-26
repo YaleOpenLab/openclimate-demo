@@ -149,6 +149,18 @@ func getMultiNationalId() {
 	})
 }
 
+type NationState struct {
+	Name string
+	Pledges []database.Pledge
+	Subnational []Subnational
+}
+
+type Subnational struct {
+	Name string
+	Pledges []database.Pledge
+	Assets []database.Asset
+}
+
 func getActorIds() {
 	http.HandleFunc("/actors/", func(w http.ResponseWriter, r *http.Request) {
 		strID, err := getId(w, r)
@@ -159,6 +171,12 @@ func getActorIds() {
 		}
 
 		id, err := strconv.Atoi(strID)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		}
+
+		company, err := database.RetrieveCompany(id)
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -175,11 +193,7 @@ func getActorIds() {
 
 		switch choice {
 		case "dashboard":
-			company, err := database.RetrieveCompany(id)
-			if err != nil {
-				log.Println(err)
-				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			}
+
 			pledges, err := company.GetPledges()
 			if err != nil {
 				log.Println(err)
@@ -193,7 +207,58 @@ func getActorIds() {
 			results["pledges"] = pledges
 
 		case "nation-states":
-			w.Write([]byte("nation-states: " + strconv.Itoa(id)))
+
+			countries, err := company.GetCountries()
+			if err != nil {
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				log.Fatal(err)
+			}
+
+			var nationStates []NationState
+
+			for _, country := range countries {
+				var nationState NationState
+				states, err := company.GetStates()
+				if err != nil {
+					erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+					log.Fatal(err)
+				}
+
+				pledges, err := country.GetPledges()
+				if err != nil {
+					erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+					log.Fatal(err)
+				}
+
+				var subnationals []Subnational
+
+				for _, s := range states {
+					var subnational Subnational
+					pledges, err := s.GetPledges()
+					if err != nil {
+						erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+						log.Fatal(err)
+					}
+					assets, err := company.GetAssetsByState(s.Name)
+					if err != nil {
+						erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+						log.Fatal(err)
+					}
+
+					subnational.Name = s.Name
+					subnational.Pledges = pledges
+					subnational.Assets = assets
+					subnationals = append(subnationals, subnational)
+				}
+
+				nationState.Name = country.Name
+				nationState.Pledges = pledges
+				nationState.Subnational = subnationals
+				nationStates = append(nationStates, nationState)
+			}
+
+			erpc.MarshalSend(w, nationStates)
+
 		case "review":
 			w.Write([]byte("review: " + strconv.Itoa(id)))
 		case "manage":
