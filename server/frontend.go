@@ -193,7 +193,6 @@ func getActorId() {
 
 		switch choice {
 		case "dashboard":
-
 			pledges, err := company.GetPledges()
 			if err != nil {
 				log.Println(err)
@@ -207,7 +206,6 @@ func getActorId() {
 			results["pledges"] = pledges
 
 		case "nation-states":
-
 			nationStates, err := getActorIdNationStates(company, w, r)
 			if err != nil {
 				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -215,17 +213,15 @@ func getActorId() {
 			}
 			erpc.MarshalSend(w, nationStates)
 
-		// case "review":
+		case "review":
+			results := make(map[string] interface{})
+			results["certificates"] = company.Certificates
+			results["climate_reports"] = company.ClimateReports
+			erpc.MarshalSend(w, results)
 
-		// 	reviewData, err := getActorIdReview(company, w, r)
-		// 	if err != nil {
-		// 		erpc.ResponseHandler(erpc.StatusInternalServerError)
-		// 		log.Fatal(err)
-		// 	}
-		// 	erpc.MarshalSend(w, reviewData)
+		// case "manage":
+		// 	w.Write([]byte("manage: " + strconv.Itoa(id)))
 
-		case "manage":
-			w.Write([]byte("manage: " + strconv.Itoa(id)))
 		case "climate-action-asset":
 			if len(urlParams) < 5 {
 				log.Println("insufficient amount of params")
@@ -290,10 +286,6 @@ func getActorIdNationStates(company database.Company, w http.ResponseWriter, r *
 	return nationStates, nil
 }
 
-// func getActorIdReview(company database.Company, w http.ResponseWriter, r *http.Request) {
-
-// }
-
 func getEarthStatus() {
 	http.HandleFunc("/earth-status", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
@@ -338,7 +330,21 @@ func postRegister() {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		}
 
-		w.Write([]byte("post register"))
+		bytes, err := ioutil.ReadAll(r.Body)
+		defer r.Body.Close()
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			log.Fatal(err)
+		}
+
+		var registerInfo map[string]interface{}
+		err = json.Unmarshal(bytes, &registerInfo)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			log.Fatal(err)
+		}
+
+		log.Println(registerInfo)
 	})
 }
 

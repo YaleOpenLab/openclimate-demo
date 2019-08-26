@@ -52,7 +52,9 @@ type Company struct {
 	Assets []int
 
 	// IDs of all the company's financial/regulatory assets (e.g. RECs, climate bonds, etc.)
-	Credits []int
+	Certificates []Certificate
+
+	ClimateReports []ClimateReport
 
 	// // Data that is reported (through self-reporting, databases, IoT, etc.)
 	// // as opposed to data that is aggregated from its parts/children. Data
@@ -62,6 +64,23 @@ type Company struct {
 	// Emissions  map[string]string // accept whatever emissions the frontend passes
 	// Mitigation map[string]string
 	// Adaptation map[string]string
+}
+
+type Certificate struct {
+	ID int
+	CertificateID int
+	Type string
+	Unit string
+	Status string
+}
+
+type ClimateReport struct {
+	ID int
+	Name string
+	Scope string
+	Date string
+	Verified bool
+	url string
 }
 
 func (c *Company) AddPledges(pledgeIDs ...int) error {
