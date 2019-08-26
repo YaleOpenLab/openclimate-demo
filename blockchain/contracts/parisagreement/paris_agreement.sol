@@ -55,13 +55,18 @@ contract ParisAgreementHighLevel{
     /**
      Import NDCs contract
      */
-    DetermedContributions contract_ndcs = new DetermedContributions();
+    DetermedContributions contract_ndcs;
+
+    function ImportNDCS(address _t) public {
+        contract_ndcs = DetermedContributions(_t);
+    }
+
     /**
      Calculate CO2 reduction/surplus compared to NDC
      */
-    function calcCO2Reduction(address country, int currentCO2) public view returns (int differnce) {
+    function calcCO2Reduction(int currentCO2) public view returns (int co2_reduction) {
         if(!contract_ndcs.isCounrty(msg.sender)) revert();
-        int ndcCO2 = contract_ndcs.getCO2(country);
+        int ndcCO2 = contract_ndcs.getCO2(msg.sender);
         int diff = ndcCO2-currentCO2;
         return diff;
     }
