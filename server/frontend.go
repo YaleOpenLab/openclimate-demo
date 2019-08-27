@@ -63,7 +63,7 @@ func getNationStates() {
 }
 
 func getMultiNationals() {
-	http.HandleFunc("/multinationals/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/multinationals", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
 			log.Println(err)
@@ -238,7 +238,7 @@ func getActorId() {
 }
 
 func getActorIdNationStates(company database.Company, w http.ResponseWriter, r *http.Request) ([]NationState, error) {
-	
+
 	var nationStates []NationState
 
 	countries, err := company.GetCountries()
@@ -306,7 +306,7 @@ func getActors() {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		}
 
-		w.Write([]byte("get actors")) 
+		w.Write([]byte("get actors"))
 	})
 }
 
@@ -383,4 +383,3 @@ func postLogin() {
 		erpc.MarshalSend(w, accessToken)
 	})
 }
-
