@@ -351,7 +351,6 @@ func postRegister() {
 
 func postLogin() {
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
-		log.Println("COOL!")
 		err := erpc.CheckPost(w, r)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
@@ -367,13 +366,18 @@ func postLogin() {
 		username := r.FormValue("username")
 		pwhash := r.FormValue("pwhash")
 
-		_, err = database.ValidateUser(username, pwhash)
+		user, err := database.ValidateUser(username, pwhash)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
-		accessToken := "placeholder"
-		erpc.MarshalSend(w, accessToken)
+		token, err := user.GenAccessToken()
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, token)
 	})
 }
