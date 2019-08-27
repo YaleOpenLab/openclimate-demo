@@ -14,11 +14,12 @@ type Company struct {
 
 	// Identifying info
 	Index       int
-	Name        string
-	Description string
+	Name        string `json:"name"`
+	FullName    string `json:"name"`
+	Description string `json:"description"`
 
-	Locations      []Location
-	Accountability []DistributionRecord
+	Locations      []Location           `json:"locations"`
+	Accountability []DistributionRecord `json:"accountability"`
 
 	Country string
 	Address string

@@ -104,8 +104,11 @@ func getNationStateId() {
 		}
 
 		results := make(map[string]interface{})
-		results["nation_state"] = nationState
+		results["name"] = nationState.Name
+		results["full_name"] = nationState.Name
+		results["description"] = nationState.Description
 		results["pledges"] = pledges
+		results["accountability"] = nationState.Accountability
 
 		erpc.MarshalSend(w, results)
 	})

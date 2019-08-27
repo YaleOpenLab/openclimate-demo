@@ -29,10 +29,11 @@ type Country struct {
 	MRV string
 
 	// For countries: children = regions
-	Children []string
-	Credits  []int
-	Pledges  []int  `json:"pledges"`
-	Logo     string `json:"logo"`
+	Children       []string
+	Credits        []int
+	Pledges        []int                `json:"pledges"`
+	Logo           string               `json:"logo"`
+	Accountability []DistributionRecord `json:"accountability"`
 
 	// Data that is reported (through self-reporting, databases, IoT, etc.)
 	// as opposed to data that is aggregated from its parts/children. Data
