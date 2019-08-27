@@ -287,6 +287,14 @@ func getActorIdNationStates(company database.Company, w http.ResponseWriter, r *
 	return nationStates, nil
 }
 
+type EarthStatusReturn struct {
+	Warminginc               string `json:"warming_in_c"`
+	Gtco2left                string `json:"gt_co2_left"`
+	Atmosphericco2ppm        string `json:"atmospheric_co2_ppm"`
+	Annualglobalemission     string `json:"annual_global_emission"`
+	Estimatedbudgetdepletion string `json:"estimated_budget_depletion"`
+}
+
 func getEarthStatus() {
 	http.HandleFunc("/earth-status", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
@@ -295,7 +303,14 @@ func getEarthStatus() {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		}
 
-		w.Write([]byte("earth status"))
+		var x EarthStatusReturn
+		x.Warminginc = "sample"
+		x.Gtco2left = "sample"
+		x.Atmosphericco2ppm = "sample"
+		x.Annualglobalemission = "sample"
+		x.Estimatedbudgetdepletion = "sample"
+
+		erpc.MarshalSend(w, x)
 	})
 }
 
