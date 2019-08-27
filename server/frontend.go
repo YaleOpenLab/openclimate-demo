@@ -4,14 +4,14 @@ import (
 	"log"
 	// "encoding/json"
 	// "io/ioutil"
-	erpc "github.com/Varunram/essentials/rpc"
-	"github.com/pkg/errors"
-	"net/http"
-	"strings"
-	"strconv"
 	"encoding/json"
-	"io/ioutil"
+	erpc "github.com/Varunram/essentials/rpc"
 	"github.com/YaleOpenLab/openclimate/database"
+	"github.com/pkg/errors"
+	"io/ioutil"
+	"net/http"
+	"strconv"
+	"strings"
 )
 
 func frontendFns() {
@@ -24,6 +24,7 @@ func frontendFns() {
 	getActors()
 	postFiles()
 	postRegister()
+	postLogin()
 }
 
 func getId(w http.ResponseWriter, r *http.Request) (string, error) {
@@ -150,15 +151,15 @@ func getMultiNationalId() {
 }
 
 type NationState struct {
-	Name string
-	Pledges []database.Pledge
+	Name        string
+	Pledges     []database.Pledge
 	Subnational []Subnational
 }
 
 type Subnational struct {
-	Name string
+	Name    string
 	Pledges []database.Pledge
-	Assets []database.Asset
+	Assets  []database.Asset
 }
 
 func getActorId() {
@@ -209,12 +210,12 @@ func getActorId() {
 			nationStates, err := getActorIdNationStates(company, w, r)
 			if err != nil {
 				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-				log.Fatal(err)
+				return
 			}
 			erpc.MarshalSend(w, nationStates)
 
 		case "review":
-			results := make(map[string] interface{})
+			results := make(map[string]interface{})
 			results["certificates"] = company.Certificates
 			results["climate_reports"] = company.ClimateReports
 			erpc.MarshalSend(w, results)
@@ -334,14 +335,14 @@ func postRegister() {
 		defer r.Body.Close()
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			log.Fatal(err)
+			return
 		}
 
 		var registerInfo map[string]interface{}
 		err = json.Unmarshal(bytes, &registerInfo)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			log.Fatal(err)
+			return
 		}
 
 		log.Println(registerInfo)
@@ -350,33 +351,26 @@ func postRegister() {
 
 func postLogin() {
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
+		log.Println("COOL!")
 		err := erpc.CheckPost(w, r)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			log.Fatal(err)
+			return
 		}
 
-		bytes, err := ioutil.ReadAll(r.Body)
-		defer r.Body.Close()
+		err = r.ParseForm()
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			log.Fatal(err)
+			return
 		}
 
-		var credentials map[string]string
-		err = json.Unmarshal(bytes, &credentials)
-		if err != nil {
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			log.Fatal(err)
-		}
-
-		username := credentials["username"]
-		pwhash := credentials["pwhash"]
+		username := r.FormValue("username")
+		pwhash := r.FormValue("pwhash")
 
 		_, err = database.ValidateUser(username, pwhash)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			log.Fatal(err)
+			return
 		}
 
 		accessToken := "placeholder"
