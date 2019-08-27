@@ -4,11 +4,10 @@ import (
 	"log"
 	// "encoding/json"
 	// "io/ioutil"
-	"encoding/json"
 	erpc "github.com/Varunram/essentials/rpc"
+	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/database"
 	"github.com/pkg/errors"
-	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
@@ -221,6 +220,18 @@ func getActorId() {
 			results := make(map[string]interface{})
 			results["certificates"] = company.Certificates
 			results["climate_reports"] = company.ClimateReports
+
+			var err error
+			results["emissions"], err = blockchain.RetrieveActorEmissions(id)
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusInternalServerError)
+				return
+			}
+			results["reductions"], err = blockchain.RetrieveActorEmissions(id)
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusInternalServerError)
+				return
+			}
 			erpc.MarshalSend(w, results)
 
 		// case "manage":
@@ -349,21 +360,27 @@ func postRegister() {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		}
 
-		bytes, err := ioutil.ReadAll(r.Body)
-		defer r.Body.Close()
+		err = r.ParseForm()
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
-		var registerInfo map[string]interface{}
-		err = json.Unmarshal(bytes, &registerInfo)
-		if err != nil {
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			return
-		}
+		actor_id := r.FormValue("actor_id")
+		actor_name := r.FormValue("actor_name")
+		identification_file_id := r.FormValue("identification_file_id")
+		employment_file_id := r.FormValue("employment_file_id")
+		first_name := r.FormValue("first_name")
+		last_name := r.FormValue("last_name")
+		title := r.FormValue("title")
+		email := r.FormValue("email")
+		phone := r.FormValue("phone")
+		account_type_id := r.FormValue("account_type_id")
 
-		log.Println(registerInfo)
+
+		log.Println(actor_id, actor_name, identification_file_id, employment_file_id,
+			first_name, last_name, title, email, phone, account_type_id)
+		w.Write([]byte("registered"))
 	})
 }
 

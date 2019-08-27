@@ -120,3 +120,13 @@ func CommitToChain(timeStamp *big.Int, rootHash string) error {
 	fmt.Println("Successfuly commited new ipfs root.")
 	return nil
 }
+
+func RetrieveActorEmissions(id int) (map[string]string, error) {
+	var dummy map[string]string
+	return dummy, nil
+}
+
+func RetrieveActorReductions(id int) (map[string]string, error) {
+	var dummy map[string]string
+	return dummy, nil
+}
