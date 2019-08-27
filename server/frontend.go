@@ -376,6 +376,16 @@ func postRegister() {
 		email := r.FormValue("email")
 		phone := r.FormValue("phone")
 		account_type_id := r.FormValue("account_type_id")
+		account_type := r.FormValue("account_type")
+
+		switch account_type {
+		case "country":
+			log.Println("creating country")
+		case "state":
+			log.Println("creating state")
+		case "region":
+			log.Println("creating region")
+		}
 
 		log.Println(actor_id, actor_name, identification_file_id, employment_file_id,
 			first_name, last_name, title, email, phone, account_type_id)
