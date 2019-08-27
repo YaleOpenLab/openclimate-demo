@@ -13,11 +13,11 @@ import (
 type Company struct {
 
 	// Identifying info
-	Index   int
-	Name    string
+	Index       int
+	Name        string
 	Description string
 
-	Locations []Location
+	Locations      []Location
 	Accountability []DistributionRecord
 
 	Country string
@@ -26,9 +26,9 @@ type Company struct {
 	UserIDs []int
 
 	// Contextual data
-	Area        float64
-	Iso         string
-	Population  int
+	Area       float64
+	Iso        string
+	Population int
 	// Latitude    float64
 	// Longitude   float64
 	Revenue     float64
@@ -67,20 +67,20 @@ type Company struct {
 }
 
 type Certificate struct {
-	ID int
+	ID            int
 	CertificateID int
-	Type string
-	Unit string
-	Status string
+	Type          string
+	Unit          string
+	Status        string
 }
 
 type ClimateReport struct {
-	ID int
-	Name string
-	Scope string
-	Date string
+	ID       int
+	Name     string
+	Scope    string
+	Date     string
 	Verified bool
-	url string
+	url      string
 }
 
 func (c *Company) AddPledges(pledgeIDs ...int) error {
@@ -229,7 +229,6 @@ func RetrieveAllCompanies() ([]Company, error) {
 	return companies, nil
 }
 
-
 func RetrieveAllMultiNationals() ([]Company, error) {
 
 	var multinationals []Company
@@ -247,4 +246,3 @@ func RetrieveAllMultiNationals() ([]Company, error) {
 
 	return multinationals, nil
 }
-

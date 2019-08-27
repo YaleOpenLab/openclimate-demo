@@ -1,13 +1,13 @@
 package blockchain
 
 import (
+	"context"
 	"fmt"
+	"github.com/YaleOpenLab/openclimate/blockchain/contracts/token"
+	"github.com/ethereum/go-ethereum/accounts/abi"
+	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/ethclient"
 	"log"
-	"github.com/ethereum/go-ethereum/common"
-	"context"
-	"github.com/ethereum/go-ethereum/accounts/abi"
-	"github.com/YaleOpenLab/openclimate/blockchain/contracts/token"
 	"strings"
 )
 
@@ -22,9 +22,9 @@ const (
 )
 
 type Token struct {
-	client    *ethclient.Client
-	abi       abi.ABI
-	address   common.Address
+	client  *ethclient.Client
+	abi     abi.ABI
+	address common.Address
 
 	token *blockchain.YToken
 }
@@ -39,9 +39,9 @@ func NewToken(address common.Address, client *ethclient.Client) (*Token, error) 
 		return nil, err
 	}
 	return &Token{
-		client:    client,
-		abi:       parsed,
-		address:   address,
+		client:  client,
+		abi:     parsed,
+		address: address,
 
 		token: token,
 	}, nil

@@ -19,15 +19,15 @@ type BucketItem interface {
 }
 
 type Location struct {
-	Name string
-	Latitude string
-	Longitude string
-	NationStaeID int
+	Name            string
+	Latitude        string
+	Longitude       string
+	NationStaeID    int
 	RegionalStateID int
 }
 
 type DistributionRecord struct {
-	Title string
+	Title  string
 	Weight int
 }
 
@@ -37,8 +37,6 @@ type DistributionRecord struct {
 // 	Year       int
 // 	IpfsHash   string
 // }
-
-
 
 /*
 	Given the type of actor (company, city, state, region, country, etc.) and
