@@ -43,6 +43,8 @@ type Country struct {
 	Emissions  map[string]string `json:"emissions"` // accept whatever emissions data the frontend passes
 	Mitigation map[string]string
 	Adaptation map[string]string
+
+	LastUpdated string
 }
 
 // Function that creates a new country object given its name and saves

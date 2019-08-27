@@ -377,7 +377,6 @@ func postRegister() {
 		phone := r.FormValue("phone")
 		account_type_id := r.FormValue("account_type_id")
 
-
 		log.Println(actor_id, actor_name, identification_file_id, employment_file_id,
 			first_name, last_name, title, email, phone, account_type_id)
 		w.Write([]byte("registered"))

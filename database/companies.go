@@ -65,6 +65,8 @@ type Company struct {
 	// Emissions  map[string]string // accept whatever emissions the frontend passes
 	// Mitigation map[string]string
 	// Adaptation map[string]string
+
+	LastUpdated string
 }
 
 type Certificate struct {
