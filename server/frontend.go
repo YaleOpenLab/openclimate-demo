@@ -356,8 +356,8 @@ func postRegister() {
 	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
 		if err != nil {
-			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			log.Fatal(err)
 		}
 
 		err = r.ParseForm()
@@ -386,6 +386,22 @@ func postRegister() {
 		case "region":
 			log.Println("creating region")
 		}
+
+		// actorID := registerInfo["actor_id"].(int)
+		// actorType := registerInfo["actor_type"].(string)
+
+		// actor, err := RetrieveActor(actorType, actorID)
+		// if err != nil {
+		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		// 	log.Fatal(err)
+		// }
+
+		// // if RetrieveActor() returns nil for actor, that means the actor was not found
+		// if actor == nil {
+			
+		// }
+
+		// log.Println(registerInfo)
 
 		log.Println(actor_id, actor_name, identification_file_id, employment_file_id,
 			first_name, last_name, title, email, phone, account_type_id)

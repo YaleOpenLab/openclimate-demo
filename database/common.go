@@ -79,7 +79,7 @@ func RetrieveActor(actorType string, actorID int) (Actor, error) {
 	}
 
 	if err != nil {
-		return actor, errors.Wrap(err, "User's linked actor was not found")
+		return actor, nil
 	}
 
 	return actor, nil
