@@ -39,7 +39,6 @@ type DistributionRecord struct {
 // }
 
 
-
 /*
 	Given the type of actor (company, city, state, region, country, etc.) and
 	the ID of the actor, return the entity (all actor types implement the
@@ -80,7 +79,7 @@ func RetrieveActor(actorType string, actorID int) (Actor, error) {
 	}
 
 	if err != nil {
-		return actor, errors.Wrap(err, "User's linked actor was not found")
+		return actor, nil
 	}
 
 	return actor, nil

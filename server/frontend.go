@@ -326,8 +326,8 @@ func postRegister() {
 	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
 		if err != nil {
-			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			log.Fatal(err)
 		}
 
 		bytes, err := ioutil.ReadAll(r.Body)
@@ -342,6 +342,20 @@ func postRegister() {
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			log.Fatal(err)
+		}
+
+		actorID := registerInfo["actor_id"].(int)
+		actorType := registerInfo["actor_type"].(string)
+
+		actor, err := RetrieveActor(actorType, actorID)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			log.Fatal(err)
+		}
+
+		// if RetrieveActor() returns nil for actor, that means the actor was not found
+		if actor == nil {
+			
 		}
 
 		log.Println(registerInfo)
