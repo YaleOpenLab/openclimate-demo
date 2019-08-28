@@ -6,9 +6,10 @@ import (
 
 	erpc "github.com/Varunram/essentials/rpc"
 	ocdb "github.com/YaleOpenLab/openclimate/database"
+	utils "github.com/Varunram/essentials/utils"
 )
 
-func StartServer(port string, insecure bool) {
+func StartServer(portx int, insecure bool) {
 
 	ocdb.Populate()
 	erpc.SetupBasicHandlers()
@@ -24,6 +25,11 @@ func StartServer(port string, insecure bool) {
 	setupSwytchApis()
 	setupDataHandlers()
 	frontendFns()
+
+	port, err := utils.ToString(portx)
+	if err != nil {
+		log.Fatal("Port not string")
+	}
 
 	log.Println("Starting RPC Server on Port: ", port)
 	if insecure {
