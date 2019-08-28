@@ -16,14 +16,6 @@ func main() {
 	database.FlushDB()
 	database.CreateHomeDir()
 
-	var a database.User
-	a.Username = "cool"
-	a.Pwhash = "cool"
-	a.Index = 1
-	err := a.Save()
-	if err != nil {
-		log.Fatal(err)
-	}
 	log.Println("flushed and created new db")
-	server.StartServer("8001", true)
+	server.StartServer("443", false)
 }

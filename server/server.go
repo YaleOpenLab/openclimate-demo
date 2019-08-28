@@ -29,6 +29,6 @@ func StartServer(port string, insecure bool) {
 	if insecure {
 		log.Fatal(http.ListenAndServe(":"+port, nil))
 	} else {
-		log.Fatal(http.ListenAndServeTLS(":"+port, "server.crt", "server.key", nil))
+		log.Fatal(http.ListenAndServeTLS(":"+port, "certs/server.crt", "certs/server.key", nil))
 	}
 }
