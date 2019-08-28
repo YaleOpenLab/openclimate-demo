@@ -44,6 +44,8 @@ type Region struct {
 	Emissions  map[string]string // accept whatever emissions the frontend passes
 	Mitigation map[string]string
 	Adaptation map[string]string
+
+	LastUpdated string
 }
 
 // Function that creates a new region object given its name and country

@@ -11,9 +11,10 @@ import (
 type Country struct {
 
 	// Identifying info
-	Index int
-	Name  string
-	Description string
+	Index       int
+	Name        string `json:"name"`
+	FullName    string `json:"full_name"`
+	Description string `json:"description"`
 
 	// Contextual data
 	Area        float64
@@ -28,18 +29,22 @@ type Country struct {
 	MRV string
 
 	// For countries: children = regions
-	Children []string
-	Credits  []int
-	Pledges  []int
+	Children       []string
+	Credits        []int
+	Pledges        []int                `json:"pledges"`
+	Logo           string               `json:"logo"`
+	Accountability []DistributionRecord `json:"accountability"`
 
 	// Data that is reported (through self-reporting, databases, IoT, etc.)
 	// as opposed to data that is aggregated from its parts/children. Data
 	// is stored on IPFS, so Reports holds the IPFS hashes.
 	// Reports []RepData
 
-	Emissions  map[string]string // accept whatever emissions data the frontend passes
+	Emissions  map[string]string `json:"emissions"` // accept whatever emissions data the frontend passes
 	Mitigation map[string]string
 	Adaptation map[string]string
+
+	LastUpdated string
 }
 
 // Function that creates a new country object given its name and saves

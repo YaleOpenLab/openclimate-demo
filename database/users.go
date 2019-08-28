@@ -11,6 +11,7 @@ import (
 	// keys "github.com/cosmos/cosmos-sdk/crypto/keys"
 	aes "github.com/Varunram/essentials/aes"
 	edb "github.com/Varunram/essentials/database"
+	utils "github.com/Varunram/essentials/utils"
 	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/ethereum/go-ethereum/common"
 	"github.com/ethereum/go-ethereum/common/hexutil"
@@ -29,6 +30,8 @@ type User struct {
 	Pwhash    string
 	EIN       string
 
+	AccessToken string // the access token used to authenticate with the platform for future requests
+
 	EntityType string // choices are: individual, company, city, state, region, country, oversight
 	EntityID   int    // index of the entity the user is associated with
 	Verified   bool   // if the user is a verified member of the entity they purport to be a part of
@@ -36,7 +39,6 @@ type User struct {
 
 	EthereumWallet EthWallet
 	//CosmosWallet   CosmWallet
-
 }
 
 // EthWallet contains the structures needed for an ethereum wallet
@@ -230,6 +232,11 @@ func (a *User) SendEthereumTx(address string, amount big.Int) (string, error) {
 
 	log.Printf("tx sent: %s", signedTx.Hash().Hex())
 	return signedTx.Hash().Hex(), nil
+}
+
+func (a *User) GenAccessToken() (string, error) {
+	a.AccessToken = utils.GetRandomString(30)
+	return a.AccessToken, a.Save()
 }
 
 func (a *User) GenEthKeys(seedpwd string) error {

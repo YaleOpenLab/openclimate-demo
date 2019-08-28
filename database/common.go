@@ -1,6 +1,7 @@
 package database
 
 import (
+	"github.com/Varunram/essentials/utils"
 	globals "github.com/YaleOpenLab/openclimate/globals"
 	"github.com/pkg/errors"
 )
@@ -19,15 +20,15 @@ type BucketItem interface {
 }
 
 type Location struct {
-	Name string
-	Latitude string
-	Longitude string
-	NationStaeID int
+	Name            string
+	Latitude        string
+	Longitude       string
+	NationStaeID    int
 	RegionalStateID int
 }
 
 type DistributionRecord struct {
-	Title string
+	Title  string
 	Weight int
 }
 
@@ -37,7 +38,6 @@ type DistributionRecord struct {
 // 	Year       int
 // 	IpfsHash   string
 // }
-
 
 /*
 	Given the type of actor (company, city, state, region, country, etc.) and
@@ -92,11 +92,13 @@ func (x *Asset) Save() error {
 
 // Saves city object in cities bucket. Called by NewCity
 func (x *City) Save() error {
+	x.LastUpdated = utils.Timestamp()
 	return Save(globals.DbPath, CityBucket, x)
 }
 
 // Saves country object in countries bucket. Called by NewCountry
 func (x *Country) Save() error {
+	x.LastUpdated = utils.Timestamp()
 	return Save(globals.DbPath, CountryBucket, x)
 }
 
@@ -110,6 +112,7 @@ func (x *Pledge) Save() error {
 
 // Saves region object in regions bucket. Called by NewRegion
 func (x *Region) Save() error {
+	x.LastUpdated = utils.Timestamp()
 	return Save(globals.DbPath, RegionBucket, x)
 }
 
@@ -119,6 +122,7 @@ func (x *ConnectRequest) Save() error {
 
 // Saves state object in states bucket. Called by NewState
 func (x *State) Save() error {
+	x.LastUpdated = utils.Timestamp()
 	return Save(globals.DbPath, StateBucket, x)
 }
 
@@ -129,6 +133,7 @@ func (x *User) Save() error {
 
 // Saves company object in companies bucket. Called by NewCompany
 func (x *Company) Save() error {
+	x.LastUpdated = utils.Timestamp()
 	return Save(globals.DbPath, CompanyBucket, x)
 }
 

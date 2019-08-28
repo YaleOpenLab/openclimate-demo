@@ -5,13 +5,12 @@ import (
 	// "encoding/json"
 	// "io/ioutil"
 	erpc "github.com/Varunram/essentials/rpc"
+	"github.com/YaleOpenLab/openclimate/blockchain"
+	"github.com/YaleOpenLab/openclimate/database"
 	"github.com/pkg/errors"
 	"net/http"
-	"strings"
 	"strconv"
-	"encoding/json"
-	"io/ioutil"
-	"github.com/YaleOpenLab/openclimate/database"
+	"strings"
 )
 
 func frontendFns() {
@@ -24,6 +23,7 @@ func frontendFns() {
 	getActors()
 	postFiles()
 	postRegister()
+	postLogin()
 }
 
 func getId(w http.ResponseWriter, r *http.Request) (string, error) {
@@ -63,7 +63,7 @@ func getNationStates() {
 }
 
 func getMultiNationals() {
-	http.HandleFunc("/multinationals/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/multinationals", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
 			log.Println(err)
@@ -103,8 +103,11 @@ func getNationStateId() {
 		}
 
 		results := make(map[string]interface{})
-		results["nation_state"] = nationState
+		results["name"] = nationState.Name
+		results["full_name"] = nationState.Name
+		results["description"] = nationState.Description
 		results["pledges"] = pledges
+		results["accountability"] = nationState.Accountability
 
 		erpc.MarshalSend(w, results)
 	})
@@ -150,15 +153,15 @@ func getMultiNationalId() {
 }
 
 type NationState struct {
-	Name string
-	Pledges []database.Pledge
+	Name        string
+	Pledges     []database.Pledge
 	Subnational []Subnational
 }
 
 type Subnational struct {
-	Name string
+	Name    string
 	Pledges []database.Pledge
-	Assets []database.Asset
+	Assets  []database.Asset
 }
 
 func getActorId() {
@@ -209,14 +212,26 @@ func getActorId() {
 			nationStates, err := getActorIdNationStates(company, w, r)
 			if err != nil {
 				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-				log.Fatal(err)
+				return
 			}
 			erpc.MarshalSend(w, nationStates)
 
 		case "review":
-			results := make(map[string] interface{})
+			results := make(map[string]interface{})
 			results["certificates"] = company.Certificates
 			results["climate_reports"] = company.ClimateReports
+
+			var err error
+			results["emissions"], err = blockchain.RetrieveActorEmissions(id)
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusInternalServerError)
+				return
+			}
+			results["reductions"], err = blockchain.RetrieveActorEmissions(id)
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusInternalServerError)
+				return
+			}
 			erpc.MarshalSend(w, results)
 
 		// case "manage":
@@ -238,7 +253,7 @@ func getActorId() {
 }
 
 func getActorIdNationStates(company database.Company, w http.ResponseWriter, r *http.Request) ([]NationState, error) {
-	
+
 	var nationStates []NationState
 
 	countries, err := company.GetCountries()
@@ -286,6 +301,14 @@ func getActorIdNationStates(company database.Company, w http.ResponseWriter, r *
 	return nationStates, nil
 }
 
+type EarthStatusReturn struct {
+	Warminginc               string `json:"warming_in_c"`
+	Gtco2left                string `json:"gt_co2_left"`
+	Atmosphericco2ppm        string `json:"atmospheric_co2_ppm"`
+	Annualglobalemission     string `json:"annual_global_emission"`
+	Estimatedbudgetdepletion string `json:"estimated_budget_depletion"`
+}
+
 func getEarthStatus() {
 	http.HandleFunc("/earth-status", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
@@ -294,7 +317,14 @@ func getEarthStatus() {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		}
 
-		w.Write([]byte("earth status"))
+		var x EarthStatusReturn
+		x.Warminginc = "sample"
+		x.Gtco2left = "sample"
+		x.Atmosphericco2ppm = "sample"
+		x.Annualglobalemission = "sample"
+		x.Estimatedbudgetdepletion = "sample"
+
+		erpc.MarshalSend(w, x)
 	})
 }
 
@@ -306,7 +336,7 @@ func getActors() {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		}
 
-		w.Write([]byte("get actors")) 
+		w.Write([]byte("get actors"))
 	})
 }
 
@@ -330,35 +360,52 @@ func postRegister() {
 			log.Fatal(err)
 		}
 
-		bytes, err := ioutil.ReadAll(r.Body)
-		defer r.Body.Close()
+		err = r.ParseForm()
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			log.Fatal(err)
+			return
 		}
 
-		var registerInfo map[string]interface{}
-		err = json.Unmarshal(bytes, &registerInfo)
-		if err != nil {
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			log.Fatal(err)
+		actor_id := r.FormValue("actor_id")
+		actor_name := r.FormValue("actor_name")
+		identification_file_id := r.FormValue("identification_file_id")
+		employment_file_id := r.FormValue("employment_file_id")
+		first_name := r.FormValue("first_name")
+		last_name := r.FormValue("last_name")
+		title := r.FormValue("title")
+		email := r.FormValue("email")
+		phone := r.FormValue("phone")
+		account_type_id := r.FormValue("account_type_id")
+		account_type := r.FormValue("account_type")
+
+		switch account_type {
+		case "country":
+			log.Println("creating country")
+		case "state":
+			log.Println("creating state")
+		case "region":
+			log.Println("creating region")
 		}
 
-		actorID := registerInfo["actor_id"].(int)
-		actorType := registerInfo["actor_type"].(string)
+		// actorID := registerInfo["actor_id"].(int)
+		// actorType := registerInfo["actor_type"].(string)
 
-		actor, err := RetrieveActor(actorType, actorID)
-		if err != nil {
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			log.Fatal(err)
-		}
+		// actor, err := RetrieveActor(actorType, actorID)
+		// if err != nil {
+		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		// 	log.Fatal(err)
+		// }
 
-		// if RetrieveActor() returns nil for actor, that means the actor was not found
-		if actor == nil {
+		// // if RetrieveActor() returns nil for actor, that means the actor was not found
+		// if actor == nil {
 			
-		}
+		// }
 
-		log.Println(registerInfo)
+		// log.Println(registerInfo)
+
+		log.Println(actor_id, actor_name, identification_file_id, employment_file_id,
+			first_name, last_name, title, email, phone, account_type_id)
+		w.Write([]byte("registered"))
 	})
 }
 
@@ -367,34 +414,30 @@ func postLogin() {
 		err := erpc.CheckPost(w, r)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			log.Fatal(err)
+			return
 		}
 
-		bytes, err := ioutil.ReadAll(r.Body)
-		defer r.Body.Close()
+		err = r.ParseForm()
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			log.Fatal(err)
+			return
 		}
 
-		var credentials map[string]string
-		err = json.Unmarshal(bytes, &credentials)
-		if err != nil {
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-			log.Fatal(err)
-		}
+		username := r.FormValue("username")
+		pwhash := r.FormValue("pwhash")
 
-		username := credentials["username"]
-		pwhash := credentials["pwhash"]
-
-		_, err = database.ValidateUser(username, pwhash)
+		user, err := database.ValidateUser(username, pwhash)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			log.Fatal(err)
+			return
 		}
 
-		accessToken := "placeholder"
-		erpc.MarshalSend(w, accessToken)
+		token, err := user.GenAccessToken()
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, token)
 	})
 }
-
