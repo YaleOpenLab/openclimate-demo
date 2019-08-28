@@ -5,7 +5,6 @@ pragma solidity ^0.5.10;
     Accumulated results from databases will commit automatically from Openclimate backend.
     */
 contract Reporting {
-
     /**
     Struct to keep reporting entries
     */
@@ -25,28 +24,15 @@ contract Reporting {
         int ContribGreenFund; // (required) Contribution to Green Climate Fund in mibillionsllions USD
         int BilateralLoan; //  Bilateral loan to developing country Party billions USD
         // util variables
-         timeStamp; // timestamp of the latest report
-        uint index;
+        uint timeStamp; // timestamp of the latest report
     }
 
     /**
     Mapping to store reports by address.
     */
-    mapping(uint => country_report) private Reports;
-    address[] private countryIndex;
-
-    /**
-    Util function to check if the address in the list
-    */
-    function isCounrty(address counrty)
-    public
-    view
-    returns(bool isIndeed)
-    {
-        if(countryIndex.length == 0) return false;
-        return (countryIndex[Reports[counrty].index] == counrty);
-    }
-
+    mapping(address=> mapping(uint => country_report)) private Reports;
+    mapping(address=> uint[]) private timeStamps;
+    
     /**
        Function to insert a new report
     */
@@ -65,23 +51,93 @@ contract Reporting {
         int BilateralLoan,
         uint timeStamp)
     public
-    returns(uint index)
     {
-        if(isCounrty(msg.sender)) revert();
-        Reports[msg.sender].country_name      = country_name;
-        Reports[msg.sender].CO2               = CO2;
-        Reports[msg.sender].CH4               = CH4;
-        Reports[msg.sender].N2O               = N2O;
-        Reports[msg.sender].N2O               = HFCs;
-        Reports[msg.sender].N2O               = PFCs;
-        Reports[msg.sender].N2O               = SF6;
-        Reports[msg.sender].N2O               = NF3;
-        Reports[msg.sender].AltEnergy         = AltEnergy;
-        Reports[msg.sender].Mobilization      = Mobilization;
-        Reports[msg.sender].ContribGreenFund  = ContribGreenFund;
-        Reports[msg.sender].BilateralLoan     = BilateralLoan;
-        Reports[msg.sender].timeStamp         = timeStamp;
-        Reports[msg.sender].index             = countryIndex.push(msg.sender)-1;
-        return countryIndex.length-1;
+        // sanity check if there is timestamp already exist
+        if(Reports[msg.sender][timeStamp].timeStamp==timeStamp) revert();
+        // Next timestamp should be higher than the prevoius
+        if(getLastStamp(msg.sender)>=timeStamp) revert();
+        // Push new timeStamp
+        timeStamps[msg.sender].push(timeStamp);
+        // insert values
+        Reports[msg.sender][timeStamp].country_name      = country_name;
+        Reports[msg.sender][timeStamp].CO2               = CO2;
+        Reports[msg.sender][timeStamp].CH4               = CH4;
+        Reports[msg.sender][timeStamp].N2O               = N2O;
+        Reports[msg.sender][timeStamp].HFCs               = HFCs;
+        Reports[msg.sender][timeStamp].PFCs               = PFCs;
+        Reports[msg.sender][timeStamp].SF6               = SF6;
+        Reports[msg.sender][timeStamp].NF3               = NF3;
+        Reports[msg.sender][timeStamp].AltEnergy         = AltEnergy;
+        Reports[msg.sender][timeStamp].Mobilization      = Mobilization;
+        Reports[msg.sender][timeStamp].ContribGreenFund  = ContribGreenFund;
+        Reports[msg.sender][timeStamp].BilateralLoan     = BilateralLoan;
+        Reports[msg.sender][timeStamp].timeStamp         = timeStamp;
+    }
+    
+    function getAllTimeStamps () view public returns (uint[] memory timestamps) {
+        return timeStamps[msg.sender];
+    }
+    
+    function getLastStamp (address countryAddr) view public returns (uint lastTimestamp){
+        uint[] memory list = timeStamps[countryAddr];
+        uint length = timeStamps[countryAddr].length;
+        if (length == 0) return 0;
+        else return list[length-1];
+    }
+    
+    function getLastReport(address countryAddr) 
+    view 
+    public 
+    returns 
+    (
+        bytes32 country_name,
+        int CO2,
+        int CH4,
+        int N2O,
+        int HFCs,
+        int PFCs,
+        int SF6,
+        int NF3,
+        int AltEnergy,
+        int Mobilization,
+        int ContribGreenFund,
+        int BilateralLoan,
+        uint timeStamp
+        ) 
+    
+    {
+        uint  lastTimestamp = getLastStamp(countryAddr);
+        return (
+            Reports[msg.sender][lastTimestamp].country_name,
+            Reports[msg.sender][lastTimestamp].CO2,
+            Reports[msg.sender][lastTimestamp].CH4,
+            Reports[msg.sender][lastTimestamp].N2O,
+            Reports[msg.sender][lastTimestamp].HFCs,
+            Reports[msg.sender][lastTimestamp].PFCs,
+            Reports[msg.sender][lastTimestamp].SF6,
+            Reports[msg.sender][lastTimestamp].NF3,
+            Reports[msg.sender][lastTimestamp].AltEnergy,
+            Reports[msg.sender][lastTimestamp].Mobilization,
+            Reports[msg.sender][lastTimestamp].ContribGreenFund,
+            Reports[msg.sender][lastTimestamp].BilateralLoan,
+            Reports[msg.sender][lastTimestamp].timeStamp
+            );
+    }
+    
+    function getLastCO2(address countryAddr) 
+    view 
+    public 
+    returns 
+    (
+        int CO2,
+        uint timeStamp
+        ) 
+    
+    {
+        uint  lastTimestamp = getLastStamp(countryAddr);
+        return (
+            Reports[msg.sender][lastTimestamp].CO2,
+            Reports[msg.sender][lastTimestamp].timeStamp
+            );
     }
 }

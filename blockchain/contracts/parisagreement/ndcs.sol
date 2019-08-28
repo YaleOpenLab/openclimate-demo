@@ -22,24 +22,14 @@ contract DetermedContributions {
         int SF6; // in metric tonnes
         int NF3; // in metric tonnes
         int AltEnergy; // alternative/renewable energy usage in MWh
-
         // Adaptation goals
-
-
         // Capacity building
-
-
         // Finance
         int Mobilization; // (required) in billions USD.
         int ContribGreenFund; // (required) Contribution to Green Climate Fund in mibillionsllions USD
         int BilateralLoan; //  Bilateral loan to developing country Party billions USD
-
         // Technology transfer
-
-
         // Transparency
-
-
         // util variables
         uint timeTarget; // set a time target
         uint index;
@@ -107,22 +97,6 @@ contract DetermedContributions {
         NDCs[msg.sender].BilateralLoan     = BilateralLoan;
         NDCs[msg.sender].timeTarget        = timeTarget;
         NDCs[msg.sender].index             = countryIndex.push(msg.sender)-1;
-        // emit LogNewNDC(
-        //     msg.sender,
-        //     NDCs[msg.sender].index,
-        //     country_name,
-        //     CO2,
-        //     CH4,
-        //     N2O,
-        //     HFCs,
-        //     PFCs,
-        //     SF6,
-        //     NF3,
-        //     AltEnergy,
-        //     Mobilization,
-        //     ContribGreenFund,
-        //     BilateralLoan,
-        //     timeTarget);
         return countryIndex.length-1;
     }
 
@@ -160,36 +134,42 @@ contract DetermedContributions {
         NDCs[msg.sender].ContribGreenFund  = ContribGreenFund;
         NDCs[msg.sender].BilateralLoan     = BilateralLoan;
         NDCs[msg.sender].timeTarget        = timeTarget;
-
-        // emit LogUpdateNDC(
-        //     msg.sender,
-        //     NDCs[msg.sender].index,
-        //     country_name,
-        //     NDCs[msg.sender].CO2,
-        //     NDCs[msg.sender].CH4,
-        //     NDCs[msg.sender].N2O,
-        //     NDCs[msg.sender].HFCs,
-        //     NDCs[msg.sender].PFCs,
-        //     NDCs[msg.sender].SF6,
-        //     NDCs[msg.sender].NF3,
-        //     NDCs[msg.sender].AltEnergy,
-        //     NDCs[msg.sender].Mobilization,
-        //     NDCs[msg.sender].ContribGreenFund,
-        //     NDCs[msg.sender].BilateralLoan,
-        //     NDCs[msg.sender].timeTarget);
         return true;
     }
 
     /**
-    Function returns CO2 from NDC
+    Functions returns country NDC
     */
-    function getCO2(address country)
+    function getGHG(address countryAddr)
     public
     view
-    returns(int CO2)
+    returns(
+        bytes32 country_name,
+        int CO2,
+        int CH4,
+        int N2O,
+        uint timeTarget)
     {
-        if(!isCounrty(country)) revert();
+        if(!isCounrty(countryAddr)) revert();
         return(
-        NDCs[country].CO2);
+        NDCs[countryAddr].country_name,
+        NDCs[countryAddr].CO2,
+        NDCs[countryAddr].CH4,
+        NDCs[countryAddr].N2O,
+        NDCs[countryAddr].timeTarget
+        );
+    }
+    function getNdcCO2(address countryAddr)
+    public
+    view
+    returns(
+        int CO2,
+        uint timeTarget)
+    {
+        if(!isCounrty(countryAddr)) revert();
+        return(
+        NDCs[countryAddr].CO2,
+        NDCs[countryAddr].timeTarget
+        );
     }
 }
