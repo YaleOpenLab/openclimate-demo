@@ -1,4 +1,4 @@
-# Climate Change Markets
+# Draft ideas of smart contract applications to climate change markets
 
 ### The Problem
 
