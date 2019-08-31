@@ -10,7 +10,7 @@ contract ParisAgreementHighLevel{
     // At the high level we can set goals for every country and receive accumulated reports to keep track/actions
 
     /**
-    Each country will be assigned is public ETH address and a private key kept secret on the responsible state agency
+    Each country will be assigned its public ETH address and a private key kept secret on the responsible state agency
     We can rethink this process later.
     */
     address[] public countries;
@@ -30,7 +30,7 @@ contract ParisAgreementHighLevel{
     /**
      Util function set global goals by COP
      */
-    function set_global_stocktale (address[] memory votingPatries, int CO2, int CH4, int N2O, int AltEnergy, uint timeGoal) public pure {
+    function set_global_stocktake (address[] memory votingParties, int CO2, int CH4, int N2O, int AltEnergy, uint timeGoal) public pure {
         global_stocktake(votingPatries, CO2, CH4, N2O, AltEnergy, timeGoal);
     }
     
@@ -51,7 +51,7 @@ contract ParisAgreementHighLevel{
     }
     // Calculate GHG reduction/surplus compared to NDC 
     function calculateReductions(address countryAddr) public view returns (int co2_reduction) {
-        require(contract_ndcs.isCounrty(countryAddr), "Conrty doesnt have an NDC");
+        require(contract_ndcs.isCounrty(countryAddr), "Country doesnt have an NDC");
         (int ndcCO2, uint timeTarget) = contract_ndcs.getNdcCO2(countryAddr);
         (int reportCO2, uint timeStamp) = report_ndc.getLastCO2(countryAddr);
         require(timeTarget>=timeStamp, "Timestamp cant be higher than timeTarget");
