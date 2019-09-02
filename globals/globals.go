@@ -10,4 +10,5 @@ var (
 	DbPath         = DbDir + "/openclimate.db"
 	StDataDir      = "staticdata/json_data"
 	DefaultRpcPort = 8001
+	IpfsMasterPwd  = "topsecret"
 )

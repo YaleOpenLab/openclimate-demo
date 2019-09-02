@@ -67,6 +67,7 @@ type Company struct {
 	// Adaptation map[string]string
 
 	LastUpdated string
+	Files       []string // list of ipfs hashes to be stored for verification or something similar
 }
 
 type Certificate struct {

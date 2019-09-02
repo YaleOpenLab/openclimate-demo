@@ -6,7 +6,6 @@ import (
 
 	erpc "github.com/Varunram/essentials/rpc"
 	utils "github.com/Varunram/essentials/utils"
-	ocdb "github.com/YaleOpenLab/openclimate/database"
 )
 
 func checkReqdParams(w http.ResponseWriter, r *http.Request, options ...string) bool {
@@ -22,7 +21,6 @@ func checkReqdParams(w http.ResponseWriter, r *http.Request, options ...string) 
 
 func StartServer(portx int, insecure bool) {
 
-	ocdb.Populate()
 	erpc.SetupBasicHandlers()
 
 	setupView()

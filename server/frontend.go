@@ -3,14 +3,17 @@ package server
 import (
 	"log"
 	// "encoding/json"
+	cc20 "github.com/Varunram/essentials/chacha20poly1305"
 	"github.com/Varunram/essentials/ipfs"
 	erpc "github.com/Varunram/essentials/rpc"
 	"github.com/Varunram/essentials/utils"
 	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/database"
+	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/pkg/errors"
 	"io/ioutil"
 	"net/http"
+	"os"
 	"strconv"
 	"strings"
 )
@@ -26,6 +29,7 @@ func frontendFns() {
 	postFiles()
 	postRegister()
 	postLogin()
+	getFiles()
 }
 
 func getId(w http.ResponseWriter, r *http.Request) (string, error) {
@@ -463,8 +467,13 @@ func postLogin() {
 	})
 }
 
+type postfileReturn struct {
+	IpfsHash string
+}
+
 func postFiles() {
 	http.HandleFunc("/files", func(w http.ResponseWriter, r *http.Request) {
+		log.Println("in postfiles endpoint")
 		err := erpc.CheckPost(w, r)
 		if err != nil {
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
@@ -480,8 +489,9 @@ func postFiles() {
 		docIdString := r.FormValue("docId")
 		entity := r.FormValue("entity")
 
-		if entity != "country" || entity != "mnc" {
-			log.Println("invalid entity, quitting")
+		if entity != "country" && entity != "mnc" && entity != "state" {
+			erpc.MarshalSend(w, erpc.StatusBadRequest)
+			return
 		}
 
 		docId, err := utils.ToInt(docIdString)
@@ -499,6 +509,7 @@ func postFiles() {
 		r.ParseMultipartForm(1 << 21) // max 10MB files
 		file, fileHeader, err := r.FormFile("file")
 		if err != nil {
+			log.Println("could not parse form data", err)
 			erpc.MarshalSend(w, erpc.StatusBadRequest)
 			return
 		}
@@ -512,7 +523,14 @@ func postFiles() {
 			return
 		}
 
-		hash, err := ipfs.IpfsAddBytes(fileBytes)
+		// encrypt with chacha20 since the file size is variable
+		encryptedBytes, err := cc20.Encrypt(fileBytes, globals.IpfsMasterPwd)
+		if err != nil {
+			erpc.MarshalSend(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		hash, err := ipfs.IpfsAddBytes(encryptedBytes)
 		if err != nil {
 			erpc.MarshalSend(w, erpc.StatusInternalServerError)
 			return
@@ -526,14 +544,95 @@ func postFiles() {
 				erpc.MarshalSend(w, erpc.StatusBadRequest)
 				return
 			}
-			country, err := database.RetrieveCountry(idInt)
+			x, err := database.RetrieveCountry(idInt)
 			if err != nil {
 				erpc.MarshalSend(w, erpc.StatusInternalServerError)
 				return
 			}
-			country.Files = append(country.Files, hash)
+			x.Files = append(x.Files, hash)
+			err = x.Save()
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusInternalServerError)
+			}
 		case "mnc":
 			log.Println("storing file against required multinational company")
+			idInt, err := utils.ToInt(id)
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusBadRequest)
+				return
+			}
+			x, err := database.RetrieveCompany(idInt)
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusInternalServerError)
+				return
+			}
+			x.Files = append(x.Files, hash)
+			err = x.Save()
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusInternalServerError)
+			}
+		case "state":
+			log.Println("storing file against requried state")
+			idInt, err := utils.ToInt(id)
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusBadRequest)
+				return
+			}
+			x, err := database.RetrieveState(idInt)
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusInternalServerError)
+				return
+			}
+			x.Files = append(x.Files, hash)
+			err = x.Save()
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusInternalServerError)
+			}
 		}
+
+		var pf postfileReturn
+		pf.IpfsHash = hash
+		erpc.MarshalSend(w, pf)
+	})
+}
+
+func getFiles() {
+	http.HandleFunc("/getfiles", func(w http.ResponseWriter, r *http.Request) {
+		log.Println("in getFiles endpoint")
+
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			erpc.MarshalSend(w, erpc.StatusBadRequest)
+			return
+		}
+
+		if !checkReqdParams(w, r, "hash", "extension") {
+			return
+		}
+
+		extension := r.URL.Query()["extension"][0]
+		hash := r.URL.Query()["hash"][0]
+
+		encryptedFile, err := ipfs.IpfsGetFile(hash, extension)
+		if err != nil {
+			erpc.MarshalSend(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		encryptedBytes, err := ioutil.ReadFile(encryptedFile)
+		if err != nil {
+			erpc.MarshalSend(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		os.Remove(encryptedFile)
+
+		decryptedBytes, err := cc20.Decrypt(encryptedBytes, globals.IpfsMasterPwd)
+		if err != nil {
+			erpc.MarshalSend(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		w.Write(decryptedBytes)
 	})
 }
