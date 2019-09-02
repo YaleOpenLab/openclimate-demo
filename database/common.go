@@ -267,3 +267,67 @@ func (c *Oversight) UpdateMRV(MRV string) {
 	c.MRV = MRV
 	c.Save()
 }
+
+func SearchState(name string) ([]State, error) {
+	var arr []State
+	all, err := RetrieveAllStates()
+	if err != nil {
+		return arr, errors.Wrap(err, "Error while retrieving all cities from database")
+	}
+
+	for _, val := range all {
+		if val.Name == name {
+			arr = append(arr, val)
+		}
+	}
+
+	return arr, nil
+}
+
+func SearchCity(name string) ([]City, error) {
+	var arr []City
+	all, err := RetrieveAllCities()
+	if err != nil {
+		return arr, errors.Wrap(err, "Error while retrieving all cities from database")
+	}
+
+	for _, val := range all {
+		if val.Name == name {
+			arr = append(arr, val)
+		}
+	}
+
+	return arr, nil
+}
+
+func SearchRegion(name string) ([]Region, error) {
+	var arr []Region
+	all, err := RetrieveAllRegions()
+	if err != nil {
+		return arr, errors.Wrap(err, "Error while retrieving all regions from database")
+	}
+
+	for _, val := range all {
+		if val.Name == name {
+			arr = append(arr, val)
+		}
+	}
+
+	return arr, nil
+}
+
+func SearchCompany(name string) ([]Company, error) {
+	var arr []Company
+	all, err := RetrieveAllCompanies()
+	if err != nil {
+		return arr, errors.Wrap(err, "Error while retrieving all companies from database")
+	}
+
+	for _, val := range all {
+		if val.Name == name {
+			arr = append(arr, val)
+		}
+	}
+
+	return arr, nil
+}

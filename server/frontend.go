@@ -31,6 +31,7 @@ func frontendFns() {
 	postLogin()
 	getFiles()
 	addLike()
+	searchForEntity()
 }
 
 func getId(w http.ResponseWriter, r *http.Request) (string, error) {
@@ -749,5 +750,75 @@ func addNotVisible() {
 		}
 
 		erpc.MarshalSend(w, erpc.StatusOK)
+	})
+}
+
+type searchReturn struct {
+	Username  string
+	Country   string
+	Companies []string
+	Cities    []string
+	Regions   []string
+	States    []string
+}
+
+func searchForEntity() {
+	http.HandleFunc("/actors/search", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckGet(w, r)
+		if err != nil {
+			erpc.MarshalSend(w, erpc.StatusBadRequest)
+		}
+
+		if !checkReqdParams(w, r, "search") {
+			return
+		}
+
+		searchParam := r.URL.Query()["search"][0]
+
+		var country database.Country
+		var user database.User
+		var companies []database.Company
+		var cities []database.City
+		var regions []database.Region
+		var states []database.State
+
+		user, _ = database.RetrieveUserByUsername(searchParam)
+
+		country, _ = database.RetrieveCountryByName(searchParam)
+		companies, _ = database.SearchCompany(searchParam)
+		states, _ = database.SearchState(searchParam)
+		regions, _ = database.SearchRegion(searchParam)
+		cities, _ = database.SearchCity(searchParam)
+
+		var stateNames []string
+		var regionNames []string
+		var cityNames []string
+		var companyNames []string
+
+		for _, state := range states {
+			stateNames = append(stateNames, state.Name)
+		}
+
+		for _, region := range regions {
+			regionNames = append(regionNames, region.Name)
+		}
+
+		for _, city := range cities {
+			cityNames = append(cityNames, city.Name)
+		}
+
+		for _, company := range companies {
+			companyNames = append(companyNames, company.Name)
+		}
+		var x searchReturn
+
+		x.Username = user.Username
+		x.Country = country.Name
+		x.Companies = companyNames
+		x.Cities = cityNames
+		x.Regions = regionNames
+		x.States = stateNames
+
+		erpc.MarshalSend(w, x)
 	})
 }
