@@ -19,6 +19,17 @@ func checkReqdParams(w http.ResponseWriter, r *http.Request, options ...string) 
 	return true
 }
 
+func checkReqdPostParams(w http.ResponseWriter, r *http.Request, options ...string) bool {
+	for _, option := range options {
+		if r.FormValue(option) == "" {
+			log.Println("reqd param: ", option, "not found")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return false
+		}
+	}
+	return true
+}
+
 func StartServer(portx int, insecure bool) {
 
 	erpc.SetupBasicHandlers()

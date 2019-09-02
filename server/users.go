@@ -55,38 +55,6 @@ func newUser() {
 	})
 }
 
-// func newChild() {
-// 	http.HandleFunc("/user/add/child", func(w http.ResponseWriter, r *http.Request) {
-// 		err := erpc.CheckGet(w, r)
-// 		if err != nil {
-// 			return
-// 		}
-
-// 		if r.URL.Query()["child"] == nil {
-// 			log.Println("required param child missing")
-// 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-// 			return
-// 		}
-
-// 		username := r.URL.Query()["username"][0]
-// 		child := r.URL.Query()["child"][0]
-
-// 		user, err := database.RetrieveUserByUsername(username)
-// 		if err != nil {
-// 			log.Println("failed to retrieve user, quitting")
-// 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-// 		}
-
-// 		err = user.AddChild(child)
-// 		if err != nil {
-// 			log.Println("failed to add child, quitting")
-// 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-// 		}
-
-// 		erpc.MarshalSend(w, user)
-// 	})
-// }
-
 func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error) {
 	var user database.User
 	err := erpc.CheckGet(w, r)

@@ -1,8 +1,8 @@
 package server
 
 import (
-	"encoding/json"
-	"io/ioutil"
+	// "encoding/json"
+	// "io/ioutil"
 	"log"
 	"net/http"
 	// "strconv"
@@ -33,27 +33,18 @@ func reportDirect() {
 			return
 		}
 
-		if !checkReqdParams(w, r, "report_type") {
-			return
-		}
-
-		reportType := r.URL.Query()["report_type"][0]
-		bytes, err := ioutil.ReadAll(r.Body)
-		defer r.Body.Close()
+		err = r.ParseForm()
 		if err != nil {
-			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
-		var data interface{}
-		err = json.Unmarshal(bytes, &data)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		if !checkReqdParams(w, r, "report_type", "data") {
 			return
 		}
 
+		reportType := r.FormValue("report_type")
+		data := r.FormValue("data")
 		err = oracle.VerifyAndCommit(reportType, user.EntityType, user.EntityID, data)
 		if err != nil {
 			log.Fatal(err)

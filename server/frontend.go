@@ -1,8 +1,14 @@
 package server
 
 import (
-	"log"
 	// "encoding/json"
+	"io/ioutil"
+	"log"
+	"net/http"
+	"os"
+	"strconv"
+	"strings"
+
 	cc20 "github.com/Varunram/essentials/chacha20poly1305"
 	"github.com/Varunram/essentials/ipfs"
 	erpc "github.com/Varunram/essentials/rpc"
@@ -11,11 +17,6 @@ import (
 	"github.com/YaleOpenLab/openclimate/database"
 	"github.com/YaleOpenLab/openclimate/globals"
 	"github.com/pkg/errors"
-	"io/ioutil"
-	"net/http"
-	"os"
-	"strconv"
-	"strings"
 )
 
 func frontendFns() {
@@ -412,6 +413,10 @@ func postRegister() {
 			return
 		}
 
+		if !checkReqdParams(w, r, "username", "pwhash", "first_name", "last_name", "email", "ein") {
+			return
+		}
+
 		multiNationalId := r.FormValue("m_id")
 		nationId := r.FormValue("n_id")
 		var idS string
@@ -432,7 +437,6 @@ func postRegister() {
 
 		id, err := utils.ToInt(idS)
 		if err != nil {
-			log.Println("ID=", id, err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
@@ -480,6 +484,10 @@ func postLogin() {
 			return
 		}
 
+		if !checkReqdPostParams(w, r, "username", "pwhash") {
+			return
+		}
+
 		username := r.FormValue("username")
 		pwhash := r.FormValue("pwhash")
 
@@ -514,8 +522,7 @@ func postFiles() {
 			return
 		}
 
-		if r.FormValue("id") == "" || r.FormValue("docId") == "" || r.FormValue("entity") == "" {
-			erpc.MarshalSend(w, erpc.StatusBadRequest)
+		if !checkReqdPostParams(w, r, "id", "docId", "entity") {
 			return
 		}
 
@@ -680,8 +687,7 @@ func addLike() {
 			return
 		}
 
-		if r.FormValue("accessToken") == "" || r.FormValue("username") == "" {
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdPostParams(w, r, "accessToken", "username") {
 			return
 		}
 
@@ -721,8 +727,7 @@ func addNotVisible() {
 			return
 		}
 
-		if r.FormValue("accessToken") == "" || r.FormValue("username") == "" {
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdPostParams(w, r, "accessToken", "username") {
 			return
 		}
 
