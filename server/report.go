@@ -33,7 +33,7 @@ func reportDirect() {
 			return
 		}
 
-		if !checkReqdParams(w, "report_type") {
+		if !checkReqdParams(w, r, "report_type") {
 			return
 		}
 

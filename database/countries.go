@@ -45,6 +45,7 @@ type Country struct {
 	Adaptation map[string]string
 
 	LastUpdated string
+	Files       []string // an a rray of all the necessary documents to validate this specific country
 }
 
 // Function that creates a new country object given its name and saves

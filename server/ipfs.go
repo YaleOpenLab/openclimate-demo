@@ -118,7 +118,7 @@ func getIpfsHash() {
 			return
 		}
 
-		if !checkReqdParams(w, "string") {
+		if !checkReqdParams(w, r, "string") {
 			return
 		}
 

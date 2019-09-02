@@ -45,7 +45,7 @@ func VerifyUser() {
 			return
 		}
 
-		if !checkReqdParams(w, "candidate_id") {
+		if !checkReqdParams(w, r, "candidate_id") {
 			return
 		}
 
@@ -289,7 +289,7 @@ func CommitPledge() {
 			return
 		}
 
-		if !checkReqdParams(w, "pledge_ID") {
+		if !checkReqdParams(w, r, "pledge_ID") {
 			return
 		}
 
@@ -326,7 +326,7 @@ func UpdateMRV() {
 			return
 		}
 
-		if !checkReqdParams(w, "MRV") {
+		if !checkReqdParams(w, r, "MRV") {
 			return
 		}
 

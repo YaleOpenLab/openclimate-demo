@@ -52,7 +52,7 @@ func getRegion() {
 			return
 		}
 
-		if !checkReqdParams(w, "region_name", "region_country") {
+		if !checkReqdParams(w, r, "region_name", "region_country") {
 			return
 		}
 
@@ -99,7 +99,7 @@ func getStatesByCountry() {
 			return
 		}
 
-		if !checkReqdParams(w, "country") {
+		if !checkReqdParams(w, r, "country") {
 			return
 		}
 
@@ -121,7 +121,7 @@ func getState() {
 			return
 		}
 
-		if !checkReqdParams(w, "state_name", "state_country") {
+		if !checkReqdParams(w, r, "state_name", "state_country") {
 			return
 		}
 
@@ -167,7 +167,7 @@ func getCity() {
 			return
 		}
 
-		if !checkReqdParams(w, "city_name", "city_region") {
+		if !checkReqdParams(w, r, "city_name", "city_region") {
 			return
 		}
 
@@ -213,7 +213,7 @@ func getCompany() {
 			return
 		}
 
-		if !checkReqdParams(w, "company_name", "company_country") {
+		if !checkReqdParams(w, r, "company_name", "company_country") {
 			return
 		}
 
@@ -259,7 +259,7 @@ func getCountry() {
 			return
 		}
 
-		if !checkReqdParams(w, "country_name") {
+		if !checkReqdParams(w, r, "country_name") {
 			return
 		}
 

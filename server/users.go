@@ -33,7 +33,7 @@ func newUser() {
 			return
 		}
 
-		if !checkReqdParams(w, "username", "pwhash", "email", "entity_type") {
+		if !checkReqdParams(w, r, "username", "pwhash", "email", "entity_type") {
 			return
 		}
 
@@ -94,8 +94,8 @@ func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error)
 		return user, errors.Wrap(err, "could not checkgetauth")
 	}
 
-	if !checkReqdParams(w, "username", "pwhash") {
-		return
+	if !checkReqdParams(w, r, "username", "pwhash") {
+		return user, nil
 	}
 
 	username := r.URL.Query()["username"][0]
@@ -117,8 +117,8 @@ func CheckPostAuth(w http.ResponseWriter, r *http.Request) (database.User, error
 		return user, errors.Wrap(err, "could not checkpostauth")
 	}
 
-	if !checkReqdParams(w, "username", "pwhash") {
-		return
+	if !checkReqdParams(w, r, "username", "pwhash") {
+		return user, nil
 	}
 
 	username := r.URL.Query()["username"][0]
@@ -239,7 +239,7 @@ func sendEth() {
 			return
 		}
 
-		if !checkReqdParams(w, "address", "amount") {
+		if !checkReqdParams(w, r, "address", "amount") {
 			return
 		}
 

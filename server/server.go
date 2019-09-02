@@ -9,7 +9,7 @@ import (
 	ocdb "github.com/YaleOpenLab/openclimate/database"
 )
 
-func checkReqdParams(w *http.ResponseWriter, options ...string) bool {
+func checkReqdParams(w http.ResponseWriter, r *http.Request, options ...string) bool {
 	for _, option := range options {
 		if r.URL.Query()[option] == nil {
 			log.Println("reqd param: ", option, "not found")

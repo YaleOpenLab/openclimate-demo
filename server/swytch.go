@@ -38,7 +38,7 @@ func getAccessToken() {
 			return
 		}
 
-		if !checkReqdParams(w, "clientId", "clientSecret", "username", "password") {
+		if !checkReqdParams(w, r, "clientId", "clientSecret", "username", "password") {
 			return
 		}
 
@@ -97,7 +97,7 @@ func getRefreshToken() {
 			return
 		}
 
-		if !checkReqdParams(w, "clientId", "clientSecret", "refreshToken") {
+		if !checkReqdParams(w, r, "clientId", "clientSecret", "refreshToken") {
 			return
 		}
 
@@ -177,7 +177,7 @@ func getSwytchUser() {
 			return
 		}
 
-		if !checkReqdParams(w, "authToken") {
+		if !checkReqdParams(w, r, "authToken") {
 			return
 		}
 
@@ -263,7 +263,7 @@ func getAssets() {
 			return
 		}
 
-		if !checkReqdParams(w, "authToken", "userId") {
+		if !checkReqdParams(w, r, "authToken", "userId") {
 			return
 		}
 
@@ -360,7 +360,7 @@ func getEnergy() {
 			return
 		}
 
-		if !checkReqdParams(w, "authToken", "assetId") {
+		if !checkReqdParams(w, r, "authToken", "assetId") {
 			return
 		}
 
@@ -459,7 +459,7 @@ func getEnergyAttribution() {
 			return
 		}
 
-		if !checkReqdParams(w, "authToken", "assetId") {
+		if !checkReqdParams(w, r, "authToken", "assetId") {
 			return
 		}
 

@@ -3,11 +3,13 @@ package server
 import (
 	"log"
 	// "encoding/json"
-	// "io/ioutil"
+	"github.com/Varunram/essentials/ipfs"
 	erpc "github.com/Varunram/essentials/rpc"
+	"github.com/Varunram/essentials/utils"
 	"github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/database"
 	"github.com/pkg/errors"
+	"io/ioutil"
 	"net/http"
 	"strconv"
 	"strings"
@@ -173,7 +175,7 @@ func getActorId() {
 			return
 		}
 
-		id, err := strconv.Atoi(strID)
+		id, err := utils.ToInt(strID)
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
@@ -209,31 +211,31 @@ func getActorId() {
 			results["accountability"] = company.Accountability
 			results["pledges"] = pledges
 
-			results["direct_emissions"], err = getDirectEmissionsActorId(id)
+			results["direct_emissions"], err = getDirectEmissionsActorId(strID)
 			if err != nil {
 				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 				return
 			}
 
-			results["mitigation_outcomes"], err = getMitigationOutcomesActorId(id)
+			results["mitigation_outcomes"], err = getMitigationOutcomesActorId(strID)
 			if err != nil {
 				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 				return
 			}
 
-			results["direct_emissions"], err = getWindAndSolarActorId(id)
+			results["direct_emissions"], err = getWindAndSolarActorId(strID)
 			if err != nil {
 				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 				return
 			}
 
-			results["disclosure_settings"], err = getDisclosureSettingsActorId(id)
+			results["disclosure_settings"], err = getDisclosureSettingsActorId(strID)
 			if err != nil {
 				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 				return
 			}
 
-			results["weighted_score"], err = getWeightedScoreActorId(id)
+			results["weighted_score"], err = getWeightedScoreActorId(strID)
 			if err != nil {
 				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 				return
@@ -371,18 +373,6 @@ func getActors() {
 	})
 }
 
-func postFiles() {
-	http.HandleFunc("/files", func(w http.ResponseWriter, r *http.Request) {
-		err := erpc.CheckPost(w, r)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-		}
-
-		w.Write([]byte("post files"))
-	})
-}
-
 func postRegister() {
 	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
@@ -470,5 +460,80 @@ func postLogin() {
 		}
 
 		erpc.MarshalSend(w, token)
+	})
+}
+
+func postFiles() {
+	http.HandleFunc("/files", func(w http.ResponseWriter, r *http.Request) {
+		err := erpc.CheckPost(w, r)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		if r.FormValue("id") == "" || r.FormValue("docId") == "" || r.FormValue("entity") == "" {
+			erpc.MarshalSend(w, erpc.StatusBadRequest)
+			return
+		}
+
+		id := r.FormValue("id")
+		docIdString := r.FormValue("docId")
+		entity := r.FormValue("entity")
+
+		if entity != "country" || entity != "mnc" {
+			log.Println("invalid entity, quitting")
+		}
+
+		docId, err := utils.ToInt(docIdString)
+		if err != nil {
+			erpc.MarshalSend(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		if docId > 5 || docId < 1 {
+			log.Println("invalid doc id, quitting")
+			erpc.MarshalSend(w, erpc.StatusBadRequest)
+			return
+		}
+
+		r.ParseMultipartForm(1 << 21) // max 10MB files
+		file, fileHeader, err := r.FormFile("file")
+		if err != nil {
+			erpc.MarshalSend(w, erpc.StatusBadRequest)
+			return
+		}
+
+		defer file.Close()
+
+		log.Println("file size: ", fileHeader.Size)
+		fileBytes, err := ioutil.ReadAll(file)
+		if err != nil {
+			erpc.MarshalSend(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		hash, err := ipfs.IpfsAddBytes(fileBytes)
+		if err != nil {
+			erpc.MarshalSend(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		switch entity {
+		case "country":
+			log.Println("storing file against required country")
+			idInt, err := utils.ToInt(id)
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusBadRequest)
+				return
+			}
+			country, err := database.RetrieveCountry(idInt)
+			if err != nil {
+				erpc.MarshalSend(w, erpc.StatusInternalServerError)
+				return
+			}
+			country.Files = append(country.Files, hash)
+		case "mnc":
+			log.Println("storing file against required multinational company")
+		}
 	})
 }
