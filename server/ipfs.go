@@ -118,8 +118,7 @@ func getIpfsHash() {
 			return
 		}
 
-		if r.URL.Query()["string"] == nil {
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "string") {
 			return
 		}
 

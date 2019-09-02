@@ -52,9 +52,8 @@ func getRegion() {
 			return
 		}
 
-		if r.URL.Query()["region_name"] == nil || r.URL.Query()["region_country"] == nil {
-			log.Println("Region_name or region_country not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "region_name", "region_country") {
+			return
 		}
 
 		name := r.URL.Query()["region_name"][0]
@@ -100,9 +99,7 @@ func getStatesByCountry() {
 			return
 		}
 
-		if r.URL.Query()["country"] == nil {
-			log.Println("Country not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "country") {
 			return
 		}
 
@@ -124,9 +121,8 @@ func getState() {
 			return
 		}
 
-		if r.URL.Query()["state_name"] == nil || r.URL.Query()["state_country"] == nil {
-			log.Println("State_name or state_country not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "state_name", "state_country") {
+			return
 		}
 
 		name := r.URL.Query()["state_name"][0]
@@ -171,9 +167,8 @@ func getCity() {
 			return
 		}
 
-		if r.URL.Query()["city_name"] == nil || r.URL.Query()["city_region"] == nil {
-			log.Println("City name or city region not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "city_name", "city_region") {
+			return
 		}
 
 		name := r.URL.Query()["city_name"][0]
@@ -218,9 +213,7 @@ func getCompany() {
 			return
 		}
 
-		if r.URL.Query()["company_name"] == nil || r.URL.Query()["company_country"] == nil {
-			log.Println("company name or country not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "company_name", "company_country") {
 			return
 		}
 
@@ -266,9 +259,7 @@ func getCountry() {
 			return
 		}
 
-		if r.URL.Query()["country_name"] == nil {
-			log.Println("country name not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "country_name") {
 			return
 		}
 

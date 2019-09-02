@@ -45,9 +45,7 @@ func VerifyUser() {
 			return
 		}
 
-		if r.URL.Query()["candidate_id"] == nil {
-			log.Println("Candidate for verification not specified")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "candidate_id") {
 			return
 		}
 
@@ -291,9 +289,7 @@ func CommitPledge() {
 			return
 		}
 
-		if r.URL.Query()["pledge_ID"] == nil {
-			log.Println("pledge ID not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "pledge_ID") {
 			return
 		}
 
@@ -330,14 +326,11 @@ func UpdateMRV() {
 			return
 		}
 
-		if r.URL.Query()["MRV"] == nil {
-			log.Println("Updated MRV not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "MRV") {
 			return
 		}
 
 		mrv := r.URL.Query()["MRV"][0]
-
 		actor, err := user.RetrieveUserEntity()
 		actor.UpdateMRV(mrv)
 
