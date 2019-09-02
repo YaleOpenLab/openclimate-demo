@@ -38,6 +38,8 @@ type User struct {
 	Admin      bool   // is the user an admin for its entity?
 
 	EthereumWallet EthWallet
+	Liked          []string // array of liked projects
+	NotVisible     []string // array of visible projects
 	//CosmosWallet   CosmWallet
 }
 

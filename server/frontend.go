@@ -700,3 +700,44 @@ func addLike() {
 		erpc.MarshalSend(w, erpc.StatusOK)
 	})
 }
+
+func addNotVisible() {
+	http.HandleFunc("/visible/pledges/", func(w http.ResponseWriter, r *http.Request) {
+		strID, err := getPutId(w, r)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		if r.FormValue("accessToken") == "" || r.FormValue("username") == "" {
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		accessToken := r.FormValue("accessToken")
+		username := r.FormValue("username")
+
+		user, err := database.RetrieveUserByUsername(username)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		if user.AccessToken != accessToken {
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		// since the frontend is not expected to pass invalid requests to the liked routes, we don't validate that.
+		// this is not expected to be used by any ohter extenral parties, so this is okay I guess.
+		user.NotVisible = append(user.NotVisible, strID)
+		err = user.Save()
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, erpc.StatusOK)
+	})
+}
