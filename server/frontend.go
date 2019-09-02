@@ -200,6 +200,7 @@ func getActorId() {
 			if err != nil {
 				log.Println(err)
 				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
 			}
 			results := make(map[string]interface{})
 			results["full_name"] = company.Name
@@ -208,6 +209,36 @@ func getActorId() {
 			results["accountability"] = company.Accountability
 			results["pledges"] = pledges
 
+			results["direct_emissions"], err = getDirectEmissionsActorId(id)
+			if err != nil {
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+
+			results["mitigation_outcomes"], err = getMitigationOutcomesActorId(id)
+			if err != nil {
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+
+			results["direct_emissions"], err = getWindAndSolarActorId(id)
+			if err != nil {
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+
+			results["disclosure_settings"], err = getDisclosureSettingsActorId(id)
+			if err != nil {
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+
+			results["weighted_score"], err = getWeightedScoreActorId(id)
+			if err != nil {
+				erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+				return
+			}
+		// end of dashboard case
 		case "nation-states":
 			nationStates, err := getActorIdNationStates(company, w, r)
 			if err != nil {
@@ -215,7 +246,7 @@ func getActorId() {
 				return
 			}
 			erpc.MarshalSend(w, nationStates)
-
+		// end of nation states case
 		case "review":
 			results := make(map[string]interface{})
 			results["certificates"] = company.Certificates
