@@ -30,11 +30,30 @@ func frontendFns() {
 	postRegister()
 	postLogin()
 	getFiles()
+	addLike()
 }
 
 func getId(w http.ResponseWriter, r *http.Request) (string, error) {
 	var id string
 	err := erpc.CheckGet(w, r)
+	if err != nil {
+		log.Println(err)
+		return id, errors.New("request not get")
+	}
+
+	urlParams := strings.Split(r.URL.String(), "/")
+
+	if len(urlParams) < 3 {
+		return id, errors.New("no id provided, quitting")
+	}
+
+	id = urlParams[2]
+	return id, nil
+}
+
+func getPutId(w http.ResponseWriter, r *http.Request) (string, error) {
+	var id string
+	err := erpc.CheckPut(w, r)
 	if err != nil {
 		log.Println(err)
 		return id, errors.New("request not get")
@@ -438,12 +457,14 @@ func postLogin() {
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
 		if err != nil {
+			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
 		err = r.ParseForm()
 		if err != nil {
+			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
@@ -453,12 +474,14 @@ func postLogin() {
 
 		user, err := database.ValidateUser(username, pwhash)
 		if err != nil {
+			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
 		token, err := user.GenAccessToken()
 		if err != nil {
+			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
@@ -634,5 +657,46 @@ func getFiles() {
 		}
 
 		w.Write(decryptedBytes)
+	})
+}
+
+func addLike() {
+	http.HandleFunc("/like/pledges/", func(w http.ResponseWriter, r *http.Request) {
+		strID, err := getPutId(w, r)
+		if err != nil {
+			log.Println(err)
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		if r.FormValue("accessToken") == "" || r.FormValue("username") == "" {
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		accessToken := r.FormValue("accessToken")
+		username := r.FormValue("username")
+
+		user, err := database.RetrieveUserByUsername(username)
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		if user.AccessToken != accessToken {
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+
+		// since the frontend is not expected to pass invalid requests to the liked routes, we don't validate that.
+		// this is not expected to be used by any ohter extenral parties, so this is okay I guess.
+		user.Liked = append(user.Liked, strID)
+		err = user.Save()
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
+
+		erpc.MarshalSend(w, erpc.StatusOK)
 	})
 }
