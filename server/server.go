@@ -5,9 +5,20 @@ import (
 	"net/http"
 
 	erpc "github.com/Varunram/essentials/rpc"
-	ocdb "github.com/YaleOpenLab/openclimate/database"
 	utils "github.com/Varunram/essentials/utils"
+	ocdb "github.com/YaleOpenLab/openclimate/database"
 )
+
+func checkReqdParams(w *http.ResponseWriter, options ...string) bool {
+	for _, option := range options {
+		if r.URL.Query()[option] == nil {
+			log.Println("reqd param: ", option, "not found")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return false
+		}
+	}
+	return true
+}
 
 func StartServer(portx int, insecure bool) {
 

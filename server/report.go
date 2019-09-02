@@ -33,9 +33,7 @@ func reportDirect() {
 			return
 		}
 
-		if r.URL.Query()["report_type"] == nil {
-			log.Println("report type not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "report_type") {
 			return
 		}
 

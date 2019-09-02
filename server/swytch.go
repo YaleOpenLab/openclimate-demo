@@ -38,11 +38,10 @@ func getAccessToken() {
 			return
 		}
 
-		if r.URL.Query()["clientId"] == nil || r.URL.Query()["clientSecret"] == nil ||
-			r.URL.Query()["username"] == nil || r.URL.Query()["password"] == nil {
-			erpc.MarshalSend(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "clientId", "clientSecret", "username", "password") {
 			return
 		}
+
 		url := "https://platformapi-staging.swytch.io/v1/oauth/token"
 		pwd := "password"
 
@@ -98,9 +97,7 @@ func getRefreshToken() {
 			return
 		}
 
-		if r.URL.Query()["clientId"] == nil || r.URL.Query()["clientSecret"] == nil ||
-			r.URL.Query()["refreshToken"] == nil {
-			erpc.MarshalSend(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "clientId", "clientSecret", "refreshToken") {
 			return
 		}
 
@@ -180,8 +177,7 @@ func getSwytchUser() {
 			return
 		}
 
-		if r.URL.Query()["authToken"] == nil {
-			erpc.MarshalSend(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "authToken") {
 			return
 		}
 
@@ -267,8 +263,7 @@ func getAssets() {
 			return
 		}
 
-		if r.URL.Query()["authToken"] == nil || r.URL.Query()["userId"] == nil {
-			erpc.MarshalSend(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "authToken", "userId") {
 			return
 		}
 
@@ -365,8 +360,7 @@ func getEnergy() {
 			return
 		}
 
-		if r.URL.Query()["authToken"] == nil || r.URL.Query()["assetId"] == nil {
-			erpc.MarshalSend(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "authToken", "assetId") {
 			return
 		}
 
@@ -465,8 +459,7 @@ func getEnergyAttribution() {
 			return
 		}
 
-		if r.URL.Query()["authToken"] == nil || r.URL.Query()["assetId"] == nil {
-			erpc.MarshalSend(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "authToken", "assetId") {
 			return
 		}
 

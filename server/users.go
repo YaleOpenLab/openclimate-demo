@@ -33,16 +33,7 @@ func newUser() {
 			return
 		}
 
-		if r.URL.Query()["username"] == nil ||
-			r.URL.Query()["pwhash"] == nil ||
-			r.URL.Query()["email"] == nil ||
-			r.URL.Query()["entity_type"] == nil {
-			log.Println("required params - username, pwhash, email, or entity_type missing")
-			log.Println(r.URL.Query()["username"])
-			log.Println(r.URL.Query()["pwhash"])
-			log.Println(r.URL.Query()["email"])
-			log.Println(r.URL.Query()["entity_type"])
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "username", "pwhash", "email", "entity_type") {
 			return
 		}
 
@@ -103,10 +94,8 @@ func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error)
 		return user, errors.Wrap(err, "could not checkgetauth")
 	}
 
-	if r.URL.Query()["username"] == nil || r.URL.Query()["pwhash"] == nil {
-		log.Println("missing params in call")
-		erpc.ResponseHandler(w, erpc.StatusBadRequest)
-		return user, errors.New("missing params in call")
+	if !checkReqdParams(w, "username", "pwhash") {
+		return
 	}
 
 	username := r.URL.Query()["username"][0]
@@ -128,9 +117,8 @@ func CheckPostAuth(w http.ResponseWriter, r *http.Request) (database.User, error
 		return user, errors.Wrap(err, "could not checkpostauth")
 	}
 
-	if r.URL.Query()["username"] == nil || r.URL.Query()["pwhash"] == nil {
-		erpc.ResponseHandler(w, erpc.StatusBadRequest)
-		return user, errors.New("missing params in call")
+	if !checkReqdParams(w, "username", "pwhash") {
+		return
 	}
 
 	username := r.URL.Query()["username"][0]
@@ -251,9 +239,7 @@ func sendEth() {
 			return
 		}
 
-		if r.URL.Query()["address"] == nil || r.URL.Query()["amount"] == nil {
-			log.Println("address or amount missing, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, "address", "amount") {
 			return
 		}
 
