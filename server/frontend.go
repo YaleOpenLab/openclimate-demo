@@ -398,7 +398,7 @@ func postRegister() {
 
 		// // if RetrieveActor() returns nil for actor, that means the actor was not found
 		// if actor == nil {
-			
+
 		// }
 
 		// log.Println(registerInfo)

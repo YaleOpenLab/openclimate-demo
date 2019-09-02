@@ -4,17 +4,17 @@ import (
 	// "github.com/YaleOpenLab/openclimate/blockchain"
 	"github.com/YaleOpenLab/openclimate/database"
 	// "github.com/YaleOpenLab/openclimate/oracle"
-	"github.com/YaleOpenLab/openclimate/server"
 	"github.com/YaleOpenLab/openclimate/globals"
+	"github.com/YaleOpenLab/openclimate/server"
 	flags "github.com/jessevdk/go-flags"
-	"os"
 	"log"
+	"os"
 	// "math/big"
 )
 
 var opts struct {
-	Insecure  bool `short:"i" description:"Start the API using http. Not recommended"`
-	Port      int  `short:"p" description:"The port on which the server runs on. Default: HTTPS/8080"`
+	Insecure bool `short:"i" description:"Start the API using http. Not recommended"`
+	Port     int  `short:"p" description:"The port on which the server runs on. Default: HTTPS/8080"`
 }
 
 // ParseConfig parses CLI parameters passed
