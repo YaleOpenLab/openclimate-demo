@@ -400,8 +400,9 @@ func postRegister() {
 	http.HandleFunc("/register", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
 		if err != nil {
+			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			log.Fatal(err)
+			return
 		}
 
 		err = r.ParseForm()
@@ -410,46 +411,55 @@ func postRegister() {
 			return
 		}
 
-		actor_id := r.FormValue("actor_id")
-		actor_name := r.FormValue("actor_name")
-		identification_file_id := r.FormValue("identification_file_id")
-		employment_file_id := r.FormValue("employment_file_id")
-		first_name := r.FormValue("first_name")
-		last_name := r.FormValue("last_name")
-		title := r.FormValue("title")
-		email := r.FormValue("email")
-		phone := r.FormValue("phone")
-		account_type_id := r.FormValue("account_type_id")
-		account_type := r.FormValue("account_type")
+		multiNationalId := r.FormValue("m_id")
+		nationId := r.FormValue("n_id")
+		var idS string
 
-		switch account_type {
-		case "country":
-			log.Println("creating country")
-		case "state":
-			log.Println("creating state")
-		case "region":
-			log.Println("creating region")
+		var multinational bool
+		if multiNationalId == "" {
+			if nationId == "" {
+				log.Println("both mnc and nation id are nil, quitting")
+				erpc.ResponseHandler(w, erpc.StatusBadRequest)
+				return
+			}
+			multinational = false
+			idS = nationId
+		} else {
+			multinational = true
+			idS = multiNationalId
 		}
 
-		// actorID := registerInfo["actor_id"].(int)
-		// actorType := registerInfo["actor_type"].(string)
+		id, err := utils.ToInt(idS)
+		if err != nil {
+			log.Println("ID=", id, err)
+			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
+		}
 
-		// actor, err := RetrieveActor(actorType, actorID)
-		// if err != nil {
-		// 	erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-		// 	log.Fatal(err)
-		// }
+		x, _ := database.RetrieveUser(id)
 
-		// // if RetrieveActor() returns nil for actor, that means the actor was not found
-		// if actor == nil {
+		x.Username = r.FormValue("username")
+		x.Pwhash = r.FormValue("pwhash")
+		x.FirstName = r.FormValue("first_name")
+		x.LastName = r.FormValue("last_name")
+		x.Email = r.FormValue("email")
+		x.EIN = r.FormValue("ein")
+		x.EntityType = "country"
 
-		// }
+		if multinational {
+			x.EntityType = "mnc"
+		} else {
+			x.EntityType = "country"
+		}
 
-		// log.Println(registerInfo)
+		err = x.Save()
+		if err != nil {
+			log.Println(err)
+			erpc.MarshalSend(w, erpc.StatusInternalServerError)
+			return
+		}
 
-		log.Println(actor_id, actor_name, identification_file_id, employment_file_id,
-			first_name, last_name, title, email, phone, account_type_id)
-		w.Write([]byte("registered"))
+		erpc.MarshalSend(w, x)
 	})
 }
 
@@ -702,7 +712,7 @@ func addLike() {
 }
 
 func addNotVisible() {
-	http.HandleFunc("/visible/pledges/", func(w http.ResponseWriter, r *http.Request) {
+	http.HandleFunc("/hide/disclosure-settings/", func(w http.ResponseWriter, r *http.Request) {
 		strID, err := getPutId(w, r)
 		if err != nil {
 			log.Println(err)
