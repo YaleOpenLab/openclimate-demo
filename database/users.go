@@ -173,7 +173,23 @@ func ValidateUser(username string, pwhash string) (User, error) {
 		}
 	}
 
-	return user, errors.New("user not found")
+	return user, errors.New("user not found / pwhash incorrect")
+}
+
+func ValidateAccessToken(username string, accessToken string) (User, error) {
+	var user User
+	users, err := RetrieveAllUsers()
+	if err != nil {
+		return user, errors.Wrap(err, "error while retrieving all users from database")
+	}
+
+	for _, user := range users {
+		if user.Username == username && user.AccessToken == accessToken {
+			return user, nil
+		}
+	}
+
+	return user, errors.New("user not found / access token doesn't match")
 }
 
 // Empty function, simply allows User to match "Actor" interface methods

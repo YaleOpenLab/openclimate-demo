@@ -62,16 +62,16 @@ func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error)
 		return user, errors.Wrap(err, "could not checkgetauth")
 	}
 
-	if !checkReqdParams(w, r, "username", "pwhash") {
+	if !checkReqdParams(w, r, "username", "access_token") {
 		return user, nil
 	}
 
 	username := r.URL.Query()["username"][0]
-	pwhash := r.URL.Query()["pwhash"][0]
+	accessToken := r.URL.Query()["access_token"][0]
 
-	user, err = database.ValidateUser(username, pwhash)
+	user, err = database.ValidateAccessToken(username, accessToken)
 	if err != nil {
-		log.Println("could not retrieve user from the database, quitting")
+		log.Println("could not retrieve user from the database or invalid access token, quitting")
 		erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		return user, errors.New("user not found in database, quitting")
 	}
@@ -85,15 +85,16 @@ func CheckPostAuth(w http.ResponseWriter, r *http.Request) (database.User, error
 		return user, errors.Wrap(err, "could not checkpostauth")
 	}
 
-	if !checkReqdParams(w, r, "username", "pwhash") {
+	if !checkReqdParams(w, r, "username", "access_token") {
 		return user, nil
 	}
 
 	username := r.URL.Query()["username"][0]
-	pwhash := r.URL.Query()["pwhash"][0]
+	accessToken := r.URL.Query()["access_token"][0]
 
-	user, err = database.ValidateUser(username, pwhash)
+	user, err = database.ValidateAccessToken(username, accessToken)
 	if err != nil {
+		log.Println("could not retrieve user from the database or invalid access token, quitting")
 		erpc.ResponseHandler(w, erpc.StatusBadRequest)
 		return user, errors.New("user not found in database, quitting")
 	}
