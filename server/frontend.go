@@ -468,18 +468,21 @@ func postRegister() {
 	})
 }
 
+type PostLoginResponse struct {
+	Token string
+}
+
 func postLogin() {
 	http.HandleFunc("/login", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckPost(w, r)
 		if err != nil {
-			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
 		err = r.ParseForm()
 		if err != nil {
-			log.Println(err)
+			log.Println("PARSE FORM ERROR?", err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
@@ -505,7 +508,9 @@ func postLogin() {
 			return
 		}
 
-		erpc.MarshalSend(w, token)
+		var x PostLoginResponse
+		x.Token = token
+		erpc.MarshalSend(w, x)
 	})
 }
 
