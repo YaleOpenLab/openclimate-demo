@@ -33,16 +33,7 @@ func newUser() {
 			return
 		}
 
-		if r.URL.Query()["username"] == nil ||
-			r.URL.Query()["pwhash"] == nil ||
-			r.URL.Query()["email"] == nil ||
-			r.URL.Query()["entity_type"] == nil {
-			log.Println("required params - username, pwhash, email, or entity_type missing")
-			log.Println(r.URL.Query()["username"])
-			log.Println(r.URL.Query()["pwhash"])
-			log.Println(r.URL.Query()["email"])
-			log.Println(r.URL.Query()["entity_type"])
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, r, "username", "pwhash", "email", "entity_type") {
 			return
 		}
 
@@ -64,38 +55,6 @@ func newUser() {
 	})
 }
 
-// func newChild() {
-// 	http.HandleFunc("/user/add/child", func(w http.ResponseWriter, r *http.Request) {
-// 		err := erpc.CheckGet(w, r)
-// 		if err != nil {
-// 			return
-// 		}
-
-// 		if r.URL.Query()["child"] == nil {
-// 			log.Println("required param child missing")
-// 			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-// 			return
-// 		}
-
-// 		username := r.URL.Query()["username"][0]
-// 		child := r.URL.Query()["child"][0]
-
-// 		user, err := database.RetrieveUserByUsername(username)
-// 		if err != nil {
-// 			log.Println("failed to retrieve user, quitting")
-// 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-// 		}
-
-// 		err = user.AddChild(child)
-// 		if err != nil {
-// 			log.Println("failed to add child, quitting")
-// 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
-// 		}
-
-// 		erpc.MarshalSend(w, user)
-// 	})
-// }
-
 func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error) {
 	var user database.User
 	err := erpc.CheckGet(w, r)
@@ -103,19 +62,17 @@ func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error)
 		return user, errors.Wrap(err, "could not checkgetauth")
 	}
 
-	if r.URL.Query()["username"] == nil || r.URL.Query()["pwhash"] == nil {
-		log.Println("missing params in call")
-		erpc.ResponseHandler(w, erpc.StatusBadRequest)
-		return user, errors.New("missing params in call")
+	if !checkReqdParams(w, r, "username", "access_token") {
+		erpc.ResponseHandler(w, erpc.StatusUnauthorized)
+		return user, errors.New("did not have required params")
 	}
 
 	username := r.URL.Query()["username"][0]
-	pwhash := r.URL.Query()["pwhash"][0]
+	accessToken := r.URL.Query()["access_token"][0]
 
-	user, err = database.ValidateUser(username, pwhash)
+	user, err = database.ValidateAccessToken(username, accessToken)
 	if err != nil {
-		log.Println("could not retrieve user from the database, quitting")
-		erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		erpc.ResponseHandler(w, erpc.StatusUnauthorized)
 		return user, errors.New("user not found in database, quitting")
 	}
 	return user, nil
@@ -128,17 +85,17 @@ func CheckPostAuth(w http.ResponseWriter, r *http.Request) (database.User, error
 		return user, errors.Wrap(err, "could not checkpostauth")
 	}
 
-	if r.URL.Query()["username"] == nil || r.URL.Query()["pwhash"] == nil {
-		erpc.ResponseHandler(w, erpc.StatusBadRequest)
-		return user, errors.New("missing params in call")
+	if !checkReqdParams(w, r, "username", "access_token") {
+		erpc.ResponseHandler(w, erpc.StatusUnauthorized)
+		return user, errors.New("did not have requried params")
 	}
 
 	username := r.URL.Query()["username"][0]
-	pwhash := r.URL.Query()["pwhash"][0]
+	accessToken := r.URL.Query()["access_token"][0]
 
-	user, err = database.ValidateUser(username, pwhash)
+	user, err = database.ValidateAccessToken(username, accessToken)
 	if err != nil {
-		erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		erpc.ResponseHandler(w, erpc.StatusUnauthorized)
 		return user, errors.New("user not found in database, quitting")
 	}
 
@@ -251,9 +208,7 @@ func sendEth() {
 			return
 		}
 
-		if r.URL.Query()["address"] == nil || r.URL.Query()["amount"] == nil {
-			log.Println("address or amount missing, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, r, "address", "amount") {
 			return
 		}
 

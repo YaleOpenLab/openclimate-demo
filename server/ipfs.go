@@ -35,8 +35,7 @@ func RetrieveFromIpfs() {
 
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
 		}
 
 		reportType := r.URL.Query()["report_type"][0]
@@ -77,8 +76,7 @@ func RetrieveAllFromIpfs() {
 
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+			return
 		}
 
 		// reportType := r.URL.Query()["report_type"][0]
@@ -118,8 +116,7 @@ func getIpfsHash() {
 			return
 		}
 
-		if r.URL.Query()["string"] == nil {
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, r, "string") {
 			return
 		}
 

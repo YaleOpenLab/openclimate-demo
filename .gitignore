@@ -9,3 +9,4 @@ globals/secret.go
 sprojects/proofs/proofs
 certs/server.crt
 certs/server.key
+index.html

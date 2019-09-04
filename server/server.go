@@ -5,13 +5,33 @@ import (
 	"net/http"
 
 	erpc "github.com/Varunram/essentials/rpc"
-	ocdb "github.com/YaleOpenLab/openclimate/database"
 	utils "github.com/Varunram/essentials/utils"
 )
 
+func checkReqdParams(w http.ResponseWriter, r *http.Request, options ...string) bool {
+	for _, option := range options {
+		if r.URL.Query()[option] == nil {
+			log.Println("reqd param: ", option, "not found")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return false
+		}
+	}
+	return true
+}
+
+func checkReqdPostParams(w http.ResponseWriter, r *http.Request, options ...string) bool {
+	for _, option := range options {
+		if r.FormValue(option) == "" {
+			log.Println("reqd param: ", option, "not found")
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return false
+		}
+	}
+	return true
+}
+
 func StartServer(portx int, insecure bool) {
 
-	ocdb.Populate()
 	erpc.SetupBasicHandlers()
 
 	setupView()

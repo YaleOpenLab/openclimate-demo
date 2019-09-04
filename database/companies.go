@@ -14,7 +14,7 @@ type Company struct {
 
 	// Identifying info
 	Index       int
-	Name        string `json:"name"`
+	Name        string `json:"shortname"`
 	FullName    string `json:"name"`
 	Description string `json:"description"`
 
@@ -67,6 +67,7 @@ type Company struct {
 	// Adaptation map[string]string
 
 	LastUpdated string
+	Files       []string // list of ipfs hashes to be stored for verification or something similar
 }
 
 type Certificate struct {

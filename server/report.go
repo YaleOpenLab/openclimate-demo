@@ -1,8 +1,8 @@
 package server
 
 import (
-	"encoding/json"
-	"io/ioutil"
+	// "encoding/json"
+	// "io/ioutil"
 	"log"
 	"net/http"
 	// "strconv"
@@ -28,34 +28,21 @@ func reportDirect() {
 	http.HandleFunc("/report/direct", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckPostAuth(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
-		if r.URL.Query()["report_type"] == nil {
-			log.Println("report type not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
-			return
-		}
-
-		reportType := r.URL.Query()["report_type"][0]
-		bytes, err := ioutil.ReadAll(r.Body)
-		defer r.Body.Close()
+		err = r.ParseForm()
 		if err != nil {
-			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
-		var data interface{}
-		err = json.Unmarshal(bytes, &data)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		if !checkReqdParams(w, r, "report_type", "data") {
 			return
 		}
 
+		reportType := r.FormValue("report_type")
+		data := r.FormValue("data")
 		err = oracle.VerifyAndCommit(reportType, user.EntityType, user.EntityID, data)
 		if err != nil {
 			log.Fatal(err)

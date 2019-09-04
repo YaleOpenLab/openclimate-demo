@@ -10,6 +10,7 @@ import (
 	"strconv"
 
 	erpc "github.com/Varunram/essentials/rpc"
+	"github.com/Varunram/essentials/utils"
 	db "github.com/YaleOpenLab/openclimate/database"
 	"github.com/YaleOpenLab/openclimate/ipfs"
 )
@@ -22,7 +23,6 @@ func setupManage() {
 	UpdatePledge()
 	CommitPledge()
 	UpdateMRV()
-	integrateBulk()
 	integrateRequest()
 }
 
@@ -45,9 +45,7 @@ func VerifyUser() {
 			return
 		}
 
-		if r.URL.Query()["candidate_id"] == nil {
-			log.Println("Candidate for verification not specified")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, r, "candidate_id") {
 			return
 		}
 
@@ -91,27 +89,21 @@ func AddAsset() {
 			return
 		}
 
-		bytes, err := ioutil.ReadAll(r.Body)
-		defer r.Body.Close()
+		err = r.ParseForm()
 		if err != nil {
-			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
-		var asset map[string]string
-		err = json.Unmarshal(bytes, &asset)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		if !checkReqdPostParams(w, r, "name", "location", "state", "type") {
 			return
 		}
 
-		name := asset["name"]
 		companyID := user.EntityID
-		location := asset["location"]
-		state := asset["state"]
-		assetType := asset["type"]
+		name := r.FormValue("name")
+		location := r.FormValue("location")
+		state := r.FormValue("state")
+		assetType := r.FormValue("type")
 
 		new, err := db.NewAsset(name, companyID, location, state, assetType)
 		if err != nil {
@@ -189,38 +181,40 @@ func AddPledge() {
 			return
 		}
 
-		// Read the data in the body of the response into bytes,
-		// which will be parsed into a map[string]string.
-		bytes, err := ioutil.ReadAll(r.Body)
-		defer r.Body.Close()
+		err = r.ParseForm()
 		if err != nil {
 			log.Println(err)
 			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 
-		// Unmarshal the json bytes into the map[string]string data type
-		// to be parsed for the arguments to create a new Pledge item and
-		// inserted into the pledge bucket.
-		var pledge map[string]interface{}
-		err = json.Unmarshal(bytes, &pledge)
-		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
+		if !checkReqdPostParams(w, r, "pledge_type", "base_year", "target_year", "goal", "regulatory") {
 			return
 		}
 
-		// Convert string data into the correct data type to be passed
-		// to the NewPledge() function, in order to create the new pledge.
+		pledgeType := r.FormValue("pledge_type")
+		baseYear, err := utils.ToFloat(r.FormValue("base_year"))
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+		targetYear, err := utils.ToFloat(r.FormValue("target_year"))
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+		goal, err := utils.ToFloat(r.FormValue("goal"))
+		if err != nil {
+			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
+		}
+		var regulatory bool
+		if r.FormValue("regulatory") == "true" {
+			regulatory = true
+		}
 
 		actorType := user.EntityType
 		actorID := user.EntityID
-
-		pledgeType := pledge["pledge_type"].(string)
-		baseYear := pledge["base_year"].(float64)
-		targetYear := pledge["target_year"].(float64)
-		goal := pledge["goal"].(float64)
-		regulatory := pledge["regulatory"].(bool)
 
 		// Call NewPledge() with all the arguments, which have been typecasted
 		// into the proper types required by the NewPledge function.
@@ -286,14 +280,10 @@ func CommitPledge() {
 	http.HandleFunc("manage/pledges/commit", func(w http.ResponseWriter, r *http.Request) {
 		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
-		if r.URL.Query()["pledge_ID"] == nil {
-			log.Println("pledge ID not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, r, "pledge_ID") {
 			return
 		}
 
@@ -325,28 +315,19 @@ func UpdateMRV() {
 	http.HandleFunc("/manage/mrv/update", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
-		if r.URL.Query()["MRV"] == nil {
-			log.Println("Updated MRV not passed, quitting")
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		if !checkReqdParams(w, r, "MRV") {
 			return
 		}
 
 		mrv := r.URL.Query()["MRV"][0]
-
 		actor, err := user.RetrieveUserEntity()
 		actor.UpdateMRV(mrv)
 
 		erpc.MarshalSend(w, mrv)
 	})
-}
-
-func integrateBulk() {
-
 }
 
 // Submit a request to connect with an external database that contains

@@ -7,20 +7,18 @@ import (
 )
 
 func Populate() {
-	PopulateCountries()
-	PopulateRegions()
-	PopulateUSStates()
-	PopulateAvangridCompany()
-	PopulateAvangridAssets()
-	PopulateAdminUsers()
-	PopulateTestUsers()
-
-	// TestGetActor()
+	populateCountries()
+	populateRegions()
+	populateUSStates()
+	populateAvangridCompany()
+	populateAvangridAssets()
+	populateAdminUsers()
+	populateTestUsers()
 }
 
 // Test function populating the countries bucket with dummy values
 // to test the rpc endpoint for countries
-func PopulateCountries() error {
+func populateCountries() error {
 	countries := []string{"USA", "China", "Japan", "Mexico", "Ethiopia"}
 	for _, country := range countries {
 		_, err := NewCountry(country)
@@ -31,7 +29,7 @@ func PopulateCountries() error {
 	return nil
 }
 
-func PopulateRegions() error {
+func populateRegions() error {
 	_, err := NewRegion("New England", "USA")
 	if err != nil {
 		return errors.Wrap(err, "Failed populate regions test")
@@ -56,7 +54,7 @@ func PopulateRegions() error {
 }
 
 // Test function populating the regions bucket with the US states
-func PopulateUSStates() {
+func populateUSStates() {
 	USStates = []string{"Alabama", "Alaska", "American Samoa", "Arizona", "Arkansas", "California", "Colorado", "Connecticut", "Delaware", "District of Columbia", "Federated States of Micronesia", "Florida", "Georgia", "Guam", "Hawaii", "Idaho", "Illinois", "Indiana", "Iowa", "Kansas", "Kentucky", "Louisiana", "Maine", "Marshall Islands", "Maryland", "Massachusetts", "Michigan", "Minnesota", "Mississippi", "Missouri", "Montana", "Nebraska", "Nevada", "New Hampshire", "New Jersey", "New Mexico", "New York", "North Carolina", "North Dakota", "Northern Mariana Islands", "Ohio", "Oklahoma", "Oregon", "Palau", "Pennsylvania", "Puerto Rico", "Rhode Island", "South Carolina", "South Dakota", "Tennessee", "Texas", "Utah", "Vermont", "Virgin Island", "Virginia", "Washington", "West Virginia", "Wisconsin", "Wyoming"}
 	for _, state := range USStates {
 		_, err := NewState(state, "USA")
@@ -79,7 +77,7 @@ func PopulateUSStates() {
 	}
 }
 
-func PopulateAvangridCompany() {
+func populateAvangridCompany() {
 
 	avangrid, err := NewCompany("Avangrid", "USA")
 	if err != nil {
@@ -146,7 +144,7 @@ func PopulateAvangridCompany() {
 	}
 }
 
-func PopulateAvangridAssets() {
+func populateAvangridAssets() {
 
 	avangrid, err := RetrieveCompanyByName("Avangrid", "USA")
 	if err != nil {
@@ -201,7 +199,7 @@ func PopulateAvangridAssets() {
 	}
 }
 
-func PopulateAdminUsers() error {
+func populateAdminUsers() error {
 	pwhash := utils.SHA3hash("p")
 
 	_, err := NewUser("amanda", pwhash, "amanda@test.com", "company", "Avangrid", "USA")
@@ -225,7 +223,7 @@ func PopulateAdminUsers() error {
 	return nil
 }
 
-func PopulateTestUsers() error {
+func populateTestUsers() error {
 	pwhash := utils.SHA3hash("a")
 	user, err := NewUser("testuser", pwhash, "user@test.com", "country", "USA", "")
 	if err != nil {

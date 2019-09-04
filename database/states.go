@@ -48,6 +48,7 @@ type State struct {
 	Adaptation map[string]string
 
 	LastUpdated string
+	Files       []string
 }
 
 // Function that creates a new state object given its name and country
