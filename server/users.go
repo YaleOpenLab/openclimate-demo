@@ -63,7 +63,8 @@ func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error)
 	}
 
 	if !checkReqdParams(w, r, "username", "access_token") {
-		return user, nil
+		erpc.ResponseHandler(w, erpc.StatusUnauthorized)
+		return user, errors.New("did not have required params")
 	}
 
 	username := r.URL.Query()["username"][0]
@@ -71,8 +72,7 @@ func CheckGetAuth(w http.ResponseWriter, r *http.Request) (database.User, error)
 
 	user, err = database.ValidateAccessToken(username, accessToken)
 	if err != nil {
-		log.Println("could not retrieve user from the database or invalid access token, quitting")
-		erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		erpc.ResponseHandler(w, erpc.StatusUnauthorized)
 		return user, errors.New("user not found in database, quitting")
 	}
 	return user, nil
@@ -86,7 +86,8 @@ func CheckPostAuth(w http.ResponseWriter, r *http.Request) (database.User, error
 	}
 
 	if !checkReqdParams(w, r, "username", "access_token") {
-		return user, nil
+		erpc.ResponseHandler(w, erpc.StatusUnauthorized)
+		return user, errors.New("did not have requried params")
 	}
 
 	username := r.URL.Query()["username"][0]
@@ -94,8 +95,7 @@ func CheckPostAuth(w http.ResponseWriter, r *http.Request) (database.User, error
 
 	user, err = database.ValidateAccessToken(username, accessToken)
 	if err != nil {
-		log.Println("could not retrieve user from the database or invalid access token, quitting")
-		erpc.ResponseHandler(w, erpc.StatusBadRequest)
+		erpc.ResponseHandler(w, erpc.StatusUnauthorized)
 		return user, errors.New("user not found in database, quitting")
 	}
 

@@ -28,8 +28,6 @@ func reportDirect() {
 	http.HandleFunc("/report/direct", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckPostAuth(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusInternalServerError)
 			return
 		}
 

@@ -94,8 +94,6 @@ func getStatesByCountry() {
 	http.HandleFunc("/state/filter", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 

@@ -280,8 +280,6 @@ func CommitPledge() {
 	http.HandleFunc("manage/pledges/commit", func(w http.ResponseWriter, r *http.Request) {
 		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -317,8 +315,6 @@ func UpdateMRV() {
 	http.HandleFunc("/manage/mrv/update", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 

@@ -39,7 +39,6 @@ func getId(w http.ResponseWriter, r *http.Request) (string, error) {
 	var id string
 	err := erpc.CheckGet(w, r)
 	if err != nil {
-		log.Println(err)
 		return id, errors.New("request not get")
 	}
 
@@ -75,8 +74,7 @@ func getNationStates() {
 	http.HandleFunc("/nation-states", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
 		}
 
 		nationStates, err := database.RetrieveAllCountries()
@@ -93,8 +91,7 @@ func getMultiNationals() {
 	http.HandleFunc("/multinationals", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
 		}
 
 		multinationals, err := database.RetrieveAllMultiNationals()
@@ -106,8 +103,6 @@ func getNationStateId() {
 	http.HandleFunc("/nation-states/", func(w http.ResponseWriter, r *http.Request) {
 		strID, err := getId(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -144,8 +139,6 @@ func getMultiNationalId() {
 	http.HandleFunc("/multinationals/", func(w http.ResponseWriter, r *http.Request) {
 		strID, err := getId(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -195,8 +188,6 @@ func getActorId() {
 	http.HandleFunc("/actors/", func(w http.ResponseWriter, r *http.Request) {
 		strID, err := getId(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -371,8 +362,7 @@ func getEarthStatus() {
 	http.HandleFunc("/earth-status", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
 		}
 
 		var x EarthStatusReturn
@@ -390,8 +380,7 @@ func getActors() {
 	http.HandleFunc("/actors", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
+			return
 		}
 
 		w.Write([]byte("get actors"))
@@ -648,7 +637,6 @@ func getFiles() {
 
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			erpc.MarshalSend(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -776,7 +764,7 @@ func searchForEntity() {
 	http.HandleFunc("/actors/search", func(w http.ResponseWriter, r *http.Request) {
 		err := erpc.CheckGet(w, r)
 		if err != nil {
-			erpc.MarshalSend(w, erpc.StatusBadRequest)
+			return
 		}
 
 		if !checkReqdParams(w, r, "search") {

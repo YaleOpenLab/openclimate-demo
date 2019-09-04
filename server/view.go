@@ -22,8 +22,6 @@ func viewCompanyPledges() {
 	http.HandleFunc(viewUrl+"/pledges", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -50,8 +48,6 @@ func ViewCompanyEarth() {
 
 		_, err := CheckGetAuth(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -70,8 +66,6 @@ func viewCompanyNational() {
 	http.HandleFunc(viewUrl+"/national", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -111,8 +105,6 @@ func viewCompanySubNationalByNational() {
 	http.HandleFunc(viewUrl+"/subnational", func(w http.ResponseWriter, r *http.Request) {
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
@@ -170,8 +162,6 @@ func viewCompanyAssetsBySubNational() {
 
 		user, err := CheckGetAuth(w, r)
 		if err != nil {
-			log.Println(err)
-			erpc.ResponseHandler(w, erpc.StatusBadRequest)
 			return
 		}
 
