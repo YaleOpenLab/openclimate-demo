@@ -34,7 +34,7 @@ contract Reporting {
     mapping(address=> uint[]) private timeStamps;
     
     /**
-       Function to insert a new report
+       Function to insert a new report. It increments values.
     */
     function insert_report(
         bytes32 country_name,
@@ -58,19 +58,20 @@ contract Reporting {
         if(getLastStamp(msg.sender)>=timeStamp) revert();
         // Push new timeStamp
         timeStamps[msg.sender].push(timeStamp);
+        uint lastTimestamp = getLastStamp(msg.sender);
         // insert values
         Reports[msg.sender][timeStamp].country_name      = country_name;
-        Reports[msg.sender][timeStamp].CO2               = CO2;
-        Reports[msg.sender][timeStamp].CH4               = CH4;
-        Reports[msg.sender][timeStamp].N2O               = N2O;
-        Reports[msg.sender][timeStamp].HFCs               = HFCs;
-        Reports[msg.sender][timeStamp].PFCs               = PFCs;
-        Reports[msg.sender][timeStamp].SF6               = SF6;
-        Reports[msg.sender][timeStamp].NF3               = NF3;
-        Reports[msg.sender][timeStamp].AltEnergy         = AltEnergy;
-        Reports[msg.sender][timeStamp].Mobilization      = Mobilization;
-        Reports[msg.sender][timeStamp].ContribGreenFund  = ContribGreenFund;
-        Reports[msg.sender][timeStamp].BilateralLoan     = BilateralLoan;
+        Reports[msg.sender][timeStamp].CO2               = Reports[msg.sender][lastTimestamp].CO2+CO2;
+        Reports[msg.sender][timeStamp].CH4               = Reports[msg.sender][lastTimestamp].CH4+CH4;
+        Reports[msg.sender][timeStamp].N2O               = Reports[msg.sender][lastTimestamp].N2O+N2O;
+        Reports[msg.sender][timeStamp].HFCs              = Reports[msg.sender][lastTimestamp].HFCs+HFCs;
+        Reports[msg.sender][timeStamp].PFCs              = Reports[msg.sender][lastTimestamp].PFCs+PFCs;
+        Reports[msg.sender][timeStamp].SF6               = Reports[msg.sender][lastTimestamp].SF6+SF6;
+        Reports[msg.sender][timeStamp].NF3               = Reports[msg.sender][lastTimestamp].NF3+NF3;
+        Reports[msg.sender][timeStamp].AltEnergy         = Reports[msg.sender][lastTimestamp].AltEnergy+AltEnergy;
+        Reports[msg.sender][timeStamp].Mobilization      = Reports[msg.sender][lastTimestamp].Mobilization+Mobilization;
+        Reports[msg.sender][timeStamp].ContribGreenFund  = Reports[msg.sender][lastTimestamp].ContribGreenFund+ContribGreenFund;
+        Reports[msg.sender][timeStamp].BilateralLoan     = Reports[msg.sender][lastTimestamp].BilateralLoan+BilateralLoan;
         Reports[msg.sender][timeStamp].timeStamp         = timeStamp;
     }
     
@@ -83,6 +84,13 @@ contract Reporting {
         uint length = timeStamps[countryAddr].length;
         if (length == 0) return 0;
         else return list[length-1];
+    }
+    
+    function getPrevoiusStamp (address countryAddr) view public returns (uint prevousTimestamp){
+        uint[] memory list = timeStamps[countryAddr];
+        uint length = timeStamps[countryAddr].length;
+        if (length == 1) return 0;
+        else return list[length-2];
     }
     
     function getLastReport(address countryAddr) 
@@ -136,8 +144,23 @@ contract Reporting {
     {
         uint  lastTimestamp = getLastStamp(countryAddr);
         return (
-            Reports[msg.sender][lastTimestamp].CO2,
-            Reports[msg.sender][lastTimestamp].timeStamp
+            Reports[countryAddr][lastTimestamp].CO2,
+            Reports[countryAddr][lastTimestamp].timeStamp
+            );
+    }
+    
+    function getIncrementCO2(address countryAddr) 
+    view 
+    public 
+    returns 
+    (
+        int CO2
+        ) 
+    {
+        uint  lastTimestamp = getLastStamp(countryAddr);
+        uint  prevousTimestamp = getPrevoiusStamp(countryAddr);
+        return (
+            Reports[countryAddr][lastTimestamp].CO2-Reports[countryAddr][prevousTimestamp].CO2
             );
     }
 }

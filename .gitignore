@@ -10,3 +10,6 @@ sprojects/proofs/proofs
 certs/server.crt
 certs/server.key
 index.html
+
+# IntelliJ
+.idea

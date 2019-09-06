@@ -3,6 +3,7 @@ pragma solidity ^0.5.10;
 import "./ndcs.sol";
 import "./reporting.sol";
 // import "../math/SafeMath.sol";
+import "../token/YaleOpenClimate.sol";
 
 contract ParisAgreementHighLevel{
     // using SafeMath for uint256;
@@ -31,7 +32,7 @@ contract ParisAgreementHighLevel{
      Util function set global goals by COP
      */
     function set_global_stocktake (address[] memory votingParties, int CO2, int CH4, int N2O, int AltEnergy, uint timeGoal) public pure {
-        global_stocktake(votingPatries, CO2, CH4, N2O, AltEnergy, timeGoal);
+        global_stocktake(votingParties, CO2, CH4, N2O, AltEnergy, timeGoal);
     }
     
     
@@ -49,23 +50,35 @@ contract ParisAgreementHighLevel{
     function ReportNDCS(address _t) public {
         report_ndc = Reporting(_t);
     }
+    
+    // Import Token Contract contract
+    YaleOpenClimate token;
+    function TransferToken(address _t) public {
+        token = YaleOpenClimate(_t);
+    }
+    
     // Calculate GHG reduction/surplus compared to NDC 
-    function calculateReductions(address countryAddr) public view returns (int co2_reduction) {
+    function calculateReductions(address countryAddr) public view returns (int reduction_) {
         require(contract_ndcs.isCounrty(countryAddr), "Country doesnt have an NDC");
         (int ndcCO2, uint timeTarget) = contract_ndcs.getNdcCO2(countryAddr);
         (int reportCO2, uint timeStamp) = report_ndc.getLastCO2(countryAddr);
         require(timeTarget>=timeStamp, "Timestamp cant be higher than timeTarget");
-        return (ndcCO2-reportCO2);
+        int reduction = ndcCO2-reportCO2;
+        return reduction;
     }
     
-    // //Make an action - issue/burn tokens depending on reporting
-    // function ndcAction(address countryAddr) private (int ussuedTokens) {
-    //    
-    //    logic for issuing/burning tokens depending on how the country achieves its NDC target
-    //    Token will probably have some value or benefits for a counrty (still working on it)
-    //    
-    //    return;
-    // }
+    //Make an action - issue/burn tokens depending on reporting
+    // logic for issuing/burning tokens depending on how the country achieves its NDC target
+    // Token will probably have some value or benefits for a counrty
+    // Note. Tokens owner is be a PA contract itself 
+    function ndcAction(address countryAddr) payable public returns (bool transfered, int amount) {
+        // calculate CO2 offset increment
+        int increment = report_ndc.getIncrementCO2(countryAddr);
+        require((increment>0), "Last offset should be greater 0");
+        // Transfer tokens from PA contract to countryAddr
+        token.transferFrom(address(this), countryAddr, uint(increment));
+        return (true, increment);
+    }
     
     /********************************************************************
      End of action part
