@@ -12,6 +12,36 @@ import (
 
 var Curve *btcec.KoblitzCurve = btcec.S256() // take only the curve, can't use other stuff
 
+func Encrypt(x *big.Int, k []byte, n, nsq *big.Int) *big.Int {
+	one := new(big.Int).SetInt64(1)
+
+	xn := new(big.Int).Mul(x, n)
+
+	xnplusonemodnsq := new(big.Int).Mod(new(big.Int).Add(xn, one), nsq)
+
+	knmodnsq := new(big.Int).Exp(new(big.Int).SetBytes(k), n, nsq)
+
+	return new(big.Int).Mod(new(big.Int).Mul(xnplusonemodnsq, knmodnsq), nsq)
+}
+
+func Decrypt(lambda, ex, n, nsq, mu *big.Int) *big.Int {
+	clambdamodnsq := new(big.Int).Exp(ex, lambda, nsq)
+	Lc := L(clambdamodnsq, n)
+	Lcmu := new(big.Int).Mul(Lc, mu)
+	Lcmumodn := new(big.Int).Mod(Lcmu, n)
+
+	return Lcmumodn
+}
+
+func L(x, n *big.Int) *big.Int {
+	one := new(big.Int).SetInt64(1)
+
+	xminusone := new(big.Int).Sub(x, one)
+	divn := new(big.Int).Div(xminusone, n)
+
+	return divn
+}
+
 func testDHExchange() {
 	x1, err := btcutils.NewPrivateKey() // lets assume this to be the same as x
 	if err != nil {
@@ -108,6 +138,8 @@ func main() {
 	two := new(big.Int).SetInt64(2)
 
 	n := new(big.Int).Mul(p, q)
+	nsq := new(big.Int).Exp(n, two, zero)
+
 	g := new(big.Int).Add(n, one)
 
 	pminus1 := new(big.Int).Sub(p, one)
@@ -118,8 +150,6 @@ func main() {
 	if (new(big.Int).Exp(new(big.Int).SetBytes(k), lambda, n)).Cmp(one) != 0 {
 		log.Fatal("mod exp wrong")
 	}
-
-	nsq := new(big.Int).Exp(n, two, zero)
 
 	if (new(big.Int).Exp(new(big.Int).SetBytes(k), new(big.Int).Mul(lambda, n), nsq)).Cmp(one) != 0 {
 		log.Fatal("mod exp wrong")
@@ -136,11 +166,11 @@ func main() {
 
 	testMsg := new(big.Int).SetBytes([]byte("Hello World"))
 
-	testCipherText := Encrypt(testMsg, k, n)
+	testCipherText := Encrypt(testMsg, k, n, nsq)
 	glambdamodn2 := new(big.Int).Exp(g, lambda, nsq)
 	mu := new(big.Int).ModInverse(L(glambdamodn2, n), n)
 
-	check1 := Decrypt(lambda, testCipherText, n, g, mu)
+	check1 := Decrypt(lambda, testCipherText, n, nsq, mu)
 	if check1.Cmp(testMsg) != 0 {
 		log.Fatal("test decryption of privkey not working")
 	}
@@ -156,42 +186,6 @@ func main() {
 	k2inv := new(big.Int).ModInverse(x2, nsq)
 	sprime := new(big.Int).Mod(new(big.Int).Mul(mulpart, k2inv), nsq)
 
-	sig := Decrypt(lambda, sprime, n, g, mu)
+	sig := Decrypt(lambda, sprime, n, nsq, mu)
 	log.Println("SIG=", sig)
-}
-
-func Decrypt(lambda, ex, n, g, mu *big.Int) *big.Int {
-	zero := new(big.Int).SetInt64(0)
-	two := new(big.Int).SetInt64(2)
-	nsq := new(big.Int).Exp(n, two, zero)
-
-	clambdamodnsq := new(big.Int).Exp(ex, lambda, nsq)
-	Lc := L(clambdamodnsq, n)
-	Lcmu := new(big.Int).Mul(Lc, mu)
-	Lcmumodn := new(big.Int).Mod(Lcmu, n)
-
-	return Lcmumodn
-}
-
-func L(x, n *big.Int) *big.Int {
-	one := new(big.Int).SetInt64(1)
-
-	xminusone := new(big.Int).Sub(x, one)
-	divn := new(big.Int).Div(xminusone, n)
-
-	return divn
-}
-
-func Encrypt(x *big.Int, k []byte, n *big.Int) *big.Int {
-	one := new(big.Int).SetInt64(1)
-	two := new(big.Int).SetInt64(2)
-	nsq := new(big.Int).Exp(n, two, nil)
-
-	xn := new(big.Int).Mul(x, n)
-
-	xnplusonemodnsq := new(big.Int).Mod(new(big.Int).Add(xn, one), nsq)
-
-	knmodnsq := new(big.Int).Exp(new(big.Int).SetBytes(k), n, nsq)
-
-	return new(big.Int).Mod(new(big.Int).Mul(xnplusonemodnsq, knmodnsq), nsq)
 }
