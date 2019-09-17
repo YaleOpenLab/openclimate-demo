@@ -1,10 +1,10 @@
 package main
 
 import (
+	"crypto/rand"
+	"crypto/rsa"
 	"log"
 	"math/big"
-	"crypto/rsa"
-	"crypto/rand"
 
 	btcutils "github.com/bithyve/research/utils"
 	"github.com/btcsuite/btcd/btcec"
@@ -94,16 +94,16 @@ func main() {
 	p := primes.Primes[0]
 	q := primes.Primes[1]
 
+	if len(p.Bytes()) != len(q.Bytes()) {
+		log.Fatal("equal length primes needed")
+	}
+
 	zero := new(big.Int).SetInt64(0)
 	one := new(big.Int).SetInt64(1)
-	// minusone := new(big.Int).SetInt64(-1)
 	two := new(big.Int).SetInt64(2)
 
 	n := new(big.Int).Mul(p, q)
 	g := new(big.Int).Add(n, one)
-	// don't need g since we expand g^m mod n^2 binomially to get (1 + mn) mod n^2
-
-	// log.Println("n = ", n, "g = ", g)
 
 	pminus1 := new(big.Int).Sub(p, one)
 	qminus1 := new(big.Int).Sub(q, one)
@@ -115,11 +115,10 @@ func main() {
 	}
 
 	nsq := new(big.Int).Exp(n, two, zero)
+
 	if (new(big.Int).Exp(new(big.Int).SetBytes(k), new(big.Int).Mul(lambda, n), nsq)).Cmp(one) != 0 {
 		log.Fatal("mod exp wrong")
 	}
-
-	x := one // CHANGE THIS LATER
 
 	/*
 		NAIVE METHOD
@@ -130,84 +129,99 @@ func main() {
 		ex := new(big.Int).Mod(gxkn, nsq)
 	*/
 
-	ex := Encrypt(x, k, n)
-	TestDecrypt(lambda, nsq, ex, x, n)
+	x := x1
 
-	kex1 := new(big.Int).Exp(ex, new(big.Int).SetBytes(k), nsq) // e(x1 * k)
+	ex1 := Encrypt(x, k, n)
+	check1 := Decrypt(lambda, ex1, n, g)
+	if check1.Cmp(x) != 0 {
+		log.Fatal("test decryption of privkey not working")
+	}
 
-	x1k := new(big.Int).Mul(x1, new(big.Int).SetBytes(k))
-	kpb := new(big.Int).Exp(new(big.Int).SetBytes(k), new(big.Int).SetBytes(k), nsq)
-	check1 := Encrypt(x1k, kpb.Bytes(), n)
+	kex1 := new(big.Int).Exp(ex1, new(big.Int).SetBytes(k), nsq) // e(x1 * k)
 
-	log.Println(check1, kex1)
-	kex1x2 := new(big.Int).Exp(kex1, x2, nsq)
+	kex1x2 := new(big.Int).Exp(kex1, x2, nsq) // e(x1 * k * x2)
 
-	gzmodn2 := new(big.Int).Exp(g, new(big.Int).SetBytes(z), nsq)
-	mulpart := new(big.Int).Mod(new(big.Int).Mul(kex1x2, gzmodn2), nsq)
+	gzmodn2 := new(big.Int).Exp(g, new(big.Int).SetBytes(z), nsq)       // g^z
+	mulpart := new(big.Int).Mod(new(big.Int).Mul(kex1x2, gzmodn2), nsq) // e(z + x1 * k * x2)
 
 	k2inv := new(big.Int).ModInverse(x2, nsq)
 	sprime := new(big.Int).Mod(new(big.Int).Mul(mulpart, k2inv), nsq)
 
 	log.Println("SPAM: ", P, K2)
 	log.Println("S' = ", sprime)
-	Decrypt(lambda, nsq, sprime, n)
+	sig := Decrypt(lambda, sprime, n, g)
+	log.Println("SIG=", sig)
 }
 
-func Decrypt(lambda, nsq, ex, n *big.Int) {
-	mu := new(big.Int).ModInverse(lambda, n)
-	one := new(big.Int).SetInt64(1)
-
-	exlambdamodnsq := new(big.Int).Exp(ex, lambda, nsq)
-	exlambdamodnsqminone := new(big.Int).Sub(exlambdamodnsq, one)
-	exlambdamodnsqminonedivn := new(big.Int).Div(exlambdamodnsqminone, n)
-
-	decrypt := new(big.Int).Mod(new(big.Int).Mul(exlambdamodnsqminonedivn, mu), n)
-	decrypt2 := new(big.Int).Div(exlambdamodnsqminonedivn, lambda)
-
-	if decrypt.Cmp(decrypt2) != 0 {
-		log.Fatal("decryption failed")
-	}
-
-	log.Println("DECRYPT: ", decrypt)
-}
-
-func Encrypt(x *big.Int, k []byte, n *big.Int) *big.Int{
+func Decrypt(lambda, ex, n, g *big.Int) *big.Int {
 	zero := new(big.Int).SetInt64(0)
-	one := new(big.Int).SetInt64(1)
 	two := new(big.Int).SetInt64(2)
 	nsq := new(big.Int).Exp(n, two, zero)
 
-	xn := new(big.Int).Mul(x, n)
-	xnplusone := new(big.Int).Add(xn, one)
-	xnplusonemodnsq := new(big.Int).Mod(xnplusone, nsq)
+	glambdamodn2 := new(big.Int).Exp(g, lambda, nsq)
+	mu := new(big.Int).ModInverse(L(glambdamodn2, n), n)
 
-	rnmodnsq := new(big.Int).Exp(new(big.Int).SetBytes(k), n, nsq)
+	clambdamodnsq := new(big.Int).Exp(ex, lambda, nsq)
+	Lc := L(clambdamodnsq, n)
+	Lcmu := new(big.Int).Mul(Lc, mu)
+	Lcmumodn := new(big.Int).Mod(Lcmu, n)
 
-	return new(big.Int).Mod(new(big.Int).Mul(xnplusonemodnsq, rnmodnsq), nsq)
+	return Lcmumodn
 }
 
-func TestDecrypt(lambda, nsq, ex, x, n *big.Int) {
-	mu := new(big.Int).ModInverse(lambda, n)
+func L(x, n *big.Int) *big.Int {
 	one := new(big.Int).SetInt64(1)
-	// CHECK DECRYPTION
+
+	xminusone := new(big.Int).Sub(x, one)
+	divn := new(big.Int).Div(xminusone, n)
+
+	return divn
+}
+
+func TestDecrypt(lambda, ex, x, n, g *big.Int) {
+	zero := new(big.Int).SetInt64(0)
+	one := new(big.Int).SetInt64(1)
+	two := new(big.Int).SetInt64(2)
+
+	nsq := new(big.Int).Exp(n, two, zero)
+
+	glambdamodn2 := new(big.Int).Exp(g, lambda, nsq)
+	mu := new(big.Int).ModInverse(L(glambdamodn2, n), n)
+
 	exlambdamodnsq := new(big.Int).Exp(ex, lambda, nsq)
 
 	// 1 + lambda * x * n == g ^ (lambda *x) mod (n^2) == g ^ (lambda *x) * r^(n*lambda) mod n^2 == e(x)^lambda mod n^2
 	if (new(big.Int).Add(new(big.Int).Mul(new(big.Int).Mul(lambda, x), n), one)).Cmp(exlambdamodnsq) != 0 {
-		log.Println("decryption failed")
+		log.Fatal("test decryption failed at 1+lambda*n*x")
 	}
 
 	exlambdamodnsqminone := new(big.Int).Sub(exlambdamodnsq, one)
 	exlambdamodnsqminonedivn := new(big.Int).Div(exlambdamodnsqminone, n)
 
 	if new(big.Int).Mul(lambda, x).Cmp(exlambdamodnsqminonedivn) != 0 {
-		log.Println("decryption failed")
+		log.Fatal("test decryption failed")
 	}
 
 	decrypt := new(big.Int).Mod(new(big.Int).Mul(exlambdamodnsqminonedivn, mu), n)
 	decrypt2 := new(big.Int).Div(exlambdamodnsqminonedivn, lambda)
 
 	if decrypt.Cmp(decrypt2) != 0 {
-		log.Println("decryption failed")
+		log.Fatal("decryption failed")
+	} else {
+		log.Println("test decryption works")
 	}
+}
+
+func Encrypt(x *big.Int, k []byte, n *big.Int) *big.Int {
+	one := new(big.Int).SetInt64(1)
+	two := new(big.Int).SetInt64(2)
+	nsq := new(big.Int).Exp(n, two, nil)
+
+	xn := new(big.Int).Mul(x, n)
+
+	xnplusonemodnsq := new(big.Int).Mod(new(big.Int).Add(xn, one), nsq)
+
+	knmodnsq := new(big.Int).Exp(new(big.Int).SetBytes(k), n, nsq)
+
+	return new(big.Int).Mod(new(big.Int).Mul(xnplusonemodnsq, knmodnsq), nsq)
 }
