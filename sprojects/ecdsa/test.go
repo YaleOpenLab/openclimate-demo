@@ -53,7 +53,7 @@ func main() {
 	P1 := btcutils.ScalarMult(X1, x2.Bytes())
 	P2 := btcutils.ScalarMult(X2, x1.Bytes())
 
-	log.Println(P1.Cmp(P2)) // dh key exchange complete
+	log.Println("ECDH EXCHANGE: ", P1.Cmp(P2)) // dh key exchange complete
 	P := P1
 
 	z := btcutils.Sha256([]byte("hello"))
@@ -78,7 +78,6 @@ func main() {
 	K := btcutils.ScalarMult(K1, k2.Bytes())
 	// point K will be given as part of the signature
 
-	log.Println("K = ", K) // DON"T PRINT THIS
 	k := K.X.Bytes()
 
 	// need to calculate Paillier encryption of x1 here
@@ -101,7 +100,7 @@ func main() {
 	two := new(big.Int).SetInt64(2)
 
 	n := new(big.Int).Mul(p, q)
-	// g := new(big.Int).Add(n, one)
+	g := new(big.Int).Add(n, one)
 	// don't need g since we expand g^m mod n^2 binomially to get (1 + mn) mod n^2
 
 	// log.Println("n = ", n, "g = ", g)
@@ -110,8 +109,6 @@ func main() {
 	qminus1 := new(big.Int).Sub(q, one)
 
 	lambda := new(big.Int).Div(new(big.Int).Mul(pminus1, qminus1), two)
-
-	mu := new(big.Int).ModInverse(lambda, n)
 
 	if (new(big.Int).Exp(new(big.Int).SetBytes(k), lambda, n)).Cmp(one) != 0 {
 		log.Fatal("mod exp wrong")
@@ -133,16 +130,65 @@ func main() {
 		ex := new(big.Int).Mod(gxkn, nsq)
 	*/
 
+	ex := Encrypt(x, k, n)
+	TestDecrypt(lambda, nsq, ex, x, n)
+
+	kex1 := new(big.Int).Exp(ex, new(big.Int).SetBytes(k), nsq) // e(x1 * k)
+
+	x1k := new(big.Int).Mul(x1, new(big.Int).SetBytes(k))
+	kpb := new(big.Int).Exp(new(big.Int).SetBytes(k), new(big.Int).SetBytes(k), nsq)
+	check1 := Encrypt(x1k, kpb.Bytes(), n)
+
+	log.Println(check1, kex1)
+	kex1x2 := new(big.Int).Exp(kex1, x2, nsq)
+
+	gzmodn2 := new(big.Int).Exp(g, new(big.Int).SetBytes(z), nsq)
+	mulpart := new(big.Int).Mod(new(big.Int).Mul(kex1x2, gzmodn2), nsq)
+
+	k2inv := new(big.Int).ModInverse(x2, nsq)
+	sprime := new(big.Int).Mod(new(big.Int).Mul(mulpart, k2inv), nsq)
+
+	log.Println("SPAM: ", P, K2)
+	log.Println("S' = ", sprime)
+	Decrypt(lambda, nsq, sprime, n)
+}
+
+func Decrypt(lambda, nsq, ex, n *big.Int) {
+	mu := new(big.Int).ModInverse(lambda, n)
+	one := new(big.Int).SetInt64(1)
+
+	exlambdamodnsq := new(big.Int).Exp(ex, lambda, nsq)
+	exlambdamodnsqminone := new(big.Int).Sub(exlambdamodnsq, one)
+	exlambdamodnsqminonedivn := new(big.Int).Div(exlambdamodnsqminone, n)
+
+	decrypt := new(big.Int).Mod(new(big.Int).Mul(exlambdamodnsqminonedivn, mu), n)
+	decrypt2 := new(big.Int).Div(exlambdamodnsqminonedivn, lambda)
+
+	if decrypt.Cmp(decrypt2) != 0 {
+		log.Fatal("decryption failed")
+	}
+
+	log.Println("DECRYPT: ", decrypt)
+}
+
+func Encrypt(x *big.Int, k []byte, n *big.Int) *big.Int{
+	zero := new(big.Int).SetInt64(0)
+	one := new(big.Int).SetInt64(1)
+	two := new(big.Int).SetInt64(2)
+	nsq := new(big.Int).Exp(n, two, zero)
+
 	xn := new(big.Int).Mul(x, n)
 	xnplusone := new(big.Int).Add(xn, one)
 	xnplusonemodnsq := new(big.Int).Mod(xnplusone, nsq)
 
 	rnmodnsq := new(big.Int).Exp(new(big.Int).SetBytes(k), n, nsq)
 
-	ex := new(big.Int).Mod(new(big.Int).Mul(xnplusonemodnsq, rnmodnsq), nsq)
+	return new(big.Int).Mod(new(big.Int).Mul(xnplusonemodnsq, rnmodnsq), nsq)
+}
 
-	log.Println("ENCRYPTED BLOB: ", ex)
-
+func TestDecrypt(lambda, nsq, ex, x, n *big.Int) {
+	mu := new(big.Int).ModInverse(lambda, n)
+	one := new(big.Int).SetInt64(1)
 	// CHECK DECRYPTION
 	exlambdamodnsq := new(big.Int).Exp(ex, lambda, nsq)
 
