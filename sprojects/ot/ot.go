@@ -1,6 +1,7 @@
 package main
 
 import (
+	"errors"
 	"log"
 	"math/big"
 
@@ -9,7 +10,38 @@ import (
 
 var Curve = btcutils.Curve
 
-func AliceObliviousSig(T btcutils.Point, a *big.Int, A btcutils.Point, m []byte) (*big.Int, btcutils.Point) {
+func AliceSign(T btcutils.Point, a *big.Int, A, H btcutils.Point, m0, m1 []byte) (*big.Int, btcutils.Point, *big.Int, btcutils.Point) {
+
+	c := new(big.Int).SetInt64(1)
+	cH := btcutils.ScalarMult(H, c.Bytes())
+
+	T0 := T
+	T1 := btcutils.Sub(T0, cH)
+
+	s0, R0 := aliceObliviousSig(T0, a, A, m0)
+	s1, R1 := aliceObliviousSig(T1, a, A, m1)
+
+	return s0, R0, s1, R1
+}
+
+func BobVerify(s0, s1 *big.Int, P, R0, R1, T, H, A btcutils.Point, m0, m1 []byte) error {
+	c := new(big.Int).SetInt64(1)
+	cH := btcutils.ScalarMult(H, c.Bytes())
+
+	T0 := T
+	T1 := btcutils.Sub(T0, cH)
+
+	if !verifyAdaptorSig(s0, A, R0, T0, m0) {
+		return errors.New("adaptor sig verification failed")
+	}
+	if !verifyAdaptorSig(s1, A, R1, T1, m1) {
+		return errors.New("adaptor sig verification failed")
+	}
+
+	return nil
+}
+
+func aliceObliviousSig(T btcutils.Point, a *big.Int, A btcutils.Point, m []byte) (*big.Int, btcutils.Point) {
 	r, err := btcutils.NewPrivateKey()
 	if err != nil {
 		log.Fatal(err)
@@ -22,6 +54,20 @@ func AliceObliviousSig(T btcutils.Point, a *big.Int, A btcutils.Point, m []byte)
 	HPRTmx := new(big.Int).Mul(btcutils.BytesToNum(HPRTm), a) // H(P||R+T||m) * x
 	s := new(big.Int).Add(r, HPRTmx)                          // s = r + H(P||R+T||m) * x
 	return s, R
+}
+
+func verifyAdaptorSig(s *big.Int, P, R, T btcutils.Point, m []byte) bool {
+	sG := btcutils.ScalarBaseMult(s.Bytes())
+
+	RplusT := btcutils.Add(R, T)
+
+	HPRTm := btcutils.Sha256(P.Bytes(), RplusT.Bytes(), m) // H(P||R+T||m)
+
+	HPRTmP := btcutils.ScalarMult(P, HPRTm) // H(P||R+T||m) * P
+
+	RplusHPRTmP := btcutils.Add(R, HPRTmP) // R + H(P||R+T||m) * P
+	// s*G == R + H(P||R+T||m) * P
+	return sG.Cmp(RplusHPRTmP)
 }
 
 func main() {
@@ -44,7 +90,6 @@ func main() {
 
 		Everything above is done with the help of adaptor signatures
 	*/
-	log.Println("Oblivious Signing")
 
 	b, err := btcutils.NewPrivateKey()
 	if err != nil {
@@ -55,17 +100,12 @@ func main() {
 	shaBytes := btcutils.Sha256(Curve.Params().Gx.Bytes(), Curve.Params().Gy.Bytes()) // btcutils.Sha256(G)
 	H.Set(Curve.ScalarBaseMult(shaBytes))                                             // H = btcutils.Point(btcutils.Sha256(G))
 
-	c := new(big.Int).SetInt64(1)
-
-	cH := btcutils.ScalarMult(H, c.Bytes())
 	bG := btcutils.ScalarBaseMult(b.Bytes())
 
-	T0 := bG
-	T1 := btcutils.Add(cH, bG)
+	T := bG // ie we choose c as 0 in this case
 
 	m0 := []byte("Alice wins")
 	m1 := []byte("Alice loses")
-	// we need to pass on both T0 and T1 to Alice in order for her to sign
 
 	// Generate Alice's private key
 	a, err := btcutils.NewPrivateKey()
@@ -74,10 +114,11 @@ func main() {
 	}
 
 	A := btcutils.PointFromPrivkey(a)
-	s0, R0 := AliceObliviousSig(T0, a, A, m0)
-	s1, R1 := AliceObliviousSig(T1, a, A, m1)
 
-	log.Println("s0, R0: ", s0, R0)
-	log.Println("s1, R1: ", s1, R1)
+	s0, R0, s1, R1 := AliceSign(T, a, A, H, m0, m1)
+
+	BobVerify(s0, s1, A, R0, R1, T, H, A, m0, m1)
+
+	log.Println("Oblivious Signing test successful")
 	// now Bob should verify these adaptor signatures
 }
