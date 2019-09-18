@@ -1,5 +1,7 @@
-# Openclimate
+# open climate
 
-This is the main repository for the Yale's Open Climate project, incubated at the Yale Open Innovation Lab.
+This is the main repository for the open climate project, an open source initiative exploring the application of distributed ledger technology (DLT) and other emerging technologies, such as IoT (Internet of Things), big data and machine learning, to the challenge of helping the world keep a transparent climate accounting system towards the climate targets set in the 2015 Paris Agreement—i.e. maintaining anthropogenic warming below 1.5oC.
+This project involves a software ‘platform of platforms,’ distinguished here as the Open Climate platform (capitalized to distinguish from the overall open climate project), the development of climate communication protocols, and a shared user interface as portal to the system. Front end repository can be found [here](https://github.com/YaleOpenLab/openx-frontend). The platform acts as a common integrator designed to reconcile climate records and functions from both legacy and DLT-based climate platforms in the pursuit of helping maintain a decentralized ‘ledger of ledgers’. 
+Whilst the platform is currently incubated at the Yale Open Innovation Lab (openlab) it seeks to combine a growing network of other platforms in advanced technological stages; using and open innovation effort to develop the common open source layers. 
 
 For more information, visit: [https://openlab.yale.edu/open-climate](https://openlab.yale.edu/open-climate).

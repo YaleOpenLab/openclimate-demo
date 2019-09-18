@@ -1,3 +1,4 @@
+.DS_Store
 openclimate
 config.yaml
 relayer/relayer
@@ -10,6 +11,6 @@ sprojects/proofs/proofs
 certs/server.crt
 certs/server.key
 index.html
-
-# IntelliJ
+sprojects/ecdsa/ecdsa
+sprojects/ot/ot
 .idea
