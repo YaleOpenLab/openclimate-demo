@@ -7,6 +7,7 @@ import (
 )
 
 func Populate() {
+	InitUSStates()
 	populateCountries()
 	populateRegions()
 	populateUSStates()
@@ -19,8 +20,9 @@ func Populate() {
 // Test function populating the countries bucket with dummy values
 // to test the rpc endpoint for countries
 func populateCountries() error {
-	countries := []string{"USA", "China", "Japan", "Mexico", "Ethiopia"}
-	for _, country := range countries {
+	log.Println("populating countries", CountryIds)
+	for _, country := range CountryIds {
+		log.Println("inserting: ", country)
 		_, err := NewCountry(country)
 		if err != nil {
 			return errors.Wrap(err, "Failed to add countries")
