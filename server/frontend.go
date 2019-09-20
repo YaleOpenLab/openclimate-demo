@@ -1,4 +1,5 @@
 package server
+// this scrypt relates to the endpoints and routes related to front end. It is a temporary file for front end demo purpose
 
 import (
 	// "encoding/json"
