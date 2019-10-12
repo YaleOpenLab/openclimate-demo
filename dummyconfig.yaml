@@ -2,3 +2,4 @@ email: dummy@test.com
 password: password
 privkey: "blah"
 privkeypassword: "blahpassword"
+primarykey
