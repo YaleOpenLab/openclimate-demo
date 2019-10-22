@@ -1,2 +1,0 @@
-# Decentralized Open Innovation Consortium
-

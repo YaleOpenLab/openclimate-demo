@@ -1,2 +1,0 @@
-# Release strategy and timeline
-
