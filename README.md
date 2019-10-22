@@ -1,7 +1,36 @@
-# open climate
+---
+description: Welcome to documentation section for the Open Climate Collabathon!
+---
 
-This is the main repository for the open climate project, an open source initiative exploring the application of distributed ledger technology (DLT) and other emerging technologies, such as IoT (Internet of Things), big data and machine learning, to the challenge of helping the world keep a transparent climate accounting system towards the climate targets set in the 2015 Paris Agreement—i.e. maintaining anthropogenic warming below 1.5oC.
-This project involves a software ‘platform of platforms,’ distinguished here as the Open Climate platform (capitalized to distinguish from the overall open climate project), the development of climate communication protocols, and a shared user interface as portal to the system. Front end repository can be found [here](https://github.com/YaleOpenLab/openx-frontend). The platform acts as a common integrator designed to reconcile climate records and functions from both legacy and DLT-based climate platforms in the pursuit of helping maintain a decentralized ‘ledger of ledgers’.
-Whilst the platform is currently incubated at the Yale Open Innovation Lab (openlab) it seeks to combine a growing network of other platforms in advanced technological stages; using and open innovation effort to develop the common open source layers. 
+# Welcome
 
-For more information, visit: [https://openlab.yale.edu/open-climate](https://openlab.yale.edu/open-climate).
+{% hint style="info" %}
+This GitBook compiles most of the important documentation needed to participate in the 2019 Collabathon and contribute to the open climate project. For specific event details and registration, go to the event's [main website.](www.collabathon.openclimate.earth) 
+{% endhint %}
+
+## Navigating this Site and its content
+
+_\[This will describe the general outline of the GitBook so it acts as an easy index for visitors\]_
+
+\_\_
+
+### Guideline section—
+
+{% page-ref page="guidelines/" %}
+
+_\[Description of the guideline section\]_
+
+### Open Climate Platform Documentation—
+
+{% page-ref page="docs-open-climate-platform/" %}
+
+## Contributing to this GitBook
+
+_\[Describe here how participants can contribute to the documentation here\]_
+
+Here is the link to join as a writer for the GitBook:
+
+{% embed url="https://app.gitbook.com/invite/open-climate?invite=-LqvHs8psq-ZwnF87hDK" %}
+
+\_\_
+
