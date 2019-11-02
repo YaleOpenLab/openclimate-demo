@@ -112,26 +112,6 @@ func NewUser(username string, pwhash string, email string, entityType string, en
 	return user, user.Save()
 }
 
-// // RetrieveAllUsers gets a list of all User in the database
-// func RetrieveAllUsers() ([]User, error) {
-// 	var users []User
-// 	keys, err := edb.RetrieveAllKeys(globals.DbPath, UserBucket)
-// 	if err != nil {
-// 		log.Println(err)
-// 		return users, errors.Wrap(err, "could not retrieve all user keys")
-// 	}
-// 	for _, val := range keys {
-// 		var x User
-// 		err = json.Unmarshal(val, &x)
-// 		if err != nil {
-// 			break
-// 		}
-// 		users = append(users, x)
-// 	}
-
-// 	return users, nil
-// }
-
 // RetrieveUser retrieves a particular User indexed by key from the database
 func RetrieveUser(key int) (User, error) {
 	var user User
@@ -168,6 +148,7 @@ func ValidateUser(username string, pwhash string) (User, error) {
 	}
 
 	for _, user := range users {
+		log.Println(user.Username, user.Pwhash)
 		if user.Username == username && user.Pwhash == pwhash {
 			return user, nil
 		}

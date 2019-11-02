@@ -14,7 +14,6 @@ func Populate() {
 	populateAvangridCompany()
 	populateAvangridAssets()
 	populateAdminUsers()
-	populateTestUsers()
 }
 
 // Test function populating the countries bucket with dummy values
@@ -202,11 +201,12 @@ func populateAvangridAssets() {
 }
 
 func populateAdminUsers() error {
-	pwhash := utils.SHA3hash("p")
+	pwhash := utils.SHA3hash("a")
 
 	_, err := NewUser("amanda", pwhash, "amanda@test.com", "company", "Avangrid", "USA")
 	if err != nil {
 		log.Println(err, "failed to populate user amanda")
+		return err
 	}
 
 	b, err := NewUser("brian", pwhash, "brian@test.com", "company", "Avangrid", "USA")
@@ -214,7 +214,21 @@ func populateAdminUsers() error {
 		return errors.Wrap(err, "failed to populate user brian")
 	}
 	b.Verified = true
-	b.Save()
+
+	err = b.Save()
+	if err != nil {
+		log.Println(err)
+		return err
+	}
+
+	user, err := NewUser("testuser", pwhash, "user@test.com", "company", "Avangrid", "USA")
+	if err != nil {
+		return errors.Wrap(err, "failed to create test user in country: USA")
+	}
+
+	log.Println("created new user: ", user.Index)
+	user.Verified = true
+	return user.Save()
 
 	// users, err := RetrieveAllUsers()
 	// if err != nil {
@@ -222,15 +236,4 @@ func populateAdminUsers() error {
 	// }
 	// log.Println(users)
 
-	return nil
-}
-
-func populateTestUsers() error {
-	pwhash := utils.SHA3hash("a")
-	user, err := NewUser("testuser", pwhash, "user@test.com", "country", "USA", "")
-	if err != nil {
-		return errors.Wrap(err, "failed to create test user in country: USA")
-	}
-	user.Verified = true
-	return user.Save()
 }
