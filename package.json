@@ -1,0 +1,23 @@
+{
+    "name": "dbpop",
+    "version": "1.0.0",
+    "description": "For scraping data and consolidation",
+    "main": "index.js",
+    "scripts": {
+        "test": "echo \"Error: no test specified\" && exit 1",
+        "start": "node index.js"
+    },
+    "author": "disregardfiat",
+    "license": "MIT",
+    "dependencies": {
+        "after": "^0.8.2",
+        "bytewise": "^1.1.0",
+        "component-type": "^1.2.1",
+        "cors": "^2.8.5",
+        "express": "^4.17.1",
+        "level": "^6.0.0",
+        "levelup-defaults": "^2.0.0",
+        "node-fetch": "^2.6.0",
+        "stream-to-array": "^2.3.0"
+    }
+}

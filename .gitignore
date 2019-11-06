@@ -3,7 +3,6 @@ openclimate
 config.yaml
 relayer/relayer
 load-data/load-data
-.DS_Store
 blockchain/wallet
 __pycache__
 globals/secret.go
@@ -13,3 +12,6 @@ certs/server.key
 index.html
 sprojects/ecdsa/ecdsa
 sprojects/ot/ot
+node_modules
+package-lock.json
+db
