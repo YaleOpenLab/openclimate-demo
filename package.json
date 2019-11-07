@@ -15,6 +15,7 @@
         "component-type": "^1.2.1",
         "cors": "^2.8.5",
         "express": "^4.17.1",
+        "fs-extra": "^8.1.0",
         "level": "^6.0.0",
         "levelup-defaults": "^2.0.0",
         "node-fetch": "^2.6.0",

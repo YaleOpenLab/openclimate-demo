@@ -1,6 +1,7 @@
-var fetch = require('node-fetch');
-var Pathwise = require('./pathwise');
-var level = require('level');
+const fetch = require('node-fetch');
+const Pathwise = require('./pathwise');
+const level = require('level');
+const fs = require('fs-extra');
 const express = require('express');
 const cors = require('cors');
 const api = express()
@@ -22,20 +23,20 @@ var https_redirect = function(req, res, next) {
 
 api.use(https_redirect);
 api.use(cors())
-api.get('/country-references', (req, res, next) => {
-    var ref_codes = {}
+api.get('/dump', (req, res, next) => {
+    var dump = {}
     res.setHeader('Content-Type', 'application/json')
-    store.get([ref], function(err, obj) {
-        ref_codes = obj,
+    store.get([], function(err, obj) {
+        dump = obj,
             res.send(JSON.stringify({
-                ref_codes
+                dump
             }, null, 3))
     });
 });
 api.get('/countries', (req, res, next) => {
     var countries = {}
     res.setHeader('Content-Type', 'application/json')
-    store.get([cc], function(err, obj) {
+    store.get(['ref'], function(err, obj) {
         countries = obj,
             res.send(JSON.stringify({
                 countries
@@ -87,26 +88,25 @@ api.get('/nation/:id', (req, res, next) => {
     });
 });
 api.get('/national-emissions/:id', (req, res, next) => {
-    let id = req.params.id
+    let id = req.params.id.toUpperCase()
     res.setHeader('Content-Type', 'application/json')
-    let rP = DBget2(cc, id),
-        eP = DBget(ref)
-    Promise.all([rP, eP])
+    let rP = DBget3('info', id, 'wby')
+        //eP = DBget()
+    Promise.all([rP])
         .then(function(v) {
-            let coun = v[0],
-                em = v[1],
-                nation = {}
-            nation.id = id
+            let em = v[0],
+                nation = {},
+                coun = ref.countries[ref.three_code[id]]
+            nation.id = coun.n
             nation.code = coun.c
-            nation.display_name = coun.d
-            nation.lower_name = coun.n
-            nation.polygon = coun.p
-            nation.flag_img = coun.f
-            nation.emissions = {}
-            nation.emissions.source_name = em.sn
-            nation.emissions.source = em.s
-            nation.emissions.total_ghg_emissions = em.t
-            nation.emissions.land_based_sinks = em.s
+            nation.display_name = coun.f
+                //nation.polygon = coun.p
+                //nation.flag_img = coun.f
+            nation.emissions = em
+                //nation.emissions.source_name = em.sn
+                //nation.emissions.source = em.s
+                //nation.emissions.total_ghg_emissions = em.t
+                //nation.emissions.land_based_sinks = em.s
             nation.emissions.net_ghg = em.n
             res.send(JSON.stringify({
                 nation
@@ -146,58 +146,59 @@ api.get('/national-pledges/:id', (req, res, next) => {
 http.listen(3001, function() {
     console.log(`DB API listening on port 3001`);
 });
-scrapeCSVnBuildRef('https://raw.githubusercontent.com/openclimatedata/global-carbon-budget/master/data/country-definitions.csv', cc, 1, 2, ref)
-
-function scrapeCSVnBuildRef(raw, location, by, alt, altl) { //url, db namespace, colnum, alt num, altnamespace
-    fetch(`${raw}`)
-        .then(function(response) {
-            return response.text();
-        })
-        .then(function(text) {
-            var header = text.split('\n')[0]
-            var data = text.split('\n')
-            var info = header.split(',')
-            var json = {}
-            var ref = {}
-            var schema = []
-            for (i = 0; i < info.length; i++) {
-                schema.push(header[i])
-            }
-            for (i = 1; i < data.length; i++) {
-                row = data[i].split(',')
-                if (row[by]) {
-                    var named = row[by].toLowerCase()
-                    var refn = row[alt].toLowerCase()
-                    json[named] = {}
-                    ref[refn] = named
-                    for (j = 0; j < info.length; j++) {
-                        if (typeof row[j] === 'string') {
-                            json[named][info[j]] = row[j].toLowerCase() || ''
-                        } else {
-                            json[named][info[j]] = row[j] || ''
-                        }
-                    }
+fs.readFile('csv/country-standards.csv')
+    .then(function(file) {
+        return file.toString('utf8')
+    })
+    .then(function(text) {
+        let json = {
+            num_to_three: {},
+            two_to_three: {},
+            lowercase_to_three: {},
+            alts_to_three: {},
+            three_code: {},
+            countries: {}
+        }
+        const rows = text.split('\n')
+        for (i = 1; i < rows.length; i++) {
+            let col = rows[i].split(/(?!\B"[^"]*),(?![^"]*"\B)/g)
+            if (col[5] != 'N/A') { //simple filter
+                let now = parseInt(col[7])
+                json.countries[col[0]] = {
+                    c: col[5], //code, 3
+                    f: col[1], //full name
+                    a: [col[2].toLowerCase()], //alternate names
+                    n: parseInt(col[0]), //numeric code
+                    t: col[4], //two letter code
+                    s: parseInt(col[6]), //start year
+                    e: now
+                }
+                json.num_to_three[col[0]] = col[5]
+                json.two_to_three[col[4]] = col[5]
+                json.three_code[col[5]] = col[0]
+                json.lowercase_to_three[col[2].toLowerCase()] = col[5]
+                switch (col[0]) {
+                    case '842':
+                        json.lowercase_to_three['united states of america'] = col[5]
+                        break;
+                    default:
+                        break;
                 }
             }
-            store.put([location], json, function(err) {
-                if (err) {
-                    console.log(err)
-                } else {
-                    store.put([altl], ref, function(err) {
-                        if (err) {
-                            console.log(err)
-                        } else {
-                            scrapeCSVCO('https://raw.githubusercontent.com/YaleOpenLab/openclimate/master/staticdata/csv_data/cdiac_fossil_fuel_cement_national.csv', 'https://raw.githubusercontent.com/YaleOpenLab/openclimate/master/staticdata/csv_data/consumption_emissions.csv')
-                        }
-                    })
-                }
-            })
-
+        }
+        ref = json
+        ref.errors = {}
+        store.put(['ref'], json, function(err) {
+            if (err) {
+                console.log(err)
+            } else {
+                scrapeCSVCO('https://raw.githubusercontent.com/YaleOpenLab/openclimate/master/staticdata/csv_data/cdiac_fossil_fuel_cement_national.csv', 'https://raw.githubusercontent.com/YaleOpenLab/openclimate/master/staticdata/csv_data/consumption_emissions.csv')
+            }
         })
-        .catch(function(e) {
-            console.log(e)
-        })
-}
+    })
+    .catch(function(e) {
+        console.log(e)
+    })
 
 function scrapeCSVCO(raw, coem) { //built for cdiac_fossil_fuel_cement_national.csv & consumption_emissions.csv
     fetch(`${raw}`)
@@ -205,12 +206,10 @@ function scrapeCSVCO(raw, coem) { //built for cdiac_fossil_fuel_cement_national.
             return response.text();
         })
         .then(function(text) {
-            var ccP = DBget(cc),
-                refP = DBget(ref)
-            Promise.all([ccP, refP])
+            var refP = DBget('ref')
+            Promise.all([refP])
                 .then(function(v) {
-                    var CC = v[0],
-                        REF = v[1],
+                    var REF = v[0],
                         data = text.split('\n'),
                         header = data[0],
                         info = header.split(','),
@@ -221,25 +220,28 @@ function scrapeCSVCO(raw, coem) { //built for cdiac_fossil_fuel_cement_national.
                     }
                     for (i = 1; i < data.length; i++) {
                         row = data[i].split(',')
-                        if (REF[row[0].toLowerCase()] == null) {
-                            REF[row[0].toLowerCase()] = row[0].toLowerCase()
-                        }
-                        var named = REF[row[0].toLowerCase()]
-                        if (json[named] == null) { json[named] = {} }
-                        json[named][row[1]] = {}
-                        for (j = 2; j < info.length; j++) {
-                            json[named][row[1]][schema[j]] = row[j] || 0
+                        if (ref.lowercase_to_three[row[0].toLowerCase()] == null) {
+                            ref.errors[row[0].toLowerCase()] = 'w/bunkers'
+                        } else {
+                            var named = ref.lowercase_to_three[row[0].toLowerCase()]
+                            if (json[named] == null) {
+                                json[named] = {
+                                    wby: {} //with bunkers by year
+                                }
+                            }
+                            json[named].wby[row[1]] = {}
+                            for (j = 2; j < info.length; j++) {
+                                json[named].wby[row[1]][schema[j]] = parseFloat(row[j]) || 0
+                            }
                         }
                     }
 
-                    return [CC, REF, json]
+                    return [json]
                 })
                 .then(function(x) {
-                    var c = x[0],
-                        r = x[1],
-                        j = x[2],
+                    var j = x[0],
                         ops = []
-                    fetch(`${coem}`, j, r)
+                    fetch(`${coem}`)
                         .then(function(response) {
                             return response.text();
                         })
@@ -254,17 +256,25 @@ function scrapeCSVCO(raw, coem) { //built for cdiac_fossil_fuel_cement_national.
                             }
                             for (i = 1; i < data.length; i++) {
                                 row = data[i].split(',')
-                                if (json[row[0].toLowerCase()] == null) {
-                                    json[row[0].toLowerCase()] = {}
+                                if (ref.three_code[row[0]] == null) {
+                                    ref.errors[row[0]] = 'coem'
+                                } else {
+                                    named = row[0]
+                                    if (json[named] == null) {
+                                        json[named] = {
+                                            coem: {}
+                                        }
+                                    } else {
+                                        json[named].coem = {}
+                                    }
+                                    if (json[named].coem[row[1]] == null) {
+                                        json[named].coem[row[1]] = {}
+                                    }
+                                    json[named].coem[row[1]][schema[2]] = parseFloat(row[2])
                                 }
-                                if (json[row[0].toLowerCase()][row[1]] == null) {
-                                    json[row[0].toLowerCase()][row[1]] = {}
-                                }
-                                json[row[0].toLowerCase()][row[1]][schema[2]] = parseFloat(row[2])
                             }
-                            console.log(json)
-                            ops.push({ type: 'put', path: ['REF'], data: r })
-                            ops.push({ type: 'put', path: ['CO2'], data: json })
+                            ops.push({ type: 'put', path: ['ref'], data: ref })
+                            ops.push({ type: 'put', path: ['info'], data: json })
                             store.batch(ops)
                         })
                 })

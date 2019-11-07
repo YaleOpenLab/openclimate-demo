@@ -1,0 +1,295 @@
+Country Code,"Country Name, Full ","Country Name, Abbreviation",Country Comments,ISO2-digit Alpha,ISO3-digit Alpha,Start Valid Year,End Valid Year
+4,Afghanistan,Afghanistan,,AF,AFG,1962,Now
+472,"Africa CAMEU region, not elsewhere specified","Africa CAMEU region, nes",,N/A,N/A,1962,2004
+8,Albania,Albania,,AL,ALB,1962,Now
+12,Algeria,Algeria,,DZ,DZA,1962,Now
+16,American Samoa,American Samoa,,AS,ASM,1962,Now
+20,Andorra,Andorra,,AD,AND,1962,Now
+24,Angola,Angola,,AO,AGO,1962,Now
+660,Anguilla,Anguilla,,AI,AIA,1981,Now
+10,Antarctica,Antarctica,,AQ,ATA,1962,Now
+28,Antigua and Barbuda,Antigua and Barbuda,,AG,ATA,1962,Now
+899,"Areas, not elsewhere specified","Areas, nes",,N/A,N/A,1962,Now
+32,Argentina,Argentina,,AR,ARG,1962,Now
+51,Armenia,Armenia,,AM,ARM,1992,Now
+533,Aruba,Aruba,,AW,ABW,1988,Now
+36,Australia,Australia,,AU,AUS,1962,Now
+40,Austria,Austria,,AT,AUT,1962,Now
+31,Azerbaijan,Azerbaijan,,AZ,AZE,1992,Now
+44,Bahamas,Bahamas,,BS,BHS,1962,Now
+48,Bahrain,Bahrain,,BH,BHR,1962,Now
+50,Bangladesh,Bangladesh,,BD,BGD,1972,Now
+52,Barbados,Barbados,,BB,BRB,1962,Now
+112,Belarus,Belarus,,BY,BLR,1992,Now
+56,Belgium,Belgium,,BE,BEL,1999,Now
+58,Belgium-Luxembourg,Belgium-Luxembourg,,BE,BEL,1962,1998
+84,Belize,Belize,,BZ,BLZ,1962,Now
+204,Benin,Benin,,BJ,BEN,1962,Now
+60,Bermuda,Bermuda,,BM,BMU,1962,Now
+64,Bhutan,Bhutan,,BT,BTN,1962,Now
+68,Plurinational State of Bolivia,Bolivia (Plurinational State of),,BO,BOL,1962,Now
+535,"Bonaire, Saint Eustatius and Saba",Bonaire,,BQ,BES,2011,Now
+70,Bosnia Herzegovina,Bosnia Herzegovina,,BA,BIH,1992,Now
+72,Botswana,Botswana,,BW,BWA,2000,Now
+74,Ile Bouvet,Bouvet Island,,N/A,N/A,1962,Now
+80,British Antarctic Territories,Br. Antarctic Terr.,,N/A,N/A,1962,Now
+86,British Indian Ocean Territories,Br. Indian Ocean Terr.,,IO,IOT,1962,Now
+92,British Virgin Islands,Br. Virgin Isds,,VG,VGB,1962,Now
+76,Brazil,Brazil,,BR,BRA,1962,Now
+96,Brunei Darussalam,Brunei Darussalam,,BN,BRN,1962,Now
+100,Bulgaria,Bulgaria,,BG,BGR,1962,Now
+837,Bunkers,Bunkers,,N/A,N/A,1962,Now
+854,Burkina Faso,Burkina Faso,,BF,BFA,1962,Now
+108,Burundi,Burundi,,BI,BDI,1962,Now
+132,Cabo Verde,Cabo Verde,,CV,CPV,1962,Now
+471,"CACM, not elsewhere specified","CACM, nes",,N/A,N/A,1962,2004
+116,Cambodia,Cambodia,,KH,KHM,1962,Now
+120,Cameroon,Cameroon,,CM,CMR,1962,Now
+124,Canada,Canada,,CA,CAN,1962,Now
+129,"Caribbean, not elsewhere specified","Caribbean, nes",,N/A,N/A,1962,2004
+136,Cayman Islands,Cayman Isds,,KY,CYM,1962,Now
+140,Central African Republic,Central African Rep.,,CF,CAF,1962,Now
+148,Chad,Chad,,TD,TCD,1962,Now
+152,Chile,Chile,,CL,CHL,1962,Now
+156,China,China,,CN,CHN,1962,Now
+344,"China, Hong Kong Special Administrative Region","China, Hong Kong SAR",,HK,HKG,1962,Now
+446,"China, Macao Special Administrative Region","China, Macao SAR",,MO,MAC,1962,Now
+162,Christmas Islands,Christmas Isds,,CX,CXR,1962,Now
+166,Cocos Islands,Cocos Isds,,CC,CCK,1962,Now
+170,Colombia,Colombia,,CO,COL,1962,Now
+174,Comoros,Comoros,,KM,COM,1962,Now
+178,Congo,Congo,,CG,COG,1962,Now
+184,Cook Islands,Cook Isds,,CK,COK,1962,Now
+188,Costa Rica,Costa Rica,,CR,CRI,1962,Now
+384,Côte d'Ivoire,Côte d'Ivoire,,CI,CIV,1962,Now
+191,Croatia,Croatia,,HR,HRV,1992,Now
+192,Cuba,Cuba,,CU,CUB,1962,Now
+531,Curaçao,Curaçao,,CW,CUW,2010,Now
+196,Cyprus,Cyprus,,CY,CYP,1962,Now
+203,Czechia,Czechia,,CZ,CZE,1993,Now
+200,Czechoslovakia,Czechoslovakia,,CS,CSK,1962,1992
+408,Democratic People's Republic of Korea,Dem. People's Rep. of Korea,,KP,PRK,1962,Now
+180,Democratic Republic of the Congo,Dem. Rep. of the Congo,,CD,COD,1962,Now
+208,Denmark,Denmark,,DK,DNK,1962,Now
+262,Djibouti,Djibouti,,DJ,DJI,1962,Now
+212,Dominica,Dominica,,DM,DMA,1962,Now
+214,Dominican Republic,Dominican Rep.,,DO,DOM,1962,Now
+588,East and West Pakistan,East and West Pakistan,,PK,PAK,1962,1971
+221,"Eastern Europe, not elsewhere specified","Eastern Europe, nes",,N/A,N/A,1962,2004
+218,Ecuador,Ecuador,,EC,ECU,1962,Now
+818,Egypt,Egypt,,EG,EGY,1962,Now
+222,El Salvador,El Salvador,,SV,SLV,1962,Now
+226,Equatorial Guinea,Equatorial Guinea,,GQ,GNQ,1962,Now
+232,Eritrea,Eritrea,,ER,ERI,1993,Now
+233,Estonia,Estonia,,EE,EST,1992,Now
+231,Ethiopia,Ethiopia,,ET,ETH,1993,Now
+97,EU-28,EU-28,,EU,EU2,1962,Now
+697,"Europe EFTA, not elsewhere specified","Europe EFTA, nes",,N/A,N/A,1962,2004
+492,"Europe EU, not elsewhere specified","Europe EU, nes",Code 492 is mapped to code 568 since 2005,N/A,N/A,1962,2004
+234,Faeroe Islands,Faeroe Isds,,FO,FRO,1962,Now
+238,Falkland Islands (Malvinas),Falkland Isds (Malvinas),,FK,FLK,1962,Now
+242,Fiji,Fiji,,FJ,FJI,1962,Now
+246,Finland,Finland,,FI,FIN,1962,Now
+886,Former Arab Republic of Yemen,Fmr Arab Rep. of Yemen,,YE,YEM,1962,1990
+278,Former Democratic Republic of Germany,Fmr Dem. Rep. of Germany,,DD,DDR,1962,1990
+866,Former Democratic Republic of Vietnam,Fmr Dem. Rep. of Vietnam,,VD,VDR,1962,1974
+720,Former Democratic Yemen,Fmr Dem. Yemen,,YD,YMD,1962,1990
+230,Former Ethiopia,Fmr Ethiopia,,ET,ETH,1962,1992
+280,Former Federal Republic of Germany,Fmr Fed. Rep. of Germany,,DE,DEU,1962,1990
+582,Former Pacific Islands,Fmr Pacific Isds,,PC,PCI,1962,1991
+590,"Former Panama, excluding Canal Zone","Fmr Panama, excl.Canal Zone",,PA,PAN,1962,1977
+592,Former Panama-Canal-Zone,Fmr Panama-Canal-Zone,,PZ,PCZ,1962,1977
+868,Former Republic of Vietnam,Fmr Rep. of Vietnam,,VN,VNM,1962,1974
+717,Former Rhodesia Nyas,Fmr Rhodesia Nyas,,N/A,N/A,1962,1964
+736,Former Sudan,Fmr Sudan,,SD,SDN,1962,2011
+835,Former Tanganyika,Fmr Tanganyika,,N/A,N/A,1962,1964
+810,Former USSR,Fmr USSR,,SU,SUN,1962,1991
+890,Former Yugoslavia,Fmr Yugoslavia,In 1992 including TFYR of Macedonia,YU,YUG,1962,1991
+836,Former Zanzibar and Pemba Island,Fmr Zanzibar and Pemba Isd,,N/A,N/A,1962,1964
+260,French South Antarctic Territories,Fr. South Antarctic Terr.,,FQ,ATF,1962,Now
+251,"France, Monaco",France,Including Monaco,FR,FRA,1962,Now
+838,Free Zones,Free Zones,,N/A,N/A,1962,Now
+254,French Guiana,French Guiana,,GF,GUF,1962,1995
+258,French Polynesia,French Polynesia,,PF,PYF,1962,Now
+583,Federated State of Micronesia,FS Micronesia,,FM,FSM,1992,Now
+266,Gabon,Gabon,,GA,GAB,1962,Now
+270,Gambia,Gambia,,GM,GMB,1962,Now
+268,Georgia,Georgia,,GE,GEO,1992,Now
+276,Germany,Germany,,DE,DEU,1991,Now
+288,Ghana,Ghana,,GH,GHA,1962,Now
+292,Gibraltar,Gibraltar,,GI,GIB,1962,Now
+300,Greece,Greece,,GR,GRC,1962,Now
+304,Greenland,Greenland,,GL,GRL,1962,Now
+308,Grenada,Grenada,,GD,GRD,1962,Now
+312,Guadeloupe,Guadeloupe,,GP,GLP,1962,1995
+316,Guam,Guam,,GU,GUM,1962,Now
+320,Guatemala,Guatemala,,GT,GTM,1962,Now
+324,Guinea,Guinea,,GN,GIN,1962,Now
+624,Guinea-Bissau,Guinea-Bissau,,GW,GNB,1962,Now
+328,Guyana,Guyana,,GY,GUY,1962,Now
+332,Haiti,Haiti,,HT,HTI,1962,Now
+334,Heard Island and McDonald Islands,Heard Island and McDonald Islands,,HM,HMD,1962,Now
+336,Holy See (Vatican City State),Holy See (Vatican City State),,VA,VAT,2000,Now
+340,Honduras,Honduras,,HN,HND,1962,Now
+348,Hungary,Hungary,,HU,HUN,1962,Now
+352,Iceland,Iceland,,IS,ISL,1962,Now
+699,India,India,,IN,IND,1975,Now
+356,"India, excluding Sikkim","India, excl. Sikkim",,IN,IND,1962,1974
+360,Indonesia,Indonesia,,ID,IDN,1962,Now
+364,Iran,Iran,,IR,IRN,1962,Now
+368,Iraq,Iraq,,IQ,IRQ,1962,Now
+372,Ireland,Ireland,,IE,IRL,1962,Now
+376,Israel,Israel,,IL,ISR,1962,Now
+381,Italy,Italy,,IT,ITA,1962,Now
+388,Jamaica,Jamaica,,JM,JAM,1962,Now
+392,Japan,Japan,,JP,JPN,1962,Now
+400,Jordan,Jordan,,JO,JOR,1962,Now
+398,Kazakhstan,Kazakhstan,,KZ,KAZ,1992,Now
+404,Kenya,Kenya,,KE,KEN,1962,Now
+296,Kiribati,Kiribati,,KI,KIR,1962,Now
+414,Kuwait,Kuwait,,KW,KWT,1962,Now
+417,Kyrgyzstan,Kyrgyzstan,,KG,KGZ,1992,Now
+473,"LAIA, not elsewhere specified","LAIA, nes",,N/,N/A,1962,Now
+418,Lao People's Dem. Rep.,Lao People's Dem. Rep.,,LA,LAO,1962,Now
+428,Latvia,Latvia,,LV,LVA,1992,Now
+422,Lebanon,Lebanon,,LB,LBN,1962,Now
+426,Lesotho,Lesotho,,LS,LSO,2000,Now
+430,Liberia,Liberia,,LR,LBR,1962,Now
+434,Libya,Libya,,LY,LBY,1962,Now
+440,Lithuania,Lithuania,,LT,LTU,1992,Now
+442,Luxembourg,Luxembourg,,LU,LUX,1999,Now
+450,Madagascar,Madagascar,,MG,MDG,1962,Now
+454,Malawi,Malawi,,MW,MWI,1965,Now
+458,Malaysia,Malaysia,,MY,MYS,1964,Now
+462,Maldives,Maldives,,MV,MDV,1962,Now
+466,Mali,Mali,,ML,MLI,1962,Now
+470,Malta,Malta,,MT,MLT,1962,Now
+584,Marshall Islands,Marshall Isds,,MH,MHL,1992,Now
+474,Martinique,Martinique,,MQ,MTQ,1962,1995
+478,Mauritania,Mauritania,,MR,MRT,1962,Now
+480,Mauritius,Mauritius,,MU,MUS,1962,Now
+175,Mayotte,Mayotte,,YT,MYT,1962,Now
+484,Mexico,Mexico,,MX,MEX,1962,Now
+496,Mongolia,Mongolia,,MN,MNG,1962,Now
+499,Montenegro,Montenegro,,ME,MNE,2006,Now
+500,Montserrat,Montserrat,,MS,MSR,1962,Now
+504,Morocco,Morocco,,MA,MAR,1962,Now
+508,Mozambique,Mozambique,,MZ,MOZ,1962,Now
+104,Myanmar,Myanmar,,MM,MMR,1962,Now
+580,Northern Mariana Islands,N. Mariana Isds,,MP,MNP,1992,Now
+516,Namibia,Namibia,,NA,NAM,2000,Now
+520,Nauru,Nauru,,NR,NRU,1962,Now
+524,Nepal,Nepal,,NP,NPL,1962,Now
+530,Netherlands Antilles,Neth. Antilles,,AN,ANT,1988,2010
+532,Netherlands Antilles and Aruba,Neth. Antilles and Aruba,,AN,ANT,1962,1987
+528,Netherlands,Netherlands,,NL,NLD,1962,Now
+536,Neutral Zone,Neutral Zone,,N/A,N/A,1962,Now
+540,New Caledonia,New Caledonia,,NC,NCL,1962,Now
+554,New Zealand,New Zealand,,NZ,NZL,1962,Now
+558,Nicaragua,Nicaragua,,NI,NIC,1962,Now
+562,Niger,Niger,,NE,NER,1962,Now
+566,Nigeria,Nigeria,,NG,NGA,1962,Now
+570,Niue,Niue,,NU,NIU,1962,Now
+574,Norfolk Islands,Norfolk Isds,,NF,NFK,1962,Now
+637,"North America, the Caribbean and Central America not elsewhere specified","North America and Central America, nes",,N/A,N/A,1962,Now
+290,"Northern Africa, not elsewhere specified","Northern Africa, nes",,N/A,N/A,1962,2004
+579,"Norway, Svalbard and Jan Mayen",Norway,Including Svalbard and Jan Mayen,NO,NOR,1962,Now
+527,"Oceania, not elsewhere specified","Oceania, nes",,N/A,N/A,1962,Now
+512,Oman,Oman,,OM,OMN,1962,Now
+577,"Other Africa, not elsewhere specified","Other Africa, nes",,N/A,N/A,1962,Now
+490,"Other Asia, not elsewhere specified","Other Asia, nes",,N/A,N/A,1962,Now
+568,"Other Europe, not elsewhere specified","Other Europe, nes",,N/A,N/A,1962,Now
+586,Pakistan,Pakistan,,PK,PAK,1972,Now
+585,Palau,Palau,,PW,PLW,1992,Now
+591,Panama,Panama,,PA,PAN,1978,Now
+598,Papua New Guinea,Papua New Guinea,,PG,PNG,1962,Now
+600,Paraguay,Paraguay,,PY,PRY,1962,Now
+459,Peninsula Malaysia,Peninsula Malaysia,,N/A,N/A,1962,1963
+604,Peru,Peru,,PE,PER,1962,Now
+608,Philippines,Philippines,,PH,PHL,1962,Now
+612,Pitcairn,Pitcairn,,PN,PCN,1962,Now
+616,Poland,Poland,,PL,POL,1962,Now
+620,Portugal,Portugal,,PT,PRT,1962,Now
+634,Qatar,Qatar,,QA,QAT,1962,Now
+410,Republic of Korea,Rep. of Korea,,KR,KOR,1962,Now
+498,Republic of Moldova,Rep. of Moldova,,MD,MDA,1992,Now
+636,"Rest of America, not elsewhere specified","Rest of America, nes",,N/A,N/A,1962,2004
+638,Réunion,Réunion,,RE,REU,1962,1995
+642,Romania,Romania,,RO,ROU,1962,Now
+643,Russian Federation,Russian Federation,,RU,RUS,1992,Now
+646,Rwanda,Rwanda,,RW,RWA,1962,Now
+647,Ryukyu Island,Ryukyu Isd,,N/A,N/A,1962,1972
+461,Sabah,Sabah,,N/A,N/A,1962,1963
+652,Saint Barthélemy,Saint Barthélemy,,BL,BLM,2013,Now
+654,Saint Helena,Saint Helena,,SH,SHN,1962,Now
+659,Saint Kitts and Nevis,Saint Kitts and Nevis,,KN,KNA,1981,Now
+658,"Saint Kitts, Nevis and Anguilla","Saint Kitts, Nevis and Anguilla",,KN,KNA,1962,1980
+662,Saint Lucia,Saint Lucia,,LC,LCA,1962,Now
+534,Saint Maarten (Dutch part),Saint Maarten,,SX,SXM,2010,Now
+666,Saint Pierre and Miquelon,Saint Pierre and Miquelon,,PM,SPM,1962,Now
+670,Saint Vincent and the Grenadines,Saint Vincent and the Grenadines,,VC,VCT,1962,Now
+882,Samoa,Samoa,,WS,WSM,1962,Now
+674,San Marino,San Marino,,SM,SMR,2000,Now
+678,Sao Tome and Principe,Sao Tome and Principe,,ST,STP,1962,Now
+457,Sarawak,Sarawak,,N/A,N/A,1962,1963
+682,Saudi Arabia,Saudi Arabia,,SA,SAU,1962,Now
+686,Senegal,Senegal,,SN,SEN,1962,Now
+688,Serbia,Serbia,,RS,SRB,2006,Now
+891,Serbia and Montenegro,Serbia and Montenegro,,CS,SCG,1992,2005
+690,Seychelles,Seychelles,,SC,SYC,1962,Now
+694,Sierra Leone,Sierra Leone,,SL,SLE,1962,Now
+698,Sikkim,Sikkim,,N/A,N/A,1962,1974
+702,Singapore,Singapore,,SG,SGP,1962,Now
+703,Slovakia,Slovakia,,SK,SVK,1993,Now
+705,Slovenia,Slovenia,,SI,SVN,1992,Now
+711,Southern African Customs Union,So. African Customs Union,,ZA,ZAF,1962,1999
+90,Solomon Islands,Solomon Isds,,SB,SLB,1962,Now
+706,Somalia,Somalia,,SO,SOM,1962,Now
+710,South Africa,South Africa,,ZA,ZAF,2000,Now
+239,South Georgia and the South Sandwich Islands,South Georgia and the South Sandwich Islands,,GS,SGS,1962,Now
+728,South Sudan,South Sudan,,SS,SSD,2012,Now
+724,Spain,Spain,,ES,ESP,1962,Now
+839,Special Categories,Special Categories,,N/A,N/A,1962,Now
+144,Sri Lanka,Sri Lanka,,LK,LKA,1962,Now
+275,State of Palestine,State of Palestine,,PS,PSE,2000,Now
+729,Sudan,Sudan,"Refers to the new Sudan, now excluding the southern part.",SD,SDN,2012,Now
+740,Suriname,Suriname,,SR,SUR,1962,Now
+748,Swaziland,Swaziland,,SZ,SWZ,2000,Now
+752,Sweden,Sweden,,SE,SWE,1962,Now
+757,"Switzerland, Liechtenstein",Switzerland,Liechtenstein,CH,CHE,1962,Now
+760,Syria,Syria,,SY,SYR,1962,Now
+762,Tajikistan,Tajikistan,,TJ,TJK,1992,Now
+807,The Former Yugoslav Republic of Macedonia,TFYR of Macedonia,,MK,MKD,1993,Now
+764,Thailand,Thailand,,TH,THA,1962,Now
+626,Timor-Leste,Timor-Leste,,TL,TLS,1962,Now
+768,Togo,Togo,,TG,TGO,1962,Now
+772,Tokelau,Tokelau,,TK,TKL,1962,Now
+776,Tonga,Tonga,,TO,TON,1962,Now
+780,Trinidad and Tobago,Trinidad and Tobago,,TT,TTO,1962,Now
+788,Tunisia,Tunisia,,TN,TUN,1962,Now
+792,Turkey,Turkey,,TR,TUR,1962,Now
+795,Turkmenistan,Turkmenistan,,TM,TKM,1992,Now
+796,Turks and Caicos Islands,Turks and Caicos Isds,,TC,TCA,1962,Now
+798,Tuvalu,Tuvalu,,TV,TUV,1962,Now
+800,Uganda,Uganda,,UG,UGA,1962,Now
+804,Ukraine,Ukraine,,UA,UKR,1992,Now
+784,United Arab Emirates,United Arab Emirates,,AE,ARE,1962,Now
+826,United Kingdom,United Kingdom,,GB,GBR,1962,Now
+834,United Republic of Tanzania,United Rep. of Tanzania,,TZ,TZA,1965,Now
+581,United States Minor Outlying Islands,United States Minor Outlying Islands,United States Minor Outlying Islands,UM,UMI,1962,Now
+858,Uruguay,Uruguay,,UY,URY,1962,Now
+849,US Miscellaneous Pacific Islands,US Misc. Pacific Isds,,N/A,N/A,1962,1962
+850,US Virgin Islands,US Virgin Isds,,VI,VIR,1962,1980
+842,"USA, Puerto Rico and US Virgin Islands",USA,Including Puerto Rico and US Virgin Islands,US,USA,1981,Now
+841,USA and Puerto Rico,USA (before 1981),Including Puerto Rico,US,USA,1962,1980
+860,Uzbekistan,Uzbekistan,,UZ,UZB,1992,Now
+548,Vanuatu,Vanuatu,,VU,VUT,1962,Now
+862,Venezuela,Venezuela,,VE,VEN,1962,Now
+704,Viet Nam,Viet Nam,,VN,VNM,1975,Now
+876,Wallis and Futuna Islands,Wallis and Futuna Isds,,WF,WLF,1962,Now
+879,"Western Asia, not elsewhere specified","Western Asia, nes",,N/A,N/A,1962,2004
+732,Western Sahara,Western Sahara,,EH,ESH,1962,Now
+0,World,World,,WL,WLD,1962,Now
+887,Yemen,Yemen,,YE,YEM,1991,Now
+894,Zambia,Zambia,,ZM,ZMB,1965,Now
+716,Zimbabwe,Zimbabwe,,ZW,ZWE,1965,Now
