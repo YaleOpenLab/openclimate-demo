@@ -5,6 +5,7 @@ const fs = require('fs-extra');
 const express = require('express');
 const cors = require('cors');
 const api = express()
+const port = process.env.PORT || 3001
 var http = require('http').Server(api);
 var cc = 'CC',
     ref = 'REF'
@@ -58,12 +59,12 @@ api.get('/earth', (req, res, next) => {
     store.get(['stats'], function(err, obj) {
         let earth = {}
         earth.atmo_co2_concentration = '412PPM'
-        earth.annual_global_emissions = ''
-        earth.avg_temp_increase = ''
-        earth.total_pledges = ''
+        earth.annual_global_emissions = 'Lotsa GT'
+        earth.avg_temp_increase = '0.1'
+        earth.total_pledges = 4300
         earth.remaining_emissions = {
-            remaining_budget: '',
-            source: ''
+            remaining_budget: 'fewer GT',
+            source: 'unk'
         }
         res.send(JSON.stringify({
             nation
@@ -143,7 +144,7 @@ api.get('/national-pledges/:id', (req, res, next) => {
             }, null, 3))
         });
 });
-http.listen(3001, function() {
+http.listen(port, function() {
     console.log(`DB API listening on port 3001`);
 });
 fs.readFile('csv/country-standards.csv')
@@ -161,7 +162,7 @@ fs.readFile('csv/country-standards.csv')
         }
         const rows = text.split('\n')
         for (i = 1; i < rows.length; i++) {
-            let col = rows[i].split(/(?!\B"[^"]*),(?![^"]*"\B)/g)
+            let col = rows[i].split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/gm)
             if (col[5] != 'N/A') { //simple filter
                 let now = parseInt(col[7])
                 json.countries[col[0]] = {
@@ -180,6 +181,7 @@ fs.readFile('csv/country-standards.csv')
                 switch (col[0]) {
                     case '842':
                         json.lowercase_to_three['united states of america'] = col[5]
+                        json.lowercase_to_three['usa'] = col[5]
                         break;
                     default:
                         break;
@@ -195,10 +197,51 @@ fs.readFile('csv/country-standards.csv')
                 scrapeCSVCO('https://raw.githubusercontent.com/YaleOpenLab/openclimate/master/staticdata/csv_data/cdiac_fossil_fuel_cement_national.csv', 'https://raw.githubusercontent.com/YaleOpenLab/openclimate/master/staticdata/csv_data/consumption_emissions.csv')
             }
         })
+        fs.readFile('csv/2017GHbyRegion.csv')
+            .then(function(file) {
+                return file.toString('utf8')
+            })
+            .then(function(text) {
+                var data = text.split(/(?!\B"[^"]*)\n(?![^"]*"\B)/g),
+                    header = data[0],
+                    info = header.split(','),
+                    schema = []
+                ops = []
+                for (i = 0; i < info.length; i++) {
+                    schema.push(info[i])
+                }
+                for (i = 1; i < data.length - 1; i++) {
+                    row = data[i].split(/,(?=(?:[^\"]*\"[^\"]*\")*[^\"]*$)/gm)
+                    if (ref.lowercase_to_three[row[1].toLowerCase()] && row[1] == 'USA') {
+                        var ghg = {
+                            region: row[0].toLowerCase(),
+                            name: row[0],
+                            of: ref.lowercase_to_three[row[1].toLowerCase()],
+                            year: parseInt(row[7]),
+                            pop: row[5],
+                            total: row[19]
+                        }
+                        ops.push({ type: 'put', path: ['info', ref.lowercase_to_three[row[1].toLowerCase()], 'sub', ghg.region], data: ghg })
+                        ops.push({
+                            type: 'put',
+                            path: ['ref', 'countries', ref.three_code[ref.lowercase_to_three[row[1].toLowerCase()]], 'sub'],
+                            data: {
+                                [ghg.region]: 'regions'
+                            }
+                        })
+                    } else {
+                        if (row[1]) { ref.errors[row[1]] = 'regions' }
+                    }
+                }
+                store.batch(ops)
+            })
+
     })
     .catch(function(e) {
         console.log(e)
     })
+
+
 
 function scrapeCSVCO(raw, coem) { //built for cdiac_fossil_fuel_cement_national.csv & consumption_emissions.csv
     fetch(`${raw}`)
