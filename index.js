@@ -75,13 +75,14 @@ api.get('/nations', (req, res, next) => { //list of country codes
     res.setHeader('Content-Type', 'application/json')
     let list = {}
     let keys = Object.keys(ref.three_code)
-    for (i = 0; i < ref.countries.length; i++) {
-        list[keys[i]] = ref.countries[keys[i]].f
+    for (i = 0; i < keys.length; i++) {
+        list[keys[i]] = ref.countries[ref.three_code[keys[i]]].f
     }
     res.send(JSON.stringify({
-        list,
-        keys
+        list
     }, null, 3))
+
+
 });
 api.get('/nation/:id', (req, res, next) => { //country info and list subnational actors - only working for USA with 6 states
     let id = req.params.id.toUpperCase()
