@@ -71,22 +71,38 @@ api.get('/earth', (req, res, next) => {
         }, null, 3))
     });
 });
-api.get('/nation/:id', (req, res, next) => {
-    let id = req.params.id
-    let nation = {}
+api.get('/nations', (req, res, next) => { //list of country codes
     res.setHeader('Content-Type', 'application/json')
-    store.get([cc, id], function(err, obj) {
-        nation.id = id
-        nation.code = obj.c
-        nation.display_name = obj.d
-        nation.lower_name = obj.n
-        nation.polygon = obj.p
-        nation.flag_img = obj.f
-
-        res.send(JSON.stringify({
-            nation
-        }, null, 3))
-    });
+    let list = {}
+    let keys = Object.keys(ref.three_code)
+    for (i = 0; i < ref.countries.length; i++) {
+        list[keys[i]] = ref.countries[keys[i]].f
+    }
+    res.send(JSON.stringify({
+        list,
+        keys
+    }, null, 3))
+});
+api.get('/nation/:id', (req, res, next) => { //country info and list subnational actors - only working for USA with 6 states
+    let id = req.params.id.toUpperCase()
+    res.setHeader('Content-Type', 'application/json')
+    let rP = DBget2('info', id)
+        //eP = DBget()
+    Promise.all([rP])
+        .then(function(v) {
+            let nat = v[0],
+                nation = {},
+                coun = ref.countries[ref.three_code[id]]
+            nation.id = coun.n
+            nation.code = coun.c
+            nation.display_name = coun.f
+                //nation.polygon = coun.p
+                //nation.flag_img = coun.f
+            nation.subs = Object.keys(nat.sub)
+            res.send(JSON.stringify({
+                nation
+            }, null, 3))
+        });
 });
 api.get('/national-emissions/:id', (req, res, next) => {
     let id = req.params.id.toUpperCase()
