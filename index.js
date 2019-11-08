@@ -1,39 +1,42 @@
-const fetch = require('node-fetch');
-const Pathwise = require('./pathwise');
-const level = require('level');
-const fs = require('fs-extra');
-const express = require('express');
-const cors = require('cors');
-const api = express()
-const port = process.env.PORT || 3001
-var http = require('http').Server(api);
-var cc = 'CC',
-    ref = 'REF'
-var store = new Pathwise(level('./db', { createIfEmpty: true }));
-var https_redirect = function(req, res, next) {
-    if (process.env.NODE_ENV === 'production') {
-        if (req.headers['x-forwarded-proto'] != 'https') {
-            return res.redirect('https://' + req.headers.host + req.url);
+const level = require('level'),
+    levelgraph = require('levelgraph'),
+    jsonld = require('levelgraph-jsonld'),
+    db = jsonld(levelgraph(level('./db', { createIfEmpty: true, base: 'https://schema.org' }))),
+    fetch = require('node-fetch'),
+    fs = require('fs-extra'),
+    express = require('express'),
+    cors = require('cors'),
+    api = express(),
+    port = process.env.PORT || 3001,
+    http = require('http').Server(api),
+    https_redirect = function(req, res, next) {
+        if (process.env.NODE_ENV === 'production') {
+            if (req.headers['x-forwarded-proto'] != 'https') {
+                return res.redirect('https://' + req.headers.host + req.url);
+            } else {
+                return next();
+            }
         } else {
             return next();
         }
-    } else {
-        return next();
-    }
-};
+    },
+    iso3166 = require('./data/iso3166')
+
+// API
 
 api.use(https_redirect);
 api.use(cors())
 api.get('/dump', (req, res, next) => {
     var dump = {}
     res.setHeader('Content-Type', 'application/json')
-    store.get([], function(err, obj) {
+    db.get([], function(err, obj) {
         dump = obj,
             res.send(JSON.stringify({
                 dump
             }, null, 3))
     });
 });
+/*
 api.get('/countries', (req, res, next) => {
     var countries = {}
     res.setHeader('Content-Type', 'application/json')
@@ -71,7 +74,7 @@ api.get('/earth', (req, res, next) => {
         }, null, 3))
     });
 });
-api.get('/nations', (req, res, next) => { //list of country codes
+api.get('/nations', (req, res, next) => { //list of country codes 
     res.setHeader('Content-Type', 'application/json')
     let list = {}
     let keys = Object.keys(ref.three_code)
@@ -105,6 +108,38 @@ api.get('/nation/:id', (req, res, next) => { //country info and list subnational
             }, null, 3))
         });
 });
+*/
+api.get('/nation/:id', (req, res, next) => { //country info and list subnational actors - only working for USA with 6 states
+    let id = req.params.id.toUpperCase()
+    res.setHeader('Content-Type', 'application/json')
+    let num = parseInt(id)
+    let query = ''
+    if (typeof num == 'number') {
+        query = '@ISO3166-1-numeric'
+    } else if (id.length == 2) {
+        query = '@ISO3166-1-Alpha-2'
+    } else if (id.length == 3) {
+        query = '@ISO3166-1-Alpha-3'
+    }
+    if (query) {
+        db.jsonld.get(pld[id], { '@context': pld[query] }, function(err, obj) {
+            if (err) {
+                res.send(JSON.stringify({
+                    err
+                }, null, 3))
+            } else {
+                res.send(JSON.stringify({
+                    obj
+                }, null, 3))
+            }
+        });
+    } else {
+        res.send(JSON.stringify({
+            Error: 'Not a valid query'
+        }, null, 3))
+    }
+});
+/*
 api.get('/national-emissions/:id', (req, res, next) => {
     let id = req.params.id.toUpperCase()
     res.setHeader('Content-Type', 'application/json')
@@ -161,9 +196,32 @@ api.get('/national-pledges/:id', (req, res, next) => {
             }, null, 3))
         });
 });
+*/
 http.listen(port, function() {
     console.log(`DB API listening on port 3001`);
 });
+
+// DB
+var ref = {}
+for (i = 0; i < iso3166.length; i++) {
+    var pld = {
+        "@context": "https://schema.org",
+        "@type": "Country",
+        "@ISO3166-1-numeric": iso3166[i]['ISO3166-1-numeric'],
+        "@ISO3166-1-Alpha-3": iso3166[i]['ISO3166-1-Alpha-3'],
+        "@ISO3166-1-Alpha-2": iso3166[i]['ISO3166-1-Alpha-2'],
+        "Country-data": iso3166[i]
+    }
+    db.jsonld.put(pld, function(err, obj) {
+        if (err) {
+            console.log(err)
+        } else {
+            console.log(obj)
+        }
+    });
+}
+
+/*
 fs.readFile('csv/country-standards.csv')
     .then(function(file) {
         return file.toString('utf8')
@@ -251,151 +309,10 @@ fs.readFile('csv/country-standards.csv')
                     }
                 }
                 store.batch(ops)
+                return
             })
-
     })
     .catch(function(e) {
         console.log(e)
     })
-
-
-
-function scrapeCSVCO(raw, coem) { //built for cdiac_fossil_fuel_cement_national.csv & consumption_emissions.csv
-    fetch(`${raw}`)
-        .then(function(response) {
-            return response.text();
-        })
-        .then(function(text) {
-            var refP = DBget('ref')
-            Promise.all([refP])
-                .then(function(v) {
-                    var REF = v[0],
-                        data = text.split('\n'),
-                        header = data[0],
-                        info = header.split(','),
-                        json = {},
-                        schema = []
-                    for (i = 0; i < info.length; i++) {
-                        schema.push(info[i])
-                    }
-                    for (i = 1; i < data.length; i++) {
-                        row = data[i].split(',')
-                        if (ref.lowercase_to_three[row[0].toLowerCase()] == null) {
-                            ref.errors[row[0].toLowerCase()] = 'w/bunkers'
-                        } else {
-                            var named = ref.lowercase_to_three[row[0].toLowerCase()]
-                            if (json[named] == null) {
-                                json[named] = {
-                                    wby: {} //with bunkers by year
-                                }
-                            }
-                            json[named].wby[row[1]] = {}
-                            for (j = 2; j < info.length; j++) {
-                                json[named].wby[row[1]][schema[j]] = parseFloat(row[j]) || 0
-                            }
-                        }
-                    }
-
-                    return [json]
-                })
-                .then(function(x) {
-                    var j = x[0],
-                        ops = []
-                    fetch(`${coem}`)
-                        .then(function(response) {
-                            return response.text();
-                        })
-                        .then(function(t) {
-                            var data = t.split('\n'),
-                                header = data[0],
-                                info = header.split(','),
-                                json = j,
-                                schema = []
-                            for (i = 0; i < info.length; i++) {
-                                schema.push(info[i])
-                            }
-                            for (i = 1; i < data.length; i++) {
-                                row = data[i].split(',')
-                                if (ref.three_code[row[0]] == null) {
-                                    ref.errors[row[0]] = 'coem'
-                                } else {
-                                    named = row[0]
-                                    if (json[named] == null) {
-                                        json[named] = {
-                                            coem: {}
-                                        }
-                                    } else {
-                                        json[named].coem = {}
-                                    }
-                                    if (json[named].coem[row[1]] == null) {
-                                        json[named].coem[row[1]] = {}
-                                    }
-                                    json[named].coem[row[1]][schema[2]] = parseFloat(row[2])
-                                }
-                            }
-                            ops.push({ type: 'put', path: ['ref'], data: ref })
-                            ops.push({ type: 'put', path: ['info'], data: json })
-                            store.batch(ops)
-                        })
-                })
-                .catch(function(e) {
-                    console.log(e)
-                })
-        })
-}
-
-function DBget(loc) {
-    return new Promise(function(resolve, reject) {
-        store.get([loc], function(e, a) {
-            if (e) {
-                reject(e)
-            } else if (Object.keys(a).length == 0) {
-                resolve(0)
-            } else {
-                resolve(a)
-            }
-        });
-    })
-}
-
-function DBget2(loc, loc2) {
-    return new Promise(function(resolve, reject) {
-        store.get([loc, loc2], function(e, a) {
-            if (e) {
-                reject(e)
-            } else if (Object.keys(a).length == 0) {
-                resolve(0)
-            } else {
-                resolve(a)
-            }
-        });
-    })
-}
-
-function DBget3(loc, loc2, loc3) {
-    return new Promise(function(resolve, reject) {
-        store.get([loc, loc2, loc3], function(e, a) {
-            if (e) {
-                reject(e)
-            } else if (Object.keys(a).length == 0) {
-                resolve(0)
-            } else {
-                resolve(a)
-            }
-        });
-    })
-}
-
-function DBget4(loc, loc2, loc3, loc4) {
-    return new Promise(function(resolve, reject) {
-        store.get([loc, loc2, loc3, loc4], function(e, a) {
-            if (e) {
-                reject(e)
-            } else if (Object.keys(a).length == 0) {
-                resolve(0)
-            } else {
-                resolve(a)
-            }
-        });
-    })
-}
+    */
